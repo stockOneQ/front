@@ -1,8 +1,16 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { Inter } from 'next/font/google';
+import Globals from 'styles/Globals';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const inter = Inter({ subsets: ['latin'] });
+
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <main className={inter.className}>
+      <Component {...pageProps} />
+      <Globals />
+    </main>
+  )
 }
 
-export default MyApp
+export default App;
