@@ -1,16 +1,24 @@
-import type { AppProps } from 'next/app'
 import { Inter } from 'next/font/google';
+import AppLayout from 'components/common/AppLayout';
 import Globals from 'styles/Globals';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const App = ({ Component, pageProps }: AppProps) => {
+type AppProps = {
+  Component: React.ElementType;
+}; 
+
+function App({ Component }: AppProps) {
   return (
     <main className={inter.className}>
-      <Component {...pageProps} />
-      <Globals />
+      <AppLayout>
+        <Component />
+        <Globals />
+      </AppLayout>
     </main>
-  )
+  );
 }
-
+ 
 export default App;
+
+
