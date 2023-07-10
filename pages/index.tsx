@@ -1,9 +1,9 @@
-import HeadPart from './HeadPart';
-
+// import HeadPart from './HeadPart';
+import Header from '../components/common/header';
 const Home = () => {
   return (
     <>
-      <HeadPart />
+      <Header />
       <h1>hi</h1>
     </>
   )
