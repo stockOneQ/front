@@ -27,7 +27,7 @@ const Header = () => {
           <li><Link href="/community/Community">Community</Link></li>
           <li><Link href="/connect/Connect">Connect</Link></li>
           <li><Link href="/mypage/Mypage">MyPage</Link></li>
-          <li><Link href="/mypage/Mypage">logout</Link></li>
+          <li><Link href="/login/Login">logout</Link></li>
           {/* <li><a>sign in</a></li> */}
         </ul>
       </nav>
