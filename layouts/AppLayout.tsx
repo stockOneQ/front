@@ -1,10 +1,10 @@
-import React from 'react';
-import Header from './header';
- 
+import React from "react";
+import Header from "../components/common/Header/header";
+
 type AppLayoutProps = {
   children: React.ReactNode;
 };
- 
+
 function AppLayout({ children }: AppLayoutProps) {
   return (
     <div>
@@ -15,5 +15,5 @@ function AppLayout({ children }: AppLayoutProps) {
     </div>
   );
 }
- 
+
 export default AppLayout;

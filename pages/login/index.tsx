@@ -1,6 +1,6 @@
-import Header from "../../components/common/header";
+import Header from "../../components/common/Header/header";
 
-const Login  = () => {
+const Login = () => {
   return (
     <div>
       <h1>login this</h1>
