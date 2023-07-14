@@ -3,8 +3,32 @@ import Link from "next/link";
 import Image from "next/image";
 //import {NavWrapper, LogoBox, NavUl, NavLi, LogoImage} from './headerModule';이거 왜 못불러올까요,,
 import logo from "../../../public/favicon/favicon-192.png";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Header = () => {
+  const [activeLink, setActiveLink] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      // URL에서 현재 경로
+      const route = url === "/" ? "home" : url.split("/").slice(-1)[0];
+      // 현재 경로에 기반하여 activeLink 상태를 업데이트
+      setActiveLink(route);
+    };
+
+    // 페이지 로드 시에 activeLink 상태를 초기화
+    setActiveLink(router.pathname === "/" ? "home" : router.pathname.split("/").slice(-1)[0]);
+
+    // routeChangeComplete 이벤트를 구독하여 activeLink 상태를 업데이트
+    router.events.on("routeChangeComplete", handleRouteChange);
+    // 컴포넌트가 언마운트될 때 routeChangeComplete 이벤트 구독을 해제,  불필요한 이벤트 구독이 남아있지 않도록
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router]);
+
   return (
     <>
       <Head>
@@ -20,34 +44,50 @@ const Header = () => {
       </Head>
       <nav className="nav_bar">
         <div className="logo_box">
-          <Link href="/" aria-label="메인페이지로 이동">
+          <a href="/" aria-label="메인페이지로 이동">
             <Image
               role="main-link"
               src={logo}
               alt="스톡원큐 로고"
               width={50}
               height={50}
-            ></Image>
-          </Link>
+            />
+          </a>
         </div>
-        <ul className="nav_ul">
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/community">Community</Link>
-          </li>
-          <li>
-            <Link href="/connect">Connect</Link>
-          </li>
-          <li>
-            <Link href="/myPage">MyPage</Link>
-          </li>
-          <li>
-            <Link href="/login">logout</Link>
-          </li>
-          {/* <li><a>sign in</a></li> */}
-        </ul>
+        <div className="menu_bar">
+          <ul className="nav_ul">
+            <li
+              onClick={() => setActiveLink("home")}
+              className={activeLink === "home" ? "active" : ""}
+            >
+              <Link href="/">Home</Link>
+            </li>
+            <li
+              onClick={() => setActiveLink("community")}
+              className={activeLink === "community" ? "active" : ""}
+            >
+              <Link href="/community">Community</Link>
+            </li>
+            <li
+              onClick={() => setActiveLink("connect")}
+              className={activeLink === "connect" ? "active" : ""}
+            >
+              <Link href="/connect">Connect</Link>
+            </li>
+            <li
+              onClick={() => setActiveLink("myPage")}
+              className={activeLink === "myPage" ? "active" : ""}
+            >
+              <Link href="/myPage">MyPage</Link>
+            </li>
+            <li
+              onClick={() => setActiveLink("logout")}
+              className={activeLink === "logout" ? "active" : ""}
+            >
+              <Link href="/login">Logout</Link>
+            </li>
+          </ul>
+        </div>
       </nav>
       <style jsx>{`
         .nav_bar {
@@ -58,25 +98,31 @@ const Header = () => {
           position: relative;
         }
 
+        .menu_bar {
+          width: 85%;
+          padding-left: 3%;
+        }
+
         .nav_ul {
           display: flex;
-          top: 50%;
-          height: 18px;
+          flex-wrap: wrap;
+          justify-content: flex-start;
           transform: translateY(-50%);
           position: absolute;
-          display: flex;
+          width: 80%;
+          top: 50%;
         }
 
-        .nav_bar li {
+        .nav_ul li {
           font-size: 18px;
           font-weight: 600;
-          top: 40%;
-          margin-left: 70%;
           color: #979797;
+          flex: 0 0 20%;
         }
 
-        .nav_bar li:first-child {
-          margin-left: 100%;
+        .nav_ul li.active {
+          color: #000000;
+          /* Add any other styles you want to apply to the active link */
         }
 
         .logo_box {
@@ -85,6 +131,7 @@ const Header = () => {
           justify-content: center;
           align-items: center;
         }
+
         .logo_box img {
           margin-left: 17vw;
           border-radius: 100px;
