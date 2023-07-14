@@ -1,39 +1,43 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const NavWrapper = styled.nav`
+export const NavWrapper = styled.nav`
   display: flex;
   width: 100vw;
-  height: 15vh;
+  height: 18vh;
   min-height: 50px;
-  position: relative;
 `;
 
-const LogoBox = styled.div`
+export const LogoBox = styled.div`
   width: 15vw;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const NavUl = styled.ul`
+export const MenuBar = styled.div`
+  width: 85%;
+  padding: 0% 5%;
+
   display: flex;
-  top: 50%;
-  height: 18px;
-  transform: translateY(-50%);
-  position: absolute;
-  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const NavLi = styled.li`
+export const NavList = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 18px;
+`;
+
+export const NavItem = styled.li`
   font-size: 18px;
   font-weight: 600;
-  top: 40%;
-  margin-left: 70%;
   color: #979797;
-`;
 
-const LogoImage = styled.img`
-  margin-left: 17vw;
-  border-radius: 100px;
-  user-select: none;
+  &:active {
+    color: #000000;
+  }
 `;
