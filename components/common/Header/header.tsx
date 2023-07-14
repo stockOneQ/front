@@ -3,27 +3,28 @@ import Link from "next/link";
 import Image from "next/image";
 //import {NavWrapper, LogoBox, NavUl, NavLi, LogoImage} from './headerModule';이거 왜 못불러올까요,,
 import logo from "../../../public/favicon/favicon-192.png";
+import menuIcon from "../../../assets/imgs/menu.png";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { InnerNavBar } from "./innerNavBar";
 
 import * as H from "./headerModule";
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("");
+  const [currentPath, setCurrentPath] = useState("");
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url: string) => {
+    const handleRouteChange = (url) => {
       // URL에서 현재 경로
       const route = url === "/" ? "home" : url.split("/").slice(-1)[0];
       // 현재 경로에 기반하여 activeLink 상태를 업데이트
       setActiveLink(route);
     };
-
     // 페이지 로드 시에 activeLink 상태를 초기화
-    setActiveLink(
-      router.pathname === "/" ? "home" : router.pathname.split("/").slice(-1)[0]
-    );
+    setActiveLink(router.pathname === "/" ? "home" : router.pathname.split("/").slice(-1)[0]);
+    setCurrentPath(router.pathname);
 
     // routeChangeComplete 이벤트를 구독하여 activeLink 상태를 업데이트
     router.events.on("routeChangeComplete", handleRouteChange);
@@ -60,39 +61,32 @@ const Header = () => {
         </H.LogoBox>
         <H.MenuBar>
           <H.NavList>
-            <H.NavItem
-              onClick={() => setActiveLink("home")}
-              className={activeLink === "home" ? "active" : ""}
-            >
+            <H.NavItem className={activeLink === "home" ? "active" : ""}>
               <Link href="/">Home</Link>
             </H.NavItem>
-            <H.NavItem
-              onClick={() => setActiveLink("community")}
-              className={activeLink === "community" ? "active" : ""}
-            >
+            <H.NavItem className={activeLink === "community" ? "active" : ""}>
               <Link href="/community">Community</Link>
             </H.NavItem>
-            <H.NavItem
-              onClick={() => setActiveLink("connect")}
-              className={activeLink === "connect" ? "active" : ""}
-            >
+            <H.NavItem className={activeLink === "connect" ? "active" : ""}>
               <Link href="/connect">Connect</Link>
             </H.NavItem>
-            <H.NavItem
-              onClick={() => setActiveLink("myPage")}
-              className={activeLink === "myPage" ? "active" : ""}
-            >
+            <H.NavItem className={activeLink === "myPage" ? "active" : ""}>
               <Link href="/myPage">My Page</Link>
             </H.NavItem>
-            <H.NavItem
-              onClick={() => setActiveLink("logout")}
-              className={activeLink === "logout" ? "active" : ""}
-            >
+            <H.NavItem className={activeLink === "logout" ? "active" : ""}>
               <Link href="/login">Logout</Link>
             </H.NavItem>
           </H.NavList>
         </H.MenuBar>
       </H.NavWrapper>
+      <InnerNavBar
+        navItems={[
+          { label: "냉동", url: "/community" },
+          { label: "냉장", url: "/" },
+          { label: "상온", url: "/" },
+        ]}
+        currentPath={currentPath}
+      />
     </>
   );
 };

@@ -8,7 +8,7 @@ export const NavWrapper = styled.nav`
 `;
 
 export const LogoBox = styled.div`
-  width: 15vw;
+  padding: 0 5% 0 5%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +37,7 @@ export const NavItem = styled.li`
   font-weight: 600;
   color: #979797;
 
-  &:active {
+  &.active {
     color: #000000;
   }
 `;
