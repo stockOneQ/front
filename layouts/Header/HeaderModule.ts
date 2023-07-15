@@ -1,22 +1,23 @@
 import styled from "styled-components";
 
-export const NavWrapper = styled.nav`
+export const Header = styled.div`
   display: flex;
-  max-width: 144rem;
   padding: 2rem;
   margin: 0 auto;
+  max-width: 144rem;
   height: 18vh;
   min-height: 50px;
 `;
 
 export const LogoBox = styled.div`
-  padding: 0 5% 0 5%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  padding: 0 5% 0 5%;
 `;
 
-export const MenuBar = styled.div`
+export const NavBar = styled.div`
   width: 85%;
   padding: 0% 5%;
 
@@ -31,7 +32,6 @@ export const NavList = styled.ul`
   align-items: center;
 
   width: 100%;
-  height: 18px;
 `;
 
 export const NavItem = styled.li`
