@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const SideNavBox = styled.div`
+export const Box = styled.div`
   max-width: 144rem;
   padding: 2rem;
   margin: 0 auto;
@@ -8,8 +8,6 @@ const SideNavBox = styled.div`
   flex-direction: row;
 `;
 
-const MainBox = styled.main`
+export const Main = styled.main`
   padding: 4rem 7rem;
-`
-
-export { SideNavBox, MainBox }
+`;

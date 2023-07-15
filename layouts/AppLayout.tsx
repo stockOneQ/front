@@ -1,55 +1,69 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import * as L from "./AppLayoutStyles";
+
 import Header from "./Header";
-import InnerNavBar from './InnerNavBar';
-import * as S from './AppLayoutStyles';
-import { useRouter } from 'next/router';
+import SideMenuBar from "./SideMenuBar";
 
 type AppLayoutProps = {
   children: React.ReactNode;
 };
 
+type Item = {
+  label: string;
+  url: string;
+};
+
 const AppLayout = ({ children }: AppLayoutProps) => {
-  const [activeLink, setActiveLink] = useState("");
-  const [currentPath, setCurrentPath] = useState("");
   const router = useRouter();
+  const currentPath = router.pathname;
 
-  useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      // URL에서 현재 경로
-      const route = url === "/" ? "home" : url.split("/").slice(-1)[0];
-      // 현재 경로에 기반하여 activeLink 상태를 업데이트
-      setActiveLink(route);
-    };
-    // 페이지 로드 시에 activeLink 상태를 초기화
-    setActiveLink(router.pathname === "/" ? "home" : router.pathname.split("/").slice(-1)[0]);
-    setCurrentPath(router.pathname);
+  let sideMenuBarItems: Item[] = [];
 
-    // routeChangeComplete 이벤트를 구독하여 activeLink 상태를 업데이트
-    router.events.on("routeChangeComplete", handleRouteChange);
-    // 컴포넌트가 언마운트될 때 routeChangeComplete 이벤트 구독을 해제, 불필요한 이벤트 구독이 남아있지 않도록
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router]);
+  switch (currentPath) {
+    case "/":
+    case "/coldStorage":
+    case "/roomTemperature":
+      sideMenuBarItems = [
+        { label: "냉동", url: "/" },
+        { label: "냉장", url: "/coldStorage" },
+        { label: "상온", url: "/roomTemperature" },
+      ];
+      break;
+    case "/community/friends":
+    case "/community/posts":
+      sideMenuBarItems = [
+        { label: "친구", url: "/community/friends" },
+        { label: "게시판", url: "/community/posts" },
+      ];
+      break;
+    case "/connect":
+    case "/connect/data":
+      sideMenuBarItems = [
+        { label: "자료", url: "/connect/data" },
+        { label: "연결", url: "/connect" },
+      ];
+      break;
+    case "/myPage":
+    case "/myPage/questions":
+    case "/myPage/secession":
+      sideMenuBarItems = [
+        { label: "회원정보수정", url: "/myPage" },
+        { label: "F & A", url: "/myPage/questions" },
+        { label: "회원탈퇴", url: "/myPage/secession" },
+      ];
+      break;
+  }
 
   return (
     <>
-      <Header activeLink={activeLink} />
-      <S.SideNavBox>
-        <InnerNavBar
-          navItems={[
-            { label: "냉동", url: "/community" },
-            { label: "냉장", url: "/" },
-            { label: "상온", url: "/" },
-          ]}
-          currentPath={currentPath}
-          />
-        <S.MainBox>{children}</S.MainBox>
-      </S.SideNavBox>
-      {/* 공통으로 들어가게될 Header 컴포넌트 */}
-      {/* 자식으로 오게될 { children } prop 리턴 */}
+      <Header />
+      <L.Box>
+        <SideMenuBar items={sideMenuBarItems} currentPath={currentPath} />
+        <L.Main>{children}</L.Main>
+      </L.Box>
     </>
   );
-}
+};
 
 export default AppLayout;
