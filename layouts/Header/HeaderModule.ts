@@ -4,7 +4,7 @@ export const Header = styled.div`
   display: flex;
   margin: 0 auto;
   max-width: 144rem;
-  height: 13vh;
+  height: 18vh;
   min-height: 50px;
 
   // border: 1px solid gray;
