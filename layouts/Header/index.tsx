@@ -24,7 +24,7 @@ const Header = () => {
       <H.NavBar>
         <H.NavList>
           <H.NavItem className={click === "home" ? "active" : ""}>
-            <Link href="/home" onClick={() => setClick("home")}>
+            <Link href="/" onClick={() => setClick("home")}>
               Home
             </Link>
           </H.NavItem>
