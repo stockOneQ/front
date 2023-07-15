@@ -14,9 +14,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     </main>
   ) : (
     <main className={inter.className}>
+      <Globals />
       <AppLayout>
         <Component {...pageProps} />
-        <Globals />
       </AppLayout>
     </main>
   );

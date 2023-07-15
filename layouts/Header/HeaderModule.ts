@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 export const NavWrapper = styled.nav`
   display: flex;
-  width: 100vw;
+  max-width: 144rem;
+  padding: 2rem;
+  margin: 0 auto;
   height: 18vh;
   min-height: 50px;
 `;
