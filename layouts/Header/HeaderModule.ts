@@ -7,7 +7,7 @@ export const Header = styled.div`
   height: 13vh;
   min-height: 50px;
 
-  border: 1px solid gray;
+  // border: 1px solid gray;
 `;
 
 export const LogoBox = styled.div`
