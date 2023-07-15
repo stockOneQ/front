@@ -1,4 +1,4 @@
-import Header from "../../components/common/Header/header";
+import Header from "../../layouts/Header";
 
 const Connect = () => {
   return (

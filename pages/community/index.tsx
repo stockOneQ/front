@@ -1,10 +1,10 @@
-import Header from "../../components/common/Header/header";
+import Header from "../../layouts/Header";
+import CommunityFriends from './CommunityFriends';
 
 const Community = () => {
   return (
     <div>
-      <h1>community page</h1>
-      {/* Add your content here */}
+      <CommunityFriends />
     </div>
   );
 };
