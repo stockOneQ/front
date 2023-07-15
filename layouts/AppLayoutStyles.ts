@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const SideNavBox = styled.div`
-  max-width: 144rem;
+  width: 144rem;
   padding: 2rem;
   margin: 0 auto;
   display: flex;

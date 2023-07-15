@@ -9,7 +9,7 @@ export const inner_menu_bar = styled.nav`
 `;
 
 export const inner_nav_ul = styled.ul`
-  width: 100%;
+  width: 18.4rem;
   padding: 2rem;
   text-align: center;
 `;
