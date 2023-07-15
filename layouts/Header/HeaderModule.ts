@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 export const Header = styled.div`
   display: flex;
-  padding: 2rem;
   margin: 0 auto;
   max-width: 144rem;
-  height: 18vh;
+  height: 13vh;
   min-height: 50px;
+
+  border: 1px solid gray;
 `;
 
 export const LogoBox = styled.div`
@@ -14,11 +15,11 @@ export const LogoBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding: 0 5% 0 5%;
+  padding: 0 5%;
 `;
 
 export const NavBar = styled.div`
-  width: 85%;
+  width: 100%;
   padding: 0% 5%;
 
   display: flex;
