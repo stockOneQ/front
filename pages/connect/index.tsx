@@ -1,10 +1,7 @@
-import Header from "../../layouts/Header";
-
 const Connect = () => {
   return (
     <div>
-      <h1>connect page</h1>
-      {/* Add your content here */}
+      <h1>커넥트의 연결 페이지입니다.</h1>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const Base = createGlobalStyle`
   * {
@@ -19,11 +19,11 @@ const Base = createGlobalStyle`
   }
   
   #root {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Roboto', sans-serif;
     line-height: 1;
     font-weight: 400;
     color: var(--primary-color);
   }
-`
+`;
 
 export default Base;
