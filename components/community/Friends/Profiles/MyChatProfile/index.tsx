@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import myProfile from 'public/assets/imgs/community/myProfile.png';
-import myPageIcon from 'public/assets/imgs/community/myPageIcon.svg';
+import myPageIcon from 'public/assets/icons/community/myPageIcon.svg';
 import * as S from './style';
 
 /** 나의 채팅 프로필 */
