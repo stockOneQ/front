@@ -5,7 +5,7 @@ interface ICardProps {
   width: string;
 };
 
-const CardBox = styled.div<ICardProps>`
+const CardBox = styled.article<ICardProps>`
   width: ${props => props.width || '38.5rem'};
   height: 65vh;
   border-radius: 3rem;
