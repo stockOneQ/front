@@ -5,6 +5,8 @@ import Globals from "styles/Globals";
 import Login from "./login";
 import Head from "next/head";
 
+import { RecoilRoot } from "recoil";
+
 const roboto = Roboto({
   weight: "400",
   subsets: ["latin"],
@@ -24,19 +26,21 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="apple-touch-icon" href="favicon/favicon-apple.png" />
         <link rel="/manifest" href="manifest.webmanifest" />
       </Head>
-      {Component === Login ? (
-        <main className={roboto.className}>
-          <Component {...pageProps} />
-          <Globals />
-        </main>
-      ) : (
-        <main className={roboto.className}>
-          <Globals />
-          <AppLayout>
+      <RecoilRoot>
+        {Component === Login ? (
+          <main className={roboto.className}>
             <Component {...pageProps} />
-          </AppLayout>
-        </main>
-      )}
+            <Globals />
+          </main>
+        ) : (
+          <main className={roboto.className}>
+            <Globals />
+            <AppLayout>
+              <Component {...pageProps} />
+            </AppLayout>
+          </main>
+        )}
+      </RecoilRoot>
     </>
   );
 };
