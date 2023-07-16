@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const SideMenuBar = styled.nav`
-  width: 18.4rem;
-  height: 75vh;
+  width: 22.8rem;
+  height: 90vh;
   display: flex;
   border-right: 1px solid #e1e1e1;
   position: relative;
@@ -27,8 +27,8 @@ export const SideMenuBarItem = styled.li`
 `;
 
 export const LogoBox = styled.div`
-  top: 30%;
-  left: 18.4rem;
+  top: 17%;
+  left: 100%;
   transform: translate(-50%, -50%);
   position: absolute;
 `;
