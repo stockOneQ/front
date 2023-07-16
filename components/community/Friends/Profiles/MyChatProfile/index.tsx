@@ -18,6 +18,7 @@ const MyChatProfile = () => {
           <S.MyPhoneText>010-0000-0000</S.MyPhoneText>
         </div>
         <S.MyPageButton>
+          <button>6</button>
           <Image src={myPageIcon} alt="my_page_icon" width={19.64} height={26.84} />
         </S.MyPageButton>
       </S.MyProfileBox>

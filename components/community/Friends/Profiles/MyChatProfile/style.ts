@@ -51,6 +51,22 @@ const MyPhoneText = styled.p`
 
 const MyPageButton = styled.button`
   margin-left: auto;
+  position: relative;
+
+  button {
+    position: absolute;
+    top: -.2rem;
+    left: -2.7rem;
+    width: 2.7rem;
+    height: 1.5rem;
+    border-radius: .8rem;
+    background: linear-gradient(130deg, #F9E499 0%, #F9E499 0%, #F2B2CF 34.38%, #B1B0D7 65.63%, #55ABD7 100%);
+    color: var(--color-white);
+    text-align: center;
+    font-size: .9rem;
+    font-weight: 600;
+    line-height: normal;
+  }
 
   img {
     margin-right: 0;
