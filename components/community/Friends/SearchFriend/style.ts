@@ -40,20 +40,26 @@ const SearchByBox = styled.div`
   }
 `
 
-const SelectedValueBox = styled.div`
-  width: 100%;
-  height: 4.5rem;
+const SelectedValueButton = styled.button`
+  width: 16.3rem;
+  height: 4.4rem;
   position: relative;
   padding: 1.2rem 0;
   background-color: var(--color-black);
   border-radius: 3rem;
   z-index: 1000;
 
-  button {
+  img {
     position: absolute;
-    top: 50%;
+    top: 2.1rem;
     right: 3rem;
-    transform: translateY(-50%);
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform .5s linear;
+  }
+
+  .toggle {
+    transform: translateY(-50%) rotate(180deg);
+    transition: transform .5s linear;
   }
 `
 
@@ -99,7 +105,7 @@ export {
   SearchFriendText,
   SearchFriendBox,
   SearchByBox,
-  SelectedValueBox,
+  SelectedValueButton,
   OptionList,
   InputBox
 };
