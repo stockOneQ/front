@@ -11,15 +11,15 @@ const FriendsList = () => {
     <div>
       <FriendsCount onSetting={onSetting} setOnSetting={setOnSetting} />
       <S.FriendList>
-        <FriendProfile />
-        <FriendProfile />
-        <FriendProfile />
-        <FriendProfile />
-        <FriendProfile />
-        <FriendProfile />
-        <FriendProfile />
-        <FriendProfile />
-        <FriendProfile />
+        <FriendProfile onSetting={onSetting} />
+        <FriendProfile onSetting={onSetting} />
+        <FriendProfile onSetting={onSetting} />
+        <FriendProfile onSetting={onSetting} />
+        <FriendProfile onSetting={onSetting} />
+        <FriendProfile onSetting={onSetting} />
+        <FriendProfile onSetting={onSetting} />
+        <FriendProfile onSetting={onSetting} />
+        <FriendProfile onSetting={onSetting} />
       </S.FriendList>
     </div>
   );

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-interface IFriendsCountBoxProps {
-  onSetting: boolean;
-}
+/**************/
+/** index.tsx */
+/**************/
 
 const FriendList = styled.ul`
   height: 41vh;
@@ -11,11 +11,15 @@ const FriendList = styled.ul`
   &::-webkit-scrollbar{
     display: none;
   }
-
-  .friend_profile:not(:last-child) {
-    margin-bottom: 2.5rem;
-  }
 `
+
+/*********************/
+/** FriendsCount.tsx */
+/*********************/
+
+interface IFriendsCountBoxProps {
+  onSetting: boolean;
+}
 
 const FriendsCountBox = styled.div<IFriendsCountBoxProps>`
   padding: ${props => props.onSetting ? '.6rem 2rem .6rem' : '1.9rem 2rem'};
@@ -33,6 +37,29 @@ const FriendsCountBox = styled.div<IFriendsCountBoxProps>`
   img {
     margin-right: 1rem;
   }
+`
+
+/**********************/
+/** FriendProfile.tsx */
+/**********************/
+
+
+const FriendsBox = styled.div`
+  margin-bottom: 2.5rem;
+  `
+
+interface ICheckBoxButtonProps {
+  checked: boolean;
+}
+
+const CheckBoxButton = styled.button<ICheckBoxButtonProps>`
+  width: 2rem;
+  height: 2rem;
+  border-radius: .3rem;
+  border: 1px solid var(--color-black);
+  margin-right: 1.1rem;
+  background-color: ${props => props.checked ? 'var(--color-black)' : 'var(--color-white)'};
+  padding: .3rem .2rem;
 `
 
 const FriendProfileBox = styled.div`
@@ -88,6 +115,8 @@ const FriendPageButton = styled.button`
 export { 
   FriendList,
   FriendsCountBox,
+  FriendsBox,
+  CheckBoxButton,
   FriendProfileBox,
   FriendInfoBox,
   FriendPhoneText,

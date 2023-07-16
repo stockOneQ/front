@@ -1,14 +1,26 @@
 import Image from 'next/image';
 import friendProfile from 'public/assets/imgs/community/friendProfile.png';
+import checkedIcon from 'public/assets/icons/community/checked.svg';
 import friendStockIcon from 'public/assets/icons/community/friendStockIcon.svg';
-import myPageIcon from 'public/assets/icons/community/myPageIcon.svg';
 import * as S from './style';
+import { useState } from 'react';
+
+interface IFriendProfileProps {
+  onSetting: boolean;
+}
 
 /** 나의 채팅 프로필 */
-const FriendProfile = () => {
+const FriendProfile = ({ onSetting }: IFriendProfileProps) => {
+  const [checked, setChecked] = useState(false);
+
   return (
-    <div className="friend_profile">
+    <S.FriendsBox>
       <S.FriendProfileBox>
+        {onSetting && (
+          <S.CheckBoxButton checked={checked} onClick={() => setChecked(prev => !prev)}>
+            <Image src={checkedIcon} alt="checked_icon" width={14} height={11} />
+          </S.CheckBoxButton>
+        )}
         <Image src={friendProfile} alt="my_profile" width={60} height={60} placeholder="blur" />
         <div>
           <S.FriendInfoBox>
@@ -21,7 +33,7 @@ const FriendProfile = () => {
           <Image src={friendStockIcon} alt="my_page_icon" width={19.64} height={26.84} />
         </S.FriendPageButton>
       </S.FriendProfileBox>
-    </div>
+    </S.FriendsBox>
   );
 };
 
