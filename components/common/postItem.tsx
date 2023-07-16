@@ -20,24 +20,24 @@ const PostItem = ({
 }) => {
   return (
     <Box>
-      <PostDetail>
+      <PostDetailSection>
         <Title>{title}</Title>
         <Content>{content}</Content>
-      </PostDetail>
-      <PostInfoBox>
-        <Info>
+      </PostDetailSection>
+      <PostInfoSection>
+        <InfoBox>
           <Image alt="조회수" src={ViewsIcon}></Image>
           <span>{views}</span>
-        </Info>
-        <Info>
+        </InfoBox>
+        <InfoBox>
           <Image alt="댓글" src={CommentIcon}></Image>
           <span>{commentCount}</span>
-        </Info>
-        <Info>
+        </InfoBox>
+        <InfoBox>
           <Image alt="좋아요" src={LikeIcon}></Image>
           <span>{likes}</span>
-        </Info>
-      </PostInfoBox>
+        </InfoBox>
+      </PostInfoSection>
     </Box>
   );
 };
@@ -59,7 +59,7 @@ const Box = styled.div`
   justify-content: space-between;
 `;
 
-const PostDetail = styled.div``;
+const PostDetailSection = styled.div``;
 
 const Title = styled.div`
   font-weight: 600;
@@ -75,12 +75,12 @@ const Content = styled.div`
   color: #979797;
 `;
 
-const PostInfoBox = styled.div`
+const PostInfoSection = styled.div`
   display: flex;
   gap: 32px;
 `;
 
-const Info = styled.div`
+const InfoBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

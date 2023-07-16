@@ -8,7 +8,7 @@ const EditorTitleInput = () => {
 
   return (
     <Box>
-      <Title>제목</Title>
+      <Text>제목</Text>
       <Input
         value={titleInput}
         onChange={(e: { target: { value: SetStateAction<string> } }) =>
@@ -27,7 +27,7 @@ const Box = styled.div`
   gap: 25px;
 `;
 
-const Title = styled.h1`
+const Text = styled.h1`
   font-weight: 600;
   font-size: 18px;
   line-height: 21px;

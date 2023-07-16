@@ -8,20 +8,20 @@ const EditorContentInput = () => {
 
   return (
     <Box>
-      <Header>내용</Header>
-      <ContentInput
+      <Text>내용</Text>
+      <Input
         value={content}
         onChange={(e: { target: { value: SetStateAction<string> } }) =>
           setContent(e.target.value)
         }
-      ></ContentInput>
+      ></Input>
     </Box>
   );
 };
 
 const Box = styled.div``;
 
-const Header = styled.div`
+const Text = styled.span`
   padding-left: 12px;
   background: #f7f7f9;
   color: #000000;
@@ -36,7 +36,7 @@ const Header = styled.div`
   height: 45px;
 `;
 
-const ContentInput = styled.textarea`
+const Input = styled.textarea`
   resize: none;
 
   width: 1075px;

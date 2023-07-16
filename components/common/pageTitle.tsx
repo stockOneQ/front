@@ -7,20 +7,20 @@ interface Props {
 
 const PageTitle: NextPage<Props> = ({ title }) => {
   return (
-    <Container>
-      <TitleStyle>{title}</TitleStyle>
-    </Container>
+    <Box>
+      <Text>{title}</Text>
+    </Box>
   );
 };
 
-const Container = styled.div`
+const Box = styled.div`
   width: 100%;
   padding: 0px 0px 40px 0px;
   display: flex;
   justify-content: center;
 `;
 
-const TitleStyle = styled.h1`
+const Text = styled.span`
   font-weight: 600;
   font-size: 25px;
   line-height: 29px;
