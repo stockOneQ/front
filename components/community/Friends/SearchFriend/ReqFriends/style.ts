@@ -1,5 +1,22 @@
 import styled from 'styled-components';
 
+/** ********* */
+/** index.tsx */
+/** ********* */
+
+const ReqFriendsBox = styled.div`
+  padding: 3.2rem 2rem 4rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.4rem;
+  position: relative;
+`
+
+/** ****************** */
+/** WaitingFriends.tsx */
+/** WantingFriends.tsx */
+/** ****************** */
+
 const HeadParagraph = styled.p`
   color: #000;
   font-size: 1.5rem;
@@ -39,7 +56,17 @@ const EachFriendsBox = styled.div`
   }
 `
 
+const CloseBtn = styled.button`
+  font-size: 2.5rem;
+  width: 1.5rem;
+  position: absolute;
+  top: 3rem;
+  right: 2rem;
+`
+
 export {
+  ReqFriendsBox,
   HeadParagraph,
-  EachFriendsBox
+  EachFriendsBox,
+  CloseBtn
 }

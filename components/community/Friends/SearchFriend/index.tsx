@@ -3,16 +3,17 @@ import Image from 'next/image';
 import toggleButtonIcon from 'public/assets/icons/community/toggleButtonIcon.svg';
 import searchIcon from 'public/assets/icons/community/searchIcon.svg';
 import * as S from './style';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import SearchResults from './SearchResults';
 import ReqFriends from './ReqFriends';
 
 interface ISearchFriendProps {
   reqFriends: boolean;
+  setReqFriends: Dispatch<SetStateAction<boolean>>;
 }
 
 /** 친구 찾기 */
-const SearchFriend = ({ reqFriends }: ISearchFriendProps) => {
+const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
   const [searchBy, setSearchBy] = useState('이름'); // 카테고리 선택
   const [categoryToggle, setCategoryToggle] = useState(false); // 카테고리 토글
   const [isSearch, setIsSearch] = useState(false); // 검색 중인지
@@ -53,7 +54,7 @@ const SearchFriend = ({ reqFriends }: ISearchFriendProps) => {
           <SearchResults isSearch={isSearch} />
         </>
       )}
-      {reqFriends && <ReqFriends />}
+      {reqFriends && <ReqFriends setReqFriends={setReqFriends} />}
     </Card>
   );
 };

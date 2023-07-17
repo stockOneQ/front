@@ -15,7 +15,7 @@ const Friends = () => {
   return (
     <CommunitySection>
       <Profiles setReqFriends={setReqFriends} />
-      <SearchFriend reqFriends={reqFriends} />
+      <SearchFriend reqFriends={reqFriends} setReqFriends={setReqFriends} />
     </CommunitySection>
   );
 };
