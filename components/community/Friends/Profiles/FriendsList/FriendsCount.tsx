@@ -7,11 +7,12 @@ import { Dispatch, SetStateAction } from 'react';
 
 interface IFriendsCount {
   onSetting: boolean;
+  isPermitted: number;
   setOnSetting: Dispatch<SetStateAction<boolean>>;
 }
 
 /** 친구 목록 수 */
-const FriendsCount = ({ onSetting, setOnSetting }: IFriendsCount) => {
+const FriendsCount = ({ onSetting, isPermitted, setOnSetting }: IFriendsCount) => {
   return (
     <S.FriendsCountBox onSetting={onSetting}>
       <p>친구 목록 &nbsp; 68</p>
@@ -27,7 +28,7 @@ const FriendsCount = ({ onSetting, setOnSetting }: IFriendsCount) => {
       {onSetting && (
         <div onClick={() => { setOnSetting(false); }}>
           <RejectBtn label="취소" />
-          <AcceptBtn label="삭제" disabled={false} />
+          <AcceptBtn label="삭제" disabled={isPermitted <= 0} />
         </div>
       )}
 
