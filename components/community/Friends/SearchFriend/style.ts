@@ -17,7 +17,7 @@ const SearchFriendBox = styled.div`
   border-radius: 3rem;
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.10);
   backdrop-filter: blur(.2rem);
-  margin: 0 auto;
+  margin: 0 auto 2rem;
 `
 
 const SearchByBox = styled.div`
@@ -57,7 +57,7 @@ const SelectedValueButton = styled.button`
     transition: transform .5s linear;
   }
 
-  .toggle {
+  .categoryToggle {
     transform: translateY(-50%) rotate(180deg);
     transition: transform .5s linear;
   }
@@ -107,5 +107,5 @@ export {
   SearchByBox,
   SelectedValueButton,
   OptionList,
-  InputBox
+  InputBox 
 };
