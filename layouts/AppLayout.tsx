@@ -31,10 +31,12 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       ];
       break;
     case "/community/friends":
-    case "/community/posts":
+    case "/community/board":
+    case "/community/board/new":
+    case "/community/board/[id]":
       sideMenuBarItems = [
         { label: "친구", url: "/community/friends" },
-        { label: "게시판", url: "/community/posts" },
+        { label: "게시판", url: "/community/board" },
       ];
       break;
     case "/connect":
@@ -59,7 +61,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     <>
       <Header />
       <L.Box>
-        <SideMenuBar items={sideMenuBarItems} currentPath={currentPath} />
+        <SideMenuBar items={sideMenuBarItems} />
         <L.Main>{children}</L.Main>
       </L.Box>
     </>
