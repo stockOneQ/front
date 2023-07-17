@@ -2,9 +2,10 @@ import Image from 'next/image';
 import myProfile from 'public/assets/imgs/community/myProfile.png';
 import myPageIcon from 'public/assets/icons/community/myPageIcon.svg';
 import * as S from './style';
+import { IProfilesProps } from '..';
 
 /** 나의 채팅 프로필 */
-const MyChatProfile = () => {
+const MyChatProfile = ({ setReqFriends }: IProfilesProps) => {
   return (
     <div>
       <S.MyProfileText>나</S.MyProfileText>
@@ -18,8 +19,10 @@ const MyChatProfile = () => {
           <S.MyPhoneText>010-0000-0000</S.MyPhoneText>
         </div>
         <S.MyPageButton>
+        <div onClick={() => setReqFriends(prev => !prev)}>
           <button>6</button>
           <Image src={myPageIcon} alt="my_page_icon" width={19.64} height={26.84} />
+        </div>
         </S.MyPageButton>
       </S.MyProfileBox>
     </div>
