@@ -1,5 +1,5 @@
-import FriendsCount from './FriendsCount';
 import FriendProfile from './FriendProfile';
+import FriendsCount from './FriendsCount';
 import * as S from './style';
 import { useState } from 'react';
 
