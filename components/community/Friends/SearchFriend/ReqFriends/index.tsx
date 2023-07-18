@@ -11,7 +11,7 @@ interface IReqFriendsProps {
 const ReqFriends = ({ setReqFriends }: IReqFriendsProps) => {
   return (
     <S.ReqFriendsBox>
-      <WaitingFriends/>
+      <WaitingFriends />
       <WantingBefriends />
       <S.CloseBtn onClick={() => setReqFriends(false)}>x</S.CloseBtn>
     </S.ReqFriendsBox>

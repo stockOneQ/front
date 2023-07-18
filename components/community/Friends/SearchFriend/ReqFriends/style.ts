@@ -25,12 +25,17 @@ const HeadParagraph = styled.p`
   margin-bottom: 2rem;
 `
 
-const EachFriendsBox = styled.div`
+interface IEachFriendsBoxProps {
+  hideScroll: boolean;
+}
+
+const EachFriendsBox = styled.div<IEachFriendsBoxProps>`
   height: 23rem;
   overflow-y: auto;
-  padding-right: 5.6rem;
+  padding-right: ${props => props.hideScroll ? '7.1rem' : '5.6rem'};
   
   &::-webkit-scrollbar {
+    display: ${props => props.hideScroll ? 'none' : 'inline-block'};
     width: 1.5rem;
     height: 19.3rem;
     border-radius: .8rem;
@@ -56,12 +61,10 @@ const EachFriendsBox = styled.div`
   }
 `
 
-const EachWaitingFriendsBox = styled(EachFriendsBox)`
-  height: 24rem;
-`
-
-const EachWantingFriendsBox = styled(EachFriendsBox)`
-  height: 32.5rem;
+const EachFriendBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `
 
 const CloseBtn = styled.button`
@@ -72,10 +75,28 @@ const CloseBtn = styled.button`
   right: 2rem;
 `
 
+/** ****************** */
+/** WaitingFriends.tsx */
+/** ****************** */
+
+const EachWaitingFriendsBox = styled(EachFriendsBox)`
+  height: 24rem;
+`
+
+/** ****************** */
+/** WantingFriends.tsx */
+/** ****************** */
+
+const EachWantingFriendsBox = styled(EachFriendsBox)`
+  height: 32.5rem;
+`
+
+
 export {
   ReqFriendsBox,
   HeadParagraph,
+  EachFriendBox,
+  CloseBtn,
   EachWaitingFriendsBox,
-  EachWantingFriendsBox,
-  CloseBtn
+  EachWantingFriendsBox
 }
