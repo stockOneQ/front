@@ -8,12 +8,11 @@ const WantingBefriends = () => {
   const [hideScroll, setHideScroll] = useState(true);
 
   const scrollHandler = (e: React.UIEvent<HTMLDivElement>) => {
+    setHideScroll(false);
     setIsScroll(e.currentTarget.scrollTop);
   }
 
   useEffect(() => {
-    setHideScroll(false);
-
     const timer = setTimeout(() => {
       setHideScroll(true);
     }, 1000);
