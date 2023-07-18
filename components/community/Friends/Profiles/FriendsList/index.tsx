@@ -11,7 +11,7 @@ const FriendsList = () => {
   const [isPermitted, setIsPermitted] = useState(9); // 일단 9(친구 수)로 하드 코딩
   
   return (
-    <div>
+    <>
       <FriendsCount onSetting={onSetting} isPermitted={isPermitted} setOnSetting={setOnSetting} />
       <S.FriendList>
         <FriendProfile onSetting={onSetting} setIsPermitted={setIsPermitted} />
@@ -24,7 +24,7 @@ const FriendsList = () => {
         <FriendProfile onSetting={onSetting} setIsPermitted={setIsPermitted} />
         <FriendProfile onSetting={onSetting} setIsPermitted={setIsPermitted} />
       </S.FriendList>
-    </div>
+    </>
   );
 };
 

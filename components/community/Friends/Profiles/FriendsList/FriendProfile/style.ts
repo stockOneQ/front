@@ -29,13 +29,17 @@ const FriendProfileBox = styled.div`
 /** FriendProfile.tsx */
 /**********************/
 
-const FriendInfoBox = styled.div`
+interface IFriendInfoBoxProps {
+  imgMarginRight: string;
+}
+
+const FriendInfoBox = styled.div<IFriendInfoBoxProps>`
   display: flex;
   align-items: center;
 
   img {
     border-radius: 50%;
-    margin-right: 1.9rem;
+    margin-right: ${props => props.imgMarginRight};
   }
 `
 

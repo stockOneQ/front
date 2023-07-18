@@ -12,7 +12,7 @@ const EachWaitingFriendBox = styled.div`
 const EachWaitingFriend = () => {
   return (
     <EachWaitingFriendBox className="each-friend">
-      <FriendInfo />
+      <FriendInfo width={45} imgMarginRight="1.7rem" />
       <CancelBtn disabled={false} label="요청취소" />
     </EachWaitingFriendBox>
   );

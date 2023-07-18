@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 const FriendList = styled.ul`
   height: 41vh;
+  min-height: 50rem;
   overflow-y: auto;
 
   .friend-profile:not(:last-child) {

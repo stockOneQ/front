@@ -2,11 +2,16 @@ import Image from 'next/image';
 import friendProfile from 'public/assets/imgs/community/friendProfile.png';
 import * as S from './style';
 
+interface IFriendInfoProps {
+  width: number;
+  imgMarginRight: string;
+}
+
 /** 친구 프로필 */
-const FriendInfo = () => {
+const FriendInfo = ({ width, imgMarginRight }: IFriendInfoProps) => {
   return (
-    <S.FriendInfoBox>
-      <Image src={friendProfile} alt="my_profile" width={60} height={60} placeholder="blur" />
+    <S.FriendInfoBox imgMarginRight={imgMarginRight}>
+      <Image src={friendProfile} alt="my_profile" width={width} height={width} placeholder="blur" />
       <div>
         <S.FriendInfoTextBox>
           <p>김아리</p>

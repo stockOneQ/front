@@ -6,12 +6,15 @@ const WaitingFriends = () => {
   return (
     <div>
       <S.HeadParagraph>대기중인 친구 3</S.HeadParagraph>
-      <S.EachFriendsBox>
+      <S.EachWaitingFriendsBox>
         <EachWaitingFriend />
         <EachWaitingFriend />
         <EachWaitingFriend />
         <EachWaitingFriend />
-      </S.EachFriendsBox>
+        <EachWaitingFriend />
+        <EachWaitingFriend />
+        <EachWaitingFriend />
+      </S.EachWaitingFriendsBox>
     </div>
   );
 };

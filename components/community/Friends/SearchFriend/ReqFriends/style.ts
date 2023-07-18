@@ -52,8 +52,16 @@ const EachFriendsBox = styled.div`
   }
 
   .each-friend:not(:last-child) {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.9rem;
   }
+`
+
+const EachWaitingFriendsBox = styled(EachFriendsBox)`
+  height: 24rem;
+`
+
+const EachWantingFriendsBox = styled(EachFriendsBox)`
+  height: 32.5rem;
 `
 
 const CloseBtn = styled.button`
@@ -67,6 +75,7 @@ const CloseBtn = styled.button`
 export {
   ReqFriendsBox,
   HeadParagraph,
-  EachFriendsBox,
+  EachWaitingFriendsBox,
+  EachWantingFriendsBox,
   CloseBtn
 }

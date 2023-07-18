@@ -35,7 +35,7 @@ const FriendProfile = ({ onSetting, setIsPermitted }: IFriendProfileProps) => {
           <Image src={checkedIcon} alt="checked_icon" width={14} height={11} />
         </S.CheckBoxButton>
       )}
-      <FriendInfo />
+      <FriendInfo width={60} imgMarginRight="1.2rem" />
       <S.FriendPageButton>
         <Image src={friendStockIcon} alt="my_page_icon" width={19.64} height={26.84} />
       </S.FriendPageButton>

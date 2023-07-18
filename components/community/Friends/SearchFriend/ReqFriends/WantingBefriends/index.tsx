@@ -6,13 +6,15 @@ const WantingBefriends = () => {
   return (
     <div>
       <S.HeadParagraph>친구 신청 목록 6</S.HeadParagraph>
-      <S.EachFriendsBox>
+      <S.EachWantingFriendsBox>
         <EachWantingFriend />
         <EachWantingFriend />
         <EachWantingFriend />
         <EachWantingFriend />
         <EachWantingFriend />
-      </S.EachFriendsBox>
+        <EachWantingFriend />
+        <EachWantingFriend />
+      </S.EachWantingFriendsBox>
     </div>
   );
 };

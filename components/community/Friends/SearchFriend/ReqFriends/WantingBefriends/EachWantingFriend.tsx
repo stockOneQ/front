@@ -13,7 +13,7 @@ const EachWantingFriendBox = styled.div`
 const EachWantingFriend = () => {
   return (
     <EachWantingFriendBox className="each-friend">
-      <FriendInfo />
+      <FriendInfo width={45} imgMarginRight="1.7rem" />
       <div>
         <RejectBtn label="거절" />
         <AcceptBtn disabled={false} label="수락" />
