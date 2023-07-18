@@ -10,6 +10,7 @@ export const postContentState = atom<string>({
   default: "",
 });
 
+
 export interface IPostTypes {
   id: number;
   uploadTime: string;
@@ -19,6 +20,35 @@ export interface IPostTypes {
   commentCount: number;
   likes: number;
 }
+
+// 재료 test atom
+export const gradientsListState = atom({
+  key: "gradientsListState",
+  default: [
+    {
+      id: 1,
+      productName: "유통기한 임박 재료 1",
+      category: "beforeDate",
+    },
+    {
+      id: 2,
+      productName: "유통기한 임박 재료 2",
+      category: "beforeDate",
+    },
+    {
+      id: 3,
+      productName: "부족한 재료 1",
+      category: "no",
+    },
+    {
+      id: 4,
+      productName: "유통기한 지난 재료 1",
+      category: "afterDate",
+    },
+   
+  ],
+});
+
 
 export const postListState = atom<IPostTypes[]>({
   key: "postsState",
