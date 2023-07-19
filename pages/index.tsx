@@ -1,11 +1,12 @@
-import MainPage from 'components/main/index';
+import HeadPart from './HeadPart';
 
 const Home = () => {
   return (
     <>
-     <MainPage />
+      <HeadPart />
+      <h1>hi</h1>
     </>
-  );
-};
+  )
+}
 
 export default Home;
