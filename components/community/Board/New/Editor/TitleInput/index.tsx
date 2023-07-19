@@ -8,7 +8,9 @@ const EditorTitleInput = () => {
 
   return (
     <S.Box>
-      <S.Text>제목</S.Text>
+      <S.TextContainer>
+        <S.Text>제목</S.Text>
+      </S.TextContainer>
       <S.Input
         value={titleInput}
         onChange={(e: { target: { value: SetStateAction<string> } }) =>
