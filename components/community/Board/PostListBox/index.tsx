@@ -10,7 +10,7 @@ const PostListBox = () => {
   return (
     <P.Box>
       {postList.map((value) => (
-        <Link key={value.id} href={`/community/board/posts/${value.id}`}>
+        <Link key={value.id} href={`/community/board/${value.id}`}>
           <PostItemBox
             key={value.id}
             title={value.title}
