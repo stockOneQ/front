@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Roboto } from 'next/font/google';
 import type { AppProps } from 'next/app';
 import AppLayout from 'layouts/AppLayout';
@@ -51,5 +52,21 @@ const App = ({ Component, pageProps }: AppProps) => {
     </>
   );
 };
+=======
+import type { AppProps } from 'next/app'
+import { Inter } from 'next/font/google';
+import Globals from 'styles/Globals';
+
+const inter = Inter({ subsets: ['latin'] });
+
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <main className={inter.className}>
+      <Component {...pageProps} />
+      <Globals />
+    </main>
+  )
+}
+>>>>>>> 4a75e27 (Revert "fix(global) : 배경화면 경로 설정")
 
 export default App;
