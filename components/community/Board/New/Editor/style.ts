@@ -1,18 +1,6 @@
 import styled from "styled-components";
 
-import TitleInput from "./editorTitleInput";
-import ContentInput from "./editorContentInput";
-
-const Editor = () => {
-  return (
-    <Box>
-      <TitleInput />
-      <ContentInput />
-    </Box>
-  );
-};
-
-const Box = styled.div`
+export const Box = styled.div`
   width: 1115px;
   height: 673px;
 
@@ -28,5 +16,3 @@ const Box = styled.div`
 
   padding: 20px;
 `;
-
-export default Editor;

@@ -1,10 +1,6 @@
 import { styled } from "styled-components";
 
-const BoardSearchInput = () => {
-  return <Input />;
-};
-
-const Input = styled.input`
+export const InputBar = styled.input`
   width: 567px;
   height: 35px;
 
@@ -14,5 +10,3 @@ const Input = styled.input`
   box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.05);
   border-radius: 23px;
 `;
-
-export default BoardSearchInput;
