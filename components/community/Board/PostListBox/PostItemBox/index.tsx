@@ -32,6 +32,7 @@ const PostItem = ({
         </S.InfoBox>
         <S.InfoBox>
           <Image alt="댓글" src={CommentIcon} />
+          <span>{commentCount}</span>
         </S.InfoBox>
         <S.InfoBox>
           <Image alt="좋아요" src={LikeIcon} />
