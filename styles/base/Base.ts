@@ -13,6 +13,7 @@ const Base = createGlobalStyle`
   
   body {
     background: url('/background-img.png') no-repeat center center;
+    background-attachment: fixed;
     background-size: cover;
   }
   
