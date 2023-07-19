@@ -4,16 +4,16 @@ export const Select = styled.select`
   -webkit-appearance: none;
   appearance: none;
 
-  width: 163px;
-  height: 35px;
+  width: 16.3rem;
+  height: 3.5rem;
 
   background: #000000;
-  border-radius: 100px;
+  border-radius: 10rem;
 
   color: white;
-  font-size: 13px;
+  font-size: 1.3rem;
   font-weight: 600;
-  line-height: 15px;
+  line-height: 1.5rem;
   text-align: center;
 
   cursor: pointer;
@@ -24,16 +24,5 @@ export const Option = styled.option`
   appearance: none;
 
   color: black;
-
-  width: 163px;
-  height: 35px;
-
   background: white;
-  border-radius: 100px;
-
-  cursor: pointer;
-
-  &:hover {
-    background: #f7f7f9;
-  }
 `;

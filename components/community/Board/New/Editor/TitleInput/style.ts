@@ -4,15 +4,15 @@ export const Box = styled.div`
   display: flex;
   align-items: center;
 
-  padding-bottom: 45px;
+  padding-bottom: 4.5rem;
 
-  gap: 25px;
+  gap: 2.5rem;
 `;
 
 export const Text = styled.h1`
   font-weight: 600;
-  font-size: 18px;
-  line-height: 21px;
+  font-size: 1.8rem;
+  line-height: 2.1rem;
   display: flex;
   align-items: center;
   text-align: center;
@@ -22,13 +22,13 @@ export const Text = styled.h1`
 
 export const Input = styled.input`
   box-sizing: border-box;
-  width: 984px;
-  height: 66px;
-  font-size: 18px;
+  width: 98.4rem;
+  height: 6.6rem;
+  font-size: 1.8rem;
 
-  padding-left: 16px;
+  padding-left: 1.6rem;
 
   background: #ffffff;
-  border: 1px solid #f7f7f9;
-  border-radius: 30px;
+  border: 0.1rem solid #f7f7f9;
+  border-radius: 3rem;
 `;

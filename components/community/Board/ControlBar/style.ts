@@ -5,7 +5,7 @@ export const ControlBarBox = styled.div`
 
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 `;
 
 export const SearchBar = styled.div`
@@ -17,14 +17,13 @@ export const SearchBar = styled.div`
 
 export const ControlMenuContainer = styled.div`
   position: absolute;
-  left: 4px;
 `;
 
 export const SearchIconContainer = styled.button`
   position: absolute;
-  right: 16px;
+  right: 4%;
 `;
 
 export const WriteButtonContainer = styled.button`
-  padding-left: 130px;
+  padding-left: 13rem;
 `;
