@@ -1,12 +1,11 @@
 import { useState } from "react";
-import Title from "components/common/pageTitle";
+import Title from "components/common/PageTitleContainer";
 import { useSetRecoilState, useRecoilValue, RecoilRoot } from "recoil";
 import { postListState } from "recoil/states";
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
 import ImgIcon from "../public/assets/icons/cameraIcon.svg";
 import * as S from "../components/main/style";
-
 
 /** 제품 추가 페이지 */
 const New = () => {
@@ -30,7 +29,7 @@ const New = () => {
     orderingFrequency: "",
     imageInfo: "",
   });
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -50,11 +49,12 @@ const New = () => {
   return (
     <S.Box>
       <RecoilRoot>
-
         <Title title="게시글 작성" />
         <S.TopSection>
-          <Link href='/'>작성취소</Link>
-          <S.Button type="submit"><Link href='/'>저장</Link></S.Button>
+          <Link href="/">작성취소</Link>
+          <S.Button type="submit">
+            <Link href="/">저장</Link>
+          </S.Button>
         </S.TopSection>
 
         <S.Form onSubmit={handleSubmit}>
@@ -62,7 +62,12 @@ const New = () => {
             <S.LeftSection>
               <S.ImgInput>
                 <S.Label>이미지</S.Label>
-                <Image src={ImgIcon} alt="my_page_icon" width={40} height={40} />
+                <Image
+                  src={ImgIcon}
+                  alt="my_page_icon"
+                  width={40}
+                  height={40}
+                />
               </S.ImgInput>
             </S.LeftSection>
             <S.RightSection>
@@ -180,12 +185,12 @@ const New = () => {
 
               <S.StyledInput>
                 <S.Label>발주 빈도</S.Label>
-                <S.Slider type="range"
+                <S.Slider
+                  type="range"
                   value={formData.orderingFrequency}
                   step="20"
                   onChange={handleInputChange}
-                >
-                </S.Slider>
+                ></S.Slider>
               </S.StyledInput>
             </S.RightSection>
           </S.InforSection>
@@ -194,6 +199,5 @@ const New = () => {
     </S.Box>
   );
 };
-
 
 export default New;
