@@ -14,7 +14,7 @@ const Base = createGlobalStyle`
   body {
     width: 100vw;
     height: 100vh;
-    background: url('background-img.png') no-repeat center center;
+    background: url('/background-img.png') no-repeat center center;
     background-size: cover;
   }
   
