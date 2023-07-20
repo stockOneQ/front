@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { styled } from "styled-components";
 
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { postContentState, postListState, postTitleState } from "recoil/states";
 
-import Editor from "components/editor";
-import Title from "components/common/pageTitle";
+import Editor from "./Editor/index";
+import PageTitleContainer from "../../../common/PageTitleContainer";
+
+import * as S from "./style";
 
 let id = 1;
 const getId = () => {
@@ -58,62 +59,17 @@ const New = () => {
   };
 
   return (
-    <Box>
-      <Title title="게시글 작성" />
-      <ActionButtonBox>
-        <Link href="/community/posts">
-          <Button>취소</Button>
+    <S.Box>
+      <PageTitleContainer title="게시글 작성" />
+      <S.ActionButtonBox>
+        <Link href="/community/board">
+          <S.Button>취소</S.Button>
         </Link>
-        <Button onClick={handleSubmit}>저장</Button>
-      </ActionButtonBox>
+        <S.Button onClick={handleSubmit}>저장</S.Button>
+      </S.ActionButtonBox>
       <Editor />
-    </Box>
+    </S.Box>
   );
 };
 
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ActionButtonBox = styled.div`
-  width: 100%;
-
-  display: flex;
-  justify-content: end;
-  align-items: center;
-
-  gap: 8px;
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-  padding-bottom: 30px;
-`;
-
-{
-  /* 컴포넌트로 분리하려다 잘 안돼서 일단 공통 버튼 컴포넌트 한 곳에서 작업 */
-}
-const Button = styled.button`
-  width: 71px;
-  height: 35px;
-
-  /* 텍스트 가운데 정렬 */
-  padding-top: 2px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: ${(props) => (props.children === "취소" ? "#979797" : "#000000")};
-  border-radius: 23px;
-
-  &:hover {
-    background: ${(props) =>
-      props.children === "취소"
-        ? "#3d3d3d"
-        : " linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)"};
-  }
-`;
 export default New;

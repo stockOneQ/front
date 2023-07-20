@@ -88,3 +88,8 @@ export const sortedPostsState = selector({
     }
   },
 });
+
+export const searchTypeState = atom({
+  key: "searchTypeState",
+  default: "글 제목",
+});
