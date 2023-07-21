@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 const ResultListBox = styled.div`
   padding: 0 3.5rem 0 2.5rem;
+  /* min-height: 56rem; */
 `
 const ResultListTextBox = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ const ResultListTextBox = styled.div`
 
 const FriendItemsBox = styled.div`
   height: 43vh;
+  min-height: 50rem;
   overflow-y: auto;
 
   .friend-item:not(:last-child) {
