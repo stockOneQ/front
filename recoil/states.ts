@@ -10,7 +10,6 @@ export const postContentState = atom<string>({
   default: "",
 });
 
-
 export interface IPostTypes {
   id: number;
   uploadTime: string;
@@ -45,10 +44,8 @@ export const gradientsListState = atom({
       productName: "유통기한 지난 재료 1",
       category: "afterDate",
     },
-   
   ],
 });
-
 
 export const postListState = atom<IPostTypes[]>({
   key: "postsState",
@@ -62,6 +59,25 @@ export const postListState = atom<IPostTypes[]>({
       views: 24,
       commentCount: 2,
       likes: 1,
+    },
+    {
+      id: 2,
+      uploadTime: "20230706012519547",
+      title: "로스팅과 매장을 같이 운영하는 사업자에서 분리할 때",
+      content:
+        "안녕하세요. 로스팅 공간은 제조업 허가를 받았고 한 곳은 휴게 음식점인데요. 로스팅 공간이 부족하여 다른 상가를 임대하여 분리하려고 합니다.",
+      views: 45,
+      commentCount: 20,
+      likes: 36,
+    },
+    {
+      id: 3,
+      uploadTime: "20230706012532581",
+      title: "혹시 게장 무한리필 장사하시는 분 계시나요?",
+      content: "마진 괜찮나요? 장사하시는 분 알려주세요 ~~",
+      views: 60,
+      commentCount: 13,
+      likes: 12,
     },
   ],
 });
