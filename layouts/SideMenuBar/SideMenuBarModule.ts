@@ -1,16 +1,15 @@
 import styled from "styled-components";
 
 export const SideMenuBar = styled.nav`
-  width: 22.8rem;
-  height: 90vh;
+  height: 100%;
   display: flex;
-  border-right: 1px solid #e1e1e1;
   position: relative;
 `;
 
 export const SideMenuBarList = styled.ul`
   width: 18.4rem;
-  padding: 2rem;
+  height: 95%;
+  border-right: 1px solid #e1e1e1;
   text-align: center;
 `;
 

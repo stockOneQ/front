@@ -24,6 +24,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     case "/":
     case "/coldStorage":
     case "/roomTemperature":
+    case "/new":
       sideMenuBarItems = [
         { label: "냉동", url: "/" },
         { label: "냉장", url: "/coldStorage" },

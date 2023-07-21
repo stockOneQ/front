@@ -4,10 +4,8 @@ export const Header = styled.div`
   display: flex;
   margin: 0 auto;
   width: 144rem;
-  height: 18vh;
+  height: 17vh;
   min-height: 50px;
-
-  // border: 1px solid gray;
 `;
 
 export const LogoBox = styled.div`
@@ -15,7 +13,8 @@ export const LogoBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding: 0 5%;
+  width: 18.4rem;
+  padding: 0% 5%;
 `;
 
 export const NavBar = styled.div`

@@ -15,7 +15,7 @@ const PageTitle: NextPage<Props> = ({ title }) => {
 
 const Box = styled.div`
   width: 100%;
-  padding: 0px 0px 40px 0px;
+  padding: 10px 0px 40px 0px;
   display: flex;
   justify-content: center;
 `;
