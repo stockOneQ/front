@@ -8,18 +8,7 @@ import ReqFriends from './ReqFriends';
 import DropDown from 'components/common/DropDown';
 import { styled } from 'styled-components';
 
-const DROP_DOWN_LIST = [
-  { 
-    id: 1, 
-    label: '이름' 
-  }, 
-  { 
-    id: 2, label: '상호명'
-  }, 
-  { 
-    id: 3, label: '지역명'
-  }
-]
+const DROP_DOWN_LIST = ['이름', '상호명', '지역명'];
 
 const DropBox = styled(DropDown)`
   .what {

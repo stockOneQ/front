@@ -9,15 +9,12 @@ interface IDropDownProps {
   font: number;
   padding: number;
   margin: number;
-  list: {
-    id: number;
-    label: string;
-  }[]
+  list: string[];
 }
 
 /** 드롭다운 */
 const DropDown = ({ width, height, font, padding, margin, list }: IDropDownProps) => {
-  const [searchBy, setSearchBy] = useState('이름'); // 카테고리 선택
+  const [searchBy, setSearchBy] = useState(list[0]); // 카테고리 선택
   const [categoryToggle, setCategoryToggle] = useState(false); // 카테고리 토글
 
   const changeValueHandler = (value: string) => {
@@ -33,7 +30,7 @@ const DropDown = ({ width, height, font, padding, margin, list }: IDropDownProps
       </S.SelectedValueButton>
       {categoryToggle && (
         <S.OptionList padding={padding} margin={margin}>
-          {list.map(({ id, label }) => (<li key={id} onClick={() => { changeValueHandler(label) }}>{label}</li>))}
+          {list.map((label, idx) => (<li key={idx} onClick={() => { changeValueHandler(label) }}>{label}</li>))}
         </S.OptionList>
       )}
     </S.SearchByBox>
