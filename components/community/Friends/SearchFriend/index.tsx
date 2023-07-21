@@ -1,11 +1,33 @@
 import Card from 'components/common/Card';
 import Image from 'next/image';
-import toggleButtonIcon from 'public/assets/icons/community/toggleButtonIcon.svg';
 import searchIcon from 'public/assets/icons/community/searchIcon.svg';
 import * as S from './style';
 import { Dispatch, SetStateAction, useState } from 'react';
 import SearchResults from './SearchResults';
 import ReqFriends from './ReqFriends';
+import DropDown from 'components/common/DropDown';
+import { styled } from 'styled-components';
+
+const DROP_DOWN_LIST = [
+  { 
+    id: 1, 
+    label: '이름' 
+  }, 
+  { 
+    id: 2, label: '상호명'
+  }, 
+  { 
+    id: 3, label: '지역명'
+  }
+]
+
+const DropBox = styled(DropDown)`
+  .what {
+    color: red !important;
+  padding: 100px;
+  margin: 100px !important;
+  }
+`
 
 interface ISearchFriendProps {
   reqFriends: boolean;
@@ -35,7 +57,7 @@ const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
         <>
           <S.SearchFriendText onClick={categoryToggleCloseHandler}>친구 찾기</S.SearchFriendText>
           <S.SearchFriendBox>
-            <S.SearchByBox>
+            {/* <S.SearchByBox>
               <S.SelectedValueButton onClick={() => { setCategoryToggle((prev) => (!prev)) }}>
                 <p>{searchBy}</p>
                 <Image className={`${categoryToggle ? 'categoryToggle' : ''}`} src={toggleButtonIcon} alt="my_page_icon" width={12} height={10} />
@@ -45,7 +67,8 @@ const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
                 <li onClick={() => { changeValueHandler('상호명') }}>상호명</li>
                 <li onClick={() => { changeValueHandler('지역명') }}>지역명</li>
               </S.OptionList>}
-            </S.SearchByBox>
+            </S.SearchByBox> */}
+            <DropBox width={16.3} height={4.6} font={1.5} padding={1.2} margin={4.2} list={DROP_DOWN_LIST} />
             <S.InputBox onClick={categoryToggleCloseHandler} onChange={onWriteHandler} type="text" placeholder={`${searchBy === '지역명' ? '읍, 면, 동으로 입력해주세요' : ''}`} />
             <button onClick={categoryToggleCloseHandler}>
               <Image src={searchIcon} alt="my_page_icon" width={17} height={17} />
