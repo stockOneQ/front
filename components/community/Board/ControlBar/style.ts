@@ -6,24 +6,26 @@ export const ControlBarBox = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 3rem;
+
+  position: relative;
 `;
 
 export const SearchBar = styled.div`
   position: relative;
+  left: 25%;
 
-  display: flex;
-  align-items: center;
+  img {
+    position: absolute;
+    top: 24%;
+    right: 4%;
+  }
 `;
 
-export const ControlMenuContainer = styled.div`
+export const DropBoxContainer = styled.div`
   position: absolute;
-`;
-
-export const SearchIconContainer = styled.button`
-  position: absolute;
-  right: 4%;
+  top: 0%;
 `;
 
 export const WriteButtonContainer = styled.button`
-  padding-left: 13rem;
+  margin-right: 4.4rem;
 `;

@@ -2,9 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { searchTypeState, sortTypeState } from "recoil/states";
-import * as S from "./style";
 
-import ControlMenu from "./ControlMenu";
+import * as S from "./style";
+import { styled } from "styled-components";
+
+import DropDown from "components/common/DropDown";
 import SearchInputBar from "./SearchInputBar";
 
 import SearchIcon from "public/assets/icons/community/searchIcon.svg";
@@ -13,29 +15,35 @@ import WriteIcon from "public/assets/icons/write.png";
 const sortOptionList = ["최신순", "조회순"];
 const searchOptionList = ["글 제목", "글 내용", "작성자"];
 
+const DropBox = styled(DropDown)`
+  .what {
+    color: red !important;
+    padding: 100px;
+    margin: 100px !important;
+  }
+`;
+
 const ControlBar = () => {
   const [sortType, setSortType] = useRecoilState(sortTypeState);
   const [searchType, setSearchType] = useRecoilState(searchTypeState);
 
   return (
     <S.ControlBarBox>
-      <ControlMenu
-        value={sortType}
-        onChange={setSortType}
-        optionList={sortOptionList}
-      />
+      <S.DropBoxContainer>
+        <DropBox width={16.3} height={3.5} font={1.3} list={sortOptionList} />
+      </S.DropBoxContainer>
+
       <S.SearchBar>
-        <S.ControlMenuContainer>
-          <ControlMenu
-            value={searchType}
-            onChange={setSearchType}
-            optionList={searchOptionList}
+        <S.DropBoxContainer>
+          <DropBox
+            width={16.3}
+            height={3.5}
+            font={1.3}
+            list={searchOptionList}
           />
-        </S.ControlMenuContainer>
+        </S.DropBoxContainer>
         <SearchInputBar />
-        <S.SearchIconContainer>
-          <Image alt="search" src={SearchIcon} />
-        </S.SearchIconContainer>
+        <Image alt="search" src={SearchIcon} />
       </S.SearchBar>
 
       <S.WriteButtonContainer>
@@ -46,5 +54,9 @@ const ControlBar = () => {
     </S.ControlBarBox>
   );
 };
+
+const Div = styled.div`
+  position: relative;
+`;
 
 export default ControlBar;
