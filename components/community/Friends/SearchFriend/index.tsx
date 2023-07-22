@@ -9,15 +9,15 @@ import DropDown from 'components/common/DropDown';
 import { styled } from 'styled-components';
 import FriendStock from '../FriendStock';
 
-const DROP_DOWN_LIST = ['이름', '상호명', '지역명'];
+const DROP_DOWN_LIST = ["이름", "상호명", "지역명"];
 
 const DropBox = styled(DropDown)`
   .what {
     color: red !important;
-  padding: 100px;
-  margin: 100px !important;
+    padding: 100px;
+    margin: 100px !important;
   }
-`
+`;
 
 interface ISearchFriendProps {
   reqFriends: boolean;
@@ -26,20 +26,20 @@ interface ISearchFriendProps {
 
 /** 친구 찾기 */
 const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
-  const [searchBy, setSearchBy] = useState('이름'); // 카테고리 선택
+  const [searchBy, setSearchBy] = useState("이름"); // 카테고리 선택
   const [categoryToggle, setCategoryToggle] = useState(false); // 카테고리 토글
   const [isSearch, setIsSearch] = useState(false); // 검색 중인지
 
   const categoryToggleCloseHandler = () => {
     setCategoryToggle(false);
-  }
+  };
   const changeValueHandler = (value: string) => {
-    setSearchBy(value); 
-    setCategoryToggle(false); 
-  }
+    setSearchBy(value);
+    setCategoryToggle(false);
+  };
   const onWriteHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    setIsSearch(e.currentTarget.value !== (undefined || null || ''));
-  }
+    setIsSearch(e.currentTarget.value !== (undefined || null || ""));
+  };
 
   return (
     // <Card width="65.9rem">

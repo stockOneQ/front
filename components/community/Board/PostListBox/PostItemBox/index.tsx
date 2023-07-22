@@ -23,7 +23,7 @@ const PostItem = ({
     <S.Box>
       <S.PostDetailSection>
         <S.Title>{title}</S.Title>
-        <S.Content>{content}</S.Content>
+        <S.Content>{content.substring(0, 150)}</S.Content>
       </S.PostDetailSection>
       <S.PostInfoSection>
         <S.InfoBox>
