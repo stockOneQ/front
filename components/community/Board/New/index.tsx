@@ -5,7 +5,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { postContentState, postListState, postTitleState } from "recoil/states";
 
 import Editor from "./Editor/index";
-import PageTitleContainer from "../../../common/PageTitleContainer";
+import HeadingText from "../../../common/HeadingText";
 
 import * as S from "./style";
 
@@ -61,7 +61,7 @@ const New = () => {
 
   return (
     <S.Box>
-      <PageTitleContainer title="게시글 작성" />
+      <HeadingText>게시글 작성</HeadingText>
       <S.ActionButtonBox>
         <Link href="/community/board">
           <S.Button>취소</S.Button>

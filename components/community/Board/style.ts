@@ -9,7 +9,7 @@ export const Box = styled.div`
   height: 95%;
 `;
 
-export const Header = styled.div`
+export const HeaderSection = styled.div`
   position: absolute;
   width: 100%;
   top: 0;
