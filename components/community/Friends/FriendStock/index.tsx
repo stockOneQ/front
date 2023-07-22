@@ -4,6 +4,7 @@ import rightArrow from 'public/assets/icons/community/rightArrowIc.svg';
 import StockList from './StockList';
 import styled from 'styled-components';
 import useScroll from 'hooks/useScroll';
+import { useState } from 'react';
 
 const DUMMY_DATA = [
   {
@@ -57,27 +58,80 @@ const StockLabelBox = styled.div`
   position: absolute;
   top: 0;
   display: flex;
-  align-items: center;
+  align-items: end;
   gap: 1.4rem;
+`
+
+const StockLabelParagraph = styled.p`
+  /* TODO:  왜 position: relative를 적용해 줘야 하는지 공부하기 */
+  position: relative;
+  background-image: linear-gradient(262deg, #F9E499 0%, #F2B2CF 32.29%, #B1B0D7 66.67%, #55ABD7 100%);
+  width: 7.1rem;
+  height: 6.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: .5rem .5rem 2rem 2rem;
+
+  color: var(--color-white);
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: normal;
+  z-index: 9999;
+`
+
+interface IStockLabelSelectBox {
+  isSelect: boolean;
+}
+
+const StockLabelSelectBox = styled.div<IStockLabelSelectBox>`
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  background-color: var(--color-white);
+
+  img {
+    transform: rotate(0deg);
+    margin-bottom: ${({ isSelect }) => (isSelect ? '0' : '1.3rem')};
+  }
+
+  .is-select {
+    transform: rotate(180deg);
+  }
+`
+
+const StockLabelOthersBox = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 21.5rem;
+  height: 4.4rem;
+  /* border: 1px solid #E1E1E1; */
+  outline: 1px solid #E1E1E1;
+  margin-left: -8.5rem;
+  border-radius: 2rem;
+  z-index: 1;
 
   p {
-    background-image: linear-gradient(262deg, #F9E499 0%, #F2B2CF 32.29%, #B1B0D7 66.67%, #55ABD7 100%);
-    width: 7.1rem;
-    height: 6.6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: .5rem .5rem 2rem 2rem;
-
-    color: var(--color-white);
+    width: 6.8rem;
+    color: #E1E1E1;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
     line-height: normal;
+    padding: 1rem 1.8rem;
+    z-index: 1;
   }
 
-  img {
-    margin-top: 2rem;
+  p:hover {
+    color: #AEAEAE;
+    cursor: pointer;
+  }
+
+  div {
+    height: 2.2rem;
+    border-right: 1px solid #E1E1E1;
   }
 `
 
@@ -185,13 +239,34 @@ const StockDataList = styled.ul`
 
 /** 친구 재고 페이지 */
 const FriendStock = () => {
+  const [selectOption, setSelectOption] = useState(false);
+  const [isSelect, setIsSelect] = useState(false);
+
+  const selectLabelHandler = () => {
+    setSelectOption(prev => !prev);
+    setIsSelect(prev => !prev);
+  }
+
   const { hideScroll, scrollHandler } = useScroll();
 
   return (
     <FriendStockBox>
       <StockLabelBox>
-        <p>냉동</p>
-        <Image src={rightArrow} alt="right_arrow" width={6} height={10} />
+        <div>
+          <StockLabelParagraph>냉동</StockLabelParagraph>
+        </div>
+        <StockLabelSelectBox isSelect={isSelect}>
+          {selectOption && (
+            <StockLabelOthersBox>
+              <p>냉장</p>
+              <div>&nbsp;</div>
+              <p>상온</p>
+            </StockLabelOthersBox>
+          )}
+          <button className={`${isSelect ? 'is-select' : ''}`} onClick={selectLabelHandler}>
+            <Image src={rightArrow} alt="right_arrow" width={6} height={10} />
+          </button>
+        </StockLabelSelectBox>
       </StockLabelBox>
       <SearchStockBox>
         <input type="text" />
