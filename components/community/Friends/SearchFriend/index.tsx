@@ -7,6 +7,7 @@ import SearchResults from './SearchResults';
 import ReqFriends from './ReqFriends';
 import DropDown from 'components/common/DropDown';
 import { styled } from 'styled-components';
+import FriendStock from '../FriendStock';
 
 const DROP_DOWN_LIST = ['이름', '상호명', '지역명'];
 
@@ -41,32 +42,35 @@ const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
   }
 
   return (
+    // <Card width="65.9rem">
+    //   {!reqFriends && (
+    //     <>
+    //       <S.SearchFriendText onClick={categoryToggleCloseHandler}>친구 찾기</S.SearchFriendText>
+    //       <S.SearchFriendBox>
+    //         {/* <S.SearchByBox>
+    //           <S.SelectedValueButton onClick={() => { setCategoryToggle((prev) => (!prev)) }}>
+    //             <p>{searchBy}</p>
+    //             <Image className={`${categoryToggle ? 'categoryToggle' : ''}`} src={toggleButtonIcon} alt="my_page_icon" width={12} height={10} />
+    //           </S.SelectedValueButton>
+    //           {categoryToggle && <S.OptionList>
+    //             <li onClick={() => { changeValueHandler('이름') }}>이름</li>
+    //             <li onClick={() => { changeValueHandler('상호명') }}>상호명</li>
+    //             <li onClick={() => { changeValueHandler('지역명') }}>지역명</li>
+    //           </S.OptionList>}
+    //         </S.SearchByBox> */}
+    //         <DropBox width={16.3} height={4.6} font={1.5} padding={1.2} margin={4.2} list={DROP_DOWN_LIST} />
+    //         <S.InputBox onClick={categoryToggleCloseHandler} onChange={onWriteHandler} type="text" placeholder={`${searchBy === '지역명' ? '읍, 면, 동으로 입력해주세요' : ''}`} />
+    //         <button onClick={categoryToggleCloseHandler}>
+    //           <Image src={searchIcon} alt="my_page_icon" width={17} height={17} />
+    //         </button>
+    //       </S.SearchFriendBox>
+    //       <SearchResults isSearch={isSearch} />
+    //     </>
+    //   )}
+    //   {reqFriends && <ReqFriends setReqFriends={setReqFriends} />}
+    // </Card>
     <Card width="65.9rem">
-      {!reqFriends && (
-        <>
-          <S.SearchFriendText onClick={categoryToggleCloseHandler}>친구 찾기</S.SearchFriendText>
-          <S.SearchFriendBox>
-            {/* <S.SearchByBox>
-              <S.SelectedValueButton onClick={() => { setCategoryToggle((prev) => (!prev)) }}>
-                <p>{searchBy}</p>
-                <Image className={`${categoryToggle ? 'categoryToggle' : ''}`} src={toggleButtonIcon} alt="my_page_icon" width={12} height={10} />
-              </S.SelectedValueButton>
-              {categoryToggle && <S.OptionList>
-                <li onClick={() => { changeValueHandler('이름') }}>이름</li>
-                <li onClick={() => { changeValueHandler('상호명') }}>상호명</li>
-                <li onClick={() => { changeValueHandler('지역명') }}>지역명</li>
-              </S.OptionList>}
-            </S.SearchByBox> */}
-            <DropBox width={16.3} height={4.6} font={1.5} padding={1.2} margin={4.2} list={DROP_DOWN_LIST} />
-            <S.InputBox onClick={categoryToggleCloseHandler} onChange={onWriteHandler} type="text" placeholder={`${searchBy === '지역명' ? '읍, 면, 동으로 입력해주세요' : ''}`} />
-            <button onClick={categoryToggleCloseHandler}>
-              <Image src={searchIcon} alt="my_page_icon" width={17} height={17} />
-            </button>
-          </S.SearchFriendBox>
-          <SearchResults isSearch={isSearch} />
-        </>
-      )}
-      {reqFriends && <ReqFriends setReqFriends={setReqFriends} />}
+      <FriendStock />
     </Card>
   );
 };
