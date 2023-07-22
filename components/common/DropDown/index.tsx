@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import toggleButtonIcon from "public/assets/icons/community/toggleButtonIcon.svg";
 import * as S from "./style";
 
@@ -8,14 +8,25 @@ interface IDropDownProps {
   height: number;
   font: number;
   list: string[];
+  onChange?: React.Dispatch<React.SetStateAction<string>>;
+  onReset?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /** 드롭다운 */
-const DropDown = ({ width, height, font, list }: IDropDownProps) => {
+const DropDown = ({
+  width,
+  height,
+  font,
+  list,
+  onChange,
+  onReset,
+}: IDropDownProps) => {
   const [searchBy, setSearchBy] = useState(list[0]); // 카테고리 선택
   const [categoryToggle, setCategoryToggle] = useState(false); // 카테고리 토글
 
   const changeValueHandler = (value: string) => {
+    if (onChange) onChange(value);
+    if (onReset) onReset("");
     setSearchBy(value);
     setCategoryToggle(false);
   };
