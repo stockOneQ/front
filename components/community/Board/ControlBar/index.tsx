@@ -1,6 +1,7 @@
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
   searchInputState,
   searchTypeState,
@@ -15,7 +16,6 @@ import SearchInputBar from "./SearchInputBar";
 
 import SearchIcon from "public/assets/icons/community/searchIcon.svg";
 import WriteIcon from "public/assets/icons/write.png";
-import { useState } from "react";
 
 const sortOptionList = ["최신순", "조회순"];
 const searchOptionList = ["글 제목", "글 내용", "작성자"];

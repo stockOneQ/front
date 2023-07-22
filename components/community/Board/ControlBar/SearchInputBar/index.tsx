@@ -1,7 +1,6 @@
-import { useState } from "react";
-import * as S from "./style";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { searchInputState } from "recoil/states";
+import * as S from "./style";
 
 const BoardSearchInput = ({
   value,
