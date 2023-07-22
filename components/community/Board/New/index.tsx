@@ -9,7 +9,7 @@ import PageTitleContainer from "../../../common/PageTitleContainer";
 
 import * as S from "./style";
 
-let id = 1;
+let id = 4;
 const getId = () => {
   return id++;
 };
@@ -43,10 +43,11 @@ const New = () => {
       ...posts,
       {
         id: getId(),
+        writer: "임하림",
         uploadTime: getDate(),
         title: title,
         content: content,
-        views: 4,
+        views: 30,
         commentCount: 1,
         likes: 8,
       },

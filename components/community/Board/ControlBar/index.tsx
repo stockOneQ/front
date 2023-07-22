@@ -1,7 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useRecoilState } from "recoil";
-import { searchTypeState, sortTypeState } from "recoil/states";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  searchInputState,
+  searchTypeState,
+  sortTypeState,
+} from "recoil/states";
 
 import * as S from "./style";
 import { styled } from "styled-components";
@@ -11,6 +15,7 @@ import SearchInputBar from "./SearchInputBar";
 
 import SearchIcon from "public/assets/icons/community/searchIcon.svg";
 import WriteIcon from "public/assets/icons/write.png";
+import { useState } from "react";
 
 const sortOptionList = ["최신순", "조회순"];
 const searchOptionList = ["글 제목", "글 내용", "작성자"];
@@ -24,13 +29,27 @@ const DropBox = styled(DropDown)`
 `;
 
 const ControlBar = () => {
-  const [sortType, setSortType] = useRecoilState(sortTypeState);
-  const [searchType, setSearchType] = useRecoilState(searchTypeState);
+  const setSortType = useSetRecoilState(sortTypeState);
+  const setSearchType = useSetRecoilState(searchTypeState);
+
+  /* 실시간 검색이 아닌 검색 아이콘을 통해 한번만 검색 필터를 거치므로 저장해둠 */
+  const [input, setInput] = useState("");
+  const setSearchInput = useSetRecoilState(searchInputState);
+
+  const handleSearch = () => {
+    setSearchInput(input);
+  };
 
   return (
     <S.ControlBarBox>
       <S.DropBoxContainer>
-        <DropBox width={16.3} height={3.5} font={1.3} list={sortOptionList} />
+        <DropBox
+          width={16.3}
+          height={3.5}
+          font={1.3}
+          list={sortOptionList}
+          onChange={setSortType}
+        />
       </S.DropBoxContainer>
 
       <S.SearchBar>
@@ -40,10 +59,14 @@ const ControlBar = () => {
             height={3.5}
             font={1.3}
             list={searchOptionList}
+            onChange={setSearchType}
+            onReset={setSearchInput}
           />
         </S.DropBoxContainer>
-        <SearchInputBar />
-        <Image alt="search" src={SearchIcon} />
+        <SearchInputBar value={input} onChange={setInput} />
+        <S.SearchButton onClick={handleSearch}>
+          <Image alt="search" src={SearchIcon} />
+        </S.SearchButton>
       </S.SearchBar>
 
       <S.WriteButtonContainer>
@@ -54,9 +77,5 @@ const ControlBar = () => {
     </S.ControlBarBox>
   );
 };
-
-const Div = styled.div`
-  position: relative;
-`;
 
 export default ControlBar;

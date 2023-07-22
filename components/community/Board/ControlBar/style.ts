@@ -21,6 +21,8 @@ export const SearchBar = styled.div`
   }
 `;
 
+export const SearchButton = styled.button``;
+
 export const DropBoxContainer = styled.div`
   position: absolute;
   top: 0%;
