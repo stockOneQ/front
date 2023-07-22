@@ -19,12 +19,21 @@ export const Text = styled.span`
 
 export const Input = styled.textarea`
   resize: none;
-  font-family: "Roboto";
+  border: none;
 
   width: 107.5rem;
   height: 47.7rem;
   border-radius: 0rem 0rem 3rem 3rem;
-  font-size: 1.8rem;
-  font-weight: 500;
-  padding: 1.2rem;
+  padding: 1.5rem 2.7rem;
+
+  font-family: "Roboto";
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.8rem;
+
+  color: #000000;
+
+  &:focus {
+    outline: none;
+  }
 `;

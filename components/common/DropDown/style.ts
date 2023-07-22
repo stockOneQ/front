@@ -1,63 +1,46 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-interface IDropDownProps {
+interface IDropDownButtonProps {
   width: number;
   height: number;
-}
-
-interface ISelectedValueButtonProps extends IDropDownProps {
-  padding: number;
-}
-
-interface ISearchByBoxProps extends IDropDownProps {
-  len: number;
   font: number;
 }
 
-const SearchByBox = styled.div<ISearchByBoxProps>`
-  width: ${({ width }) => `${width}rem`};
-  height: ${({ height, len }) => `${height * (len + 1) + 1.9}rem`};
-  margin-top: ${({ height, len }) => `${(height * (len + 1) + 1.9) / 2 + height + 0.95}rem`};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  font-size: ${({ font }) => `${font}rem`};
-  line-height: normal;
-  
-  p {
-    font-weight: 600;
-    z-index: 100;
-    color: var(--color-white);
-  }
-`
-
-const SelectedValueButton = styled.button<ISelectedValueButtonProps>`
+const SelectedValueButton = styled.button<IDropDownButtonProps>`
   width: ${({ width }) => `${width}rem`};
   height: ${({ height }) => `${height}rem`};
   position: relative;
-  padding: ${({ padding }) => `${padding}rem 0`};
+  padding: 0.4rem 0;
   background-color: var(--color-black);
-  border-radius: 3rem;
+  border-radius: 10rem;
   z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-size: ${({ font }) => `${font}rem`};
+    font-weight: 600;
+    color: var(--color-white);
+  }
 
   img {
     position: absolute;
     top: 50%;
     right: 3rem;
     transform: translateY(-50%) rotate(0deg);
-    transition: transform .5s linear;
+    transition: transform 0.5s linear;
   }
 
   .categoryToggle {
     transform: translateY(-50%) rotate(180deg);
-    transition: transform .5s linear;
+    transition: transform 0.5s linear;
   }
-`
+`;
 
 interface IOptionListProps {
-  padding: number;
-  margin: number;
+  font: number;
 }
 
 const OptionList = styled.ul<IOptionListProps>`
@@ -65,29 +48,27 @@ const OptionList = styled.ul<IOptionListProps>`
   background-color: var(--color-white);
   color: #979797;
   font-weight: 500;
-  padding-top: ${({ margin }) => `${margin}rem`};
-  border: 1px solid #F7F7F9;
-  z-index: 0;
-  margin-top: -22.5px;
+  font-size: ${({ font }) => `${font}rem`};
+  padding-top: 2.8rem;
+  margin-top: -20px;
+  border: 1px solid #f7f7f9;
   border-bottom-left-radius: 3rem;
   border-bottom-right-radius: 3rem;
+  position: relative;
+  z-index: 999;
 
   li {
+    text-align: center;
     color: #979797;
-    font-weight: 500;
-    padding: ${({ padding }) => `${padding}rem`};
-    border-radius: 3rem;
+    padding: 1rem;
+    border-radius: 2rem;
     cursor: pointer;
 
     &:hover {
       color: var(--color-black);
-      background-color: #F7F7F9;
+      background-color: #f7f7f9;
     }
   }
-`
+`;
 
-export {
-  SearchByBox,
-  SelectedValueButton,
-  OptionList
-}
+export { SelectedValueButton, OptionList };

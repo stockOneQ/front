@@ -36,9 +36,12 @@ export const Input = styled.input`
   height: 6.6rem;
   font-size: 1.8rem;
 
-  padding-left: 1.6rem;
+  padding: 1rem 3.3rem;
 
   background: #ffffff;
   border: 0.1rem solid #f7f7f9;
   border-radius: 3rem;
+
+  font-weight: 500;
+  line-height: 2.1rem;
 `;

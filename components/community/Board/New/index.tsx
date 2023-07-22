@@ -5,11 +5,11 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { postContentState, postListState, postTitleState } from "recoil/states";
 
 import Editor from "./Editor/index";
-import PageTitleContainer from "../../../common/PageTitleContainer";
+import HeadingText from "../../../common/HeadingText";
 
 import * as S from "./style";
 
-let id = 1;
+let id = 4;
 const getId = () => {
   return id++;
 };
@@ -43,10 +43,11 @@ const New = () => {
       ...posts,
       {
         id: getId(),
+        writer: "임하림",
         uploadTime: getDate(),
         title: title,
         content: content,
-        views: 4,
+        views: 30,
         commentCount: 1,
         likes: 8,
       },
@@ -60,7 +61,7 @@ const New = () => {
 
   return (
     <S.Box>
-      <PageTitleContainer title="게시글 작성" />
+      <HeadingText>게시글 작성</HeadingText>
       <S.ActionButtonBox>
         <Link href="/community/board">
           <S.Button>취소</S.Button>
