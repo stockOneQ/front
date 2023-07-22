@@ -3,6 +3,7 @@ import searchIcon from 'public/assets/icons/community/searchIcBlack.svg';
 import rightArrow from 'public/assets/icons/community/rightArrowIc.svg';
 import StockList from './StockList';
 import styled from 'styled-components';
+import useScroll from 'hooks/useScroll';
 
 const DUMMY_DATA = [
   {
@@ -26,7 +27,7 @@ const DUMMY_DATA = [
     img: '/assets/imgs/community/myProfile.png'
   },
   {
-    stockName: "망고 시럼",
+    stockName: "망고 시럽",
     amount: 1,
     img: '/assets/imgs/community/myProfile.png'
   },
@@ -139,13 +140,39 @@ const FriendStockItem = styled.li`
   font-weight: 600;
   line-height: normal;
 `
+interface IStockDataBoxProps {
+  hideScroll: boolean;
+}
 
-const StockDataBox = styled.div`
+const StockDataBox = styled.div<IStockDataBoxProps>`
   margin-top: 1.7rem;
   margin-left: .1rem;
   width: 61.9rem;
   height: 60.8rem;
   overflow-y: auto;
+  padding-right: ${props => props.hideScroll ? '7.1rem' : '5.6rem'};
+
+  &::-webkit-scrollbar {
+    display: ${props => props.hideScroll ? 'none' : 'inline-block'};
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: .8rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: .3rem solid transparent;
+    height: 4rem;
+    border-radius: .8rem;
+    background-color: var(--color-black);
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: .8rem;
+    background-color: #eee;
+  }
 `
 
 const StockDataList = styled.ul`
@@ -158,6 +185,8 @@ const StockDataList = styled.ul`
 
 /** 친구 재고 페이지 */
 const FriendStock = () => {
+  const { hideScroll, scrollHandler } = useScroll();
+
   return (
     <FriendStockBox>
       <StockLabelBox>
@@ -180,7 +209,7 @@ const FriendStock = () => {
             <FriendStockItem>부족한 재료 1</FriendStockItem>
           </FriendStockList>
         </nav>
-        <StockDataBox>
+        <StockDataBox hideScroll={hideScroll} onScroll={scrollHandler}>
           <StockDataList>
             {DUMMY_DATA.map(({ stockName, amount, img }, idx) => (
               <StockList key={idx} stockName={stockName} amount={amount} img={img} />
