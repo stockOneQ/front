@@ -57,7 +57,7 @@ export const postListState = atom<IPostTypes[]>({
     {
       id: 1,
       writer: "임하림",
-      uploadTime: "20230700230339500",
+      uploadTime: "20230706012532581",
       title: "배달대행료 카드결제 신용카드 추천 좀 해주세요",
       content:
         "포인트 적립되는 카드 있나요? 있으면 정보 공유 해주시면 감사하겠습니다",
@@ -79,7 +79,7 @@ export const postListState = atom<IPostTypes[]>({
     {
       id: 3,
       writer: "이가영",
-      uploadTime: "20230706012532581",
+      uploadTime: "20230700230339500",
       title: "혹시 게장 무한리필 장사하시는 분 계시나요?",
       content: "마진 괜찮나요? 장사하시는 분 알려주세요 ~~",
       views: 60,
@@ -105,7 +105,7 @@ export const sortedPostsState = selector({
     switch (sortType) {
       case "최신순":
         return [...posts].sort((a, b) => {
-          return Number(a.uploadTime) - Number(b.uploadTime);
+          return Number(b.uploadTime) - Number(a.uploadTime);
         });
 
       /** 조회순 */
