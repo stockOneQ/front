@@ -79,7 +79,7 @@ export const postListState = atom<IPostTypes[]>({
     {
       id: 3,
       writer: "이가영",
-      uploadTime: "20230700230339500",
+      uploadTime: "20230706230339500",
       title: "혹시 게장 무한리필 장사하시는 분 계시나요?",
       content: "마진 괜찮나요? 장사하시는 분 알려주세요 ~~",
       views: 60,
