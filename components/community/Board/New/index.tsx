@@ -16,15 +16,15 @@ const getId = () => {
 
 const getDate = () => {
   const date = new Date();
-  const Year = String(date.getFullYear());
-  const Month = String(date.getMonth() + 1).padStart(2, "0");
-  const Day = String(date.getDay()).padStart(2, "0");
-  const Hour = String(date.getHours()).padStart(2, "0");
-  const Minute = String(date.getMinutes()).padStart(2, "0");
-  const Second = String(date.getSeconds()).padStart(2, "0");
-  const MSecond = String(date.getMilliseconds()).padStart(3, "0");
+  const year = String(date.getFullYear());
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+  const second = String(date.getSeconds()).padStart(2, "0");
+  const mSecond = String(date.getMilliseconds()).padStart(3, "0");
 
-  return Year + Month + Day + Hour + Minute + Second + MSecond;
+  return year + month + day + hour + minute + second + mSecond;
 };
 
 const New = () => {
@@ -33,6 +33,7 @@ const New = () => {
   const [title, setTitle] = useRecoilState(postTitleState);
   const [content, setContent] = useRecoilState(postContentState);
   const setPostList = useSetRecoilState(postListState);
+  console.log(getDate());
 
   /* 게시글 작성 페이지 - 저장 버튼 클릭 처리 함수 */
   const handleSubmit = () => {
