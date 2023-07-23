@@ -19,7 +19,7 @@ export interface ProductItem {
   orderingSite: string;
   orderingFrequency: string;
   imageInfo: string;
-};
+}
 
 export const mainPostListState = atom<ProductItem[]>({
   key: "mainPostListState",
@@ -40,16 +40,19 @@ export const mainPostListState = atom<ProductItem[]>({
       quantity: "2",
       orderingSite: "투썸사이트",
       orderingFrequency: "2",
-      imageInfo: "이미지"
+      imageInfo: "이미지",
     },
   ],
 });
 
 export const handleProductClick = () => {
   const setSelectedProductState = useSetRecoilState(selectedProductState);
-  return useCallback((item: GradientsListItem) => {
-    setSelectedProductState(item);
-  }, [setSelectedProductState]);
+  return useCallback(
+    (item: GradientsListItem) => {
+      setSelectedProductState(item);
+    },
+    [setSelectedProductState]
+  );
 };
 //유통기한 임박재료
 export const approachingExpirationState = atom<string[]>({
@@ -59,13 +62,13 @@ export const approachingExpirationState = atom<string[]>({
 
 //유통기한 지난 재료
 export const expiredIngredientsState = atom<number[]>({
-  key: 'expiredIngredientsState',
+  key: "expiredIngredientsState",
   default: [],
 });
 
-//부족한 재료 
+//부족한 재료
 export const insufficientIngredientsState = atom<number[]>({
-  key: 'insufficientIngredientsState',
+  key: "insufficientIngredientsState",
   default: [],
 });
 
@@ -114,7 +117,6 @@ export const filteredItemsState = selector({
   },
 });
 
-
 export type IngredientsListItem = {
   id: number;
   category: string;
@@ -133,9 +135,10 @@ export const filteredIngredientsListState = selector<IngredientsListItem[]>({
     const searchTerm = get(searchTermState);
     const postList = get(ingredientsListState);
 
-    return postList.filter((item) =>
-      (selectedCategory === "전체" || item.category === selectedCategory) &&
-      item.productName.toLowerCase().includes(searchTerm.toLowerCase())
+    return postList.filter(
+      (item) =>
+        (selectedCategory === "전체" || item.category === selectedCategory) &&
+        item.productName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   },
 });
@@ -156,8 +159,8 @@ export const searchTermState = atom<string>({
   default: "",
 });
 
+/** ----------------- 게시판 페이지 ----------------- */
 
-/** 게시판 페이지 */
 export const postTitleState = atom<string>({
   key: "postTitleState",
   default: "",
@@ -218,10 +221,7 @@ export const postListState = atom<IPostTypes[]>({
   ],
 });
 
-
-
 /** 게시글 정렬 */
-
 export const sortTypeState = atom<string>({
   key: "sortTypeState",
   default: "최신순",
@@ -249,7 +249,6 @@ export const sortedPostsState = selector({
 });
 
 /* 게시글 검색 */
-
 export const searchTypeState = atom<string>({
   key: "searchTypeState",
   default: "글 제목",
@@ -293,4 +292,34 @@ export const filteredPostsState = selector({
       sortedPosts.filter((post) => searchedPosts.includes(post))
     );
   },
+});
+
+export const postCommentState = atom<string>({
+  key: "postCommentState",
+  default: "",
+});
+
+export interface IPostCommentTypes {
+  id: number;
+  writer: string;
+  uploadTime: string;
+  content: string;
+}
+
+export const postCommentListState = atom<IPostCommentTypes[]>({
+  key: "postCommentListState",
+  default: [
+    {
+      id: 1,
+      writer: "전언석",
+      uploadTime: "2023년 07월 21일 01:25",
+      content: "알아봐드리겠습니다",
+    },
+    {
+      id: 2,
+      writer: "김아리",
+      uploadTime: "2023년 07월 22일 12:23",
+      content: "안녕하세요. 저 하고 있습니다. 마진 괜찮습니다.",
+    },
+  ],
 });

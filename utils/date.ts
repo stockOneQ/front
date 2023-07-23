@@ -12,9 +12,9 @@ export const getDetailDate = () => {
 };
 
 export const getStringDate = (props: string) => {
-  const date = typeof props === "string" ? props.substring(0, 8) : "";
+  const date = typeof props === "string" ? props.substring(0, 12) : "";
   return `${date.substring(0, 4)}년 ${date.substring(4, 6)}월 ${date.substring(
     6,
     8
-  )}일`;
+  )}일 ${date.substring(8, 10)}:${date.substring(10, 12)}`;
 };
