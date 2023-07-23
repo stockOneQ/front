@@ -26,6 +26,8 @@ const InputBox = styled.input`
   font-size: 1.3rem;
   font-weight: 500;
   line-height: normal;
+  counter-reset: var(--color-black);
+  margin-left: 16.3rem;
 
   &::placeholder {
     color: #979797;

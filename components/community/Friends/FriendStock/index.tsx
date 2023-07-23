@@ -5,7 +5,6 @@ import StockList from './StockList';
 import styled from 'styled-components';
 import useScroll from 'hooks/useScroll';
 import { useState } from 'react';
-import back from 'public/assets/icons/community/back.svg';
 
 const DUMMY_DATA = [
   {
@@ -93,9 +92,9 @@ const StockLabelParagraph = styled.p<IStockLabelParagraphProps>`
   position: relative;
   /* background-image: linear-gradient(262deg, #F9E499 0%, #F2B2CF 32.29%, #B1B0D7 66.67%, #55ABD7 100%); */
   background-image: ${({ selected }) => {
-    if (selected === '냉동') return `url('/assets/icons/community/bg-img/selectLabel1.svg')`;
-    else if (selected === '냉장') return `url('/assets/icons/community/bg-img/selectLabel2.svg')`;
-    else if (selected === '상온') return `url('/assets/icons/community/bg-img/selectLabel3.svg')`;
+    if (selected === '냉동') return `url('/assets/icons/community/bg-img/selectLabel1Bg.svg')`;
+    else if (selected === '냉장') return `url('/assets/icons/community/bg-img/selectLabel2Bg.svg')`;
+    else if (selected === '상온') return `url('/assets/icons/community/bg-img/selectLabel3Bg.svg')`;
   }};
   width: 7.1rem;
   height: 6.6rem;
