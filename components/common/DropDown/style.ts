@@ -31,6 +31,10 @@ const SelectedValueButton = styled.button<IDropDownButtonProps>`
     right: 3rem;
     transform: translateY(-50%) rotate(0deg);
     transition: transform 0.5s linear;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .categoryToggle {
