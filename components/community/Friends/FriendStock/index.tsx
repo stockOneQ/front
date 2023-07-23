@@ -5,6 +5,7 @@ import StockList from './StockList';
 import styled from 'styled-components';
 import useScroll from 'hooks/useScroll';
 import { useState } from 'react';
+import back from 'public/assets/icons/community/back.svg';
 
 const DUMMY_DATA = [
   {
@@ -83,10 +84,19 @@ const StockLabelBox = styled.div`
   gap: 1.4rem;
 `
 
-const StockLabelParagraph = styled.p`
+interface IStockLabelParagraphProps {
+  selected: string;
+}
+
+const StockLabelParagraph = styled.p<IStockLabelParagraphProps>`
   /* TODO:  왜 position: relative를 적용해 줘야 하는지 공부하기 */
   position: relative;
-  background-image: linear-gradient(262deg, #F9E499 0%, #F2B2CF 32.29%, #B1B0D7 66.67%, #55ABD7 100%);
+  /* background-image: linear-gradient(262deg, #F9E499 0%, #F2B2CF 32.29%, #B1B0D7 66.67%, #55ABD7 100%); */
+  background-image: ${({ selected }) => {
+    if (selected === '냉동') return `url('/assets/icons/community/bg-img/selectLabel1.svg')`;
+    else if (selected === '냉장') return `url('/assets/icons/community/bg-img/selectLabel2.svg')`;
+    else if (selected === '상온') return `url('/assets/icons/community/bg-img/selectLabel3.svg')`;
+  }};
   width: 7.1rem;
   height: 6.6rem;
   display: flex;
@@ -110,7 +120,6 @@ const StockLabelSelectBox = styled.div<IStockLabelSelectBox>`
   display: flex;
   align-items: center;
   gap: .7rem;
-  background-color: var(--color-white);
 
   img {
     transform: rotate(0deg);
@@ -123,6 +132,7 @@ const StockLabelSelectBox = styled.div<IStockLabelSelectBox>`
 `
 
 const StockLabelOthersBox = styled.div`
+  background-color: var(--color-white);
   display: flex;
   justify-content: end;
   align-items: center;
@@ -183,7 +193,7 @@ const SearchStockBox = styled.div`
     border-radius: 4.3rem;
     background: var(--color-black);
 
-    color: #FFF;
+    color: var(--color-white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -289,12 +299,12 @@ const FriendStock = () => {
     <FriendStockBox>
       <StockLabelBox>
         <div>
-          <StockLabelParagraph>{selectState[0]}</StockLabelParagraph>
+          <StockLabelParagraph selected={selectState[0]}>{selectState[0]}</StockLabelParagraph>
         </div>
         <StockLabelSelectBox isSelect={isSelect}>
           {selectOption && (
             <StockLabelOthersBox>
-              {selectState.map((item, idx) => (
+              {selectState.map((item) => (
                 <>
                   <p onClick={() => { selectLabelHandler(item) }}>{item}</p>
                   <div>&nbsp;</div>
