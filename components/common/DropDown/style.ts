@@ -3,7 +3,7 @@ import styled from "styled-components";
 interface IDropDownButtonProps {
   width: number;
   height: number;
-  font: number;
+  fontSize: number;
 }
 
 const SelectedValueButton = styled.button<IDropDownButtonProps>`
@@ -20,21 +20,28 @@ const SelectedValueButton = styled.button<IDropDownButtonProps>`
   align-items: center;
 
   span {
-    font-size: ${({ font }) => `${font}rem`};
+    font-size: ${({ fontSize }) => `${fontSize}rem`};
     font-weight: 600;
     color: var(--color-white);
   }
+`;
+
+interface IToggleProps {
+  toggleTopSize: number;
+}
+
+const ToggleContainer = styled.div<IToggleProps>`
+  position: absolute;
+  top: ${({ toggleTopSize }) => `${toggleTopSize}%`};
+  right: 20%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   img {
-    position: absolute;
-    top: 48%;
-    right: 18%;
     transform: translateY(-50%) rotate(0deg);
     transition: transform 0.5s linear;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .categoryToggle {
@@ -44,22 +51,26 @@ const SelectedValueButton = styled.button<IDropDownButtonProps>`
 `;
 
 interface IOptionListProps {
-  font: number;
+  fontSize: number;
 }
 
 const OptionList = styled.ul<IOptionListProps>`
+  z-index: 999;
+
+  position: relative;
   width: 100%;
   background-color: var(--color-white);
   color: #979797;
+
   font-weight: 500;
-  font-size: ${({ font }) => `${font}rem`};
+  font-size: ${({ fontSize }) => `${fontSize}rem`};
+
   padding-top: 2.8rem;
   margin-top: -20px;
+
   border: 1px solid #f7f7f9;
   border-bottom-left-radius: 3rem;
   border-bottom-right-radius: 3rem;
-  position: relative;
-  z-index: 999;
 
   li {
     text-align: center;
@@ -75,4 +86,4 @@ const OptionList = styled.ul<IOptionListProps>`
   }
 `;
 
-export { SelectedValueButton, OptionList };
+export { SelectedValueButton, ToggleContainer, OptionList };
