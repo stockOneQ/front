@@ -9,7 +9,7 @@ const AcptBtn = styled.button<IAcceptBtnProps>`
   position: relative;
   width: 7.1rem;
   height: 4.6rem;
-  border-radius: .4rem;
+  border-radius: .5rem;
   background-color: ${props => props.disabled ? '#979797' : 'var(--color-black)'};
   color: var(--color-white);
   text-align: center;
@@ -30,13 +30,14 @@ const AcptBtn = styled.button<IAcceptBtnProps>`
     width: 7.1rem;
     height: 4.6rem;
     border-radius: .4rem;
-    background: ${props => props.disabled ? '#979797' : 'linear-gradient(164deg, #F9E499 0%, #F2B2CF 31.25%, #B1B0D7 65.10%, #55ABD7 100%), #000'};
+    background: ${props => props.disabled ? '#979797' : `url('/assets/icons/community/bg-img/acceptBtnBg.svg')`};
     color: var(--color-white);
     font-size: 1.3rem;
     font-weight: 600;
     line-height: normal;
     transition: all .3s ease;
     opacity: 0;
+    overflow: hidden;
   }
 
   &:hover::after,

@@ -30,7 +30,7 @@ const CnclBtn = styled.button<ICancelBtnProps>`
     width: 7.1rem;
     height: 4.6rem;
     border-radius: .4rem;
-    background: linear-gradient(164deg, #F9E499 0%, #F2B2CF 31.25%, #B1B0D7 65.10%, #55ABD7 100%), #000;
+    background-image: url('/assets/icons/community/bg-img/acceptBtnBg.svg');
     color: var(--color-white);
     font-size: 1.3rem;
     font-weight: 600;
