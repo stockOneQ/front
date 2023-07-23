@@ -1,10 +1,17 @@
 import { styled } from "styled-components";
 
 export const Box = styled.div`
-  width: 100%;
-
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+
+  height: 95%;
+`;
+
+export const HeaderSection = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
 `;

@@ -16,6 +16,7 @@ const EditorTitleInput = () => {
         onChange={(e: { target: { value: SetStateAction<string> } }) =>
           setTitleInput(e.target.value)
         }
+        maxLength={37}
       />
     </S.Box>
   );

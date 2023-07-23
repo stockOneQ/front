@@ -1,26 +1,78 @@
 import { atom, selector, useSetRecoilState } from "recoil";
 import { useCallback } from "react";
 
-export const postTitleState = atom<string>({
-  key: "postTitleState",
-  default: "",
-});
-
-export const postContentState = atom<string>({
-  key: "postContentState",
-  default: "",
-});
-
-export interface IPostTypes {
+/** 메인 페이지 + 제품 추가 */
+export interface ProductItem {
   id: number;
-  uploadTime: string;
-  title: string;
-  content: string;
-  views: number;
-  commentCount: number;
-  likes: number;
-}
+  productName: string;
+  price: string;
+  seller: string;
+  receiptYear: string;
+  receiptMonth: string;
+  receiptDay: string;
+  expirationYear: string;
+  expirationMonth: string;
+  expirationDay: string;
+  ingredientLocation: string;
+  requiredQuantity: string;
+  quantity: string;
+  orderingSite: string;
+  orderingFrequency: string;
+  imageInfo: string;
+};
 
+export const mainPostListState = atom<ProductItem[]>({
+  key: "mainPostListState",
+  default: [
+    {
+      id: 1,
+      productName: "가나원두",
+      price: "12000원",
+      seller: "투썸플레이스",
+      receiptYear: "2023",
+      receiptMonth: "09",
+      receiptDay: "20",
+      expirationYear: "2023",
+      expirationMonth: "10",
+      expirationDay: "23",
+      ingredientLocation: "선반위",
+      requiredQuantity: "3",
+      quantity: "2",
+      orderingSite: "투썸사이트",
+      orderingFrequency: "2",
+      imageInfo: "이미지"
+    },
+  ],
+});
+
+export const handleProductClick = () => {
+  const setSelectedProductState = useSetRecoilState(selectedProductState);
+  return useCallback((item: GradientsListItem) => {
+    setSelectedProductState(item);
+  }, [setSelectedProductState]);
+};
+//유통기한 임박재료
+export const approachingExpirationState = atom<string[]>({
+  key: "approachingExpirationState",
+  default: [],
+});
+
+//유통기한 지난 재료
+export const expiredIngredientsState = atom<number[]>({
+  key: 'expiredIngredientsState',
+  default: [],
+});
+
+//부족한 재료 
+export const insufficientIngredientsState = atom<number[]>({
+  key: 'insufficientIngredientsState',
+  default: [],
+});
+
+export const postMainTitleState = atom<string>({
+  key: "postMainTitleState",
+  default: "",
+});
 
 export const newpostListState = atom({
   key: "newpostListState",
@@ -88,27 +140,53 @@ export const filteredIngredientsListState = selector<IngredientsListItem[]>({
   },
 });
 
+/** 제품상세페이지 이동 */
 export const selectedProductState = atom<IngredientsListItem | null>({
   key: "selectedProductState",
   default: null,
 });
-
+/** 제품 카테고리 */
 export const selectedCategoryState = atom<string>({
   key: "selectedCategoryState",
   default: "전체",
 });
-
+/** 제품 검색 */
 export const searchTermState = atom<string>({
   key: "searchTermState",
   default: "",
 });
 
+
+/** 게시판 페이지 */
+export const postTitleState = atom<string>({
+  key: "postTitleState",
+  default: "",
+});
+
+export const postContentState = atom<string>({
+  key: "postContentState",
+  default: "",
+});
+
+export interface IPostTypes {
+  id: number;
+  writer: string;
+  uploadTime: string;
+  title: string;
+  content: string;
+  views: number;
+  commentCount: number;
+  likes: number;
+}
+
+/** 게시글 목록 */
 export const postListState = atom<IPostTypes[]>({
-  key: "postsState",
+  key: "postListState",
   default: [
     {
       id: 1,
-      uploadTime: "20230700230339500",
+      writer: "임하림",
+      uploadTime: "20230706012532581",
       title: "배달대행료 카드결제 신용카드 추천 좀 해주세요",
       content:
         "포인트 적립되는 카드 있나요? 있으면 정보 공유 해주시면 감사하겠습니다",
@@ -116,79 +194,33 @@ export const postListState = atom<IPostTypes[]>({
       commentCount: 2,
       likes: 1,
     },
-  ],
-});
-
-export interface ProductItem {
-  id: number;
-  productName: string;
-  price: string;
-  seller: string;
-  receiptYear: string;
-  receiptMonth: string;
-  receiptDay: string;
-  expirationYear: string;
-  expirationMonth: string;
-  expirationDay: string;
-  ingredientLocation: string;
-  requiredQuantity: string;
-  quantity: string;
-  orderingSite: string;
-  orderingFrequency: string;
-  imageInfo: string;
-};
-
-export const mainPostListState = atom<ProductItem[]>({
-  key: "mainPostListState",
-  default: [
     {
-      id: 1,
-      productName: "가나원두",
-      price: "12000원",
-      seller: "투썸플레이스",
-      receiptYear: "2023",
-      receiptMonth: "09",
-      receiptDay: "20",
-      expirationYear: "2023",
-      expirationMonth: "10",
-      expirationDay: "23",
-      ingredientLocation: "선반위",
-      requiredQuantity: "3",
-      quantity: "2",
-      orderingSite: "투썸사이트",
-      orderingFrequency: "2",
-      imageInfo: "이미지"
+      id: 2,
+      writer: "전언석",
+      uploadTime: "20230706012519547",
+      title: "로스팅과 매장을 같이 운영하는 사업자에서 분리할 때",
+      content:
+        "안녕하세요. 로스팅 공간은 제조업 허가를 받았고 한 곳은 휴게 음식점인데요. 로스팅 공간이 부족하여 다른 상가를 임대하여 분리하려고 합니다.",
+      views: 45,
+      commentCount: 20,
+      likes: 36,
+    },
+    {
+      id: 3,
+      writer: "이가영",
+      uploadTime: "20230700230339500",
+      title: "혹시 게장 무한리필 장사하시는 분 계시나요?",
+      content: "마진 괜찮나요? 장사하시는 분 알려주세요 ~~",
+      views: 60,
+      commentCount: 13,
+      likes: 12,
     },
   ],
 });
-export const handleProductClick = () => {
-  const setSelectedProductState = useSetRecoilState(selectedProductState);
-  return useCallback((item: GradientsListItem) => {
-    setSelectedProductState(item);
-  }, [setSelectedProductState]);
-};
-//유통기한 임박재료
-export const approachingExpirationState = atom<string[]>({
-  key: "approachingExpirationState",
-  default: [],
-});
 
-//유통기한 지난 재료
-export const expiredIngredientsState = atom<number[]>({
-  key: 'expiredIngredientsState',
-  default: [],
-});
 
-//부족한 재료 
-export const insufficientIngredientsState = atom<number[]>({
-  key: 'insufficientIngredientsState',
-  default: [],
-});
 
-export const postMainTitleState = atom<string>({
-  key: "postMainTitleState",
-  default: "",
-});
+/** 게시글 정렬 */
 
 export const sortTypeState = atom({
   key: "sortTypeState",
@@ -203,12 +235,62 @@ export const sortedPostsState = selector({
 
     switch (sortType) {
       case "최신순":
-        return posts.sort((a, b) => {
-          return Number(a.uploadTime) - Number(b.uploadTime);
+        return [...posts].sort((a, b) => {
+          return Number(b.uploadTime) - Number(a.uploadTime);
         });
-      /* 조회순*/
+
+      /** 조회순 */
       default:
-        return;
+        return [...posts].sort((a, b) => {
+          return Number(b.views) - Number(a.views);
+        });
     }
+  },
+});
+
+/* 게시글 검색 */
+
+export const searchTypeState = atom({
+  key: "searchTypeState",
+  default: "글 제목",
+});
+
+export const searchInputState = atom({
+  key: "searchInputState",
+  default: "",
+});
+
+export const searchedPostsState = selector({
+  key: "searchedPostsState",
+  get: ({ get }) => {
+    const searchType = get(searchTypeState);
+    const searchInput = get(searchInputState);
+    const posts = get(postListState);
+
+    switch (searchType) {
+      case "글 제목":
+        return posts.filter((post) => post.title.includes(searchInput));
+      case "글 내용":
+        return posts.filter((post) => post.content.includes(searchInput));
+      case "작성자":
+        return posts.filter(
+          (post) =>
+            post.writer.includes(searchInput) || post.writer === searchInput
+        );
+    }
+  },
+});
+
+/** 정렬 & 검색 필터링 공통 뽑아내기 */
+export const filteredPostsState = selector({
+  key: "filteredPostsState",
+  get: ({ get }) => {
+    const sortedPosts = get(sortedPostsState);
+    const searchedPosts = get(searchedPostsState);
+
+    return (
+      searchedPosts &&
+      sortedPosts.filter((post) => searchedPosts.includes(post))
+    );
   },
 });

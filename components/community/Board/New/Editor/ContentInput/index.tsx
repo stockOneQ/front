@@ -15,6 +15,7 @@ const EditorContentInput = () => {
         onChange={(e: { target: { value: SetStateAction<string> } }) =>
           setContent(e.target.value)
         }
+        maxLength={5000}
       ></S.Input>
     </S.Box>
   );
