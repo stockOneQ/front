@@ -49,6 +49,25 @@ const DUMMY_DATA = [
   },
 ]
 
+const NAV_DATA = [
+  {
+    label: '전체',
+    amount: 9
+  },
+  {
+    label: '유통기한 지난 재료',
+    amount: 3
+  },
+  {
+    label: '유통기한 임박 재료',
+    amount: 2
+  },
+  {
+    label: '부족한 재료',
+    amount: 1
+  }
+]
+
 const FriendStockBox = styled.div`
   padding: 3.7rem 11.1rem 0 3rem;
   position: relative;
@@ -181,18 +200,24 @@ const FriendStockList = styled.ul`
 const FriendStockItem = styled.li`
   min-width: 7.1rem;
   height: 2.8rem;
-  border-radius: 2rem;
-  background: #171717;
+  
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 1.6rem;
-
-  color: var(--color-white);
+  cursor: pointer;
+  
+  color: #737373;
   text-align: center;
   font-size: 1.3rem;
   font-weight: 600;
   line-height: normal;
+
+  &.active-nav {
+    border-radius: 2rem;
+    background: #171717; 
+    color: var(--color-white);
+  }
 `
 interface IStockDataBoxProps {
   hideScroll: boolean;
@@ -239,8 +264,11 @@ const StockDataList = styled.ul`
 
 /** 친구 재고 페이지 */
 const FriendStock = () => {
-  const [selectOption, setSelectOption] = useState(false);
-  const [isSelect, setIsSelect] = useState(false);
+  const [selectOption, setSelectOption] = useState(false); // 냉동 냉장 상온 선택
+  const [isSelect, setIsSelect] = useState(false); // 선택된 항목 css 주기 위해
+  const [activeNav, setActiveNav] = useState(0);
+  console.log(activeNav);
+  
 
   const selectLabelHandler = () => {
     setSelectOption(prev => !prev);
@@ -278,10 +306,9 @@ const FriendStock = () => {
       <div>
         <nav>
           <FriendStockList>
-            <FriendStockItem>전체 9</FriendStockItem>
-            <FriendStockItem>유통기한 지난 재료 3</FriendStockItem>
-            <FriendStockItem>유통기한 임박 재료 2</FriendStockItem>
-            <FriendStockItem>부족한 재료 1</FriendStockItem>
+            {NAV_DATA.map(({ label, amount }, idx) => (
+              <FriendStockItem key={idx} className={`${activeNav === idx ? 'active-nav' : ''}`} onClick={() => { setActiveNav(idx) }}>{label} {amount}</FriendStockItem>
+            ))}
           </FriendStockList>
         </nav>
         <StockDataBox hideScroll={hideScroll} onScroll={scrollHandler}>
