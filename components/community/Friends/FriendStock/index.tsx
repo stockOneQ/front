@@ -49,6 +49,8 @@ const DUMMY_DATA = [
   },
 ]
 
+const SELECT_DATA = ['냉동', '냉장', '상온'];
+
 const NAV_DATA = [
   {
     label: '전체',
@@ -148,7 +150,7 @@ const StockLabelOthersBox = styled.div`
     cursor: pointer;
   }
 
-  div {
+  div:not(:last-child) {
     height: 2.2rem;
     border-right: 1px solid #E1E1E1;
   }
@@ -264,13 +266,19 @@ const StockDataList = styled.ul`
 
 /** 친구 재고 페이지 */
 const FriendStock = () => {
-  const [selectOption, setSelectOption] = useState(false); // 냉동 냉장 상온 선택
+  const [selectOption, setSelectOption] = useState(false); // 냉동 냉장 상온 선택창 열기
+  const [selectState, setSelectState] = useState(SELECT_DATA); // 냉동 냉장 상온 중 하나 고르기
   const [isSelect, setIsSelect] = useState(false); // 선택된 항목 css 주기 위해
   const [activeNav, setActiveNav] = useState(0);
   console.log(activeNav);
   
+  const selectLabelHandler = (idx: string) => {
+    if (idx === '냉동') setSelectState(['냉동', '냉장', '상온']);
+    else if (idx === '냉장') setSelectState(['냉장', '냉동', '상온']);
+    else setSelectState(['상온', '냉장', '냉동']);
+  }
 
-  const selectLabelHandler = () => {
+  const openSelectLabelHandler = () => {
     setSelectOption(prev => !prev);
     setIsSelect(prev => !prev);
   }
@@ -281,17 +289,20 @@ const FriendStock = () => {
     <FriendStockBox>
       <StockLabelBox>
         <div>
-          <StockLabelParagraph>냉동</StockLabelParagraph>
+          <StockLabelParagraph>{selectState[0]}</StockLabelParagraph>
         </div>
         <StockLabelSelectBox isSelect={isSelect}>
           {selectOption && (
             <StockLabelOthersBox>
-              <p>냉장</p>
-              <div>&nbsp;</div>
-              <p>상온</p>
+              {selectState.map((item, idx) => (
+                <>
+                  <p onClick={() => { selectLabelHandler(item) }}>{item}</p>
+                  <div>&nbsp;</div>
+                </>
+              ))}
             </StockLabelOthersBox>
           )}
-          <button className={`${isSelect ? 'is-select' : ''}`} onClick={selectLabelHandler}>
+          <button className={`${isSelect ? 'is-select' : ''}`} onClick={openSelectLabelHandler}>
             <Image src={rightArrow} alt="right_arrow" width={6} height={10} />
           </button>
         </StockLabelSelectBox>
