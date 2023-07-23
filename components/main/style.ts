@@ -2,7 +2,10 @@ import styled from "styled-components";
 
 export const TopSection = styled.div`
   display: flex;
-  left: 35%;
+  left: 40%;
+  font-size: 16px;
+  line-height: 35px;
+  font-weight: bold;
   position: relative;
 `;
 export const InforSection = styled.div`
@@ -18,10 +21,16 @@ export const RightSection = styled.div`
 `;
 
 export const ImgInput = styled.div`
-  width: 180px;
-  box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.10);
+  width: 230px;
+  box-shadow: 0px 1.1rem 2rem 2px rgba(0, 0, 0, 0.10);
   border-radius: 20px;
-  height: 180px;
+  display: flex;
+  top: 10%;
+  position: relative;
+  margin-right: 155px;
+  height: 230px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Slider = styled.input`
@@ -56,6 +65,9 @@ export const Slider = styled.input`
 export const ReceiptDateInput = styled.div`
   display: flex;
   gap: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 45px;
 `;
 
 export const QuantitySection = styled.div`
@@ -80,10 +92,14 @@ export const ReceiptDateInputField = styled.input`
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 `;
 
+export const ReceiptDateInputYearField = styled(ReceiptDateInputField)`
+  width: 100px; 
+`;
+
 
 export const Box = styled.div`
   display: flex;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.10);
   border-radius: 30px;
   flex-direction: column;
@@ -92,11 +108,11 @@ export const Box = styled.div`
 `;
 export const QuantityInput = styled.div`
   display: flex;
-  margin-left: 9%;
+  margin-left: 3%;
 `;
 export const StyledInput = styled.div`
   display: flex;
-  margin: 10%;
+  margin: 3%;
 `;
 
 export const Form = styled.form`
@@ -109,25 +125,26 @@ export const Label = styled.label`
   font-size: 18px;
   font-weight: bold;
   width: 150px;
-  line-height: 30px;
+  line-height: 49px;
 `;
 
 export const Input = styled.input`
   width: 350px;
-  height: 45px;
+  height: 55px;
   padding: 6px 10px;
   border: none;
-  border-radius: 25px;
+  border-radius: 40px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 `;
 
 export const Button = styled.button`
-  width: 100px;
+  width: 65px;
   height: 35px;
   background-color: #000000;
   color: white;
   border: none;
-  border-radius: 5px;
+  margin-left: 15px;
+  border-radius: 23px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;

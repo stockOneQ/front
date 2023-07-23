@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Gradients from './Gradients';
+import Ingredients from './Ingredients';
 
 const MainSection = styled.section`
   gap: 7.1rem;
@@ -9,7 +9,7 @@ const MainSection = styled.section`
 const MainPage = () => {
     return (
         <MainSection>
-            <Gradients />
+            <Ingredients />
         </MainSection>
     );
 };
