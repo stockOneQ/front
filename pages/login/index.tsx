@@ -1,12 +1,10 @@
+import Login from 'components/login';
 import Header from "../../layouts/Header";
 
-const Login = () => {
+const LoginPage = () => {
   return (
-    <div>
-      <h1>login this</h1>
-      {/* Add your content here */}
-    </div>
+    <Login />
   );
 };
 
-export default Login;
+export default LoginPage;

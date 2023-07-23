@@ -3,7 +3,7 @@ import MainPage from 'components/main/index';
 const Home = () => {
   return (
     <>
-     <MainPage />
+      <MainPage />
     </>
   );
 };
