@@ -1,32 +1,161 @@
-import { atom, selector } from "recoil";
+import { atom, selector, useSetRecoilState } from "recoil";
+import { useCallback } from "react";
 
-/** 메인 페이지*/
-// 재료 test atom
-export const gradientsListState = atom({
-  key: "gradientsListState",
+/** 메인 페이지 + 제품 추가 */
+export interface ProductItem {
+  id: number;
+  productName: string;
+  price: string;
+  seller: string;
+  receiptYear: string;
+  receiptMonth: string;
+  receiptDay: string;
+  expirationYear: string;
+  expirationMonth: string;
+  expirationDay: string;
+  ingredientLocation: string;
+  requiredQuantity: string;
+  quantity: string;
+  orderingSite: string;
+  orderingFrequency: string;
+  imageInfo: string;
+};
+
+export const mainPostListState = atom<ProductItem[]>({
+  key: "mainPostListState",
   default: [
     {
       id: 1,
-      productName: "유통기한 임박 재료 1",
-      category: "beforeDate",
-    },
-    {
-      id: 2,
-      productName: "유통기한 임박 재료 2",
-      category: "beforeDate",
-    },
-    {
-      id: 3,
-      productName: "부족한 재료 1",
-      category: "no",
-    },
-    {
-      id: 4,
-      productName: "유통기한 지난 재료 1",
-      category: "afterDate",
+      productName: "가나원두",
+      price: "12000원",
+      seller: "투썸플레이스",
+      receiptYear: "2023",
+      receiptMonth: "09",
+      receiptDay: "20",
+      expirationYear: "2023",
+      expirationMonth: "10",
+      expirationDay: "23",
+      ingredientLocation: "선반위",
+      requiredQuantity: "3",
+      quantity: "2",
+      orderingSite: "투썸사이트",
+      orderingFrequency: "2",
+      imageInfo: "이미지"
     },
   ],
 });
+
+export const handleProductClick = () => {
+  const setSelectedProductState = useSetRecoilState(selectedProductState);
+  return useCallback((item: GradientsListItem) => {
+    setSelectedProductState(item);
+  }, [setSelectedProductState]);
+};
+//유통기한 임박재료
+export const approachingExpirationState = atom<string[]>({
+  key: "approachingExpirationState",
+  default: [],
+});
+
+//유통기한 지난 재료
+export const expiredIngredientsState = atom<number[]>({
+  key: 'expiredIngredientsState',
+  default: [],
+});
+
+//부족한 재료 
+export const insufficientIngredientsState = atom<number[]>({
+  key: 'insufficientIngredientsState',
+  default: [],
+});
+
+export const postMainTitleState = atom<string>({
+  key: "postMainTitleState",
+  default: "",
+});
+
+export const newpostListState = atom({
+  key: "newpostListState",
+  default: [],
+});
+
+export const searchFilterState = atom({
+  key: "searchFilterState",
+  default: "",
+});
+
+export const searchResultsState = selector({
+  key: "searchResultsState",
+  get: ({ get }) => {
+    const searchTerm = get(searchFilterState);
+    const newpostList = get(newpostListState);
+
+    if (searchTerm.trim() !== "") {
+      return newpostList.filter((item) =>
+        item.productName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    } else {
+      return newpostList;
+    }
+  },
+});
+
+export const filteredItemsState = selector({
+  key: "filteredItemsState",
+  get: ({ get }) => {
+    const searchTerm = get(searchFilterState);
+    const searchResults = get(searchResultsState);
+
+    if (searchTerm.trim() !== "") {
+      return searchResults;
+    } else {
+      return searchResults;
+    }
+  },
+});
+
+
+export type IngredientsListItem = {
+  id: number;
+  category: string;
+  productName: string;
+};
+
+export const ingredientsListState = atom<IngredientsListItem[]>({
+  key: "ingredientsListState",
+  default: [],
+});
+
+export const filteredIngredientsListState = selector<IngredientsListItem[]>({
+  key: "filteredIngredientsListState",
+  get: ({ get }) => {
+    const selectedCategory = get(selectedCategoryState);
+    const searchTerm = get(searchTermState);
+    const postList = get(ingredientsListState);
+
+    return postList.filter((item) =>
+      (selectedCategory === "전체" || item.category === selectedCategory) &&
+      item.productName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  },
+});
+
+/** 제품상세페이지 이동 */
+export const selectedProductState = atom<IngredientsListItem | null>({
+  key: "selectedProductState",
+  default: null,
+});
+/** 제품 카테고리 */
+export const selectedCategoryState = atom<string>({
+  key: "selectedCategoryState",
+  default: "전체",
+});
+/** 제품 검색 */
+export const searchTermState = atom<string>({
+  key: "searchTermState",
+  default: "",
+});
+
 
 /** 게시판 페이지 */
 export const postTitleState = atom<string>({
@@ -88,6 +217,8 @@ export const postListState = atom<IPostTypes[]>({
     },
   ],
 });
+
+
 
 /** 게시글 정렬 */
 
