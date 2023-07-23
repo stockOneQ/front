@@ -27,8 +27,8 @@ const SelectedValueButton = styled.button<IDropDownButtonProps>`
 
   img {
     position: absolute;
-    top: 50%;
-    right: 3rem;
+    top: 48%;
+    right: 18%;
     transform: translateY(-50%) rotate(0deg);
     transition: transform 0.5s linear;
 
