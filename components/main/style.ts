@@ -1,3 +1,4 @@
+//components/main/style
 import styled from "styled-components";
 
 export const TopSection = styled.div`
@@ -19,6 +20,16 @@ export const LeftSection = styled.div`
 export const RightSection = styled.div`
   
 `;
+
+export const StorageMethodRadioGroup = styled.div`
+
+`;
+
+export const StorageMethodRadio = styled.input`
+
+`;
+
+
 
 export const ImgInput = styled.div`
   width: 230px;

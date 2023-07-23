@@ -1,11 +1,13 @@
+//new
 import Link from "next/link";
 import Image from 'next/image';
 import ImgIcon from "../public/assets/icons/imgUpload.svg";
 import * as S from "../components/main/style";
-import { useState,SetStateAction } from "react";
+import { useState, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSetRecoilState, useRecoilValue, RecoilRoot, useRecoilState } from "recoil";
-import { approachingExpirationState, postMainTitleState, mainPostListState, expiredIngredientsState, insufficientIngredientsState} from "../recoil/states";
+import { approachingExpirationState, postMainTitleState, mainPostListState, expiredIngredientsState, insufficientIngredientsState, storageMethodState } from "../recoil/states";
+import Ingredients from "components/main/Ingredients";
 
 let id = 1;
 const getId = () => {
@@ -14,9 +16,19 @@ const getId = () => {
 
 /** 제품 추가 페이지 */
 const New = () => {
+
   const router = useRouter();
   const [productName, setProductName] = useRecoilState(postMainTitleState);
-  const setPostList = useSetRecoilState(mainPostListState);
+  const setPostListState = useSetRecoilState(mainPostListState);
+
+  //빈도순 정렬
+  const [postList, setPostList] = useRecoilState(mainPostListState);
+  const [sortedPostList, setSortedPostList] = useState([]);
+
+  useEffect(() => {
+    const sortedList = [...postList].sort((a, b) => a.orderingFrequency - b.orderingFrequency);
+    setSortedPostList(sortedList);
+  }, [postList]);
 
   //유통기한임박 재료 
   const setApproachingExpiration = useSetRecoilState(approachingExpirationState);
@@ -25,13 +37,16 @@ const New = () => {
   const setExpiredIngredients = useSetRecoilState(expiredIngredientsState);
   //부족한 재료 
   const setinsufficientIngredients = useSetRecoilState(insufficientIngredientsState);
+  //냉장 냉동 상온
+  const setstorageMethod = useRecoilValue(storageMethodState);
+  
 
   //현재 날짜와 만료 날짜 사이의 일수 차이를 계산하는 함수
   const calculateDaysRemaining = () => {
     const currentDate = new Date();
     const expirationDate = new Date(
       parseInt(formData.expirationYear),
-      parseInt(formData.expirationMonth) - 1, // Months are 0-indexed, so subtract 1
+      parseInt(formData.expirationMonth) - 1, 
       parseInt(formData.expirationDay)
     );
     const timeDifference = expirationDate.getTime() - currentDate.getTime();
@@ -55,6 +70,7 @@ const New = () => {
     orderingSite: "",
     orderingFrequency: "",
     imageInfo: "",
+    storageMethod: '',
   });
 
   const handleInputChange = (e) => {
@@ -82,16 +98,22 @@ const New = () => {
       orderingSite: formData.orderingSite,
       orderingFrequency: formData.orderingFrequency,
       imageInfo: formData.imageInfo,
+      storageMethod: formData.storageMethod,
     };
 
     // 업데이트 recoil state
-    setPostList((prevPostList) => [...prevPostList, newProduct]);
+    setPostListState((prevPostList) => [...prevPostList, newProduct]); // Use setPostListState instead of setPostList
+    const sortedList = [...postList].sort((a, b) => a.orderingFrequency - b.orderingFrequency);
+    setSortedPostList(sortedList);
+
     const newProductId = newProduct.id.toString();
     //부족한 재료 
     const newQuantity = parseInt(formData.quantity, 10);
     const newRequiredQuantity = parseInt(formData.requiredQuantity, 10);
     // 유통기한 계산
     const daysRemaining = calculateDaysRemaining();
+
+
     if (newQuantity <= newRequiredQuantity) {
       //부족한 재료
       setinsufficientIngredients((prevInsufficientIngredients) => [...prevInsufficientIngredients, newProductId]);
@@ -144,6 +166,7 @@ const New = () => {
       orderingSite: "",
       orderingFrequency: "",
       imageInfo: "",
+      storageMethod: "",
     });
 
     setProductName("");
@@ -165,6 +188,20 @@ const New = () => {
         <S.Form >
           <S.InforSection>
             <S.LeftSection>
+              <S.StyledInput>
+                <S.StorageMethodRadioGroup>
+                  <S.StyledInput>
+                    <S.Label>재료보관방법</S.Label>
+                    <S.Input
+                      type="text"
+                      name="storageMethod"
+                      value={formData.storageMethod}
+                      onChange={handleInputChange}
+                    />
+                  </S.StyledInput>
+                </S.StorageMethodRadioGroup>
+              </S.StyledInput>
+
               <S.ImgInput>
                 <Image src={ImgIcon} alt="my_page_icon" width={124} height={83} />
               </S.ImgInput>
@@ -309,6 +346,8 @@ const New = () => {
             </S.RightSection>
           </S.InforSection>
         </S.Form>
+        {/* 추후 삭제 예정.. */}
+        <Ingredients productsToShow={sortedPostList} storageMethod={formData.storageMethod} />
       </RecoilRoot>
     </S.Box>
   );

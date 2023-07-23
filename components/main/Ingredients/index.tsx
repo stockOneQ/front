@@ -1,3 +1,4 @@
+//ingredients/index.tsx
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -6,25 +7,42 @@ import exampleMain from 'public/assets/imgs/community/friendProfile.png';
 import searchIcon from 'public/assets/icons/community/searchIcon.svg';
 import Link from 'next/link';
 import toggleButtonIcon from 'public/assets/icons/community/toggleButtonIcon.svg';
-import {  selectedProductState, mainPostListState, approachingExpirationState, expiredIngredientsState, insufficientIngredientsState } from '../../../recoil/states';
+import { selectedProductState, mainPostListState, approachingExpirationState, expiredIngredientsState, insufficientIngredientsState, StorageMethod, ProductItem } from '../../../recoil/states';
 
+// 추후 제거 후 다 ProductItem 교체 예정
 type IngredientsListItem = {
   id: number;
   category: string;
   productName: string;
+
 };
 
 
-const Ingredients = (): JSX.Element => {
+type IngredientsProps = {
+  productsToShow: ProductItem[];
+  storageMethodFilter: StorageMethod;
+};
 
+
+const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
 
   const [searchBy, setSearchBy] = useState<string>('가나다순');
   const [categoryToggle, setCategoryToggle] = useState<boolean>(false);
   const [activeLink, setActiveLink] = useState<string>('전체');
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
-  const [searchTerm, setSearchTerm] = useState<string>(''); 
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const setSelectedProduct = useSetRecoilState(selectedProductState);
+
+  //정렬
+  const [sortOrder, setSortOrder] = useState<'가나다순' | '빈도순'>('가나다순');
+  const changeValueHandler = (value: string): void => {
+    setSearchBy(value);
+    setCategoryToggle(false);
+
+    // Toggle the sort order based on the selected value
+    setSortOrder((prevSortOrder) => (prevSortOrder === '가나다순' ? '빈도순' : '가나다순'));
+  };
 
   // 유통기한임박, 지난, 부족한재료
   const approachingExpiration = useRecoilValue(approachingExpirationState);
@@ -32,21 +50,32 @@ const Ingredients = (): JSX.Element => {
   const insufficientIngredients = useRecoilValue(insufficientIngredientsState);
 
   // 카테고리 개수
-  const approachingExpirationCount: number = postList.filter((item) => approachingExpiration.includes(item.id.toString())).length;
-  const expiredIngredientsCount: number = postList.filter((item) => expiredIngredients.includes(item.id.toString())).length;
-  const insufficientIngredientsCount: number = postList.filter((item) => insufficientIngredients.includes(item.id.toString())).length;
-  const totalCount: number = postList.length;
+  const approachingExpirationCount: number = productsToShow.filter((item) =>
+    approachingExpiration.includes(item.id.toString())
+  ).length;
+  const expiredIngredientsCount: number = productsToShow.filter((item) =>
+    expiredIngredients.includes(item.id.toString())
+  ).length;
+  const insufficientIngredientsCount: number = productsToShow.filter((item) =>
+    insufficientIngredients.includes(item.id.toString())
+  ).length;
+  const totalCount: number = productsToShow.length;
 
   // 유통기한임박
   const [filteredApproachingExpiration, setFilteredApproachingExpiration] = useState<IngredientsListItem[]>([]);
   useEffect(() => {
     if (selectedCategory === 'beforeDate') {
-      const approachingExpirationProducts = postList.filter((item) => approachingExpiration.includes(item.id.toString()));
+      const approachingExpirationProducts = postList.filter(
+        (item) =>
+          approachingExpiration.includes(item.id.toString()) &&
+          (selectedCategory === '전체' || item.storageMethod === storageMethodFilter)
+      );
       setFilteredApproachingExpiration(approachingExpirationProducts);
     } else {
       setFilteredApproachingExpiration([]);
     }
-  }, [selectedCategory, approachingExpiration, postList]);
+  }, [selectedCategory, storageMethodFilter, approachingExpiration, postList]);
+
   // 유통기한지난
   const [filteredExpiredItems, setFilteredExpiredItems] = useState<IngredientsListItem[]>([]);
   useEffect(() => {
@@ -73,21 +102,40 @@ const Ingredients = (): JSX.Element => {
     setSelectedCategory(link);
   };
 
+  const renderItems = (items: ProductItem[]) => {
+    const sortedItems = sortOrder === '가나다순'
+      ? items.sort((a, b) => a.productName.localeCompare(b.productName))
+      : items.sort((a, b) => parseInt(b.orderingFrequency) - parseInt(a.orderingFrequency));
+
+    return sortedItems.map((value) => (
+      <S.MainItem key={value.id} onClick={() => handleItemClick(value)}>
+        <Link href={`/product/${value.id}`} key={value.id}>
+          <S.MainItemImg>
+            <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
+          </S.MainItemImg>
+          <S.ProductName>
+            {value.productName}
+          </S.ProductName>
+        </Link>
+      </S.MainItem>
+    ));
+  };
+
   const categoryToggleCloseHandler = (): void => {
     setCategoryToggle(false);
   };
 
-  const changeValueHandler = (value: string): void => {
-    setSearchBy(value);
-    setCategoryToggle(false);
-  };
+  //필터링해서 제품 정렬
+  const filteredItems: ProductItem[] = selectedCategory === '전체'
+    ? postList.filter((item) => item.storageMethod === storageMethodFilter)
+    : postList.filter((item) => item.storageMethod === storageMethodFilter && item.category === selectedCategory);
 
-  const filteredItems: IngredientsListItem[] = selectedCategory === '전체'
-    ? postList
-    : postList.filter((item) => item.category === selectedCategory);
+  const sortedFilteredItems = sortOrder === '가나다순'
+    ? filteredItems.sort((a, b) => a.productName.localeCompare(b.productName))
+    : filteredItems.sort((a, b) => parseInt(b.orderingFrequency) - parseInt(a.orderingFrequency));
 
 
-  const handleItemClick = (item: IngredientsListItem): void => {
+  const handleItemClick = (item: ProductItem): void => {
     setSelectedProduct(item);
   };
 
@@ -146,8 +194,8 @@ const Ingredients = (): JSX.Element => {
           </S.SelectedValueButton>
           {categoryToggle && (
             <S.OptionList>
-              <li onClick={() => changeValueHandler('가나다순')}>가나다순</li>
-              <li onClick={() => changeValueHandler('빈도순')}>빈도순</li>
+              <li onClick={() => changeValueHandler('가나다순')} className={sortOrder === '가나다순' ? 'selected' : ''}>가나다순</li>
+              <li onClick={() => changeValueHandler('빈도순')} className={sortOrder === '빈도순' ? 'selected' : ''}>빈도순</li>
             </S.OptionList>
           )}
           <S.SerchSection>
@@ -164,69 +212,10 @@ const Ingredients = (): JSX.Element => {
       </S.ControlBar>
 
       <S.MainSection>
-        {selectedCategory === 'beforeDate'
-          ? filteredApproachingExpiration.map((value) => (
-            <S.MainItem key={value.id} onClick={() => handleItemClick(value)}>
-              <Link href={`/product/${value.id}`} key={value.id}>
-                <S.MainItemImg>
-                  <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
-                </S.MainItemImg>
-                <S.ProductName>
-                  {value.productName}
-                </S.ProductName>
-              </Link>
-            </S.MainItem>
-          ))
-          : selectedCategory === 'afterDate'
-            ? filteredExpiredItems.map((value) => (
-              <S.MainItem key={value.id} onClick={() => handleItemClick(value)}>
-                <Link href={`/product/${value.id}`} key={value.id}>
-                  <S.MainItemImg>
-                    <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
-                  </S.MainItemImg>
-                  <S.ProductName>
-                    {value.productName}
-                  </S.ProductName>
-                </Link>
-              </S.MainItem>
-            ))
-            : selectedCategory === 'no'
-              ? filteredInsufficientIngredients.map((value) => (
-                <S.MainItem key={value.id} onClick={() => handleItemClick(value)}>
-                  <Link href={`/product/${value.id}`} key={value.id}>
-                    <S.MainItemImg>
-                      <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
-                    </S.MainItemImg>
-                    <S.ProductName>
-                      {value.productName}
-                    </S.ProductName>
-                  </Link>
-                </S.MainItem>
-              )) : searchTerm !== ''
-                ? searchResults.map((item) => (
-                  <S.MainItem key={item.id} onClick={() => handleItemClick(item)}>
-                    <Link href={`/product/${item.id}`} key={item.id}>
-                      <S.MainItemImg>
-                        <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
-                      </S.MainItemImg>
-                      <S.ProductName>
-                        {item.productName}
-                      </S.ProductName>
-                    </Link>
-                  </S.MainItem>
-                ))
-                : filteredItems.map((value) => (
-                  <S.MainItem key={value.id} onClick={() => handleItemClick(value)}>
-                    <Link href={`/product/${value.id}`} key={value.id}>
-                      <S.MainItemImg>
-                        <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
-                      </S.MainItemImg>
-                      <S.ProductName>
-                        {value.productName}
-                      </S.ProductName>
-                    </Link>
-                  </S.MainItem>
-                ))}
+        {selectedCategory === 'beforeDate' && renderItems(filteredApproachingExpiration)}
+        {selectedCategory === 'afterDate' && renderItems(filteredExpiredItems)}
+        {selectedCategory === 'no' && renderItems(filteredInsufficientIngredients)}
+        {searchTerm !== '' ? renderItems(searchResults) : renderItems(filteredItems)}
       </S.MainSection>
 
     </>
