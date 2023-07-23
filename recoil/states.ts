@@ -91,7 +91,7 @@ export const postListState = atom<IPostTypes[]>({
 
 /** 게시글 정렬 */
 
-export const sortTypeState = atom({
+export const sortTypeState = atom<string>({
   key: "sortTypeState",
   default: "최신순",
 });
@@ -119,12 +119,12 @@ export const sortedPostsState = selector({
 
 /* 게시글 검색 */
 
-export const searchTypeState = atom({
+export const searchTypeState = atom<string>({
   key: "searchTypeState",
   default: "글 제목",
 });
 
-export const searchInputState = atom({
+export const searchInputState = atom<string>({
   key: "searchInputState",
   default: "",
 });
