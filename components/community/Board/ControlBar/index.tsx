@@ -20,14 +20,6 @@ import WriteIcon from "public/assets/icons/write.png";
 const sortOptionList = ["최신순", "조회순"];
 const searchOptionList = ["글 제목", "글 내용", "작성자"];
 
-const DropBox = styled(DropDown)`
-  .what {
-    color: red !important;
-    padding: 100px;
-    margin: 100px !important;
-  }
-`;
-
 const ControlBar = () => {
   const setSortType = useSetRecoilState(sortTypeState);
   const setSearchType = useSetRecoilState(searchTypeState);
@@ -43,10 +35,12 @@ const ControlBar = () => {
   return (
     <S.ControlBarBox>
       <S.DropBoxContainer>
-        <DropBox
+        <DropDown
           width={16.3}
           height={3.5}
-          font={1.3}
+          fontSize={1.3}
+          toggleSize={10}
+          toggleTopSize={48}
           list={sortOptionList}
           onChange={setSortType}
         />
@@ -54,10 +48,12 @@ const ControlBar = () => {
 
       <S.SearchBar>
         <S.DropBoxContainer>
-          <DropBox
+          <DropDown
             width={16.3}
             height={3.5}
-            font={1.3}
+            fontSize={1.3}
+            toggleSize={10}
+            toggleTopSize={48}
             list={searchOptionList}
             onChange={setSearchType}
             onReset={setSearchInput}

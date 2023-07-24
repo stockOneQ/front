@@ -19,6 +19,7 @@ export const ActionButtonBox = styled.div`
   font-size: 1.8rem;
   font-weight: 600;
   padding-bottom: 3rem;
+  margin-right: 3.2rem;
 `;
 
 {

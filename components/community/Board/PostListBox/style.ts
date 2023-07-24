@@ -10,4 +10,13 @@ export const Box = styled.div`
 
   position: absolute;
   top: 17.5%;
+
+  &::-webkit-scrollbar {
+    width: 0.9rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #444343;
+    border-radius: 5px;
+  }
 `;

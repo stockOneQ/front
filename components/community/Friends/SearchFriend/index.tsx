@@ -5,7 +5,7 @@ import * as S from "./style";
 import { Dispatch, SetStateAction, useState } from "react";
 import SearchResults from "./SearchResults";
 import ReqFriends from "./ReqFriends";
-import DropDown from 'components/common/DropDown';
+import DropDown from "components/common/DropDown";
 
 const DROP_DOWN_LIST = ["이름", "상호명", "지역명"];
 
@@ -16,7 +16,7 @@ interface ISearchFriendProps {
 
 /** 친구 찾기 */
 const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
-  const [searchBy, setSearchBy] = useState('이름'); // 카테고리 선택
+  const [searchBy, setSearchBy] = useState("이름"); // 카테고리 선택
   const [isSearch, setIsSearch] = useState(false); // 검색 중인지
 
   const onWriteHandler = (e: React.FormEvent<HTMLInputElement>) => {
@@ -27,15 +27,15 @@ const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
     <Card width="65.9rem">
       {!reqFriends && (
         <>
-          <S.SearchFriendText>
-            친구 찾기
-          </S.SearchFriendText>
+          <S.SearchFriendText>친구 찾기</S.SearchFriendText>
           <S.SearchFriendBox>
             <S.DropBoxContainer>
               <DropDown
                 width={16.3}
                 height={4.6}
-                font={1.5}
+                fontSize={1.5}
+                toggleSize={12}
+                toggleTopSize={46}
                 list={DROP_DOWN_LIST}
                 onChange={setSearchBy}
               />
@@ -61,7 +61,7 @@ const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
       )}
       {reqFriends && <ReqFriends setReqFriends={setReqFriends} />}
     </Card>
-    
+
     // <Card width="65.9rem">
     //   <FriendStock />
     // </Card>

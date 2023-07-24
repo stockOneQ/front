@@ -1,12 +1,14 @@
 import Image from "next/image";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import toggleButtonIcon from "public/assets/icons/community/toggleButtonIcon.svg";
 import * as S from "./style";
 
 interface IDropDownProps {
   width: number;
   height: number;
-  font: number;
+  fontSize: number;
+  toggleSize: number;
+  toggleTopSize: number;
   list: string[];
   onChange?: React.Dispatch<React.SetStateAction<string>>;
   onReset?: React.Dispatch<React.SetStateAction<string>>;
@@ -16,7 +18,9 @@ interface IDropDownProps {
 const DropDown = ({
   width,
   height,
-  font,
+  fontSize,
+  toggleSize,
+  toggleTopSize,
   list,
   onChange,
   onReset,
@@ -36,21 +40,23 @@ const DropDown = ({
       <S.SelectedValueButton
         width={width}
         height={height}
-        font={font}
+        fontSize={fontSize}
         onClick={() => {
           setCategoryToggle((prev) => !prev);
         }}
       >
         <span>{searchBy}</span>
-        <Image
-          className={`${categoryToggle ? "categoryToggle" : ""}`}
-          src={toggleButtonIcon}
-          alt="toggle_icon"
-          width={12}
-        />
+        <S.ToggleContainer toggleTopSize={toggleTopSize}>
+          <Image
+            className={`${categoryToggle ? "categoryToggle" : ""}`}
+            src={toggleButtonIcon}
+            alt="toggle_icon"
+            width={toggleSize}
+          />
+        </S.ToggleContainer>
       </S.SelectedValueButton>
       {categoryToggle && (
-        <S.OptionList font={font}>
+        <S.OptionList fontSize={fontSize}>
           {list.map((label, idx) => (
             <li
               key={idx}
