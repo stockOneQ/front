@@ -1,9 +1,11 @@
 import { atom, selector, useSetRecoilState } from "recoil";
 import { useCallback } from "react";
 
-/** 메인 페이지 + 제품 추가 */
+/** ----------------메인 페이지------------- */
+
 export interface ProductItem {
   id: number;
+  category: string;
   productName: string;
   price: string;
   seller: string;
@@ -19,13 +21,16 @@ export interface ProductItem {
   orderingSite: string;
   orderingFrequency: string;
   imageInfo: string;
-}
+  storageMethod: string;
+};
+
 
 export const mainPostListState = atom<ProductItem[]>({
   key: "mainPostListState",
   default: [
     {
       id: 1,
+      category: "냉동",
       productName: "가나원두",
       price: "12000원",
       seller: "투썸플레이스",
@@ -41,7 +46,10 @@ export const mainPostListState = atom<ProductItem[]>({
       orderingSite: "투썸사이트",
       orderingFrequency: "2",
       imageInfo: "이미지",
+      storageMethod: "냉동",
+
     },
+    
   ],
 });
 
@@ -69,6 +77,12 @@ export const expiredIngredientsState = atom<number[]>({
 //부족한 재료
 export const insufficientIngredientsState = atom<number[]>({
   key: "insufficientIngredientsState",
+  default: [],
+});
+
+//보관 방식 
+export const storageMethodState = atom<string[]>({
+  key: "storageMethodState",
   default: [],
 });
 
