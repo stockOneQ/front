@@ -2,13 +2,13 @@ import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import { filteredPostsState } from "recoil/states";
 import PostItemBox from "components/community/Board/PostListBox/PostItemBox";
-import * as P from "./style";
+import * as S from "./style";
 
 const PostListBox = () => {
   const postList = useRecoilValue(filteredPostsState);
 
   return (
-    <P.Box>
+    <S.Box>
       {postList &&
         postList.map((value) => (
           <Link key={value.id} href={`/community/board/${value.id}`}>
@@ -22,7 +22,7 @@ const PostListBox = () => {
             />
           </Link>
         ))}
-    </P.Box>
+    </S.Box>
   );
 };
 

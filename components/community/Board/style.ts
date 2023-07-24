@@ -15,3 +15,20 @@ export const HeaderSection = styled.div`
   top: 0;
   left: 0;
 `;
+
+export const MyPostSection = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+
+  position: absolute;
+  top: 2%;
+  right: 0%;
+
+  span {
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+  }
+`;

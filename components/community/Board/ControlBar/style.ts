@@ -8,6 +8,8 @@ export const ControlBarBox = styled.div`
   margin-bottom: 3rem;
 
   position: relative;
+
+  margin-left: 1.6rem;
 `;
 
 export const SearchBar = styled.div`

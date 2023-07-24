@@ -7,24 +7,13 @@ import { postContentState, postListState, postTitleState } from "recoil/states";
 import Editor from "./Editor/index";
 import HeadingText from "../../../common/HeadingText";
 
+import { getDetailDate } from "utils/date";
+
 import * as S from "./style";
 
 let id = 4;
 const getId = () => {
   return id++;
-};
-
-const getDate = () => {
-  const date = new Date();
-  const Year = String(date.getFullYear());
-  const Month = String(date.getMonth() + 1).padStart(2, "0");
-  const Day = String(date.getDay()).padStart(2, "0");
-  const Hour = String(date.getHours()).padStart(2, "0");
-  const Minute = String(date.getMinutes()).padStart(2, "0");
-  const Second = String(date.getSeconds()).padStart(2, "0");
-  const MSecond = String(date.getMilliseconds()).padStart(3, "0");
-
-  return Year + Month + Day + Hour + Minute + Second + MSecond;
 };
 
 const New = () => {
@@ -44,7 +33,7 @@ const New = () => {
       {
         id: getId(),
         writer: "임하림",
-        uploadTime: getDate(),
+        uploadTime: getDetailDate(),
         title: title,
         content: content,
         views: 30,
