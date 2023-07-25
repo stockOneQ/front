@@ -6,10 +6,16 @@ import * as S from './style';
 import exampleMain from 'public/assets/imgs/community/friendProfile.png';
 import searchIcon from 'public/assets/icons/community/searchIcon.svg';
 import Link from 'next/link';
-import toggleButtonIcon from 'public/assets/icons/community/toggleButtonIcon.svg';
 import { selectedProductState, mainPostListState, approachingExpirationState, expiredIngredientsState, insufficientIngredientsState, StorageMethod, ProductItem } from '../../../recoil/states';
+import {
+  searchInputState,
+  searchTypeState,
+  sortTypeState,
+} from "recoil/states";
+import DropDown from "components/common/DropDown";
 
-// 추후 제거 후 다 ProductItem 교체 예정
+const sortOptionList = ["가나다순", "빈도순"];
+
 type IngredientsListItem = {
   id: number;
   category: string;
@@ -27,6 +33,13 @@ type IngredientsProps = {
 const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
 
+
+  const setSortType = useSetRecoilState(sortTypeState);
+  const handleSortChange = (selectedSort: string) => {
+    setSearchBy(selectedSort);
+    setSortType(selectedSort); 
+  };
+
   const [searchBy, setSearchBy] = useState<string>('가나다순');
   const [categoryToggle, setCategoryToggle] = useState<boolean>(false);
   const [activeLink, setActiveLink] = useState<string>('전체');
@@ -40,7 +53,6 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
     setSearchBy(value);
     setCategoryToggle(false);
 
-    // Toggle the sort order based on the selected value
     setSortOrder((prevSortOrder) => (prevSortOrder === '가나다순' ? '빈도순' : '가나다순'));
   };
 
@@ -103,9 +115,16 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   };
 
   const renderItems = (items: ProductItem[]) => {
-    const sortedItems = sortOrder === '가나다순'
-      ? items.sort((a, b) => a.productName.localeCompare(b.productName))
-      : items.sort((a, b) => parseInt(b.orderingFrequency) - parseInt(a.orderingFrequency));
+    let sortedItems: ProductItem[];
+
+    if (searchBy === '가나다순') {
+      sortedItems = items.sort((a, b) => a.productName.localeCompare(b.productName));
+    } else if (searchBy === '빈도순') {
+      sortedItems = items.sort((a, b) => parseInt(b.orderingFrequency) - parseInt(a.orderingFrequency));
+    } else {
+      // Default sorting (you can customize this based on your needs)
+      sortedItems = items.sort((a, b) => a.productName.localeCompare(b.productName));
+    }
 
     return sortedItems.map((value) => (
       <S.MainItem key={value.id} onClick={() => handleItemClick(value)}>
@@ -181,26 +200,21 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
             부족한 재료
             <S.CountValue>{insufficientIngredientsCount}</S.CountValue>
           </S.StyledLink>
-
-          <S.SelectedValueButton onClick={() => setCategoryToggle(prev => !prev)}>
-            <p>{searchBy}</p>
-            <Image
-              className={`${categoryToggle ? 'categoryToggle' : ''}`}
-              src={toggleButtonIcon}
-              alt="my_page_icon"
-              width={12}
-              height={10}
+          <S.DropBoxContainer>
+            <DropDown
+              width={13.3}
+              height={3.5}
+              fontSize={1.3}
+              toggleSize={10}
+              toggleTopSize={48}
+              list={sortOptionList}
+              onChange={handleSortChange}
             />
-          </S.SelectedValueButton>
-          {categoryToggle && (
-            <S.OptionList>
-              <li onClick={() => changeValueHandler('가나다순')} className={sortOrder === '가나다순' ? 'selected' : ''}>가나다순</li>
-              <li onClick={() => changeValueHandler('빈도순')} className={sortOrder === '빈도순' ? 'selected' : ''}>빈도순</li>
-            </S.OptionList>
-          )}
+          </S.DropBoxContainer>
+
           <S.SerchSection>
-            <input type="text" placeholder="제품 검색" value={searchTerm} onChange={handleSearchChange} />
             <Image alt="search" src={searchIcon} />
+            <S.Input type="text" placeholder="제품 검색" value={searchTerm} onChange={handleSearchChange} ></S.Input>
           </S.SerchSection>
 
           <S.ActionButtonBox>
