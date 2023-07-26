@@ -179,7 +179,7 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   //     const response = await axios.get(`/api/product/${productId}`);
   //     const productDetails = response.data;
 
-  //     // You can do something with the product details here, e.g., display a modal or navigate to a new page.
+  //    product응답 후 product 상세 정보 보이기 함수 구현 
   //     console.log(productDetails);
   //   } catch (error) {
   //     console.error("Error fetching product details:", error);
