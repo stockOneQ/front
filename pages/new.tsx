@@ -1,13 +1,19 @@
 //new
 import Link from "next/link";
 import Image from 'next/image';
+import { calculateDaysRemaining } from "utils/calculateCondition";
+import axios from 'axios';
 import ImgIcon from "../public/assets/icons/imgUpload.svg";
 import * as S from "../components/main/style";
 import { useState, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/router";
+import { Title } from "components/community/Board/PostListBox/PostItemBox/style";
 import { useSetRecoilState, useRecoilValue, RecoilRoot, useRecoilState } from "recoil";
 import { approachingExpirationState, postMainTitleState, mainPostListState, expiredIngredientsState, insufficientIngredientsState, storageMethodState } from "../recoil/states";
 import Ingredients from "components/main/Ingredients";
+
+
+const sortOptionList = ["냉동", "냉장", "상온"];
 
 let id = 1;
 const getId = () => {
@@ -15,43 +21,16 @@ const getId = () => {
 };
 
 /** 제품 추가 페이지 */
-const New = () => {
 
+const New = () => {
   const router = useRouter();
   const [productName, setProductName] = useRecoilState(postMainTitleState);
   const setPostListState = useSetRecoilState(mainPostListState);
 
-  //빈도순 정렬
-  const [postList, setPostList] = useRecoilState(mainPostListState);
-  const [sortedPostList, setSortedPostList] = useState([]);
-
-  useEffect(() => {
-    const sortedList = [...postList].sort((a, b) => a.orderingFrequency - b.orderingFrequency);
-    setSortedPostList(sortedList);
-  }, [postList]);
-
-  //유통기한임박 재료 
-  const setApproachingExpiration = useSetRecoilState(approachingExpirationState);
-  //유통기한 지난 재료 
-  const expiredIngredients = useRecoilValue(expiredIngredientsState);
-  const setExpiredIngredients = useSetRecoilState(expiredIngredientsState);
-  //부족한 재료 
-  const setinsufficientIngredients = useSetRecoilState(insufficientIngredientsState);
-  //냉장 냉동 상온
-  const setstorageMethod = useRecoilValue(storageMethodState);
-  
-
-  //현재 날짜와 만료 날짜 사이의 일수 차이를 계산하는 함수
-  const calculateDaysRemaining = () => {
-    const currentDate = new Date();
-    const expirationDate = new Date(
-      parseInt(formData.expirationYear),
-      parseInt(formData.expirationMonth) - 1, 
-      parseInt(formData.expirationDay)
-    );
-    const timeDifference = expirationDate.getTime() - currentDate.getTime();
-    const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-    return daysRemaining;
+  //냉동상온냉장
+  const [selectedStorageMethod, setSelectedStorageMethod] = useState<string>('');
+  const handleStorageMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedStorageMethod(e.target.value);
   };
 
   const [formData, setFormData] = useState({
@@ -73,11 +52,42 @@ const New = () => {
     storageMethod: '',
   });
 
+  //검색 한글자
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     console.log("Input Changed:", name, value);
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
+
+  //빈도순 정렬
+  const [postList, setPostList] = useRecoilState(mainPostListState);
+  const [sortedPostList, setSortedPostList] = useState([]);
+  useEffect(() => {
+    const sortedList = [...postList].sort((a, b) => a.orderingFrequency - b.orderingFrequency);
+    setSortedPostList(sortedList);
+  }, [postList]);
+
+
+  //유통기한임박 재료 
+  const setApproachingExpiration = useSetRecoilState(approachingExpirationState);
+  //유통기한 지난 재료 
+  const expiredIngredients = useRecoilValue(expiredIngredientsState);
+  const setExpiredIngredients = useSetRecoilState(expiredIngredientsState);
+  //부족한 재료 
+  const setinsufficientIngredients = useSetRecoilState(insufficientIngredientsState);
+  //냉장 냉동 상온
+  const setstorageMethod = useRecoilValue(storageMethodState);
+
+  //현재 날짜와 만료 날짜 사이의 일수 차이를 계산하는 함수
+  const daysRemaining = calculateDaysRemaining(
+    formData.expirationYear,
+    formData.expirationMonth,
+    formData.expirationDay
+  );
+
+
+
+  
 
   // 저장하기 
   const handleSubmit = () => {
@@ -98,11 +108,11 @@ const New = () => {
       orderingSite: formData.orderingSite,
       orderingFrequency: formData.orderingFrequency,
       imageInfo: formData.imageInfo,
-      storageMethod: formData.storageMethod,
+      storageMethod: selectedStorageMethod,
     };
 
     // 업데이트 recoil state
-    setPostListState((prevPostList) => [...prevPostList, newProduct]); // Use setPostListState instead of setPostList
+    setPostListState((prevPostList) => [...prevPostList, newProduct]); 
     const sortedList = [...postList].sort((a, b) => a.orderingFrequency - b.orderingFrequency);
     setSortedPostList(sortedList);
 
@@ -173,13 +183,81 @@ const New = () => {
     router.push("/");
   };
 
+  /** ---------------------------------------------------------- */
+  /** ---------------------------------------------------------- */
+  /** ---------------------------------------------------------- */
+
+  // //데이터 json 이미지 아직 미구현
+  // const convertFormDataToJson = () => {
+  //   const jsonFormData = {
+  //     productName: productName,
+  //     price: formData.price,
+  //     seller: formData.seller,
+  //     receiptYear: formData.receiptYear,
+  //     receiptMonth: formData.receiptMonth,
+  //     receiptDay: formData.receiptDay,
+  //     expirationYear: formData.expirationYear,
+  //     expirationMonth: formData.expirationMonth,
+  //     expirationDay: formData.expirationDay,
+  //     ingredientLocation: formData.ingredientLocation,
+  //     requiredQuantity: formData.requiredQuantity,
+  //     quantity: formData.quantity,
+  //     orderingSite: formData.orderingSite,
+  //     orderingFrequency: formData.orderingFrequency,
+  //     imageInfo: formData.imageInfo,
+  //     storageMethod: selectedStorageMethod,
+  //   };
+  //   return jsonFormData;
+  // };
+
+  // //제품 추가 api 호출
+  // const handleSubmit = async () => {
+  //   const jsonFormData = convertFormDataToJson();
+  //   try {
+  //     const response = await axios.post('/api/product/add', jsonFormData);
+  //     const newProduct = response.data;
+
+  //     // 업데이트
+  //     setPostListState((prevPostList) => [...prevPostList, newProduct]);
+
+  //     // 초기화 
+  //     setFormData({
+  //       productName: "",
+  //       price: "",
+  //       seller: "",
+  //       receiptYear: "",
+  //       receiptMonth: "",
+  //       receiptDay: "",
+  //       expirationYear: "",
+  //       expirationMonth: "",
+  //       expirationDay: "",
+  //       ingredientLocation: "",
+  //       requiredQuantity: "",
+  //       quantity: "",
+  //       orderingSite: "",
+  //       orderingFrequency: "",
+  //       imageInfo: "",
+  //       storageMethod: "",
+  //     });
+  //     setProductName("");
+  //     setSelectedStorageMethod("");
+
+      
+  //     router.push("/");
+  //   } catch (error) {
+  //     console.error('Error adding product:', error);
+  //   }
+  // };
+
+
+
 
 
   return (
     <S.Box>
       <RecoilRoot>
 
-        {/* <Title title="재료 등록" /> */}
+        <Title title="재료 등록">재료등록</Title>
         <S.TopSection>
           <Link href='/'>작성취소</Link>
           <S.Button type="submit" onClick={handleSubmit}><Link href='/'>저장</Link></S.Button>
@@ -191,13 +269,36 @@ const New = () => {
               <S.StyledInput>
                 <S.StorageMethodRadioGroup>
                   <S.StyledInput>
-                    <S.Label>재료보관방법</S.Label>
-                    <S.Input
-                      type="text"
-                      name="storageMethod"
-                      value={formData.storageMethod}
-                      onChange={handleInputChange}
-                    />
+                    <S.StyledRadioInput>
+                      <input
+                        type="radio"
+                        name="storageMethod"
+                        value="냉동"
+                        checked={selectedStorageMethod === '냉동'}
+                        onChange={handleStorageMethodChange}
+                      />
+                      <span>냉동</span>
+                    </S.StyledRadioInput>
+                    <S.StyledRadioInput>
+                      <input
+                        type="radio"
+                        name="storageMethod"
+                        value="냉장"
+                        checked={selectedStorageMethod === '냉장'}
+                        onChange={handleStorageMethodChange}
+                      />
+                      <span>냉장</span>
+                    </S.StyledRadioInput>
+                    <S.StyledRadioInput>
+                      <input
+                        type="radio"
+                        name="storageMethod"
+                        value="상온"
+                        checked={selectedStorageMethod === '상온'}
+                        onChange={handleStorageMethodChange}
+                      />
+                      <span>상온</span>
+                    </S.StyledRadioInput>
                   </S.StyledInput>
                 </S.StorageMethodRadioGroup>
               </S.StyledInput>
