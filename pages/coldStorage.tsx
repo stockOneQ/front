@@ -1,5 +1,5 @@
 //coldestorage
-import ColdPage from 'components/main/Cold/index';
+import ColdPage from "components/main/Cold";
 
 const Home = () => {
   return (
