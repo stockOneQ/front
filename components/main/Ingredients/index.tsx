@@ -11,6 +11,7 @@ import MainSection from '../ItemShow';
 import { selectedProductState, mainPostListState, approachingExpirationState, expiredIngredientsState, insufficientIngredientsState, StorageMethod, ProductItem } from '../../../recoil/states';
 import { sortTypeState } from "recoil/states";
 import axios from 'axios';
+import { productList, countingProduct, fetchProductDetails, getProductByCategory } from 'pages/api/api';
 
 const sortOptionList = ["가나다순", "빈도순"];
 type IngredientsProps = {
@@ -20,7 +21,7 @@ type IngredientsProps = {
 
 
 const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) => {
- // const postList = useRecoilValue(mainPostListState);
+  //const postList = useRecoilValue(mainPostListState);
 
   // /** API 호출------------------------------------------------- */
   // /** --------------------------------------------------------- */
@@ -29,13 +30,14 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   // const router = useRouter();
 
   // //정렬 제품 api 호출
-  // const [sortedProducts, setSortedProducts] = useState([]);
+  // //const [sortedProducts, setSortedProducts] = useState([]);
+  // const [sortedProducts, setSortedProducts] = useState<ProductItem[]>([]);
   // const [selectedSortOption, setSelectedSortOption] = useState("가나다순");
   // const [activeLink, setActiveLink] = useState<string>('전체');
   // const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   // const [searchTerm, setSearchTerm] = useState("");
   // const [linksVisible, setLinksVisible] = useState(false);
-  
+
   // /** 검색 API ------------------------------------------------------------------ */
   // const handleSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
   //   const searchValue = event.target.value;
@@ -45,7 +47,7 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   //     const response = await axios.get("/api/product", {
   //       params: {
   //         store: storageMethodFilter,
-  //         condition: "전체",
+  //         condition: "전체", // 지금 내가 있는 카테고리여야 하는데 -> activeLink
   //         name: searchValue,
   //       },
   //     });
@@ -56,80 +58,48 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   //     console.error("Error fetching search results:", error);
   //   }
   // };
+
+  // // 검색 전체일 때 test코드 
+  // // const handleSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  // //   const searchValue = event.target.value;
+  // //   setSearchTerm(searchValue);
   
+  // //   try {
+  // //     const products = await searchProducts(storageMethodFilter, searchValue);
+  // //     setSortedProducts(products);
+  // //   } catch (error) {
+  // //     console.error("Error handling search change:", error);
+  // //   }
+  // // };
   // /** 제품조회 API ------------------------------------------------------------------ */
-  // const fetchSortedProducts = async (sortParameter) => {
+  // const fetchSortedProducts = async (sortParameter: string) => {
   //   try {
-  //     const response = await axios.get("/api/product/all", {
-  //       params: {
-  //         store: '냉동',
-  //         condition: '전체', //all
-  //         last: 'lastProductId',
-  //         sort: sortParameter,
-  //       },
-  //     });
+  //     const response = await productList('냉동', '전체', 0, sortParameter);
 
   //     const products = response.data;
   //     setSortedProducts(products);
   //   } catch (error) {
-  //     console.error("Error fetching sorted products:", error);
+  //     console.error('Error fetching sorted products:', error);
   //   }
   // };
 
   // // condition별 api 호출
-  // const handleLinkClick = async (category) => {
-  //   setSelectedSortOption("가나다순");
+  // const handleLinkClick = async (category: string) => {
+  //   setSelectedSortOption('가나다순');
   //   setActiveLink(category);
-  //   setSelectedCategory(category); 
+  //   setSelectedCategory(category);//음?
 
-    
-  //   let response;
-  //   if (category === "beforeDate") {
-  //     response = await axios.get("/api/product/close", {
-  //       params: {
-  //         store: storageMethodFilter,
-  //         condition: "beforeDate",
-  //         last: "lastProductId",
-  //         sort: selectedSortOption,
-  //       },
-  //     });
-  //   } else if (category === "afterDate") {
-  //     response = await axios.get("/api/product/pass", {
-  //       params: {
-  //         store: storageMethodFilter,
-  //         condition: "afterDate",
-  //         last: "lastProductId",
-  //         sort: selectedSortOption,
-  //       },
-  //     });
-  //   } else if (category === "no") {
-  //     response = await axios.get("/api/product/lack", {
-  //       params: {
-  //         store: storageMethodFilter,
-  //         condition: "no",
-  //         last: "lastProductId",
-  //         sort: selectedSortOption,
-  //       },
-  //     });
-  //   } else {
-  //     // Default: "전체" 
-  //     response = await axios.get("/api/product/all", {
-  //       params: {
-  //         store: storageMethodFilter,
-  //         condition: "전체",
-  //         last: "lastProductId",
-  //         sort: selectedSortOption,
-  //       },
-  //     });
+  //   try {
+  //     const products = await getProductByCategory(category, storageMethodFilter, selectedSortOption);
+  //     setSortedProducts(products);
+  //   } catch (error) {
+  //     console.error('Error fetching sorted products:', error);
   //   }
-
-  //   const products = response.data;
-  //   setSortedProducts(products);
   // };
   // /** 정렬 옵션 ------------------------------------------------------------------ */
 
   // //가나다순, 빈도순 옵션 변경
-  // const handleSortChange = (selectedOption) => {
+  // const handleSortChange = (selectedOption: string) => {
   //   setSelectedSortOption(selectedOption);
   //   const sortParameter = selectedOption === "빈도순" ? "빈도순" : "가나다";
 
@@ -137,59 +107,45 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   // };
 
 
-  // /** 제품 개수 API------------------------------------------------------------------ */
-  // //제품 개수 api 호출
-  // const [approachingExpirationCount, setApproachingExpirationCount] = useState(0);
-  // const [expiredIngredientsCount, setExpiredIngredientsCount] = useState(0);
-  // const [insufficientIngredientsCount, setInsufficientIngredientsCount] = useState(0);
-  // const [totalCount, setTotalCount] = useState(0);
+  // // /** 제품 개수 API------------------------------------------------------------------ */
+  // const [approachingExpirationCount, setApproachingExpirationCount] = useState<number>(0);
+  // const [expiredIngredientsCount, setExpiredIngredientsCount] = useState<number>(0);
+  // const [insufficientIngredientsCount, setInsufficientIngredientsCount] = useState<number>(0);
+  // const [totalCount, setTotalCount] = useState<number>(0);
 
-  // const fetchProductCounts = async (store: string, condition: string) => {
-  //   try {
-  //     const response = await axios.get("/api/product/count", {
-  //       params: {
-  //         store,
-  //         condition,
-  //       },
-  //     });
-
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("Error fetching product counts:", error);
-  //     return {};
-  //   }
-  // };
   // useEffect(() => {
   //   const fetchData = async () => {
-  //     const counts = await fetchProductCounts('냉동', '전체');
+  //     try {
+  //       const totalCountsResponse = await countingProduct(storageMethodFilter, '전체');
+  //       setTotalCount(totalCountsResponse.data.totalCount);
 
-  //     // 업데이트
-  //     setApproachingExpirationCount(counts.approachingExpirationCount);
-  //     setExpiredIngredientsCount(counts.expiredIngredientsCount);
-  //     setInsufficientIngredientsCount(counts.insufficientIngredientsCount);
-  //     setTotalCount(counts.totalCount);
+  //       const approachingExpirationCountResponse = await countingProduct(storageMethodFilter, 'beforeDate');
+  //       setApproachingExpirationCount(approachingExpirationCountResponse.data.approachingExpirationCount);
+
+  //       const expiredIngredientsCountResponse = await countingProduct(storageMethodFilter, 'afterDate');
+  //       setExpiredIngredientsCount(expiredIngredientsCountResponse.data.expiredIngredientsCount);
+
+  //       const insufficientIngredientsCountResponse = await countingProduct(storageMethodFilter, 'no');
+  //       setInsufficientIngredientsCount(insufficientIngredientsCountResponse.data.insufficientIngredientsCount);
+  //     } catch (error) {
+  //       console.error('Error fetching product counts:', error);
+  //     }
   //   };
 
   //   fetchData();
   // }, []);
-
   // /** 제품 상세 페이지 조회 API------------------------------------------------------ */
-  // const fetchProductDetails = async (productId) => {
+  // const handleItemClick = async (product: ProductItem) => {
   //   try {
-  //     const response = await axios.get(`/api/product/${productId}`);
-  //     const productDetails = response.data;
-
-  //    product응답 후 product 상세 정보 보이기 함수 구현 
+  //     const productId = product.id;
+  //     const productDetails = await fetchProductDetails(productId);
   //     console.log(productDetails);
-  //   } catch (error) {
-  //     console.error("Error fetching product details:", error);
-  //   }
-  // };
 
-  // const handleItemClick = (product) => {
-  //   const productId = product.id;
-  //   fetchProductDetails(productId);
-  //   router.push(`/product/${productId}`);
+
+  //     router.push(`/product/${productId}`);
+  //   } catch (error) {
+  //     console.error("Error handling item click:", error);
+  //   }
   // };
 
   /** --------------------------------------------------------- */
