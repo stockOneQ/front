@@ -32,10 +32,10 @@ const SignUpForm = styled.form`
   padding: 0 12.7rem;
 `
 
-const IDInputBox = styled.div`
+const PwInputBox = styled.div`
   display: flex;
   align-items: end;
-  gap: 4.1rem;
+  gap: 2.4rem;
 
   p {
     color: #979797;
@@ -43,10 +43,6 @@ const IDInputBox = styled.div`
     font-weight: 500;
     line-height: normal;
   }
-`
-
-const PwInputBox = styled(IDInputBox)`
-  gap: 2.4rem;
 `
 
 const AuthBox = styled.div`
@@ -107,7 +103,6 @@ export {
   SignUpBox,
   SignUpHeaderBox,
   SignUpForm,
-  IDInputBox,
   PwInputBox,
   AuthBox,
   AuthImgBox,

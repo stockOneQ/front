@@ -14,6 +14,7 @@ import NameInput from 'components/common/loginInput/NameInput';
 import BirthInput from 'components/common/loginInput/BirthInput';
 import EmailInput from 'components/common/loginInput/EmailInput';
 import DigitInput from 'components/common/loginInput/DigitInput';
+import IDInput from 'components/common/loginInput/IDInput';
 
 
 /** 회원 가입 */
@@ -34,13 +35,7 @@ const SignUp = () => {
           </S.InputRow1Box>
           <EmailInput />
           <DigitInput />
-          <S.InputRow2Box>
-            <SS.IDInputBox>
-              <S.SignUpLabel>아이디</S.SignUpLabel>
-              <p>6-20자 영문, 숫자</p>
-            </SS.IDInputBox>
-            <S.SignUpInput width="27.4rem" type="text" />
-          </S.InputRow2Box>
+          <IDInput />
           <S.InputRow2Box>
             <SS.PwInputBox>
               <S.SignUpLabel>비밀번호</S.SignUpLabel>
