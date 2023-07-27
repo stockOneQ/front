@@ -43,13 +43,13 @@ const LoginInputBox = styled.div`
   input {
     width: 34.5rem;
     height: 6.6rem;
-    border: 1px solid #E1E1E1;
+    border: 1px solid var(--color-gray);
     border-radius: 5rem;
     padding: 2.4rem 3.5rem;
   }
 
   input::placeholder {
-    color: #E1E1E1;
+    color: var(--color-gray);
   }
 `
 
@@ -60,10 +60,10 @@ interface ILoginButtonProps {
 const LoginButton = styled.button<ILoginButtonProps>`
   width: 34.5rem;
   height: 6.6rem;
-  border: 1px solid #E1E1E1;
+  border: 1px solid var(--color-gray);
   border-radius: 5rem;
   padding: 2.4rem 3.5rem;
-  background-color: #E1E1E1;
+  background-color: var(--color-gray);
   margin-bottom: 2rem;
   background-image: ${({ isTyped }) => isTyped ? `url('/assets/icons/login/bg-img/loginBtnBg.svg')` : ''};
   cursor: ${({ isTyped }) => isTyped ? 'pointer' : 'default'};

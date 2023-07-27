@@ -9,7 +9,7 @@ const SignUpHeaderBox = styled.div`
   width: 100%;
   margin: 0 auto;
   padding-bottom: 5.9rem;
-  border-bottom: 1px solid #E1E1E1;
+  border-bottom: 1px solid var(--color-gray);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,7 +71,7 @@ interface ISignUpInput {
 const SignUpInput = styled.input<ISignUpInput>`
   width: ${({ width }) => width};
   height: 4.5rem;
-  border: 1px solid #E1E1E1;
+  border: 1px solid var(--color-gray);
   border-radius: 5px;
   color: var(--color-black);
   font-size: 1.5rem;
@@ -80,7 +80,7 @@ const SignUpInput = styled.input<ISignUpInput>`
   padding: 1.3rem 2.2rem;
 
   &::placeholder {
-    color: #E1E1E1;
+    color: var(--color-gray);
     text-align: ${({ placeholderLocation = 'center' }) => placeholderLocation};
     font-size: 1.5rem;
     font-weight: 500;
@@ -116,7 +116,7 @@ const EmailSelectBox = styled.div`
   height: 4.5rem;
   padding: 1.3rem 2rem;
 
-  border: 1px solid #E1E1E1;
+  border: 1px solid var(--color-gray);
   border-radius: 5px;
   color: var(--color-black);
   font-size: 1.5rem;
@@ -166,7 +166,7 @@ const AuthBox = styled.div`
 const AuthImgBox = styled.div`
   width: 16.3rem;
   height: 11.1rem;
-  border: 1px solid #e1e1e1;
+  border: 1px solid var(--color-gray);
   border-radius: 5px;
   padding: 2rem 0;
   display: flex;

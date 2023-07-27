@@ -11,7 +11,7 @@ const RejBtn = styled.button<IRejectBtn>`
   width: ${({ width = '7.1rem'}) => width};
   height: ${({ height = '4.6rem'}) => height};
   border-radius: .4rem;
-  background-color: #E1E1E1;
+  background-color: var(--color-gray);
   color: var(--color-white);
   text-align: center;
   font-size: ${({ font = '1.3rem'}) => font};
