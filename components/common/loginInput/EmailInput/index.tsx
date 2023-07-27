@@ -5,9 +5,9 @@ import * as SS from './style';
 const EmailInput = () => {
   return (
     <S.InputRow2Box>
-      <S.SignUpLabel>E-mail</S.SignUpLabel>
+      <S.SignUpLabel htmlFor="email">E-mail</S.SignUpLabel>
       <SS.EmailInputBox>
-        <S.SignUpInput width="18.3rem" type="text" />
+        <S.SignUpInput width="18.3rem" type="text" id="email" />
         <p>@</p>
         <S.SignUpInput width="18.3rem" type="text" />
         <SS.EmailSelectBox>

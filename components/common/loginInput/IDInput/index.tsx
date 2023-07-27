@@ -6,10 +6,10 @@ const IDInput = () => {
   return (
     <S.InputRow2Box>
       <SS.IDInputBox>
-        <S.SignUpLabel>아이디</S.SignUpLabel>
+        <S.SignUpLabel htmlFor="id">아이디</S.SignUpLabel>
         <p>6-20자 영문, 숫자</p>
       </SS.IDInputBox>
-      <S.SignUpInput width="27.4rem" type="text" />
+      <S.SignUpInput width="27.4rem" type="text" id="id" />
     </S.InputRow2Box>
   );
 };

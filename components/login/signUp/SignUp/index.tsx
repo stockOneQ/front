@@ -8,13 +8,13 @@ import supervisorActive from 'public/assets/icons/login/supervisorActive.svg';
 import supervisorInactive from 'public/assets/icons/login/supervisorInactive.svg';
 import CancelBtn from 'components/common/button/CancelBtn';
 import RejectBtn from 'components/common/button/RejectBtn';
-import * as S from 'components/common/loginInput/style';
-import * as SS from './style';
 import NameInput from 'components/common/loginInput/NameInput';
 import BirthInput from 'components/common/loginInput/BirthInput';
 import EmailInput from 'components/common/loginInput/EmailInput';
 import DigitInput from 'components/common/loginInput/DigitInput';
 import IDInput from 'components/common/loginInput/IDInput';
+import * as S from 'components/common/loginInput/style';
+import * as SS from './style';
 
 
 /** 회원 가입 */
@@ -38,14 +38,14 @@ const SignUp = () => {
           <IDInput />
           <S.InputRow2Box>
             <SS.PwInputBox>
-              <S.SignUpLabel>비밀번호</S.SignUpLabel>
+              <S.SignUpLabel htmlFor="password">비밀번호</S.SignUpLabel>
               <p>6-20자 영문, 숫자, 특수문자 사용</p>
             </SS.PwInputBox>
-            <S.SignUpInput width="27.4rem" type="password" />
+            <S.SignUpInput width="27.4rem" type="password" id="password" />
           </S.InputRow2Box>
           <S.InputRow2Box>
-            <S.SignUpLabel>비밀번호 확인</S.SignUpLabel>
-            <S.SignUpInput width="27.4rem" type="password" />
+            <S.SignUpLabel htmlFor="passwordCheck">비밀번호 확인</S.SignUpLabel>
+            <S.SignUpInput width="27.4rem" type="password" id="passwordCheck" />
           </S.InputRow2Box>
           <S.InputRow3Box>
             <S.SignUpLabel>사용자 권한</S.SignUpLabel>
@@ -65,13 +65,13 @@ const SignUp = () => {
             </SS.AuthBox>
           </S.InputRow3Box>
           <S.InputRow2Box>
-            <S.SignUpLabel>매장 정보</S.SignUpLabel>
-            <S.SignUpInput width="27.4rem" type="text" />
+            <S.SignUpLabel htmlFor="store">매장 정보</S.SignUpLabel>
+            <S.SignUpInput width="27.4rem" type="text" id="store" />
           </S.InputRow2Box>
           <S.InputRow2Box>
-            <S.SignUpLabel>주소</S.SignUpLabel>
+            <S.SignUpLabel htmlFor="addr">주소</S.SignUpLabel>
             <SS.AddrInputBox>
-              <S.SignUpInput width="16.2rem" placeholderLocation="left" type="text" placeholder="우편번호" />
+              <S.SignUpInput width="16.2rem" placeholderLocation="left" type="text" id="addr" placeholder="우편번호" />
               <button>주소검색</button>
             </SS.AddrInputBox>
             <S.SignUpInput width="34.5rem" placeholderLocation="left" type="text" placeholder="기본주소" />

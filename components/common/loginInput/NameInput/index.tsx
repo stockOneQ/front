@@ -4,8 +4,8 @@ import * as S from '../style';
 const NameInput = () => {
   return (
     <S.SignUpInputBox>
-      <S.SignUpLabel>이름</S.SignUpLabel>
-      <S.SignUpInput width="18.3rem" type="text" />
+      <S.SignUpLabel htmlFor="name">이름</S.SignUpLabel>
+      <S.SignUpInput width="18.3rem" type="text" id="name" />
     </S.SignUpInputBox>
   );
 };
