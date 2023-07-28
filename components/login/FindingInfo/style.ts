@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
-const FindingInfoBox = styled.div`
+interface IFindingInfoBoxProps {
+  foundInfo: boolean
+}
+
+const FindingInfoBox = styled.div<IFindingInfoBoxProps>`
   width: 52.8rem;
-  margin: 13rem auto;
+  /* margin: ${({ foundInfo }) => foundInfo ? '26.5rem auto' : '13rem auto'}; */
+  margin: 50vh auto 0;
+  transform: translateY(-50%);
 `
 
 const FindingLogoBox = styled.div`
