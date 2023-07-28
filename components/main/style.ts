@@ -49,7 +49,7 @@ export const RightSection = styled.div`
 `;
 
 export const StorageMethodRadioGroup = styled.div`
-    left: -4%;
+    left: -8%;
     position: relative;
     width: 100%;
     font-size: 18px;
