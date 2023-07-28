@@ -88,13 +88,13 @@ const FoundedButtonBox = styled.div<IFoundedButtonBoxProps>`
   }
 
   .btn1 {
-    background-image: ${({ isFounded }) => isFounded ? `url('assets/icons/login/bg-img/foundedBigLoginBtnBg.svg')` : `url('assets/icons/login/bg-img/foundedLoginBtnBg.svg')`};
+    background-image: ${({ isFounded }) => isFounded ? `url('assets/imgs/login/bg-img/foundedBigLoginBtnBg.svg')` : `url('assets/imgs/login/bg-img/foundedLoginBtnBg.svg')`};
   }
   .btn2 {
-    background-image: url('assets/icons/login/bg-img/foundedIDBtnBg.svg');
+    background-image: url('assets/imgs/login/bg-img/foundedIDBtnBg.svg');
   }
   .btn3 {
-    background-image: ${({ isFounded }) => isFounded ? `url('assets/icons/login/bg-img/foundedBigPWBtnBg.svg')` : `url('assets/icons/login/bg-img/foundedPWBtnBg.svg')`};
+    background-image: ${({ isFounded }) => isFounded ? `url('assets/imgs/login/bg-img/foundedBigPWBtnBg.svg')` : `url('assets/imgs/login/bg-img/foundedPWBtnBg.svg')`};
   }
 `
 

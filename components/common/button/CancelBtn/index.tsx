@@ -33,7 +33,7 @@ const CnclBtn = styled.button<ICancelBtnProps>`
     width: ${({ width = '7.1rem'}) => width};
     height: ${({ height = '4.6rem'}) => height};
     border-radius: .4rem;
-    background-image: url('/assets/icons/community/bg-img/acceptBtnBg.svg');
+    background-image: url('/assets/imgs/community/bg-img/acceptBtnBg.svg');
     background-size: cover;
     background-repeat: no-repeat;
     color: var(--color-white);

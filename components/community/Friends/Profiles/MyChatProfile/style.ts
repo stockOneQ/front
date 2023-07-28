@@ -60,7 +60,7 @@ const MyPageButton = styled.button`
     width: 2.7rem;
     height: 1.5rem;
     border-radius: .8rem;
-    background-image: url('/assets/icons/community/bg-img/reqFriendBg.svg');
+    background-image: url('/assets/imgs/community/bg-img/reqFriendBg.svg');
     color: var(--color-white);
     text-align: center;
     font-size: .9rem;

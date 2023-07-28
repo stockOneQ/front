@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import mainLogo from 'public/assets/icons/login/mainLogo.svg';
 import { useEffect, useState } from 'react';
-import * as S from '../style';
+import * as S from './style';
 
 /** 로그인 초기 화면 */
 const SignIn = () => {
@@ -22,6 +22,9 @@ const SignIn = () => {
     } else {
       setIsTyped(false);
     }
+    
+    console.log(isTyped);
+    
   }, [enteredID, enteredPassword])
 
   return (

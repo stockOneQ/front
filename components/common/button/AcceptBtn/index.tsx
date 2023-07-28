@@ -33,7 +33,7 @@ const AcptBtn = styled.button<IAcceptBtnProps>`
     width: ${({ width = '7.1rem'}) => width};
     height: ${({ height = '4.6rem'}) => height};
     border-radius: .4rem;
-    background: ${props => props.disabled ? '#979797' : `url('/assets/icons/community/bg-img/acceptBtnBg.svg')`};
+    background: ${props => props.disabled ? '#979797' : `url('/assets/imgs/community/bg-img/acceptBtnBg.svg')`};
     color: var(--color-white);
     font-size: ${({ font = '1.3rem'}) => font};
     font-weight: 600;

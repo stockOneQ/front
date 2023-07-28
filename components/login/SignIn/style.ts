@@ -65,7 +65,7 @@ const SignInButton = styled.button<ISignInButtonProps>`
   padding: 2.4rem 3.5rem;
   background-color: var(--color-gray);
   margin-bottom: 2rem;
-  background-image: ${({ isTyped }) => isTyped ? `url('/assets/icons/signIn/bg-img/signInBtnBg.svg')` : ''};
+  background-image: ${({ isTyped }) => isTyped ? `url('/assets/imgs/login/bg-img/signInBtnBg.svg')` : ''};
   cursor: ${({ isTyped }) => isTyped ? 'pointer' : 'default'};
 
   font-size: 1.8rem;
