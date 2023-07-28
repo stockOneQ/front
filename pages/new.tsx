@@ -52,6 +52,7 @@ const New = () => {
     storageMethod: '',
   });
 
+
   //검색 한글자
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -85,12 +86,46 @@ const New = () => {
     formData.expirationDay
   );
 
-
-
-  
-
   // 저장하기 
   const handleSubmit = () => {
+    if (productName.length >= 11) {
+      alert("제목을 11글자 이하로 입력해 주세요.");
+      return;
+    }
+    if (formData.orderingSite.length >= 200) {
+      alert("발주사이트를 200자 이하로 입력해 주세요.");
+      return;
+    }
+    if (formData.seller.length >= 200) {
+      alert("판매업체 29자 이하로 입력해 주세요.");
+      return;
+    }
+    if (formData.ingredientLocation.length >= 200) {
+      alert("재료위치 29자 이하로 입력해 주세요.");
+      return;
+    }
+
+    const requiredFields = [
+      "seller",
+      "receiptYear",
+      "receiptMonth",
+      "receiptDay",
+      "expirationYear",
+      "expirationMonth",
+      "expirationDay",
+      "ingredientLocation",
+      "requiredQuantity",
+      "quantity",
+      "orderingFrequency",
+    ];
+
+    for (const field of requiredFields) {
+      if (!formData[field]) {
+        alert(`${field}을(를) 채워주세요.`);
+        return;
+      }
+    }
+
     const newProduct = {
       id: getId(),
       productName: productName,
@@ -112,7 +147,7 @@ const New = () => {
     };
 
     // 업데이트 recoil state
-    setPostListState((prevPostList) => [...prevPostList, newProduct]); 
+    setPostListState((prevPostList) => [...prevPostList, newProduct]);
     const sortedList = [...postList].sort((a, b) => a.orderingFrequency - b.orderingFrequency);
     setSortedPostList(sortedList);
 
@@ -180,7 +215,7 @@ const New = () => {
     });
 
     setProductName("");
-    router.push("/");
+    // router.push("/");
   };
 
   /** ---------------------------------------------------------- */
@@ -212,6 +247,44 @@ const New = () => {
 
   // //제품 추가 api 호출
   // const handleSubmit = async () => {
+  // if (productName.length >= 11) {
+  //   alert("제목을 11글자 이하로 입력해 주세요.");
+  //   return;
+  // }
+  // if (formData.orderingSite.length >= 200) {
+  //   alert("발주사이트를 200자 이하로 입력해 주세요.");
+  //   return;
+  // }
+  // if (formData.seller.length >= 200) {
+  //   alert("판매업체 29자 이하로 입력해 주세요.");
+  //   return;
+  // }
+  // if (formData.ingredientLocation.length >= 200) {
+  //   alert("재료위치 29자 이하로 입력해 주세요.");
+  //   return;
+  // }
+
+  // const requiredFields = [
+  //   "seller",
+  //   "receiptYear",
+  //   "receiptMonth",
+  //   "receiptDay",
+  //   "expirationYear",
+  //   "expirationMonth",
+  //   "expirationDay",
+  //   "ingredientLocation",
+  //   "requiredQuantity",
+  //   "quantity",
+  //   "orderingFrequency",
+  // ];
+
+  // for (const field of requiredFields) {
+  //   if (!formData[field]) {
+  //     alert(`${field}을(를) 채워주세요.`);
+  //     return;
+  //   }
+  // }
+
   //   const jsonFormData = convertFormDataToJson();
   //   try {
   //     const response = await axios.post('/api/product/add', jsonFormData);
@@ -242,17 +315,16 @@ const New = () => {
   //     setProductName("");
   //     setSelectedStorageMethod("");
 
-      
-  //     router.push("/");
+
+  //     //router.push("/");
   //   } catch (error) {
   //     console.error('Error adding product:', error);
   //   }
   // };
 
-
-
-
-
+/** ---------------------------------------------------------- */
+/** ---------------------------------------------------------- */
+/** ---------------------------------------------------------- */
   return (
     <S.Box>
       <RecoilRoot>
