@@ -107,16 +107,16 @@ const New = () => {
 
     const requiredFields = [
       "seller",
-      "receiptYear",
-      "receiptMonth",
-      "receiptDay",
-      "expirationYear",
-      "expirationMonth",
-      "expirationDay",
-      "ingredientLocation",
-      "requiredQuantity",
-      "quantity",
-      "orderingFrequency",
+      // "receiptYear",
+      // "receiptMonth",
+      // "receiptDay",
+      // "expirationYear",
+      // "expirationMonth",
+      // "expirationDay",
+      // "ingredientLocation",
+      // "requiredQuantity",
+      // "quantity",
+      // "orderingFrequency",
     ];
 
     for (const field of requiredFields) {
