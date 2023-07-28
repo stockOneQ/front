@@ -1,16 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import { ProductItem } from 'recoil/states';
+import { ProductCounts } from 'recoil/states';
 
 interface User {
 
 }
 
-interface ProductCounts {
-    approachingExpirationCount: number;
-    expiredIngredientsCount: number;
-    insufficientIngredientsCount: number;
-    totalCount: number;
-}
 
 
 const API = axios.create({
@@ -57,85 +52,131 @@ export const countingProduct = async (
     }
 };
 
+interface CountItem {
+    name: string;
+    total: number;
+  }
+  
+  interface ProductCounts {
+    approachingExpirationCount: number;
+    expiredIngredientsCount: number;
+    insufficientIngredientsCount: number;
+    totalCount: number;
+  }
+  //제품개수 
+  export const fetchProductCounts = async (store: string, condition: string): Promise<ProductCounts> => {
+    try {
+      const response = await axios.get("/api/product/count", {
+        params: {
+          store,
+          condition,
+        },
+      });
+  
+      const result: CountItem[] = response.data.result;
+  
+      const totalCountItem = result.find((item) => item.name === "Total");
+      const passCountItem = result.find((item) => item.name === "Pass");
+      const closeCountItem = result.find((item) => item.name === "Close");
+      const lackCountItem = result.find((item) => item.name === "Lack");
+  
+      return {
+        totalCount: totalCountItem?.total ?? 0,
+        approachingExpirationCount: passCountItem?.total ?? 0,
+        expiredIngredientsCount: closeCountItem?.total ?? 0,
+        insufficientIngredientsCount: lackCountItem?.total ?? 0,
+      };
+    } catch (error) {
+      console.error("Error fetching product counts:", error);
+      return {
+        totalCount: 0,
+        approachingExpirationCount: 0,
+        expiredIngredientsCount: 0,
+        insufficientIngredientsCount: 0,
+      };
+    }
+  };
+
 export const getProductByCategory = async (
-    category: string,
+    category: string, //전체 임박, 경과, 부족
+    store: string,
     storageMethodFilter: string,
     selectedSortOption: string
-  ) => {
+) => {
     let response;
-  
+
     if (category === 'beforeDate') {
-      response = await axios.get('/api/product/close', {
-        params: {
-          store: storageMethodFilter,
-          condition: 'beforeDate',
-          last: 'lastProductId',
-          sort: selectedSortOption,
-        },
-      });
+        response = await axios.get('/api/product/close', {
+            params: {
+                store: store,//가게
+                condition: storageMethodFilter,//냉장냉동상온
+                last: 'lastProductId',
+                sort: selectedSortOption,//가나다순
+            },
+        });
     } else if (category === 'afterDate') {
-      response = await axios.get('/api/product/pass', {
-        params: {
-          store: storageMethodFilter,
-          condition: 'afterDate',
-          last: 'lastProductId',
-          sort: selectedSortOption,
-        },
-      });
+        response = await axios.get('/api/product/pass', {
+            params: {
+                store: store,//가게
+                condition: storageMethodFilter,//냉장냉동상온
+                last: 'lastProductId',
+                sort: selectedSortOption,//가나다순
+            },
+        });
     } else if (category === 'no') {
-      response = await axios.get('/api/product/lack', {
-        params: {
-          store: storageMethodFilter,
-          condition: 'no',
-          last: 'lastProductId',
-          sort: selectedSortOption,
-        },
-      });
+        response = await axios.get('/api/product/lack', {
+            params: {
+                store: store,
+                condition: storageMethodFilter,
+                last: 'lastProductId',
+                sort: selectedSortOption,
+            },
+        });
     } else {
-      // Default: "전체"
-      response = await axios.get('/api/product/all', {
-        params: {
-          store: storageMethodFilter,
-          condition: '전체',
-          last: 'lastProductId',
-          sort: selectedSortOption,
-        },
-      });
+        // Default: "전체"
+        response = await axios.get('/api/product/all', {
+            params: {
+                store: store,
+                condition: storageMethodFilter,
+                last: 'lastProductId',
+                sort: selectedSortOption,
+            },
+        });
     }
-  
+
     return response.data;
-  };
+};
 
-  export const fetchProductDetails = async (
+export const fetchProductDetails = async (
     id: number
-    ): Promise<AxiosResponse<ProductItem>> => {
+): Promise<AxiosResponse<ProductItem>> => {
     try {
-      const response = await axios.get(`/api/product/${id}`);
-      return response.data;
+        const response = await axios.get(`/api/product/${id}`);
+        return response.data;
     } catch (error) {
-      throw new Error("Error fetching product details: " + error.message);
+        throw new Error("Error fetching product details: " + error.message);
     }
-  };
+};
 
-  //제품검색
-  export const searchProducts = async (
+//제품검색
+export const searchProducts = async (
     storageMethodFilter: string,
     searchValue: string
-  ): Promise<AxiosResponse<ProductItem[]>> => {
+): Promise<AxiosResponse<ProductItem[]>> => {
     try {
-      const response = await axios.get("/api/product", {
-        params: {
-          store: storageMethodFilter,
-          condition: "전체", //activelink로 바뀔 예정
-          name: searchValue,
-        },
-      });
-      return response.data;
+        const response = await axios.get("/api/product", {
+            params: {
+                store: storageMethodFilter,
+                condition: "전체", //activelink로 바뀔 예정
+                name: searchValue,
+            },
+        });
+        return response.data;
     } catch (error) {
-      throw new Error("Error fetching search results: " + error.message);
+        throw new Error("Error fetching search results: " + error.message);
     }
-  };
+};
 
-  
 
-  
+
+
