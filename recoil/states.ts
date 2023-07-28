@@ -27,30 +27,7 @@ export interface ProductItem {
 
 export const mainPostListState = atom<ProductItem[]>({
   key: "mainPostListState",
-  default: [
-    {
-      id: 1,
-      category: "냉동",
-      productName: "가나원두",
-      price: "12000원",
-      seller: "투썸플레이스",
-      receiptYear: "2023",
-      receiptMonth: "09",
-      receiptDay: "20",
-      expirationYear: "2023",
-      expirationMonth: "10",
-      expirationDay: "23",
-      ingredientLocation: "선반위",
-      requiredQuantity: "3",
-      quantity: "2",
-      orderingSite: "투썸사이트",
-      orderingFrequency: "2",
-      imageInfo: "이미지",
-      storageMethod: "냉동",
-
-    },
-    
-  ],
+  default: [ ],
 });
 
 export const handleProductClick = () => {
