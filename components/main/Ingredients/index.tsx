@@ -249,7 +249,8 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
       <S.MainItem key={value.id} onClick={() => handleItemClick(value)}>
         <Link href={`/product/${value.id}`} key={value.id}>
           <S.MainItemImg>
-            <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
+          {value.imageInfo && <Image src={value.imageInfo} alt={value.productName} width={140} height={140}/>}
+            {/* <Image src={exampleMain} alt="my_page_icon" width={140} height={140} /> */}
           </S.MainItemImg>
           <S.ProductName>
             {value.productName}

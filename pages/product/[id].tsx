@@ -114,6 +114,11 @@ const ProductPage = () => {
     }));
   };
 
+  const handleImageClick = () => {
+    console.log("Image clicked");
+  };
+
+  
   return (
     <S.Box>
       <Title title="재료 등록">재료등록</Title>
@@ -166,7 +171,15 @@ const ProductPage = () => {
                 </S.StorageMethodRadioGroup>
               </S.StyledInput>
               <S.ImgInput>
-                <Image src={ImgIcon} alt="my_page_icon" width={124} height={83} />
+              <S.ImgInput>
+              <Image
+                src={formData.imageInfo || ImgIcon}
+                alt="my_page_icon"
+                width={124}
+                height={83}
+                onClick={handleImageClick} 
+              />
+            </S.ImgInput>
               </S.ImgInput>
           </S.LeftSection>
           <S.RightSection>
