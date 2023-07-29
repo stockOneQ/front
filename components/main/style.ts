@@ -1,3 +1,4 @@
+//components/main/style
 import styled from "styled-components";
 
 export const TopSection = styled.div`
@@ -12,6 +13,33 @@ export const InforSection = styled.div`
   display: flex;
 `;
 
+export const StyledRadioInput = styled.label`
+  font-family: sans-serif;
+  padding: 10px 16px;
+  border-right: 1px solid #ccc;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:last-of-type {
+    border-right: 0;
+  }
+
+  &:hover {
+    background: #eee;
+  }
+
+  input[type="radio"]
+
+  input[type="radio"]:checked + & {
+    background: #becbff;
+  }
+`;
+
+export const DropBoxContainer = styled.div`
+  
+`;
+
+
 export const LeftSection = styled.div`
   width: 40%;
 `;
@@ -19,6 +47,20 @@ export const LeftSection = styled.div`
 export const RightSection = styled.div`
   
 `;
+
+export const StorageMethodRadioGroup = styled.div`
+    left: -8%;
+    position: relative;
+    width: 100%;
+    font-size: 18px;
+
+`;
+
+export const StorageMethodRadio = styled.input`
+
+`;
+
+
 
 export const ImgInput = styled.div`
   width: 230px;
@@ -37,7 +79,8 @@ export const Slider = styled.input`
     -webkit-appearance: none;
     width: 100%;
     height: 5px;
-    top: 10px;
+    left: 30px;
+    top: 19px;
     border-radius: 5px;
     background: #eeeeee;
     outline: none;

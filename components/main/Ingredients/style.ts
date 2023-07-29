@@ -1,9 +1,64 @@
-import styled from "styled-components";
+import styled, { keyframes }  from "styled-components";
+
+
+const slideDown = keyframes`
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: 30px;
+    opacity: 1;
+  }
+`;
+
+
 
 export const MainSection = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 90vh;
+  height: 95vh; 
+  overflow-y: auto; 
+
+  &::-webkit-scrollbar {
+    display: ${props => props.hideScroll ? 'none' : 'inline-block'};
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: .8rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: .3rem solid transparent;
+    height: 4rem;
+    border-radius: .8rem;
+    background-color: var(--color-black);
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: .8rem;
+    background-color: #eee;
+  }
+
+`;
+
+
+export const DropBoxContainer = styled.div`
+  margin-left: 3%;
+`;
+
+export const Input = styled.input`
+    background: none;
+    color: inherit;
+    border: none;
+    font-size: 13px;
+    padding: 0 0 0 15%;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    
 `;
 
 export const MainItem = styled.div`
@@ -11,8 +66,8 @@ export const MainItem = styled.div`
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.10);
   border-radius: 20px;
   height: 180px;
-  margin: 0 3% 0 3%;
-  flex-wrap: wrap;  
+  margin: 1% 3% 3% 3%;
+  flex-wrap: wrap;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,9 +86,9 @@ export const MainItemImg = styled.div`
 
 export const StyledLink = styled.button<{ isactive: boolean }>`
   display: flex;
-  width: 163px;
+  width: 190px;
   height: 35px;
-  margin: 0 2% 0 2%;
+  margin: 0 0 0 2%;
   padding-left: 10px;
   border-radius: 100px;
   color: ${(props) => (props.isactive ? "#ffffff" : "#e0e0e0")};
@@ -47,13 +102,13 @@ export const StyledLink = styled.button<{ isactive: boolean }>`
 `;
 
 export const ActionButtonBox = styled.div`
- 
   display: flex;
   justify-content: end;
   align-items: center;
-  
+  position: absolute;
   gap: 8px;
   color: white;
+  left: 91%;
   font-size: 18px;
   font-weight: 600;
   padding-bottom: 30px;
@@ -79,8 +134,7 @@ export const NavBar = styled.div`
 `;
 
 export const ControlBar = styled.div`
-  width: 100%;
-
+  width: 107%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
@@ -88,15 +142,26 @@ export const ControlBar = styled.div`
 
 export const SearchMenu = styled.div`
   position: relative;
-
   display: flex;
   align-items: center;
 `;
 
 export const SerchSection = styled.div`
   position: relative;
-  top: 5px;
-  margin: 0 20px 0 2px;
+  font-size: 13px;
+  
+  border-radius: 20px;
+  background-color: white;
+  display: flex;
+  margin: 0px 42px 0 20px;
+
+  
+
+  img {
+    top: 26%;
+    position: relative;
+    left: 10%;
+  }
 `;
 
 export const CountValue = styled.p`
@@ -128,6 +193,7 @@ export const SelectedValueButton = styled.button`
   background-color: var(--color-black);
   border-radius: 3rem;
   z-index: 1000;
+  margin-left: 10%;
 
   img {
     position: absolute;

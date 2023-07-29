@@ -1,9 +1,12 @@
-const ColdStorage = () => {
+//coldestorage
+import ColdPage from "components/main/Cold";
+
+const Home = () => {
   return (
     <>
-      <h1>홈의 냉장 페이지입니다.</h1>
+     <ColdPage />
     </>
   );
 };
 
-export default ColdStorage;
+export default Home;
