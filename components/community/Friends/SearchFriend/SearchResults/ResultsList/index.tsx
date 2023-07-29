@@ -29,11 +29,11 @@ const ResultsList = ({ searchBy, searchValue }: IResultsListProps) => {
               } else if (searchBy === '상호명') {
                 const spaceIndex = location.indexOf(' ');
                 
-                return location.slice(0, spaceIndex).indexOf(searchValue) !== -1;
+                return location.slice(spaceIndex).indexOf(searchValue) !== -1;
               } else {
                 const spaceIndex = location.indexOf(' ');
                 
-                return location.slice(spaceIndex).indexOf(searchValue) !== -1;
+                return location.slice(0, spaceIndex).indexOf(searchValue) !== -1;
               }
             })
             .map(({ id, name, location, phone }) => {
