@@ -20,12 +20,14 @@ type IngredientsProps = {
 };
 
 
+
 const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) => {
   //const postList = useRecoilValue(mainPostListState);
 
-  // /** API 호출------------------------------------------------- */
-  // /** --------------------------------------------------------- */
-  // /** --------------------------------------------------------- */
+  ////console.log(storageMethodFilter);
+  /** API 호출------------------------------------------------- */
+  /** --------------------------------------------------------- */
+  /** --------------------------------------------------------- */
 
   // const router = useRouter();
 
@@ -74,7 +76,7 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   // /** 제품조회 API ------------------------------------------------------------------ */
   // const fetchSortedProducts = async (sortParameter: string) => {
   //   try {
-  //     const response = await productList('냉동', '전체', 0, sortParameter);
+  //     const response = await productList('가게id', '냉동', 0, sortParameter);
 
   //     const products = response.data;
   //     setSortedProducts(products);
@@ -90,7 +92,7 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   //   setSelectedCategory(category);//음?
 
   //   try {
-  //     const products = await getProductByCategory(category, storageMethodFilter, selectedSortOption);
+  //     const products = await getProductByCategory(category,'가게id', category, selectedSortOption);
   //     setSortedProducts(products);
   //   } catch (error) {
   //     console.error('Error fetching sorted products:', error);
@@ -114,25 +116,16 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   // const [totalCount, setTotalCount] = useState<number>(0);
 
   // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const totalCountsResponse = await countingProduct(storageMethodFilter, '전체');
-  //       setTotalCount(totalCountsResponse.data.totalCount);
-
-  //       const approachingExpirationCountResponse = await countingProduct(storageMethodFilter, 'beforeDate');
-  //       setApproachingExpirationCount(approachingExpirationCountResponse.data.approachingExpirationCount);
-
-  //       const expiredIngredientsCountResponse = await countingProduct(storageMethodFilter, 'afterDate');
-  //       setExpiredIngredientsCount(expiredIngredientsCountResponse.data.expiredIngredientsCount);
-
-  //       const insufficientIngredientsCountResponse = await countingProduct(storageMethodFilter, 'no');
-  //       setInsufficientIngredientsCount(insufficientIngredientsCountResponse.data.insufficientIngredientsCount);
-  //     } catch (error) {
+  //   fetchProductCounts('냉동', '전체')
+  //     .then((counts) => {
+  //       setTotalCount(counts.totalCount);
+  //       setApproachingExpirationCount(counts.approachingExpirationCount);
+  //       setExpiredIngredientsCount(counts.expiredIngredientsCount);
+  //       setInsufficientIngredientsCount(counts.insufficientIngredientsCount);
+  //     })
+  //     .catch((error) => {
   //       console.error('Error fetching product counts:', error);
-  //     }
-  //   };
-
-  //   fetchData();
+  //     });
   // }, []);
   // /** 제품 상세 페이지 조회 API------------------------------------------------------ */
   // const handleItemClick = async (product: ProductItem) => {
@@ -256,7 +249,8 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
       <S.MainItem key={value.id} onClick={() => handleItemClick(value)}>
         <Link href={`/product/${value.id}`} key={value.id}>
           <S.MainItemImg>
-            <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
+          {value.imageInfo && <Image src={value.imageInfo} alt={value.productName} width={140} height={140}/>}
+            {/* <Image src={exampleMain} alt="my_page_icon" width={140} height={140} /> */}
           </S.MainItemImg>
           <S.ProductName>
             {value.productName}

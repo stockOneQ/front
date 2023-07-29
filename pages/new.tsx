@@ -52,7 +52,12 @@ const New = () => {
     storageMethod: '',
   });
 
-  //검색 한글자
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    setSelectedImage(event.target.files[0]);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     console.log("Input Changed:", name, value);
@@ -85,12 +90,47 @@ const New = () => {
     formData.expirationDay
   );
 
-
-
-  
-
   // 저장하기 
   const handleSubmit = () => {
+
+    if (productName.length >= 11) {
+      alert("제목을 11글자 이하로 입력해 주세요.");
+      return;
+    }
+    if (formData.orderingSite.length >= 200) {
+      alert("발주사이트를 200자 이하로 입력해 주세요.");
+      return;
+    }
+    if (formData.seller.length >= 200) {
+      alert("판매업체 29자 이하로 입력해 주세요.");
+      return;
+    }
+    if (formData.ingredientLocation.length >= 200) {
+      alert("재료위치 29자 이하로 입력해 주세요.");
+      return;
+    }
+
+    const requiredFields = [
+      "seller",
+      // "receiptYear",
+      // "receiptMonth",
+      // "receiptDay",
+      // "expirationYear",
+      // "expirationMonth",
+      // "expirationDay",
+      // "ingredientLocation",
+      // "requiredQuantity",
+      // "quantity",
+      // "orderingFrequency",
+    ];
+
+    for (const field of requiredFields) {
+      if (!formData[field]) {
+        alert(`${field}을(를) 채워주세요.`);
+        return;
+      }
+    }
+
     const newProduct = {
       id: getId(),
       productName: productName,
@@ -107,12 +147,12 @@ const New = () => {
       quantity: formData.quantity,
       orderingSite: formData.orderingSite,
       orderingFrequency: formData.orderingFrequency,
-      imageInfo: formData.imageInfo,
+      imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : "", 
       storageMethod: selectedStorageMethod,
     };
 
     // 업데이트 recoil state
-    setPostListState((prevPostList) => [...prevPostList, newProduct]); 
+    setPostListState((prevPostList) => [...prevPostList, newProduct]);
     const sortedList = [...postList].sort((a, b) => a.orderingFrequency - b.orderingFrequency);
     setSortedPostList(sortedList);
 
@@ -180,31 +220,28 @@ const New = () => {
     });
 
     setProductName("");
-    router.push("/");
+    // router.push("/");
   };
 
   /** ---------------------------------------------------------- */
   /** ---------------------------------------------------------- */
   /** ---------------------------------------------------------- */
 
-  // //데이터 json 이미지 아직 미구현
+  //데이터 json 이미지 아직 미구현
   // const convertFormDataToJson = () => {
   //   const jsonFormData = {
-  //     productName: productName,
+  //     id: getId(),
+  //     name: productName,
   //     price: formData.price,
-  //     seller: formData.seller,
-  //     receiptYear: formData.receiptYear,
-  //     receiptMonth: formData.receiptMonth,
-  //     receiptDay: formData.receiptDay,
-  //     expirationYear: formData.expirationYear,
-  //     expirationMonth: formData.expirationMonth,
-  //     expirationDay: formData.expirationDay,
-  //     ingredientLocation: formData.ingredientLocation,
-  //     requiredQuantity: formData.requiredQuantity,
-  //     quantity: formData.quantity,
-  //     orderingSite: formData.orderingSite,
-  //     orderingFrequency: formData.orderingFrequency,
-  //     imageInfo: formData.imageInfo,
+  //     vendor: formData.seller,
+  //     receiptDate: `${formData.receiptYear}-${formData.receiptMonth}-${formData.receiptDay}`,
+  //     expirationDate: `${formData.expirationYear}-${formData.expirationMonth}-${formData.expirationDay}`,
+  //     location: formData.ingredientLocation,
+  //     requireQuant: formData.requiredQuantity,
+  //     stockQuant: formData.quantity,
+  //     siteToOrder: formData.orderingSite,
+  //     orderFreq: formData.orderingFrequency,
+  //     imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : "", //파일선택 
   //     storageMethod: selectedStorageMethod,
   //   };
   //   return jsonFormData;
@@ -212,6 +249,44 @@ const New = () => {
 
   // //제품 추가 api 호출
   // const handleSubmit = async () => {
+  //   if (productName.length >= 11) {
+  //     alert("제목을 11글자 이하로 입력해 주세요.");
+  //     return;
+  //   }
+  //   if (formData.orderingSite.length >= 200) {
+  //     alert("발주사이트를 200자 이하로 입력해 주세요.");
+  //     return;
+  //   }
+  //   if (formData.seller.length >= 200) {
+  //     alert("판매업체 29자 이하로 입력해 주세요.");
+  //     return;
+  //   }
+  //   if (formData.ingredientLocation.length >= 200) {
+  //     alert("재료위치 29자 이하로 입력해 주세요.");
+  //     return;
+  //   }
+
+  //   const requiredFields = [
+  //     "seller",
+  //     "receiptYear",
+  //     "receiptMonth",
+  //     "receiptDay",
+  //     "expirationYear",
+  //     "expirationMonth",
+  //     "expirationDay",
+  //     "ingredientLocation",
+  //     "requiredQuantity",
+  //     "quantity",
+  //     "orderingFrequency",
+  //   ];
+
+  //   for (const field of requiredFields) {
+  //     if (!formData[field]) {
+  //       alert(`${field}을(를) 채워주세요.`);
+  //       return;
+  //     }
+  //   }
+
   //   const jsonFormData = convertFormDataToJson();
   //   try {
   //     const response = await axios.post('/api/product/add', jsonFormData);
@@ -242,17 +317,16 @@ const New = () => {
   //     setProductName("");
   //     setSelectedStorageMethod("");
 
-      
-  //     router.push("/");
+
+  //     //router.push("/");
   //   } catch (error) {
   //     console.error('Error adding product:', error);
   //   }
   // };
 
-
-
-
-
+  /** ---------------------------------------------------------- */
+  /** ---------------------------------------------------------- */
+  /** ---------------------------------------------------------- */
   return (
     <S.Box>
       <RecoilRoot>
@@ -304,7 +378,18 @@ const New = () => {
               </S.StyledInput>
 
               <S.ImgInput>
-                <Image src={ImgIcon} alt="my_page_icon" width={124} height={83} />
+                <input type="file"
+                  name="imageInfo"
+                  value={formData.imageInfo}
+                  onChange={handleImageChange} />
+                {selectedImage && (
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    alt="Selected Image"
+                    style={{ maxWidth: '100%', marginTop: '10px' }}
+                  />
+                )}
+                {/* <Image src={ImgIcon} alt="my_page_icon" width={124} height={83} /> */}
               </S.ImgInput>
             </S.LeftSection>
             <S.RightSection>
