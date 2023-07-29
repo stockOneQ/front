@@ -2,15 +2,16 @@ import ResultsList from './ResultsList';
 import ResultsPlaceholder from './ResultsPlaceholder';
 
 interface ISearchResultsProps {
-  isSearch: boolean;
+  searchBy: string;
+  searchValue: string;
 }
 
 /** 검색 결과 */
-const SearchResults = ({ isSearch }: ISearchResultsProps) => {
+const SearchResults = ({ searchBy, searchValue }: ISearchResultsProps) => {
   return (
     <>
-      {!isSearch && <ResultsPlaceholder />}
-      {isSearch && <ResultsList />}
+      {searchValue === '' && <ResultsPlaceholder />}
+      {searchValue !== '' && <ResultsList searchBy={searchBy} searchValue={searchValue} />}
     </>
   );
 };
