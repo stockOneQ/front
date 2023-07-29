@@ -5,6 +5,7 @@ interface IRejectBtn {
   width?: string;
   height?: string;
   font?: string;
+  onClick?: () => void;
 }
 
 const RejBtn = styled.button<IRejectBtn>`
@@ -26,10 +27,10 @@ const RejBtn = styled.button<IRejectBtn>`
 `
 
 /** 거절 버튼 */
-const RejectBtn = ({ label, width, height, font }: IRejectBtn) => {
+const RejectBtn = ({ label, width, height, font, onClick }: IRejectBtn) => {
   return (
     // AcceptBtn과 통일성을 위해, children이 아닌 props로 값 전달
-    <RejBtn width={width} height={height} font={font}>{label}</RejBtn>
+    <RejBtn width={width} height={height} font={font} onClick={onClick}>{label}</RejBtn>
   );
 };
 

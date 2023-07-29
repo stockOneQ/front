@@ -6,6 +6,7 @@ interface IAcceptBtnProps {
   width?: string;
   height?: string;
   font?: string;
+  onClick?: () => void;
 }
 
 const AcptBtn = styled.button<IAcceptBtnProps>`
@@ -50,10 +51,10 @@ const AcptBtn = styled.button<IAcceptBtnProps>`
 `
 
 /** 수락 버튼 */
-const AcceptBtn = ({ label, disabled, width, height, font }: IAcceptBtnProps) => {
+const AcceptBtn = ({ label, disabled, width, height, font, onClick }: IAcceptBtnProps) => {
   return (
     // linear-gradient transition 적용시키기 위해, children이 아닌, props로 값을 받음.
-    <AcptBtn label={label} disabled={disabled} width={width} height={height} font={font}>{label}</AcptBtn>
+    <AcptBtn label={label} disabled={disabled} width={width} height={height} font={font} onClick={onClick}>{label}</AcptBtn>
   );
 };
 

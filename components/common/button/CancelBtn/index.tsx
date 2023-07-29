@@ -6,6 +6,7 @@ interface ICancelBtnProps {
   width?: string;
   height?: string;
   font?: string;
+  onClick?: () => void;
 }
 
 const CnclBtn = styled.button<ICancelBtnProps>`
@@ -51,10 +52,10 @@ const CnclBtn = styled.button<ICancelBtnProps>`
 `
 
 /** 수락 버튼 */
-const CancelBtn = ({ label, disabled, width, height, font }: ICancelBtnProps) => {
+const CancelBtn = ({ label, disabled, width, height, font, onClick }: ICancelBtnProps) => {
   return (
     // linear-gradient transition 적용시키기 위해, children이 아닌, props로 값을 받음.
-    <CnclBtn label={label} disabled={disabled} width={width} height={height} font={font}>{label}</CnclBtn>
+    <CnclBtn label={label} disabled={disabled} width={width} height={height} font={font} onClick={onClick}>{label}</CnclBtn>
   );
 };
 
