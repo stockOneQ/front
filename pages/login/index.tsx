@@ -1,12 +1,18 @@
+import SignIn from 'components/login/SignIn';
 import Header from "../../layouts/Header";
+import AgreementTerms from 'components/login/signUp/AgreementTerms';
+import SignUp from 'components/login/signUp/SignUp';
+import FindingInfo from 'components/login/FindingInfo';
 
-const Login = () => {
+const LoginPage = () => {
   return (
-    <div>
-      <h1>login this</h1>
-      {/* Add your content here */}
-    </div>
+    <>
+      <SignIn />
+      {/* <AgreementTerms /> */}
+      {/* <SignUp /> */}
+      {/* <FindingInfo /> */}
+    </>
   );
 };
 
-export default Login;
+export default LoginPage;

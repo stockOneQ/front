@@ -31,7 +31,7 @@ const ResultListTextBox = styled.div`
     justify-content: center;
     align-items: center;
     font-weight: 700;
-    background-image: url('/assets/icons/community/bg-img/searchFriendBg.svg');
+    background-image: url('/assets/imgs/community/bg-img/searchFriendBg.svg');
 
   }
 `

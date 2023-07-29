@@ -92,9 +92,9 @@ const StockLabelParagraph = styled.p<IStockLabelParagraphProps>`
   position: relative;
   /* background-image: linear-gradient(262deg, #F9E499 0%, #F2B2CF 32.29%, #B1B0D7 66.67%, #55ABD7 100%); */
   background-image: ${({ selected }) => {
-    if (selected === '냉동') return `url('/assets/icons/community/bg-img/selectLabel1Bg.svg')`;
-    else if (selected === '냉장') return `url('/assets/icons/community/bg-img/selectLabel2Bg.svg')`;
-    else if (selected === '상온') return `url('/assets/icons/community/bg-img/selectLabel3Bg.svg')`;
+    if (selected === '냉동') return `url('/assets/imgs/community/bg-img/selectLabel1Bg.svg')`;
+    else if (selected === '냉장') return `url('/assets/imgs/community/bg-img/selectLabel2Bg.svg')`;
+    else if (selected === '상온') return `url('/assets/imgs/community/bg-img/selectLabel3Bg.svg')`;
   }};
   width: 7.1rem;
   height: 6.6rem;
@@ -137,15 +137,15 @@ const StockLabelOthersBox = styled.div`
   align-items: center;
   width: 21.5rem;
   height: 4.4rem;
-  /* border: 1px solid #E1E1E1; */
-  outline: 1px solid #E1E1E1;
+  /* border: 1px solid var(--color-gray); */
+  outline: 1px solid var(--color-gray);
   margin-left: -8.5rem;
   border-radius: 2rem;
   z-index: 1;
 
   p {
     width: 6.8rem;
-    color: #E1E1E1;
+    color: var(--color-gray);
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
@@ -161,7 +161,7 @@ const StockLabelOthersBox = styled.div`
 
   div:not(:last-child) {
     height: 2.2rem;
-    border-right: 1px solid #E1E1E1;
+    border-right: 1px solid var(--color-gray);
   }
 `
 
@@ -170,7 +170,7 @@ const SearchStockBox = styled.div`
   height: 2.8rem;
   padding: .6rem 1.7rem;
   border-radius: 4.3rem;
-  border: 1px solid #E1E1E1;
+  border: 1px solid var(--color-gray);
   background: var(--color-white);
   display: flex;
   justify-content: space-between;

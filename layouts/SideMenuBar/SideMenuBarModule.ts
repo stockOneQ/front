@@ -9,7 +9,7 @@ export const SideMenuBar = styled.nav`
 export const SideMenuBarList = styled.ul`
   width: 18.4rem;
   height: 95%;
-  border-right: 1px solid #e1e1e1;
+  border-right: 1px solid var(--color-gray);
   text-align: center;
 `;
 

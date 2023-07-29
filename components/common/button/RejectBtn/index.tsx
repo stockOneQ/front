@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 
 interface IRejectBtn {
-  label: string;
+  label?: string;
+  width?: string;
+  height?: string;
+  font?: string;
 }
 
-const RejBtn = styled.button`
-  width: 7.1rem;
-  height: 4.6rem;
+const RejBtn = styled.button<IRejectBtn>`
+  width: ${({ width = '7.1rem'}) => width};
+  height: ${({ height = '4.6rem'}) => height};
   border-radius: .4rem;
-  background-color: #E1E1E1;
+  background-color: var(--color-gray);
   color: var(--color-white);
   text-align: center;
-  font-size: 1.3rem;
+  font-size: ${({ font = '1.3rem'}) => font};
   font-weight: 600;
   line-height: normal;
   transition: all .3s ease;
@@ -23,10 +26,10 @@ const RejBtn = styled.button`
 `
 
 /** 거절 버튼 */
-const RejectBtn = ({ label }: IRejectBtn) => {
+const RejectBtn = ({ label, width, height, font }: IRejectBtn) => {
   return (
     // AcceptBtn과 통일성을 위해, children이 아닌 props로 값 전달
-    <RejBtn>{label}</RejBtn>
+    <RejBtn width={width} height={height} font={font}>{label}</RejBtn>
   );
 };
 

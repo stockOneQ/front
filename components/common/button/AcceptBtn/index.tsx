@@ -3,17 +3,20 @@ import styled from 'styled-components';
 interface IAcceptBtnProps {
   label: string;
   disabled: boolean;
+  width?: string;
+  height?: string;
+  font?: string;
 }
 
 const AcptBtn = styled.button<IAcceptBtnProps>`
   position: relative;
-  width: 7.1rem;
-  height: 4.6rem;
+  width: ${({ width = '7.1rem'}) => width};
+  height: ${({ height = '4.6rem'}) => height};
   border-radius: .5rem;
   background-color: ${props => props.disabled ? '#979797' : 'var(--color-black)'};
   color: var(--color-white);
   text-align: center;
-  font-size: 1.3rem;
+  font-size: ${({ font = '1.3rem'}) => font};
   font-weight: 600;
   line-height: normal;
   transition: all .3s ease;
@@ -27,12 +30,12 @@ const AcptBtn = styled.button<IAcceptBtnProps>`
     align-items: center;
     top: 0;
     left: 0;
-    width: 7.1rem;
-    height: 4.6rem;
+    width: ${({ width = '7.1rem'}) => width};
+    height: ${({ height = '4.6rem'}) => height};
     border-radius: .4rem;
-    background: ${props => props.disabled ? '#979797' : `url('/assets/icons/community/bg-img/acceptBtnBg.svg')`};
+    background: ${props => props.disabled ? '#979797' : `url('/assets/imgs/community/bg-img/acceptBtnBg.svg')`};
     color: var(--color-white);
-    font-size: 1.3rem;
+    font-size: ${({ font = '1.3rem'}) => font};
     font-weight: 600;
     line-height: normal;
     transition: all .3s ease;
@@ -47,10 +50,10 @@ const AcptBtn = styled.button<IAcceptBtnProps>`
 `
 
 /** 수락 버튼 */
-const AcceptBtn = ({ label, disabled }: IAcceptBtnProps) => {
+const AcceptBtn = ({ label, disabled, width, height, font }: IAcceptBtnProps) => {
   return (
     // linear-gradient transition 적용시키기 위해, children이 아닌, props로 값을 받음.
-    <AcptBtn label={label} disabled={disabled}>{label}</AcptBtn>
+    <AcptBtn label={label} disabled={disabled} width={width} height={height} font={font}>{label}</AcptBtn>
   );
 };
 
