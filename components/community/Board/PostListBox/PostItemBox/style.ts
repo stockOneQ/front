@@ -50,3 +50,34 @@ export const InfoBox = styled.div`
 
   color: #979797;
 `;
+
+interface ICheckBoxButtonProps {
+  checked: boolean;
+}
+
+export const StyledInput = styled.input<ICheckBoxButtonProps>`
+  appearance: none;
+
+  width: 6.4rem;
+  height: 6.4rem;
+  background-color: white;
+
+  border-radius: 100%;
+  border: 2px solid #000000;
+  padding: 0.3rem 0.2rem;
+  transition: all 150ms;
+
+  &:checked {
+    border-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='32' cy='32' r='31' fill='black' stroke='black' stroke-width='2'/%3E%3Cpath d='M18 31.8569L27.7453 42L46 23' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+
+    background-size: 100% 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: #000000;
+  }
+
+  position: absolute;
+  top: 30%;
+  right: -2.5%;
+`;

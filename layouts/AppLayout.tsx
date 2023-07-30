@@ -35,6 +35,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     case "/community/board":
     case "/community/board/new":
     case "/community/board/[id]":
+    case "/community/board/myPosts":
       sideMenuBarItems = [
         { label: "친구", url: "/community/friends" },
         { label: "게시판", url: "/community/board" },
