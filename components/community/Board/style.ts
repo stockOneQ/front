@@ -23,7 +23,7 @@ export const MyPostSection = styled.button`
   gap: 1.5rem;
 
   position: absolute;
-  top: 2%;
+  top: 12%;
   right: 0%;
 
   span {
@@ -31,4 +31,10 @@ export const MyPostSection = styled.button`
     font-size: 1.3rem;
     line-height: 1.5rem;
   }
+`;
+
+export const WriteButtonContainer = styled.button`
+  position: absolute;
+  top: 75%;
+  right: 2%;
 `;

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useSetRecoilState } from "recoil";
 import {
@@ -9,13 +8,11 @@ import {
 } from "recoil/states";
 
 import * as S from "./style";
-import { styled } from "styled-components";
 
 import DropDown from "components/common/DropDown";
 import SearchInputBar from "./SearchInputBar";
 
 import SearchIcon from "public/assets/icons/community/searchIcon.svg";
-import WriteIcon from "public/assets/icons/write.png";
 
 const sortOptionList = ["최신순", "조회순"];
 const searchOptionList = ["글 제목", "글 내용", "작성자"];
@@ -64,12 +61,6 @@ const ControlBar = () => {
           <Image alt="search" src={SearchIcon} />
         </S.SearchButton>
       </S.SearchBar>
-
-      <S.WriteButtonContainer>
-        <Link href="/community/board/new">
-          <Image alt="게시글 등록" src={WriteIcon} />
-        </Link>
-      </S.WriteButtonContainer>
     </S.ControlBarBox>
   );
 };
