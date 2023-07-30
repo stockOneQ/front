@@ -1,17 +1,14 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { postContentState, postListState, postTitleState } from "recoil/states";
-
-import Editor from "./Editor/index";
-import HeadingText from "../../../common/HeadingText";
-
 import { getDetailDate } from "utils/date";
-
 import * as S from "./style";
 
-let id = 4;
+import Editor from "./Editor/index";
+import HeadingText from "components/common/HeadingText";
+
+let id = 5; // 더미데이터 4까지
 const getId = () => {
   return id++;
 };
