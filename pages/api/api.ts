@@ -1,21 +1,47 @@
 import axios, { AxiosResponse } from 'axios';
 import { ProductItem } from 'recoil/states';
-import { ProductCounts } from 'recoil/states';
 
 interface User {
 
 }
 
+//제품개수
+interface CountItem {
+    name: string;
+    total: number;
+}
+
+interface ProductCounts {
+    approachingExpirationCount: number;
+    expiredIngredientsCount: number;
+    insufficientIngredientsCount: number;
+    totalCount: number;
+}
 
 
-const API = axios.create({
-    baseURL: ' ',
+export const API = axios.create({
+    baseURL: "http://localhost:8080",
     headers: {
-        'Content-type': 'application/json',
-        'X-ACCESS-TOKEN': 'access_token_here',
+      "Content-type": `application/json;charset=UTF-8`,
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNjkwNjE1OTc1LCJleHAiOjE2OTA2MjMxNzV9.gJpG1TfJbQknVLxM3R7jJfYG9FJIRT1ZcqdIMmEUNmY",
+      "Access-Control-Allow-Origin": `http://localhost:3000`,
+      "Access-Control-Allow-Credentials": true,
     },
-});
+  });
 
+// export const fetchDataFromApi = async (storeId, userId) => {
+//     try {
+//       const response = await axios.post('/api/product', {
+//         storeID: storeId,
+//         userID: userId,
+//       });
+//       return response.data;
+//     } catch (error) {
+//       console.error('Error fetching data from API:', error);
+//       throw error;
+//     }
+//   };
 
 //정렬 제품 api 호출
 export const productList = (
@@ -33,69 +59,59 @@ export const productList = (
         },
     });
 
-export const countingProduct = async (
-    store: string,
-    condition: string
-): Promise<AxiosResponse<ProductCounts>> => {
+// export const countingProduct = async (
+//     store: string,
+//     condition: string
+// ): Promise<AxiosResponse<ProductCounts>> => {
+//     try {
+//         const response = await axios.get('/api/product/count', {
+//             params: {
+//                 store,
+//                 condition,
+//             },
+//         });
+
+//         return response.data;
+//     } catch (error) {
+//         console.error('Error fetching product counts:', error);
+//         throw error;
+//     }
+// };
+
+
+//제품개수 
+export const fetchProductCounts = async (store: string, condition: string): Promise<ProductCounts> => {
     try {
-        const response = await axios.get('/api/product/count', {
+        const response = await axios.get("/api/product/count", {
             params: {
                 store,
                 condition,
             },
         });
 
-        return response.data;
+        const result: CountItem[] = response.data.result;
+
+        const totalCountItem = result.find((item) => item.name === "Total");
+        const passCountItem = result.find((item) => item.name === "Pass");
+        const closeCountItem = result.find((item) => item.name === "Close");
+        const lackCountItem = result.find((item) => item.name === "Lack");
+
+        return {
+            totalCount: totalCountItem?.total ?? 0,
+            approachingExpirationCount: passCountItem?.total ?? 0,
+            expiredIngredientsCount: closeCountItem?.total ?? 0,
+            insufficientIngredientsCount: lackCountItem?.total ?? 0,
+        };
     } catch (error) {
-        console.error('Error fetching product counts:', error);
-        throw error;
+        console.error("Error fetching product counts:", error);
+        return {
+            totalCount: 0,
+            approachingExpirationCount: 0,
+            expiredIngredientsCount: 0,
+            insufficientIngredientsCount: 0,
+        };
     }
 };
-
-interface CountItem {
-    name: string;
-    total: number;
-  }
-  
-  interface ProductCounts {
-    approachingExpirationCount: number;
-    expiredIngredientsCount: number;
-    insufficientIngredientsCount: number;
-    totalCount: number;
-  }
-  //제품개수 
-  export const fetchProductCounts = async (store: string, condition: string): Promise<ProductCounts> => {
-    try {
-      const response = await axios.get("/api/product/count", {
-        params: {
-          store,
-          condition,
-        },
-      });
-  
-      const result: CountItem[] = response.data.result;
-  
-      const totalCountItem = result.find((item) => item.name === "Total");
-      const passCountItem = result.find((item) => item.name === "Pass");
-      const closeCountItem = result.find((item) => item.name === "Close");
-      const lackCountItem = result.find((item) => item.name === "Lack");
-  
-      return {
-        totalCount: totalCountItem?.total ?? 0,
-        approachingExpirationCount: passCountItem?.total ?? 0,
-        expiredIngredientsCount: closeCountItem?.total ?? 0,
-        insufficientIngredientsCount: lackCountItem?.total ?? 0,
-      };
-    } catch (error) {
-      console.error("Error fetching product counts:", error);
-      return {
-        totalCount: 0,
-        approachingExpirationCount: 0,
-        expiredIngredientsCount: 0,
-        insufficientIngredientsCount: 0,
-      };
-    }
-  };
 
 export const getProductByCategory = async (
     category: string, //전체 임박, 경과, 부족
@@ -147,6 +163,7 @@ export const getProductByCategory = async (
     return response.data;
 };
 
+//상세페이지
 export const fetchProductDetails = async (
     id: number
 ): Promise<AxiosResponse<ProductItem>> => {
@@ -154,7 +171,7 @@ export const fetchProductDetails = async (
         const response = await axios.get(`/api/product/${id}`);
         return response.data;
     } catch (error) {
-        throw new Error("Error fetching product details: " + error.message);
+        throw new Error("Error fetching product details: ");
     }
 };
 
