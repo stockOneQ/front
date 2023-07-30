@@ -16,7 +16,7 @@ export const HeaderSection = styled.div`
   left: 0;
 `;
 
-export const MyPostSection = styled.button`
+export const MyPostButtonContainer = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;

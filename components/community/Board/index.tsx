@@ -21,18 +21,17 @@ const Board = () => {
     <S.Box>
       <S.HeaderSection>
         <HeadingText>전체글</HeadingText>
+        <S.MyPostButtonContainer onClick={handleMyPostsClick}>
+          <span>내가 쓴 글</span>
+          <Image src={RightArrowSVG} alt="MyPosts" />
+        </S.MyPostButtonContainer>
         <ControlBar />
         <S.WriteButtonContainer>
           <Link href="/community/board/new">
             <Image alt="게시글 등록" src={WriteSVG} />
           </Link>
         </S.WriteButtonContainer>
-        <S.MyPostSection onClick={handleMyPostsClick}>
-          <span>내가 쓴 글</span>
-          <Image src={RightArrowSVG} alt="MyPosts" />
-        </S.MyPostSection>
       </S.HeaderSection>
-
       <PostListBox />
     </S.Box>
   );
