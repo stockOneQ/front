@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import menuIcon from "../../public/assets/icons/menu.png";
+import CategorySVG from "../../public/assets/icons/category.svg";
 import * as S from "./SideMenuBarModule";
 import { useEffect, useState } from "react";
 
@@ -29,13 +29,7 @@ const SideMenuBar = ({ items }: { items: Item[] }) => {
 
       {/* 버튼 따라 움직이는 애니메이션 처리 필요 */}
       <S.LogoBox>
-        <Image
-          className="menu_icon"
-          src={menuIcon}
-          alt="메뉴아이콘"
-          width={30}
-          height={30}
-        />
+        <Image src={CategorySVG} alt="category" width={30} height={30} />
       </S.LogoBox>
     </S.SideMenuBar>
   );
