@@ -5,17 +5,15 @@ import PostItemBox from "components/community/Board/PostListBox/PostItemBox";
 import * as S from "./style";
 
 const PostListBox = ({
-  id,
+  writerId,
   isSetting,
-  checked,
 }: {
-  id?: string;
+  writerId?: number;
   isSetting?: boolean;
-  checked?: boolean;
 }) => {
   let postList = useRecoilValue(filteredPostsState);
-  if (id && postList) {
-    postList = postList.filter((post) => post.writer === id);
+  if (writerId && postList) {
+    postList = postList.filter((post) => post.writerId === 82831);
   }
   return (
     <S.Box>
@@ -23,14 +21,14 @@ const PostListBox = ({
         postList.map((value) => (
           // <Link key={value.id} href={`/community/board/${value.id}`}>
           <PostItemBox
-            key={value.id}
+            key={value.postId}
+            postId={value.postId}
             title={value.title}
             content={value.content}
             views={value.views}
             commentCount={value.commentCount}
             likes={value.likes}
             isSetting={isSetting}
-            checked={checked}
           />
           // </Link>
         ))}

@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { myPostDeleteCheckecCount, isAllCheckedState } from "recoil/states";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { postCheckedItemsState, postListState } from "recoil/states";
 import * as S from "./style";
 
 import ControlBar from "../ControlBar";
@@ -16,31 +16,39 @@ import LeftArrowSVG from "public/assets/icons/community/leftArrow.svg";
 const MyPost = () => {
   const router = useRouter();
   const [isSetting, setIsSetting] = useState(false);
-  const [active, setActive] = useState(false);
-  const [deleteCheckedCount, setDeleteCheckedCount] = useRecoilState(
-    myPostDeleteCheckecCount
+  const [postCheckedItems, setPostCheckedItems] = useRecoilState(
+    postCheckedItemsState
   );
-  const [isAllChecked, setIsAllChecked] = useRecoilState(isAllCheckedState);
+  const [isAllChecked, setIsAllChecked] = useState(false);
+  const postAllItems = useRecoilValue(postListState);
+  const myPostItems = postAllItems.filter((post) => post.writerId === 82831);
 
-  const handleMainClick = () => {
+  /** 전체글로 버튼 클릭 시 처리 함수 */
+  const handleGoMain = () => {
     router.push("/community/board");
   };
 
+  /** 환경설정 버튼 or 취소/삭제 버튼 토글 이벤트 */
   const handleToggle = () => {
-    setIsAllChecked(false);
     setIsSetting((prev) => !prev);
   };
 
   const handleAllChecked = () => {
     setIsAllChecked((prev) => !prev);
-    isAllChecked ? setDeleteCheckedCount(0) : setDeleteCheckedCount(1);
-    console.log(deleteCheckedCount);
+
+    if (isAllChecked) {
+      const allItems: number[] | ((currVal: number[]) => number[]) = [];
+      myPostItems.forEach((myPost) => allItems.push(myPost.postId));
+      setPostCheckedItems(allItems);
+    } else {
+      setPostCheckedItems([]);
+    }
   };
 
   return (
     <S.Box>
       <S.HeaderSection>
-        <S.NavButton onClick={handleMainClick}>
+        <S.NavButton onClick={handleGoMain}>
           <Image src={LeftArrowSVG} alt="goMyPosts" />
           <span>전체글로</span>
         </S.NavButton>
@@ -59,7 +67,7 @@ const MyPost = () => {
               <AcceptBtn
                 label="삭제"
                 onClick={handleToggle}
-                disabled={deleteCheckedCount <= 0}
+                disabled={postCheckedItems.length <= 0}
               />
             </S.ButtonContainer>
             <S.SelectedContainer>
@@ -69,7 +77,9 @@ const MyPost = () => {
               <S.StyledInput
                 type="checkbox"
                 id="allDeletedCheckbox"
-                checked={isAllChecked}
+                checked={
+                  postCheckedItems.length === myPostItems.length ? true : false
+                }
                 onClick={handleAllChecked}
               ></S.StyledInput>
             </S.SelectedContainer>
@@ -77,7 +87,7 @@ const MyPost = () => {
         )}
       </S.HeaderSection>
 
-      <PostListBox id={"임하림"} isSetting={isSetting} checked={isAllChecked} />
+      <PostListBox writerId={82831} isSetting={isSetting} />
     </S.Box>
   );
 };

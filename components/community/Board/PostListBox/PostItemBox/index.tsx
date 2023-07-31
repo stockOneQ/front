@@ -1,52 +1,43 @@
+import { useState } from "react";
 import Image from "next/image";
-
+import { useRecoilState } from "recoil";
+import { postCheckedItemsState } from "recoil/states";
 import ViewsSVG from "public/assets/icons/community/views.svg";
 import CommentsSVG from "public/assets/icons/community/comments.svg";
 import LikesSVG from "public/assets/icons/community/likes.svg";
-import DeleteCheckedSVG from "public/assets/icons/community/deleteChecked.svg";
 
 import * as S from "./style";
-import { useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { isAllCheckedState, myPostDeleteCheckecCount } from "recoil/states";
 
 const PostItem = ({
+  postId,
   title,
   content,
   views,
   commentCount,
   likes,
   isSetting,
-  checked,
 }: {
+  postId: number;
   title: string;
   content: string;
   views: number;
   commentCount: number;
   likes: number;
   isSetting?: boolean;
-  checked?: boolean;
 }) => {
   const [isChecked, setIsChecked] = useState(false);
-
-  useEffect(() => {
-    checked ? setIsChecked(true) : setIsChecked(false);
-  }, [checked]);
-
-  const [deleteCheckedCount, setDeleteCheckedCount] = useRecoilState(
-    myPostDeleteCheckecCount
+  const [postCheckedItems, setPostCheckedItems] = useRecoilState(
+    postCheckedItemsState
   );
-
-  const setIsAllChecked = useSetRecoilState(isAllCheckedState);
 
   const handleChecked = () => {
     setIsChecked((prev) => !prev);
 
     isChecked
-      ? setDeleteCheckedCount((prev) => (prev -= 1))
-      : setDeleteCheckedCount((prev) => (prev += 1));
-
-    console.log(deleteCheckedCount);
+      ? setPostCheckedItems((prev) => [...prev, postId])
+      : setPostCheckedItems(
+          postCheckedItems.filter((checkedItem) => checkedItem !== postId)
+        );
   };
 
   return (
@@ -72,7 +63,7 @@ const PostItem = ({
       {isSetting && (
         <S.StyledInput
           type="checkbox"
-          checked={isChecked}
+          checked={postCheckedItems.includes(postId) ? true : false}
           onClick={handleChecked}
         />
       )}
