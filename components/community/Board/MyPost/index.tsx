@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { postCheckedItemsState, postListState } from "recoil/states";
 import * as S from "./style";
 
@@ -20,7 +20,7 @@ const MyPost = () => {
     postCheckedItemsState
   );
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const postAllItems = useRecoilValue(postListState);
+  const [postAllItems, setPostAllItems] = useRecoilState(postListState);
   const myPostItems = postAllItems.filter((post) => post.writerId === 82831);
 
   /** 전체글로 버튼 클릭 시 처리 함수 */
@@ -31,6 +31,22 @@ const MyPost = () => {
   /** 환경설정 버튼 or 취소/삭제 버튼 토글 이벤트 */
   const handleToggle = () => {
     setIsSetting((prev) => !prev);
+  };
+
+  /** 취소 버튼 클릭 시 처리 함수 */
+  const handleCancel = () => {
+    handleToggle();
+    setPostCheckedItems([]);
+  };
+
+  /** 삭제 버튼 클릭 시 처리 함수 */
+  const handleDelete = () => {
+    const newItem = postAllItems.filter(
+      (item) => !postCheckedItems.includes(item.postId)
+    );
+
+    setPostAllItems(newItem);
+    handleToggle();
   };
 
   const handleAllChecked = () => {
@@ -63,10 +79,10 @@ const MyPost = () => {
         ) : (
           <S.ActionBox>
             <S.ButtonContainer>
-              <RejectBtn label="취소" onClick={handleToggle} />
+              <RejectBtn label="취소" onClick={handleCancel} />
               <AcceptBtn
                 label="삭제"
-                onClick={handleToggle}
+                onClick={handleDelete}
                 disabled={postCheckedItems.length <= 0}
               />
             </S.ButtonContainer>
