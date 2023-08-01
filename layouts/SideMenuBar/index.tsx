@@ -1,23 +1,15 @@
-import Link from "next/link";
-import Image from "next/image";
-import menuIcon from "../../public/assets/icons/menu.png";
-import * as S from "./SideMenuBarModule";
-import { useRouter } from 'next/router';
-
-type Item = {
-  label: string;
-  url: string;
-  end: string;
-};
+import Link from 'next/link';
+import Image from 'next/image';
+import menuIcon from '../../public/assets/icons/menu.png';
+import * as S from './SideMenuBarModule';
+import { Item } from 'hooks/layouts/useGetSideMenuBarItems';
 
 interface ISideMenuBarProps {
   items: Item[];
+  currentPath: string;
 }
 
-const SideMenuBar = ({ items }: ISideMenuBarProps) => {
-  const router = useRouter();
-  const currentPath = router.pathname;
-
+const SideMenuBar = ({ items, currentPath }: ISideMenuBarProps) => {
   return (
     <S.SideMenuBar>
       <S.SideMenuBarList>
