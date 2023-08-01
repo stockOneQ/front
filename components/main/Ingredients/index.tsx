@@ -19,60 +19,85 @@ type IngredientsProps = {
   storageMethodFilter: StorageMethod;
 };
 
+interface productAll {
+  id: number;
+  name : string;
+  image : null;
+}
+
 const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
 
-  const [data, setData] = useState(null);
-  const [storeId, setStoreId] = useState('');
-  const [userId, setUserId] = useState('');
 
-  // const fetchDataFromApi = async () => {
-  //   try {
-  //     const response = await axios.post('http://localhost:8080/api/product', {
-  //       storeID: storeId,
-  //       userID: userId,
-  //     });
-
-  //     setData(response.data);
-  //   } catch (error) {
-  //     console.error('Error fetching data from API:', error);
-  //   }
-  // };
-  useEffect(() => {
-    API.get("/api/product", {
-      params: {
-        storeID: storeId,
-        userID: userId,
-      },
-    })
-    .then((response) => {
-      alert("요청성공");
-      console.log(response);
-      // Update the state with the fetched data
-      setData(response.data);
-    })
-    .catch((error) => {
-      alert("요청실패");
-      console.log(error);
-    });
-  }, [storeId, userId]);
-
-  //console.log(storageMethodFilter);
   /** API 호출------------------------------------------------- */
   /** --------------------------------------------------------- */
   /** --------------------------------------------------------- */
 
-    const router = useRouter();
+  const router = useRouter();
 
-   //정렬 제품 api 호출
-  //const [sortedProducts, setSortedProducts] = useState([]);
+  const [data, setData] = useState(null);
+
+  const [storeId, setStoreId] = useState(1);
+  const [userId, setUserId] = useState(1);
   const [sortedProducts, setSortedProducts] = useState<ProductItem[]>([]);
+  
   const [selectedSortOption, setSelectedSortOption] = useState("가나다순");
   const [activeLink, setActiveLink] = useState<string>('전체');
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [searchTerm, setSearchTerm] = useState("");
   const [linksVisible, setLinksVisible] = useState(false);
 
+  //storeid & userId 
+  useEffect(() => {
+    API.get("/api/product")
+      .then((response) => {
+        alert("요청성공");
+        console.log("-------------------------")
+        console.log("첫 storeId api 호출: ",response);
+        // 업데이트 
+        setData(response.data);
+
+        setUserId(response.data?.result?.userId ?? null);
+        setStoreId(response.data?.result?.storeId ?? null);
+      })
+      .catch((error) => {
+        alert("요청실패");
+        console.log(error);
+      });
+  }, [storeId, userId]);
+  
+  // api호출에서 받은 storeID 와 userId 로 전체 제품 조회 api 호출
+  useEffect(() => {
+    if (storeId && userId) {
+      fetchSortedProducts(); 
+    }
+  }, [storeId, userId]);
+
+  // sortedProducts 업데이트 
+ 
+  /** 제품조회 API ------------------------------------------------------------------ */
+  const fetchSortedProducts = async () => {
+    try {
+      const response = await productList(storeId, '냉동', 12, '가나다');
+      const productAll = response.data;
+      console.log("응답 response data 값: ",productAll);
+      setSortedProducts(productAll);
+      console.log("현재 sortedProducts : ", sortedProducts); //null
+      
+    } catch (error) {
+      console.log(storeId);
+      console.error('Error fetching sorted products:', error);
+    }
+  };
+
+  //useEffect로 업데이트 후 업데이트된 값 반영되어야하는데 
+  useEffect(() => {
+      console.log("sortedProducts updated:", sortedProducts);//null 
+    }, [sortedProducts]);
+
+  //console.log(storageMethodFilter);
+  
+  
   /** 검색 API ------------------------------------------------------------------ */
   const handleSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value;
@@ -91,29 +116,6 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
       setSortedProducts(products);
     } catch (error) {
       console.error("Error fetching search results:", error);
-    }
-  };
-
-  //검색 전체일 때 test코드 
-  // const handleSearchChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const searchValue = event.target.value;
-  //   setSearchTerm(searchValue);
-  
-  //   try {
-  //     const products = await searchProducts(storageMethodFilter, searchValue);
-  //     setSortedProducts(products);
-  //   } catch (error) {
-  //     console.error("Error handling search change:", error);
-  //   }
-  // };
-  /** 제품조회 API ------------------------------------------------------------------ */
-  const fetchSortedProducts = async (sortParameter: string) => {
-    try {
-      const response = await productList(storeId, '냉동', 0, sortParameter);
-      const products = response.data;
-      setSortedProducts(products);
-    } catch (error) {
-      console.error('Error fetching sorted products:', error);
     }
   };
 
@@ -147,18 +149,6 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   const [insufficientIngredientsCount, setInsufficientIngredientsCount] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
 
-  // useEffect(() => {
-  //   fetchProductCounts('냉동', '전체')
-  //     .then((counts) => {
-  //       setTotalCount(counts.totalCount);
-  //       setApproachingExpirationCount(counts.approachingExpirationCount);
-  //       setExpiredIngredientsCount(counts.expiredIngredientsCount);
-  //       setInsufficientIngredientsCount(counts.insufficientIngredientsCount);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching product counts:', error);
-  //     });
-  // }, []);
 
   /** 제품 상세 페이지 조회 API------------------------------------------------------ */
   const handleItemClick = async (product: ProductItem) => {
@@ -177,140 +167,6 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   /** --------------------------------------------------------- */
   /** --------------------------------------------------------- */
   /** --------------------------------------------------------- */
-
-  // //정렬 전역 상태를 업데이트
-  // // Recoil States
-  // const postList = useRecoilValue(mainPostListState);
-  // const setSortType = useSetRecoilState(sortTypeState);
-  // const setSelectedProduct = useSetRecoilState(selectedProductState);
-
-  // // Local States
-  // const [searchBy, setSearchBy] = useState<string>('가나다순');
-  // const [categoryToggle, setCategoryToggle] = useState<boolean>(false);
-  // const [activeLink, setActiveLink] = useState<string>('전체');
-  // const [selectedCategory, setSelectedCategory] = useState<string>('전체');
-  // const [searchTerm, setSearchTerm] = useState<string>('');
-
-  // // Sorting
-  // const [sortOrder, setSortOrder] = useState<'가나다순' | '빈도순'>('가나다순');
-  // const changeValueHandler = (value: string): void => {
-  //   setSearchBy(value);
-  //   setCategoryToggle(false);
-  //   setSortOrder((prevSortOrder) => (prevSortOrder === '가나다순' ? '빈도순' : '가나다순'));
-  // };
-  // // Recoil States - 유통기한임박, 지난, 부족한재료
-  // const approachingExpiration = useRecoilValue(approachingExpirationState);
-  // const expiredIngredients = useRecoilValue(expiredIngredientsState);
-  // const insufficientIngredients = useRecoilValue(insufficientIngredientsState);
-
-  // // Category Counts
-  // const approachingExpirationCount: number = productsToShow.filter((item) =>
-  //   approachingExpiration.includes(item.id.toString())
-  // ).length;
-  // const expiredIngredientsCount: number = productsToShow.filter((item) =>
-  //   expiredIngredients.includes(item.id.toString())
-  // ).length;
-  // const insufficientIngredientsCount: number = productsToShow.filter((item) =>
-  //   insufficientIngredients.includes(item.id.toString())
-  // ).length;
-  // const totalCount: number = productsToShow.length;
-
-  // // Filtered Lists
-  // const [filteredApproachingExpiration, setFilteredApproachingExpiration] = useState<ProductItem[]>([]);
-  // const [filteredExpiredItems, setFilteredExpiredItems] = useState<ProductItem[]>([]);
-  // const [filteredInsufficientIngredients, setFilteredInsufficientIngredients] = useState<ProductItem[]>([]);
-  // const [filteredItems, setFilteredItems] = useState<ProductItem[]>([]);
-
-  // useEffect(() => {
-  //   // Filtered Lists - 유통기한임박
-  //   if (selectedCategory === 'beforeDate') {
-  //     const approachingExpirationProducts = postList.filter(
-  //       (item) =>
-  //         approachingExpiration.includes(item.id.toString()) &&
-  //         (selectedCategory === '전체' || item.storageMethod === storageMethodFilter)
-  //     );
-  //     setFilteredApproachingExpiration(approachingExpirationProducts);
-  //   } else {
-  //     setFilteredApproachingExpiration([]);
-  //   }
-
-  //   // Filtered Lists - 유통기한지난
-  //   if (selectedCategory === 'afterDate') {
-  //     const expiredIngredientsProducts = postList.filter((item) => expiredIngredients.includes(item.id.toString()));
-  //     setFilteredExpiredItems(expiredIngredientsProducts);
-  //   } else {
-  //     setFilteredExpiredItems([]);
-  //   }
-
-  //   // Filtered Lists - 부족한 재료
-  //   if (selectedCategory === 'no') {
-  //     const InsufficientIngredientsProducts = postList.filter((item) => insufficientIngredients.includes(item.id.toString()));
-  //     setFilteredInsufficientIngredients(InsufficientIngredientsProducts);
-  //   } else {
-  //     setFilteredInsufficientIngredients([]);
-  //   }
-
-  //   // Filtered Lists - 필터링해서 제품 정렬
-  //   const filteredItems = selectedCategory === '전체'
-  //     ? postList.filter((item) => item.storageMethod === storageMethodFilter)
-  //     : postList.filter((item) => item.storageMethod === storageMethodFilter && item.category === selectedCategory);
-
-  //   const sortedFilteredItems = sortOrder === '가나다순'
-  //     ? filteredItems.sort((a, b) => a.productName.localeCompare(b.productName))
-  //     : filteredItems.sort((a, b) => parseInt(b.orderingFrequency) - parseInt(a.orderingFrequency));
-
-  //   setFilteredItems(sortedFilteredItems);
-  // }, [selectedCategory, storageMethodFilter, approachingExpiration, expiredIngredients, insufficientIngredients, postList, sortOrder]);
-
-  // const handleLinkClick = (link: string): void => {
-  //   setActiveLink(link);
-  //   setSelectedCategory(link);
-  // };
-
-  // const renderItems = (items: ProductItem[]) => {
-  //   let sortedItems: ProductItem[];
-
-  //   if (searchBy === '가나다순') {
-  //     sortedItems = items.sort((a, b) => a.productName.localeCompare(b.productName));
-  //   } else if (searchBy === '빈도순') {
-  //     sortedItems = items.sort((a, b) => parseInt(b.orderingFrequency) - parseInt(a.orderingFrequency));
-  //   } else {
-  //     sortedItems = items; 
-  //   }
-
-  //   return sortedItems.map((value) => (
-  //     <S.MainItem key={value.id} onClick={() => handleItemClick(value)}>
-  //       <Link href={`/product/${value.id}`} key={value.id}>
-  //         <S.MainItemImg>
-  //         {value.imageInfo && <Image src={value.imageInfo} alt={value.productName} width={140} height={140}/>}
-  //           {/* <Image src={exampleMain} alt="my_page_icon" width={140} height={140} /> */}
-  //         </S.MainItemImg>
-  //         <S.ProductName>
-  //           {value.productName}
-  //         </S.ProductName>
-  //       </Link>
-  //     </S.MainItem>
-  //   ));
-  // };
-
-  // const handleItemClick = (item: ProductItem): void => {
-  //   setSelectedProduct(item);
-  // };
-
-  // const handleSortChange = (selectedSort: string) => {
-  //   setSearchBy(selectedSort);
-  //   setSortType(selectedSort);
-  // };
-
-  // const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-  //   setSearchTerm(event.target.value);
-  // };
-
-  // const searchResults: ProductItem[] = filteredItems.filter((item) =>
-  //   item.productName.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-  // // 검색 기능
-
 
   return (
     <>
@@ -341,18 +197,13 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
 
 
       {/* api 호출에 따른 MAIN SECTION */}
-      {sortedProducts.map((product) => (
-        <S.MainItem key={product.id} onClick={() => handleItemClick(product)}>
-          <Link href={`/product/${product.id}`} key={product.id}>
-            <S.MainItemImg>
-              <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
-            </S.MainItemImg>
-            <S.ProductName>
-              {product.productName}
-            </S.ProductName>
-          </Link>
-        </S.MainItem>
-      ))}
+      {Array.isArray(sortedProducts) ? (
+      sortedProducts.map((product) => (  
+      <p>{product.name}</p>
+      ))
+    ) : (
+      <p>Loading...</p> 
+    )}
 
     </>
   );

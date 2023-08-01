@@ -24,7 +24,7 @@ export const API = axios.create({
     headers: {
       "Content-type": `application/json;charset=UTF-8`,
       Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNjkwNjE1OTc1LCJleHAiOjE2OTA2MjMxNzV9.gJpG1TfJbQknVLxM3R7jJfYG9FJIRT1ZcqdIMmEUNmY",
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNjkwNzMyMzAxLCJleHAiOjE2OTMzMjQzMDF9.S-fxe9UPs4pCjBDrE-RGWxnx15He0seYhx79FRLwTfM",
       "Access-Control-Allow-Origin": `http://localhost:3000`,
       "Access-Control-Allow-Credentials": true,
     },
@@ -45,7 +45,7 @@ export const API = axios.create({
 
 //정렬 제품 api 호출
 export const productList = (
-    store: string,
+    store: number,
     condition: string,
     last: number,
     sort: string
@@ -82,7 +82,7 @@ export const productList = (
 //제품개수 
 export const fetchProductCounts = async (store: string, condition: string): Promise<ProductCounts> => {
     try {
-        const response = await axios.get("/api/product/count", {
+        const response = await API.get("/api/product/count", {
             params: {
                 store,
                 condition,
@@ -122,7 +122,7 @@ export const getProductByCategory = async (
     let response;
 
     if (category === 'beforeDate') {
-        response = await axios.get('/api/product/close', {
+        response = await API.get('/api/product/close', {
             params: {
                 store: store,//가게
                 condition: storageMethodFilter,//냉장냉동상온
@@ -131,7 +131,7 @@ export const getProductByCategory = async (
             },
         });
     } else if (category === 'afterDate') {
-        response = await axios.get('/api/product/pass', {
+        response = await API.get('/api/product/pass', {
             params: {
                 store: store,//가게
                 condition: storageMethodFilter,//냉장냉동상온
@@ -140,7 +140,7 @@ export const getProductByCategory = async (
             },
         });
     } else if (category === 'no') {
-        response = await axios.get('/api/product/lack', {
+        response = await API.get('/api/product/lack', {
             params: {
                 store: store,
                 condition: storageMethodFilter,
@@ -150,7 +150,7 @@ export const getProductByCategory = async (
         });
     } else {
         // Default: "전체"
-        response = await axios.get('/api/product/all', {
+        response = await API.get('/api/product/all', {
             params: {
                 store: store,
                 condition: storageMethodFilter,
@@ -168,7 +168,7 @@ export const fetchProductDetails = async (
     id: number
 ): Promise<AxiosResponse<ProductItem>> => {
     try {
-        const response = await axios.get(`/api/product/${id}`);
+        const response = await API.get(`/api/product/${id}`);
         return response.data;
     } catch (error) {
         throw new Error("Error fetching product details: ");
@@ -181,7 +181,7 @@ export const searchProducts = async (
     searchValue: string
 ): Promise<AxiosResponse<ProductItem[]>> => {
     try {
-        const response = await axios.get("/api/product", {
+        const response = await API.get("/api/product", {
             params: {
                 store: storageMethodFilter,
                 condition: "전체", //activelink로 바뀔 예정

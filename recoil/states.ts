@@ -3,27 +3,32 @@ import { useCallback } from "react";
 
 /** ----------------메인 페이지------------- */
 
+// export interface ProductItem {
+//   id: number;
+//   category: string;
+//   productName: string;
+//   price:  number;
+//   seller: string;
+//   receiptYear: string;
+//   receiptMonth: string;
+//   receiptDay: string;
+//   expirationYear: string;
+//   expirationMonth: string;
+//   expirationDay: string;
+//   ingredientLocation: string;
+//   requiredQuantity: string;
+//   quantity: string;
+//   orderingSite: string;
+//   orderingFrequency: string;
+//   imageInfo: string;
+//   storageMethod: string;
+// };
+
 export interface ProductItem {
   id: number;
-  category: string;
-  productName: string;
-  price: string;
-  seller: string;
-  receiptYear: string;
-  receiptMonth: string;
-  receiptDay: string;
-  expirationYear: string;
-  expirationMonth: string;
-  expirationDay: string;
-  ingredientLocation: string;
-  requiredQuantity: string;
-  quantity: string;
-  orderingSite: string;
-  orderingFrequency: string;
-  imageInfo: string;
-  storageMethod: string;
-};
-
+  name: string;
+  image: string | null;
+}
 
 export const mainPostListState = atom<ProductItem[]>({
   key: "mainPostListState",
