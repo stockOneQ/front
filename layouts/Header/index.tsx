@@ -3,8 +3,13 @@ import Image from "next/image";
 import logo from "public/favicon/favicon-192.png";
 import * as H from "./style";
 import { useRouter } from 'next/router';
+import { Dispatch, SetStateAction } from 'react';
 
-const Header = () => {
+interface IHeaderProps {
+  setSideBarIdx: Dispatch<SetStateAction<number>>;
+}
+
+const Header = ({ setSideBarIdx }: IHeaderProps) => {
   const router = useRouter();
   const currentPath = router.pathname;
 
@@ -24,27 +29,27 @@ const Header = () => {
       <H.NavBar>
         <H.NavList>
           <H.NavItem className={(currentPath.startsWith('/home') || currentPath === '/') ? 'active' : ''}>
-            <Link href="/home/frozen">
+            <Link href="/home/frozen" onClick={() => { setSideBarIdx(0)} }>
               Home
             </Link>
           </H.NavItem>
           <H.NavItem className={currentPath.startsWith('/community') ? 'active' : ''}>
-            <Link href="/community/friends">
+            <Link href="/community/friends" onClick={() => { setSideBarIdx(0)} }>
               Community
             </Link>
           </H.NavItem>
           <H.NavItem className={currentPath.startsWith('/connect') ? 'active' : ''}>
-            <Link href="/connect/data">
+            <Link href="/connect/data" onClick={() => { setSideBarIdx(0)} }>
               Connect
             </Link>
           </H.NavItem>
           <H.NavItem className={currentPath.startsWith('/myPage') ? 'active' : ''}>
-            <Link href="/myPage/edit">
+            <Link href="/myPage/edit" onClick={() => { setSideBarIdx(0)} }>
               My Page
             </Link>
           </H.NavItem>
           <H.NavItem className={currentPath.startsWith('/login') ? 'active' : ''}>
-            <Link href="/login">
+            <Link href="/login" onClick={() => { setSideBarIdx(0)} }>
               로그아웃
             </Link>
           </H.NavItem>
