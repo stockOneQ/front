@@ -23,7 +23,7 @@ export const API = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNjkwNzMxMDk2LCJleHAiOjE2OTA3MzgyOTZ9.D83RvFycLqELczUf96k-ycHIueDjO5GY6ecQ_qWJV8g',
+      'Authorization': `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
       'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_API_URL,
       'Access-Control-Allow-Credentials': true
     },
