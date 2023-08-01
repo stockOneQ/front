@@ -1,7 +1,8 @@
 import FriendProfile from './FriendProfile';
 import FriendsCount from './FriendsCount';
 import * as S from './style';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { API } from 'pages/api/api';
 
 export const DUMMY_DATA = [
   {
@@ -66,6 +67,15 @@ export const DUMMY_DATA = [
   },
 ]
 
+const getData = async () => {
+  try {
+    const friendsList = await API.get('/api/friends?last=5');
+    console.log('success', friendsList.data);
+  } catch (err) {
+    console.log('err', err);
+  }
+}
+
 /** 친구 목록 */
 const FriendsList = () => {
   /** 삭제, 취소 버튼 등장 */
@@ -74,6 +84,10 @@ const FriendsList = () => {
   const [isPermitted, setIsPermitted] = useState(9); // 일단 9(친구 수)로 하드 코딩
   const [isStock, setIsStock] = useState(false);
   
+  useEffect(() => {
+    getData();
+  }, [])
+
   return (
     <>
       <FriendsCount onSetting={onSetting} isPermitted={isPermitted} setOnSetting={setOnSetting} />

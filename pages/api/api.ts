@@ -20,14 +20,14 @@ interface ProductCounts {
 
 
 export const API = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
-      "Content-type": `application/json;charset=UTF-8`,
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNjkwNjE1OTc1LCJleHAiOjE2OTA2MjMxNzV9.gJpG1TfJbQknVLxM3R7jJfYG9FJIRT1ZcqdIMmEUNmY",
-      "Access-Control-Allow-Origin": `http://localhost:3000`,
-      "Access-Control-Allow-Credentials": true,
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNjkwNzMxMDk2LCJleHAiOjE2OTA3MzgyOTZ9.D83RvFycLqELczUf96k-ycHIueDjO5GY6ecQ_qWJV8g',
+      'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_API_URL,
+      'Access-Control-Allow-Credentials': true
     },
+    withCredentials: true
   });
 
 // export const fetchDataFromApi = async (storeId, userId) => {
