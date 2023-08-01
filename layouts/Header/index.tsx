@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-
 import logo from "public/favicon/favicon-192.png";
-import * as H from "./HeaderModule";
+import * as H from "./style";
+import { useRouter } from 'next/router';
 
 const Header = () => {
-  const [click, setClick] = useState("home");
+  const router = useRouter();
+  const currentPath = router.pathname;
 
   return (
     <H.Header>
@@ -23,31 +23,28 @@ const Header = () => {
       </H.LogoBox>
       <H.NavBar>
         <H.NavList>
-          <H.NavItem className={click === "home" ? "active" : ""}>
-            <Link href="/" onClick={() => setClick("home")}>
+          <H.NavItem className={currentPath === '/' ? 'active' : ''}>
+            <Link href="/">
               Home
             </Link>
           </H.NavItem>
-          <H.NavItem className={click === "community" ? "active" : ""}>
-            <Link
-              href="/community/friends"
-              onClick={() => setClick("community")}
-            >
+          <H.NavItem className={currentPath === '/community/friends' ? 'active' : ''}>
+            <Link href="/community/friends">
               Community
             </Link>
           </H.NavItem>
-          <H.NavItem className={click === "connect" ? "active" : ""}>
-            <Link href="/connect/data" onClick={() => setClick("connect")}>
+          <H.NavItem className={currentPath === '/connect/data' ? 'active' : ''}>
+            <Link href="/connect/data">
               Connect
             </Link>
           </H.NavItem>
-          <H.NavItem className={click === "myPage" ? "active" : ""}>
-            <Link href="/myPage" onClick={() => setClick("myPage")}>
+          <H.NavItem className={currentPath === '/myPage' ? 'active' : ''}>
+            <Link href="/myPage">
               My Page
             </Link>
           </H.NavItem>
-          <H.NavItem className={click === "logout" ? "active" : ""}>
-            <Link href="/login" onClick={() => setClick("logout")}>
+          <H.NavItem className={currentPath === '/login' ? 'active' : ''}>
+            <Link href="/login">
               로그아웃
             </Link>
           </H.NavItem>
