@@ -12,7 +12,7 @@ const useGetSideMenuBarItems = (currentPath: string) => {
 
   if (currentPath.startsWith('/home') || currentPath === '/') {
     return sideMenuBarItems.current = [
-      { label: '냉동', url: '/home/frozen', end: 'frozen' },
+      { label: '냉동', url: '/home/frozen', end: `${currentPath === '/' ? '' : 'frozen'}` },
       { label: '냉장', url: '/home/coldStorage', end: 'coldStorage' },
       { label: '상온', url: '/home/roomTemperature', end: 'roomTemperature' }
     ];

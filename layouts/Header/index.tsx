@@ -23,7 +23,7 @@ const Header = () => {
       </H.LogoBox>
       <H.NavBar>
         <H.NavList>
-          <H.NavItem className={currentPath.startsWith('/home') ? 'active' : ''}>
+          <H.NavItem className={(currentPath.startsWith('/home') || currentPath === '/') ? 'active' : ''}>
             <Link href="/home/frozen">
               Home
             </Link>
