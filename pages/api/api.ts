@@ -115,9 +115,10 @@ export const fetchProductCounts = async (store: string, condition: string): Prom
 
 export const getProductByCategory = async (
     category: string, //전체 임박, 경과, 부족
-    store: string,
-    storageMethodFilter: string,
-    selectedSortOption: string
+    store: number,
+    condition: string,
+    last: number,
+    sort: string
 ) => {
     let response;
 
@@ -125,42 +126,42 @@ export const getProductByCategory = async (
         response = await API.get('/api/product/close', {
             params: {
                 store: store,//가게
-                condition: storageMethodFilter,//냉장냉동상온
-                last: 'lastProductId',
-                sort: selectedSortOption,//가나다순
+                condition: condition,//냉장냉동상온
+                last: last,
+                sort:sort,//가나다순
             },
         });
     } else if (category === 'afterDate') {
         response = await API.get('/api/product/pass', {
             params: {
                 store: store,//가게
-                condition: storageMethodFilter,//냉장냉동상온
-                last: 'lastProductId',
-                sort: selectedSortOption,//가나다순
+                condition: condition,//냉장냉동상온
+                last: last,
+                sort:sort,//가나다순
             },
         });
     } else if (category === 'no') {
         response = await API.get('/api/product/lack', {
             params: {
-                store: store,
-                condition: storageMethodFilter,
-                last: 'lastProductId',
-                sort: selectedSortOption,
+                store: store,//가게
+                condition: condition,//냉장냉동상온
+                last: last,
+                sort:sort,//가나다순
             },
         });
     } else {
         // Default: "전체"
         response = await API.get('/api/product/all', {
             params: {
-                store: store,
-                condition: storageMethodFilter,
-                last: 'lastProductId',
-                sort: selectedSortOption,
+                store: store,//가게
+                condition: condition,//냉장냉동상온
+                last: last,
+                sort:sort,//가나다순
             },
         });
     }
 
-    return response.data;
+    return response.data.result;
 };
 
 //상세페이지
@@ -193,7 +194,6 @@ export const searchProducts = async (
         throw new Error("Error fetching search results: " + error.message);
     }
 };
-
 
 
 
