@@ -25,13 +25,9 @@ export const SideMenuBarItem = styled.li`
   }
 `;
 
-interface ILogoBoxProps {
-  sideBarIdx: number;
-}
-export const LogoBox = styled.div<ILogoBoxProps>`
-  top: ${({ sideBarIdx }) => sideBarIdx === 0 ? '9.9rem' : sideBarIdx === 1 ? '20.7rem' : '31.5rem'};
-  right: 0;
-  transform: translate(50%, -50%);
+export const LogoBox = styled.div`
+  top: 17%;
+  left: 100%;
+  transform: translate(-50%, -50%);
   position: absolute;
-  transition: all .7s ease;
 `;
