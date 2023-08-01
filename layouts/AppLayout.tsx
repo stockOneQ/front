@@ -21,14 +21,14 @@ const AppLayout = ({ children }: AppLayoutProps) => {
   let sideMenuBarItems: Item[] = [];
 
   switch (currentPath) {
-    case "/":
-    case "/coldStorage":
-    case "/roomTemperature":
+    case "/home/frozen":
+    case "/home/coldStorage":
+    case "/home/roomTemperature":
     case "/new":
       sideMenuBarItems = [
-        { label: "냉동", url: "/" },
-        { label: "냉장", url: "/coldStorage" },
-        { label: "상온", url: "/roomTemperature" },
+        { label: "냉동", url: "/home/frozen" },
+        { label: "냉장", url: "/home/coldStorage" },
+        { label: "상온", url: "/home/roomTemperature" },
       ];
       break;
     case "/community/friends":
@@ -40,18 +40,18 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         { label: "게시판", url: "/community/board" },
       ];
       break;
-    case "/connect":
+    case "/connect/connection":
     case "/connect/data":
       sideMenuBarItems = [
         { label: "자료", url: "/connect/data" },
-        { label: "연결", url: "/connect" },
+        { label: "연결", url: "/connect/connection" },
       ];
       break;
-    case "/myPage":
+    case "/myPage/edit":
     case "/myPage/questions":
     case "/myPage/secession":
       sideMenuBarItems = [
-        { label: "회원정보수정", url: "/myPage" },
+        { label: "회원정보수정", url: "/myPage/edit" },
         { label: "F & A", url: "/myPage/questions" },
         { label: "회원탈퇴", url: "/myPage/secession" },
       ];

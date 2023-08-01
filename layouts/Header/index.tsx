@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <H.Header>
       <H.LogoBox>
-        <Link href="/" aria-label="메인페이지로 이동">
+        <Link href="/home/frozen" aria-label="메인페이지로 이동">
           <Image
             role="main-link"
             src={logo}
@@ -23,27 +23,27 @@ const Header = () => {
       </H.LogoBox>
       <H.NavBar>
         <H.NavList>
-          <H.NavItem className={currentPath === '/' ? 'active' : ''}>
-            <Link href="/">
+          <H.NavItem className={currentPath.startsWith('/home') ? 'active' : ''}>
+            <Link href="/home/frozen">
               Home
             </Link>
           </H.NavItem>
-          <H.NavItem className={currentPath === '/community/friends' ? 'active' : ''}>
+          <H.NavItem className={currentPath.startsWith('/community') ? 'active' : ''}>
             <Link href="/community/friends">
               Community
             </Link>
           </H.NavItem>
-          <H.NavItem className={currentPath === '/connect/data' ? 'active' : ''}>
+          <H.NavItem className={currentPath.startsWith('/connect') ? 'active' : ''}>
             <Link href="/connect/data">
               Connect
             </Link>
           </H.NavItem>
-          <H.NavItem className={currentPath === '/myPage' ? 'active' : ''}>
-            <Link href="/myPage">
+          <H.NavItem className={currentPath.startsWith('/myPage') ? 'active' : ''}>
+            <Link href="/myPage/edit">
               My Page
             </Link>
           </H.NavItem>
-          <H.NavItem className={currentPath === '/login' ? 'active' : ''}>
+          <H.NavItem className={currentPath.startsWith('/login') ? 'active' : ''}>
             <Link href="/login">
               로그아웃
             </Link>
