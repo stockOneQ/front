@@ -98,8 +98,8 @@ export const fetchProductCounts = async (store: string, condition: string): Prom
 
         return {
             totalCount: totalCountItem?.total ?? 0,
-            approachingExpirationCount: passCountItem?.total ?? 0,
-            expiredIngredientsCount: closeCountItem?.total ?? 0,
+            approachingExpirationCount: closeCountItem?.total ?? 0,
+            expiredIngredientsCount: passCountItem?.total ?? 0,
             insufficientIngredientsCount: lackCountItem?.total ?? 0,
         };
     } catch (error) {
