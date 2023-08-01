@@ -24,9 +24,8 @@ const SideMenuBar = ({ items, currentPath, sideBarIdx, setSideBarIdx }: ISideMen
           <S.SideMenuBarItem
             key={idx}
             className={currentPath.endsWith(end) ? 'active' : ''}
-            onClick={() => { setSideBarIdx(idx) }}
-          >
-            <Link href={url}>
+            >
+            <Link href={url} onClick={() => { setSideBarIdx(idx) }}>
               {label}
             </Link>
           </S.SideMenuBarItem>
