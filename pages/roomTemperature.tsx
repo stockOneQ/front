@@ -1,17 +1,14 @@
-// http://localhost:8080/home/roomTemperature
-
 import RoomTempPage from "components/main/RoomTemp";
 
-/** home - 상온 페이지 */
-const RoomTemperaturePage = () => {
+const Home = () => {
   return (
     <>
-      <RoomTempPage />
+     <RoomTempPage />
     </>
   );
 };
 
-export default RoomTemperaturePage;
+export default Home;
 // const RoomTemperature = () => {
 //   return (
 //     <>
