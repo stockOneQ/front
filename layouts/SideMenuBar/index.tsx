@@ -2,25 +2,31 @@ import Link from "next/link";
 import Image from "next/image";
 import menuIcon from "../../public/assets/icons/menu.png";
 import * as S from "./SideMenuBarModule";
-import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
 
 type Item = {
   label: string;
   url: string;
+  end: string;
 };
 
-const SideMenuBar = ({ items }: { items: Item[] }) => {
-  const [click, setClick] = useState<string>("");
+interface ISideMenuBarProps {
+  items: Item[];
+}
+
+const SideMenuBar = ({ items }: ISideMenuBarProps) => {
+  const router = useRouter();
+  const currentPath = router.pathname;
 
   return (
     <S.SideMenuBar>
       <S.SideMenuBarList>
-        {items.map(({ label, url }: { label: string; url: string }, idx) => (
+        {items.map(({ label, url, end }, idx) => (
           <S.SideMenuBarItem
             key={idx}
-            className={click === label ? "active" : ""}
+            className={currentPath.endsWith(end) ? 'active' : ''}
           >
-            <Link href={url} onClick={() => setClick(label)}>
+            <Link href={url}>
               {label}
             </Link>
           </S.SideMenuBarItem>
