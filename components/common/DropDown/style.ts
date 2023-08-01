@@ -51,15 +51,14 @@ const ToggleContainer = styled.div<IToggleProps>`
 `;
 
 interface IOptionListProps {
-  width: number;
   fontSize: number;
 }
 
 const OptionList = styled.ul<IOptionListProps>`
   z-index: 999;
-  
+
   position: relative;
-  width: ${({ width }) => `${width}rem`};
+  width: 100%;
   background-color: var(--color-white);
   color: #979797;
 

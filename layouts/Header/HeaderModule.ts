@@ -40,6 +40,6 @@ export const NavItem = styled.li`
   color: #979797;
 
   &.active {
-    color: var(--color-black);
+    color: #000000;
   }
 `;
