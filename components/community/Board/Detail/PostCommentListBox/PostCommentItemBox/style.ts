@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Box = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
-  font-family: "Roboto";
+  font-family: 'Roboto';
 `;
 
 export const ContentContainer = styled.div`

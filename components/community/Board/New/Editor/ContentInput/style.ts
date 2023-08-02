@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Box = styled.div``;
 
@@ -26,7 +26,7 @@ export const Input = styled.textarea`
   border-radius: 0rem 0rem 3rem 3rem;
   padding: 1.5rem 2.7rem;
 
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 1.8rem;
