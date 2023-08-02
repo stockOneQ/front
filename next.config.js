@@ -2,11 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
-    styledComponents: true
-  }
+    styledComponents: true,
+  },
 };
 
 module.exports = {
+  swcMinify: true,
+  compiler: {
+    styledComponents: true,
+  },
   async rewrites() {
     return [
       {
