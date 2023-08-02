@@ -1,17 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-
 import logo from "public/favicon/favicon-192.png";
-import * as H from "./HeaderModule";
+import * as H from "./style";
+import { useRouter } from 'next/router';
+import { Dispatch, SetStateAction } from 'react';
 
-const Header = () => {
-  const [click, setClick] = useState("home");
+interface IHeaderProps {
+  setSideBarIdx: Dispatch<SetStateAction<number>>;
+}
+
+const Header = ({ setSideBarIdx }: IHeaderProps) => {
+  const router = useRouter();
+  const currentPath = router.pathname;
 
   return (
     <H.Header>
       <H.LogoBox>
-        <Link href="/" aria-label="메인페이지로 이동">
+        <Link href="/home/frozen" aria-label="메인페이지로 이동">
           <Image
             role="main-link"
             src={logo}
@@ -23,31 +28,28 @@ const Header = () => {
       </H.LogoBox>
       <H.NavBar>
         <H.NavList>
-          <H.NavItem className={click === "home" ? "active" : ""}>
-            <Link href="/" onClick={() => setClick("home")}>
+          <H.NavItem className={(currentPath.startsWith('/home') || currentPath === '/') ? 'active' : ''}>
+            <Link href="/home/frozen" onClick={() => { setSideBarIdx(0)} }>
               Home
             </Link>
           </H.NavItem>
-          <H.NavItem className={click === "community" ? "active" : ""}>
-            <Link
-              href="/community/friends"
-              onClick={() => setClick("community")}
-            >
+          <H.NavItem className={currentPath.startsWith('/community') ? 'active' : ''}>
+            <Link href="/community/friends" onClick={() => { setSideBarIdx(0)} }>
               Community
             </Link>
           </H.NavItem>
-          <H.NavItem className={click === "connect" ? "active" : ""}>
-            <Link href="/connect/data" onClick={() => setClick("connect")}>
+          <H.NavItem className={currentPath.startsWith('/connect') ? 'active' : ''}>
+            <Link href="/connect/data" onClick={() => { setSideBarIdx(0)} }>
               Connect
             </Link>
           </H.NavItem>
-          <H.NavItem className={click === "myPage" ? "active" : ""}>
-            <Link href="/myPage" onClick={() => setClick("myPage")}>
+          <H.NavItem className={currentPath.startsWith('/myPage') ? 'active' : ''}>
+            <Link href="/myPage/edit" onClick={() => { setSideBarIdx(0)} }>
               My Page
             </Link>
           </H.NavItem>
-          <H.NavItem className={click === "logout" ? "active" : ""}>
-            <Link href="/login" onClick={() => setClick("logout")}>
+          <H.NavItem className={currentPath.startsWith('/login') ? 'active' : ''}>
+            <Link href="/login" onClick={() => { setSideBarIdx(0)} }>
               로그아웃
             </Link>
           </H.NavItem>

@@ -1,69 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import * as L from "./AppLayoutStyles";
+import React, { PropsWithChildren, useState } from 'react';
+import { useRouter } from 'next/router';
+import * as L from './AppLayoutStyles';
+import Header from './Header';
+import SideMenuBar from './SideMenuBar';
+import useGetSideMenuBarItems from 'hooks/layouts/useGetSideMenuBarItems';
 
-import Header from "./Header";
-import SideMenuBar from "./SideMenuBar";
+const AppLayout = ({ children }: PropsWithChildren) => {
+  const [sideBarIdx, setSideBarIdx] = useState(0);
 
-type AppLayoutProps = {
-  children: React.ReactNode;
-};
-
-type Item = {
-  label: string;
-  url: string;
-};
-
-const AppLayout = ({ children }: AppLayoutProps) => {
   const router = useRouter();
   const currentPath = router.pathname;
-
-  let sideMenuBarItems: Item[] = [];
-
-  switch (currentPath) {
-    case "/":
-    case "/coldStorage":
-    case "/roomTemperature":
-    case "/new":
-      sideMenuBarItems = [
-        { label: "냉동", url: "/" },
-        { label: "냉장", url: "/coldStorage" },
-        { label: "상온", url: "/roomTemperature" },
-      ];
-      break;
-    case "/community/friends":
-    case "/community/board":
-    case "/community/board/new":
-    case "/community/board/[id]":
-    case "/community/board/myPosts":
-      sideMenuBarItems = [
-        { label: "친구", url: "/community/friends" },
-        { label: "게시판", url: "/community/board" },
-      ];
-      break;
-    case "/connect":
-    case "/connect/data":
-      sideMenuBarItems = [
-        { label: "자료", url: "/connect/data" },
-        { label: "연결", url: "/connect" },
-      ];
-      break;
-    case "/myPage":
-    case "/myPage/questions":
-    case "/myPage/secession":
-      sideMenuBarItems = [
-        { label: "회원정보수정", url: "/myPage" },
-        { label: "F & A", url: "/myPage/questions" },
-        { label: "회원탈퇴", url: "/myPage/secession" },
-      ];
-      break;
-  }
+  const sideMenuBarItems = useGetSideMenuBarItems(currentPath)!;
 
   return (
     <>
-      <Header />
+      <Header setSideBarIdx={setSideBarIdx} />
       <L.Box>
-        <SideMenuBar items={sideMenuBarItems} />
+        <SideMenuBar items={sideMenuBarItems} currentPath={currentPath} sideBarIdx={sideBarIdx} setSideBarIdx={setSideBarIdx} />
         <L.Main>{children}</L.Main>
       </L.Box>
     </>
