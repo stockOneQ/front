@@ -3,7 +3,6 @@ import { useRecoilState } from 'recoil';
 import { postCommentInputState } from 'recoil/states';
 import * as S from './style';
 import PhotoUploadSVG from 'public/assets/icons/community/photoUpload.svg';
-import { ChangeEvent } from 'react';
 
 const PostCommentInput = () => {
   const [input, setInput] = useRecoilState(postCommentInputState);
@@ -16,7 +15,7 @@ const PostCommentInput = () => {
       <S.Input
         value={input}
         maxLength={1000}
-        onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
           setInput(e.target.value)
         }
       />
