@@ -9,7 +9,7 @@ export const Box = styled.div`
 `;
 
 export const Main = styled.main`
-  padding: 0% 4%;
+  padding: 0 7rem;
   width: 100%;
   height: 100%;
   overflow: hidden;
