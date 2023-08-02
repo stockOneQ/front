@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Box = styled.div`
   width: 111.4rem;
@@ -17,7 +17,7 @@ export const Box = styled.div`
   justify-content: space-between;
 `;
 
-export const PostDetailSection = styled.div``;
+export const PostContentSection = styled.div``;
 
 export const Title = styled.div`
   font-weight: 600;
@@ -33,12 +33,12 @@ export const Content = styled.div`
   color: #979797;
 `;
 
-export const PostInfoSection = styled.div`
+export const PostInteractionSection = styled.div`
   display: flex;
   gap: 3.2rem;
 `;
 
-export const InfoBox = styled.div`
+export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +55,7 @@ interface ICheckBoxButtonProps {
   checked: boolean;
 }
 
-export const StyledInput = styled.input<ICheckBoxButtonProps>`
+export const CheckBox = styled.input<ICheckBoxButtonProps>`
   appearance: none;
 
   width: 6.4rem;

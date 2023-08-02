@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Box = styled.div`
   position: relative;
@@ -16,7 +16,7 @@ export const HeaderSection = styled.div`
   left: 0;
 `;
 
-export const ActionButtonContainer = styled.div`
+export const SettingButton = styled.div`
   position: absolute;
   top: 75%;
   right: 2%;
@@ -39,7 +39,7 @@ export const NavButton = styled.button`
   }
 `;
 
-export const ActionBox = styled.div`
+export const DeleteOptionBox = styled.div`
   display: flex;
   gap: 1rem;
 
@@ -48,7 +48,7 @@ export const ActionBox = styled.div`
   right: 0;
 `;
 
-export const ButtonContainer = styled.div`
+export const ActionButtonGroup = styled.div`
   display: flex;
 
   font-size: 1.3rem;
@@ -57,28 +57,7 @@ export const ButtonContainer = styled.div`
   color: #ffffff;
 `;
 
-export const Button = styled.button`
-  width: 7.1rem;
-  height: 4.6rem;
-
-  padding-top: 0.2rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: ${(props) => (props.children === "취소" ? "#e1e1e1" : "#000000")};
-  border-radius: 0.4rem;
-
-  &:hover {
-    background: ${(props) =>
-      props.children === "취소"
-        ? "#3d3d3d"
-        : " linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)"};
-  }
-`;
-
-export const SelectedContainer = styled.div`
+export const SelectAllContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,7 +69,7 @@ export const SelectedContainer = styled.div`
     line-height: 2.1rem;
   }
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     zoom: 2;
     margin-bottom: 0.1rem;
   }

@@ -1,24 +1,26 @@
-import Link from "next/link";
-import { useRecoilValue } from "recoil";
-import { filteredPostsState } from "recoil/states";
-import PostItemBox from "components/community/Board/PostListBox/PostItemBox";
-import * as S from "./style";
+import Link from 'next/link';
+import { useRecoilValue } from 'recoil';
+import { filteredPostListState } from 'recoil/states';
+import PostItemBox from 'components/community/Board/PostListBox/PostItemBox';
+import * as S from './style';
 
 const PostListBox = ({
   writerId,
   isSetting,
 }: {
-  writerId?: number;
+  writerId?: number; // 내가 쓴 글을 보여주기 위한
   isSetting?: boolean;
 }) => {
-  let postList = useRecoilValue(filteredPostsState);
+  let postList = useRecoilValue(filteredPostListState);
+
   if (writerId && postList) {
-    postList = postList.filter((post) => post.writerId === 82831);
+    postList = postList.filter(post => post.writerId === 82831);
   }
+
   return (
     <S.Box>
       {postList &&
-        postList.map((value) => (
+        postList.map(value => (
           // <Link key={value.id} href={`/community/board/${value.id}`}>
           <PostItemBox
             key={value.postId}

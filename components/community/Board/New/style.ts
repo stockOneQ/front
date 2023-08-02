@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Box = styled.div`
   display: flex;
@@ -7,7 +7,7 @@ export const Box = styled.div`
   align-items: center;
 `;
 
-export const ActionButtonBox = styled.div`
+export const ActionButtonGroup = styled.div`
   width: 100%;
 
   display: flex;
@@ -35,13 +35,13 @@ export const Button = styled.button`
   align-items: center;
   justify-content: center;
 
-  background: ${(props) => (props.children === "취소" ? "#979797" : "#000000")};
+  background: ${props => (props.children === '취소' ? '#979797' : '#000000')};
   border-radius: 2.3rem;
 
   &:hover {
-    background: ${(props) =>
-      props.children === "취소"
-        ? "#3d3d3d"
-        : " linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)"};
+    background: ${props =>
+      props.children === '취소'
+        ? '#3d3d3d'
+        : ' linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)'};
   }
 `;
