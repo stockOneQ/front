@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
-import * as S from "./style";
 import { postCommentListState } from "recoil/states";
+import * as S from "./style";
 import PostCommentItemBox from "./PostCommentItemBox";
 
 const PostCommentListBox = () => {

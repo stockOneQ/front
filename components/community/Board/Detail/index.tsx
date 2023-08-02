@@ -11,8 +11,8 @@ import PostCommentInputBox from "./PostCommentInputBox";
 import * as S from "./style";
 import { getStringDate } from "utils/date";
 
-import Close from "public/assets/icons/close.png";
-import Comment from "public/assets/icons/comment.png";
+import CloseSVG from "public/assets/icons/close.svg";
+import CommentsSVG from "public/assets/icons/comments.svg";
 
 type IPostType = {
   postData: {
@@ -41,7 +41,7 @@ const Detail = ({ postData }: IPostType) => {
   return (
     <S.Box>
       <S.CloseButtonContainer onClick={handleClose}>
-        <Image src={Close} alt="close" />
+        <Image src={CloseSVG} alt="close" />
       </S.CloseButtonContainer>
 
       <S.PostContainer>
@@ -58,7 +58,7 @@ const Detail = ({ postData }: IPostType) => {
 
       <S.CommentListContainer>
         <S.CommentCountContainer>
-          <Image src={Comment} alt="comment" />
+          <Image src={CommentsSVG} alt="comment" />
           <span>댓글 {postCommentList.length}</span>
         </S.CommentCountContainer>
         <PostCommentListBox />

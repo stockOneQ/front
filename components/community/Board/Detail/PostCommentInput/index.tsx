@@ -1,10 +1,8 @@
 import Image from "next/image";
+import { useRecoilState } from "recoil";
+import { postCommentState } from "recoil/states";
 import * as S from "./style";
-
-import Upload from "public/assets/imgs/community/upload.png";
-import {  postCommentState } from "recoil/states";
-import { useRecoilState} from "recoil";
-
+import PhotoUploadSVG from "public/assets/icons/community/photoUpload.svg";
 
 const PostCommentInput = () => {
   const [comment, setComment] = useRecoilState(postCommentState);
@@ -12,7 +10,7 @@ const PostCommentInput = () => {
   return (
     <S.Box>
       <S.UploadButton>
-        <Image src={Upload} alt="upload" />
+        <Image src={PhotoUploadSVG} alt="upload" />
       </S.UploadButton>
       <S.Input
         value={comment}

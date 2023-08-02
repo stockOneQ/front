@@ -19,13 +19,13 @@ export const DUMMY_DATA = [
   },
   {
     id: 2,
-    name: '김땡떙',
+    name: '신땡떙',
     location: '경주시 성건점',
     phone: '010-2474-3954'
   },
   {
     id: 3,
-    name: '유빵띵',
+    name: '유구구',
     location: '서울시 서초점',
     phone: '010-1367-2478'
   },

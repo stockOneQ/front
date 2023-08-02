@@ -1,9 +1,9 @@
-import * as S from "./style";
-import { getDetailDate, getStringDate } from "utils/date";
-import PostInfoBox from "components/community/Board/Detail/PostInfoBox";
-import PostCommentInput from "components/community/Board/Detail/PostCommentInput";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { postCommentListState, postCommentState } from "recoil/states";
+import { getDetailDate, getStringDate } from "utils/date";
+import * as S from "./style";
+import PostInfoBox from "components/community/Board/Detail/PostInfoBox";
+import PostCommentInput from "components/community/Board/Detail/PostCommentInput";
 
 let id = 3;
 const getId = () => {

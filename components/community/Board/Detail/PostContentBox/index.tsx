@@ -1,8 +1,7 @@
-import * as S from "./style";
 import Image from "next/image";
-
-import ViewsIcon from "public/assets/icons/views.png";
-import LikeIcon from "public/assets/icons/like.png";
+import * as S from "./style";
+import ViewsSVG from "public/assets/icons/views.svg";
+import LikesSVG from "public/assets/icons/likes.svg";
 
 type IPostContentType = {
   title: string;
@@ -18,11 +17,11 @@ const PostContentBox = ({ title, content, views, likes }: IPostContentType) => {
         <S.Title>{title}</S.Title>
         <S.ActionBox>
           <S.ActionContainer color="#F2B2CF">
-            <Image alt="조회수" src={ViewsIcon} />
+            <Image alt="views" src={ViewsSVG} />
             <span>{views}</span>
           </S.ActionContainer>
           <S.ActionContainer color="#7BAED7">
-            <Image alt="좋아요" src={LikeIcon} />
+            <Image alt="likes" src={LikesSVG} />
             <span>{likes}</span>
           </S.ActionContainer>
         </S.ActionBox>

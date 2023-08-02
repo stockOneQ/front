@@ -1,5 +1,5 @@
-import { SetStateAction, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { SetStateAction } from "react";
+import { useRecoilState } from "recoil";
 import { postContentState } from "recoil/states";
 
 import * as S from "./style";

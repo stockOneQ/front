@@ -22,12 +22,11 @@ export interface ProductItem {
   orderingFrequency: string;
   imageInfo: string;
   storageMethod: string;
-};
-
+}
 
 export const mainPostListState = atom<ProductItem[]>({
   key: "mainPostListState",
-  default: [ ],
+  default: [],
 });
 
 export const handleProductClick = () => {
@@ -57,7 +56,7 @@ export const insufficientIngredientsState = atom<number[]>({
   default: [],
 });
 
-//보관 방식 
+//보관 방식
 export const storageMethodState = atom<string[]>({
   key: "storageMethodState",
   default: [],
@@ -163,7 +162,8 @@ export const postContentState = atom<string>({
 });
 
 export interface IPostTypes {
-  id: number;
+  postId: number;
+  writerId: number;
   writer: string;
   uploadTime: string;
   title: string;
@@ -178,7 +178,8 @@ export const postListState = atom<IPostTypes[]>({
   key: "postListState",
   default: [
     {
-      id: 1,
+      postId: 1,
+      writerId: 82831,
       writer: "임하림",
       uploadTime: "20230706012532581",
       title: "배달대행료 카드결제 신용카드 추천 좀 해주세요",
@@ -189,7 +190,8 @@ export const postListState = atom<IPostTypes[]>({
       likes: 1,
     },
     {
-      id: 2,
+      postId: 2,
+      writerId: 123,
       writer: "전언석",
       uploadTime: "20230706012519547",
       title: "로스팅과 매장을 같이 운영하는 사업자에서 분리할 때",
@@ -200,9 +202,21 @@ export const postListState = atom<IPostTypes[]>({
       likes: 36,
     },
     {
-      id: 3,
+      postId: 3,
+      writerId: 456,
       writer: "이가영",
       uploadTime: "20230706230339500",
+      title: "혹시 게장 무한리필 장사하시는 분 계시나요?",
+      content: "마진 괜찮나요? 장사하시는 분 알려주세요 ~~",
+      views: 60,
+      commentCount: 13,
+      likes: 12,
+    },
+    {
+      postId: 4,
+      writerId: 82831,
+      writer: "임하림",
+      uploadTime: "20230706230339511",
       title: "혹시 게장 무한리필 장사하시는 분 계시나요?",
       content: "마진 괜찮나요? 장사하시는 분 알려주세요 ~~",
       views: 60,
@@ -313,4 +327,14 @@ export const postCommentListState = atom<IPostCommentTypes[]>({
       content: "안녕하세요. 저 하고 있습니다. 마진 괜찮습니다.",
     },
   ],
+});
+
+export const myPostDeleteCheckecCount = atom<number>({
+  key: "myPostDeleteCheckecCount",
+  default: 0,
+});
+
+export const postCheckedItemsState = atom<number[]>({
+  key: "postCheckedItemsState",
+  default: [],
 });
