@@ -1,15 +1,16 @@
-//new
+// http://localhost:8080/home/new
+
 import Link from "next/link";
 import Image from 'next/image';
 import { calculateDaysRemaining } from "utils/calculateCondition";
 import axios from 'axios';
 import ImgIcon from "../public/assets/icons/imgUpload.svg";
-import * as S from "../components/main/style";
+import * as S from "../../../components/main/style";
 import { useState, SetStateAction, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Title } from "components/community/Board/PostListBox/PostItemBox/style";
 import { useSetRecoilState, useRecoilValue, RecoilRoot, useRecoilState } from "recoil";
-import { approachingExpirationState, postMainTitleState, mainPostListState, expiredIngredientsState, insufficientIngredientsState, storageMethodState } from "../recoil/states";
+import { approachingExpirationState, postMainTitleState, mainPostListState, expiredIngredientsState, insufficientIngredientsState, storageMethodState } from "../../../recoil/states";
 import Ingredients from "components/main/Ingredients";
 
 

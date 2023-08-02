@@ -18,9 +18,15 @@ const SideMenuBar = ({ items }: { items: Item[] }) => {
         {items.map(({ label, url }: { label: string; url: string }, idx) => (
           <S.SideMenuBarItem
             key={idx}
+<<<<<<< HEAD
             className={click === label ? "active" : ""}
           >
             <Link href={url} onClick={() => setClick(label)}>
+=======
+            className={currentPath.indexOf(end) !== -1 ? 'active' : ''}
+            >
+            <Link href={url} onClick={() => { setSideBarIdx(idx) }}>
+>>>>>>> 384d8a5 (fix(sideNav): 사이드 nav 관련 오류 수정)
               {label}
             </Link>
           </S.SideMenuBarItem>

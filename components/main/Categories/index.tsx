@@ -113,7 +113,7 @@ const Categories: React.FC<ControlBarProps> = ({
                 </S.SerchSection>
 
                 <S.ActionButtonBox>
-                    <Link href="/new">
+                    <Link href="/home/new">
                         <S.Add>+</S.Add>
                     </Link>
                 </S.ActionButtonBox>
