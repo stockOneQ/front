@@ -167,10 +167,11 @@ export const getProductByCategory = async (
 //상세페이지
 export const fetchProductDetails = async (
     id: number
-): Promise<AxiosResponse<ProductItem>> => {
+): Promise<AxiosResponse<ProductItem[]>> => {
     try {
-        const response = await API.get(`/api/product/${id}`);
-        return response.data;
+        const response = await API.get("/api/product/${id}");
+        return response.data.result;
+        console.log(response);
     } catch (error) {
         throw new Error("Error fetching product details: ");
     }
