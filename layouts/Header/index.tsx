@@ -43,8 +43,8 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
               Connect
             </Link>
           </H.NavItem>
-          <H.NavItem className={currentPath.startsWith('/myPage') ? 'active' : ''}>
-            <Link href="/myPage/edit" onClick={() => { setSideBarIdx(0)} }>
+          <H.NavItem className={currentPath.startsWith('/my-page') ? 'active' : ''}>
+            <Link href="/my-page/edit" onClick={() => { setSideBarIdx(0)} }>
               My Page
             </Link>
           </H.NavItem>

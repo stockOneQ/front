@@ -1,32 +1,27 @@
-import Link from "next/link";
-import Image from "next/image";
-import menuIcon from "../../public/assets/icons/menu.png";
-import * as S from "./SideMenuBarModule";
-import { useEffect, useState } from "react";
+import Link from 'next/link';
+import Image from 'next/image';
+import menuIcon from '../../public/assets/icons/menu.png';
+import * as S from './style';
+import { Item } from 'hooks/layouts/useGetSideMenuBarItems';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-type Item = {
-  label: string;
-  url: string;
-};
+interface ISideMenuBarProps {
+  items: Item[];
+  currentPath: string;
+  sideBarIdx: number;
+  setSideBarIdx: Dispatch<SetStateAction<number>>;
+}
 
-const SideMenuBar = ({ items }: { items: Item[] }) => {
-  const [click, setClick] = useState<string>("");
-
+const SideMenuBar = ({ items, currentPath, sideBarIdx, setSideBarIdx }: ISideMenuBarProps) => {
   return (
     <S.SideMenuBar>
       <S.SideMenuBarList>
-        {items.map(({ label, url }: { label: string; url: string }, idx) => (
+        {items.map(({ label, url, end }, idx) => (
           <S.SideMenuBarItem
             key={idx}
-<<<<<<< HEAD
-            className={click === label ? "active" : ""}
-          >
-            <Link href={url} onClick={() => setClick(label)}>
-=======
             className={currentPath.indexOf(end) !== -1 ? 'active' : ''}
             >
             <Link href={url} onClick={() => { setSideBarIdx(idx) }}>
->>>>>>> 384d8a5 (fix(sideNav): 사이드 nav 관련 오류 수정)
               {label}
             </Link>
           </S.SideMenuBarItem>
@@ -34,7 +29,7 @@ const SideMenuBar = ({ items }: { items: Item[] }) => {
       </S.SideMenuBarList>
 
       {/* 버튼 따라 움직이는 애니메이션 처리 필요 */}
-      <S.LogoBox>
+      <S.LogoBox sideBarIdx={sideBarIdx}>
         <Image
           className="menu_icon"
           src={menuIcon}
