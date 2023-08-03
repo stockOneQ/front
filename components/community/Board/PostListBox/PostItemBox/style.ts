@@ -66,16 +66,24 @@ export const Box = styled.div`
   }
 `;
 
+export const Container = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
 export const PostContentSection = styled.div``;
 
 export const Title = styled.div`
   font-weight: 600;
   font-size: 2.5rem;
   line-height: 2.9rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.8rem;
 `;
 
 export const Content = styled.div`
+  width: 79rem;
   font-weight: 400;
   font-size: 1.8rem;
   line-height: 2.1rem;
@@ -87,7 +95,7 @@ export const PostInteractionSection = styled.div`
   gap: 3.2rem;
 `;
 
-export const Container = styled.div`
+export const Interaction = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,12 +139,12 @@ export const CheckBox = styled.input<ICheckBoxButtonProps>`
   right: -2.5%;
 `;
 
-export const Link = styled.div`
+export const StyledLink = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  width: 184px;
-  height: 216px;
+  width: 18.4rem;
+  height: 21.6rem;
   background-color: transparent;
   z-index: 999;
 `;

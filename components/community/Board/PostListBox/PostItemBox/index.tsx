@@ -9,6 +9,16 @@ import LikesSVG from 'public/assets/icons/community/likes.svg';
 import * as S from './style';
 import Link from 'next/link';
 
+interface IPostTypes {
+  postId: number;
+  title: string;
+  content: string;
+  views: number;
+  commentCount: number;
+  likes: number;
+  isSetting: boolean;
+}
+
 const PostItem = ({
   postId,
   title,
@@ -17,15 +27,7 @@ const PostItem = ({
   commentCount,
   likes,
   isSetting,
-}: {
-  postId: number;
-  title: string;
-  content: string;
-  views: number;
-  commentCount: number;
-  likes: number;
-  isSetting?: boolean;
-}) => {
+}: IPostTypes) => {
   const [isChecked, setIsChecked] = useState(false);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
@@ -43,29 +45,30 @@ const PostItem = ({
 
   return (
     <S.Box>
-      <>
+      <S.Container>
         <S.PostContentSection>
           <S.Title>{title}</S.Title>
           <S.Content>{content.substring(0, 100)}</S.Content>
         </S.PostContentSection>
         <S.PostInteractionSection>
-          <S.Container>
+          <S.Interaction>
             <Image alt="views" src={ViewsSVG} />
             <span>{views}</span>
-          </S.Container>
-          <S.Container>
+          </S.Interaction>
+          <S.Interaction>
             <Image alt="comments" src={CommentsSVG} />
             <span>{commentCount}</span>
-          </S.Container>
-          <S.Container>
+          </S.Interaction>
+          <S.Interaction>
             <Image alt="likes" src={LikesSVG} />
             <span>{likes}</span>
-          </S.Container>
+          </S.Interaction>
         </S.PostInteractionSection>
-        <Link href={`/community/board/${postId}`}>
-          <S.Link />
-        </Link>
-      </>
+      </S.Container>
+
+      <Link href={`/community/board/${postId}`}>
+        <S.StyledLink />
+      </Link>
 
       {isSetting && (
         <S.CheckBox
