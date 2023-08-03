@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import * as S from './style';
-import ViewsSVG from 'public/assets/icons/views.svg';
-import LikesSVG from 'public/assets/icons/likes.svg';
+import ViewsSVG from 'public/assets/icons/community/views.svg';
+import LikesSVG from 'public/assets/icons/community/likes.svg';
 
 type IPostContentType = {
   title: string;

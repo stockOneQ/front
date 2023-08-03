@@ -11,8 +11,8 @@ import PostCommentInputBox from './PostCommentInputBox';
 import * as S from './style';
 import { getStringDate } from 'utils/date';
 
-import CloseSVG from 'public/assets/icons/close.svg';
-import CommentsSVG from 'public/assets/icons/comments.svg';
+import CloseSVG from 'public/assets/icons/community/close.svg';
+import CommentsSVG from 'public/assets/icons/community/comments.svg';
 
 import { IPostTypes } from 'recoil/states';
 
