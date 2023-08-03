@@ -1,7 +1,7 @@
-import TitleInput from "./TitleInput";
-import ContentInput from "./ContentInput";
+import TitleInput from './TitleInput';
+import ContentInput from './ContentInput';
 
-import * as S from "./style";
+import * as S from './style';
 
 const Editor = () => {
   return (

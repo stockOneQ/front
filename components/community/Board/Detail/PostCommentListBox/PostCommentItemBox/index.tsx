@@ -1,7 +1,7 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-import * as S from "./style";
-import profileImage from "public/assets/imgs/community/profileImage.png";
+import * as S from './style';
+import profileImage from 'public/assets/imgs/community/profileImage.png';
 
 type ICommentType = {
   writer: string;

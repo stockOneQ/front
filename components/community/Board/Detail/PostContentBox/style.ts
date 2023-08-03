@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Box = styled.div`
   background: #ffffff;
@@ -11,18 +11,18 @@ export const Box = styled.div`
   padding: 4rem 5rem;
 `;
 
-export const Header = styled.div`
+export const HeaderSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-export const ActionBox = styled.div`
+export const InteractionSection = styled.div`
   display: flex;
   gap: 3.2rem;
 `;
 
-export const ActionContainer = styled.div<{ color: string }>`
+export const Container = styled.div<{ color: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +32,7 @@ export const ActionContainer = styled.div<{ color: string }>`
   font-size: 1.8rem;
   line-height: 2.1rem;
 
-  color: ${(props) => props.color};
+  color: ${props => props.color};
 `;
 
 export const Title = styled.div`

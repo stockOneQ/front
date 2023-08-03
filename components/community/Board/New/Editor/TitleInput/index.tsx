@@ -1,7 +1,6 @@
-import { SetStateAction, useState } from "react";
-import { useRecoilState } from "recoil";
-import { postTitleState } from "recoil/states";
-import * as S from "./style";
+import { useRecoilState } from 'recoil';
+import { postTitleState } from 'recoil/states';
+import * as S from './style';
 
 const EditorTitleInput = () => {
   const [titleInput, setTitleInput] = useRecoilState(postTitleState);
@@ -13,7 +12,7 @@ const EditorTitleInput = () => {
       </S.TextContainer>
       <S.Input
         value={titleInput}
-        onChange={(e: { target: { value: SetStateAction<string> } }) =>
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setTitleInput(e.target.value)
         }
         maxLength={37}

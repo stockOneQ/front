@@ -1,3 +1,30 @@
 {
-  "extends": "next/core-web-vitals"
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    "prettier",
+    "next/core-web-vitals",
+    "next",
+    "plugin:prettier/recommended" // 항상 마지막 위치
+  ],
+  "rules": {
+    // 'React' must be in scope when using JSX 에러 해결 (Next.js)
+    "react/react-in-jsx-scope": "off",
+    // ts파일에서 tsx구문 허용 (Next.js)
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
+    "react/jsx-props-no-spreading": "off"
+  }
 }

@@ -1,33 +1,22 @@
-import { useRouter } from "next/router";
-import Image from "next/image";
-import { useRecoilValue } from "recoil";
-import { postCommentListState } from "recoil/states";
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { useRecoilValue } from 'recoil';
+import { postCommentListState } from 'recoil/states';
 
-import PostInfoBox from "./PostInfoBox";
-import PostContentBox from "./PostContentBox";
-import PostCommentListBox from "./PostCommentListBox";
-import PostCommentInputBox from "./PostCommentInputBox";
+import WriterInfoBox from './WriterInfoBox';
+import PostContentBox from './PostContentBox';
+import PostCommentListBox from './PostCommentListBox';
+import PostCommentInputBox from './PostCommentInputBox';
 
-import * as S from "./style";
-import { getStringDate } from "utils/date";
+import * as S from './style';
+import { getStringDate } from 'utils/date';
 
-import CloseSVG from "public/assets/icons/close.svg";
-import CommentsSVG from "public/assets/icons/comments.svg";
+import CloseSVG from 'public/assets/icons/close.svg';
+import CommentsSVG from 'public/assets/icons/comments.svg';
 
-type IPostType = {
-  postData: {
-    id: string;
-    writer: string;
-    uploadTime: string;
-    title: string;
-    content: string;
-    views: number;
-    commentCount: number;
-    likes: number;
-  };
-};
+import { IPostTypes } from 'recoil/states';
 
-const Detail = ({ postData }: IPostType) => {
+const Detail = (postData: IPostTypes) => {
   console.log(postData);
   const { writer, uploadTime, title, content, views, likes } = postData || {};
   const router = useRouter();
@@ -35,7 +24,7 @@ const Detail = ({ postData }: IPostType) => {
   const postCommentList = useRecoilValue(postCommentListState);
 
   const handleClose = () => {
-    router.push("/community/board");
+    router.push('/community/board');
   };
 
   return (
@@ -45,7 +34,7 @@ const Detail = ({ postData }: IPostType) => {
       </S.CloseButtonContainer>
 
       <S.PostContainer>
-        <PostInfoBox writer={writer} date={getStringDate(uploadTime)} />
+        <WriterInfoBox writer={writer} date={getStringDate(uploadTime)} />
         <PostContentBox
           title={title}
           content={content}

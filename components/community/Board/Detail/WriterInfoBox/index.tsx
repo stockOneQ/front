@@ -1,13 +1,13 @@
-import Image from "next/image";
-import * as S from "./style";
-import ProfileImg from "public/assets/imgs/community/profileImage.png";
+import Image from 'next/image';
+import * as S from './style';
+import ProfileImg from 'public/assets/imgs/community/profileImage.png';
 
 type IPostInfoType = {
   writer: string;
   date: string;
 };
 
-const PostInfoBox = ({ writer, date }: IPostInfoType) => {
+const WriterInfoBox = ({ writer, date }: IPostInfoType) => {
   return (
     <S.Box>
       <S.Container>
@@ -20,4 +20,4 @@ const PostInfoBox = ({ writer, date }: IPostInfoType) => {
     </S.Box>
   );
 };
-export default PostInfoBox;
+export default WriterInfoBox;
