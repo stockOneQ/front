@@ -44,7 +44,7 @@ const PostItem = ({
   };
 
   return (
-    <S.Box>
+    <S.Box isSetting={isSetting}>
       <S.Container>
         <S.PostContentSection>
           <S.Title>{title}</S.Title>
@@ -66,16 +66,16 @@ const PostItem = ({
         </S.PostInteractionSection>
       </S.Container>
 
-      <Link href={`/community/board/${postId}`}>
-        <S.StyledLink />
-      </Link>
-
-      {isSetting && (
+      {isSetting ? (
         <S.CheckBox
           type="checkbox"
           checked={deleteCheckedItems.includes(postId)}
           onClick={handleChecked}
         />
+      ) : (
+        <Link href={`/community/board/${postId}`}>
+          <S.StyledLink />
+        </Link>
       )}
     </S.Box>
   );

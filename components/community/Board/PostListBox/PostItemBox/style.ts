@@ -1,6 +1,6 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
-export const Box = styled.div`
+export const Box = styled.div<{ isSetting: boolean }>`
   position: relative;
   width: 111.4rem;
   min-height: 21.6rem;
@@ -17,32 +17,35 @@ export const Box = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  &:hover::after {
-    content: url("data:image/svg+xml,%3Csvg width='39' height='40' viewBox='0 0 39 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 20H34' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M19 4L35 20L19 36' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  ${props =>
+    props.isSetting === false &&
+    css`
+      &:hover::after {
+        content: url("data:image/svg+xml,%3Csvg width='39' height='40' viewBox='0 0 39 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 20H34' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M19 4L35 20L19 36' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 18.4rem;
-    height: 21.6rem;
-    background: linear-gradient(
-      110.52deg,
-      rgba(85, 171, 215, 0.7) -23.23%,
-      rgba(177, 176, 215, 0.7) 20.47%,
-      rgba(242, 178, 207, 0.7) 55.88%,
-      rgba(249, 228, 153, 0.7) 121.42%
-    );
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 18.4rem;
+        height: 21.6rem;
+        background: linear-gradient(
+          110.52deg,
+          rgba(85, 171, 215, 0.7) -23.23%,
+          rgba(177, 176, 215, 0.7) 20.47%,
+          rgba(242, 178, 207, 0.7) 55.88%,
+          rgba(249, 228, 153, 0.7) 121.42%
+        );
 
-    box-shadow: 0px 11px 20px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(2px);
-    border-radius: 3rem;
+        box-shadow: 0px 11px 20px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2px);
+        border-radius: 3rem;
 
-    cursor: pointer;
+        cursor: pointer;
 
-    /* animation: fadeInLeft 0.8s;
+        /* animation: fadeInLeft 0.8s;
 
     @keyframes fadeInLeft {
       from {
@@ -54,16 +57,17 @@ export const Box = styled.div`
         transform: translateZ(0);
       }
     } */
-    animation: fadein 0.8s;
-    @keyframes fadein {
-      from {
-        opacity: 0;
+        animation: fadein 0.8s;
+        @keyframes fadein {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
       }
-      to {
-        opacity: 1;
-      }
-    }
-  }
+    `}
 `;
 
 export const Container = styled.div`
