@@ -20,6 +20,8 @@ export const SettingButton = styled.div`
   position: absolute;
   top: 75%;
   right: 2%;
+
+  cursor: pointer;
 `;
 
 export const NavButton = styled.button`
