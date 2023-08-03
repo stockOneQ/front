@@ -14,11 +14,17 @@ import { getStringDate } from 'utils/date';
 import CloseSVG from 'public/assets/icons/community/close.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
 
-import { IPostTypes } from 'recoil/states';
+interface IPostTypes {
+  writer: string;
+  uploadTime: string;
+  title: string;
+  content: string;
+  views: number;
+  likes: number;
+}
 
-const Detail = (postData: IPostTypes) => {
-  console.log(postData);
-  const { writer, uploadTime, title, content, views, likes } = postData || {};
+const Detail = (props: IPostTypes) => {
+  const { writer, uploadTime, title, content, views, likes } = props;
   const router = useRouter();
 
   const postCommentList = useRecoilValue(postCommentListState);
