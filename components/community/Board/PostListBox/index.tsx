@@ -21,7 +21,6 @@ const PostListBox = ({
     <S.Box>
       {postList &&
         postList.map(value => (
-          // <Link key={value.id} href={`/community/board/${value.id}`}>
           <PostItemBox
             key={value.postId}
             postId={value.postId}
@@ -32,7 +31,6 @@ const PostListBox = ({
             likes={value.likes}
             isSetting={isSetting}
           />
-          // </Link>
         ))}
     </S.Box>
   );

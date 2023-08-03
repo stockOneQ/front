@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Box = styled.div`
+  position: relative;
   width: 111.4rem;
   min-height: 21.6rem;
 
@@ -15,6 +16,54 @@ export const Box = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &:hover::after {
+    content: url("data:image/svg+xml,%3Csvg width='39' height='40' viewBox='0 0 39 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 20H34' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M19 4L35 20L19 36' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 18.4rem;
+    height: 21.6rem;
+    background: linear-gradient(
+      110.52deg,
+      rgba(85, 171, 215, 0.7) -23.23%,
+      rgba(177, 176, 215, 0.7) 20.47%,
+      rgba(242, 178, 207, 0.7) 55.88%,
+      rgba(249, 228, 153, 0.7) 121.42%
+    );
+
+    box-shadow: 0px 11px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    border-radius: 3rem;
+
+    cursor: pointer;
+
+    /* animation: fadeInLeft 0.8s;
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translate3d(-20%, 0, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translateZ(0);
+      }
+    } */
+    animation: fadein 0.8s;
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 export const PostContentSection = styled.div``;
@@ -80,4 +129,14 @@ export const CheckBox = styled.input<ICheckBoxButtonProps>`
   position: absolute;
   top: 30%;
   right: -2.5%;
+`;
+
+export const Link = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 184px;
+  height: 216px;
+  background-color: transparent;
+  z-index: 999;
 `;

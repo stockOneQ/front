@@ -7,6 +7,7 @@ import CommentsSVG from 'public/assets/icons/community/comments.svg';
 import LikesSVG from 'public/assets/icons/community/likes.svg';
 
 import * as S from './style';
+import Link from 'next/link';
 
 const PostItem = ({
   postId,
@@ -61,6 +62,9 @@ const PostItem = ({
             <span>{likes}</span>
           </S.Container>
         </S.PostInteractionSection>
+        <Link href={`/community/board/${postId}`}>
+          <S.Link />
+        </Link>
       </>
 
       {isSetting && (
