@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { useRecoilState } from 'recoil';
-import { deleteCheckedItemsState } from 'recoil/states';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { deleteCheckedItemsState, isDeleteModeState } from 'recoil/states';
 import ViewsSVG from 'public/assets/icons/community/views.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
 import LikesSVG from 'public/assets/icons/community/likes.svg';
@@ -16,7 +16,6 @@ interface IPostTypes {
   views: number;
   commentCount: number;
   likes: number;
-  isSetting: boolean;
 }
 
 const PostItem = ({
@@ -26,12 +25,12 @@ const PostItem = ({
   views,
   commentCount,
   likes,
-  isSetting,
 }: IPostTypes) => {
   const [isChecked, setIsChecked] = useState(false);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
   );
+  const isDeleteMode = useRecoilValue(isDeleteModeState);
 
   const handleChecked = () => {
     setIsChecked(prev => !prev);
@@ -44,7 +43,7 @@ const PostItem = ({
   };
 
   return (
-    <S.Box isSetting={isSetting}>
+    <S.Box isDeleteMode={isDeleteMode}>
       <S.Container>
         <S.PostContentSection>
           <S.Title>{title}</S.Title>
@@ -66,7 +65,8 @@ const PostItem = ({
         </S.PostInteractionSection>
       </S.Container>
 
-      {isSetting ? (
+      {/** deleteMode인 경우 체크박스만 존재. 상세 페이지로 이동 못함. */}
+      {isDeleteMode ? (
         <S.CheckBox
           type="checkbox"
           checked={deleteCheckedItems.includes(postId)}

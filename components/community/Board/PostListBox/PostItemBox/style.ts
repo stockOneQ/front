@@ -1,6 +1,6 @@
 import { css, styled } from 'styled-components';
 
-export const Box = styled.div<{ isSetting: boolean }>`
+export const Box = styled.div<{ isDeleteMode: boolean }>`
   position: relative;
   width: 111.4rem;
   min-height: 21.6rem;
@@ -17,8 +17,9 @@ export const Box = styled.div<{ isSetting: boolean }>`
   flex-direction: column;
   justify-content: space-between;
 
+  /**  deleteMode가 아닌 경우에만 이동 버튼이 생김 */
   ${props =>
-    props.isSetting === false &&
+    !props.isDeleteMode &&
     css`
       &:hover::after {
         content: url("data:image/svg+xml,%3Csvg width='39' height='40' viewBox='0 0 39 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 20H34' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M19 4L35 20L19 36' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -45,18 +46,6 @@ export const Box = styled.div<{ isSetting: boolean }>`
 
         cursor: pointer;
 
-        /* animation: fadeInLeft 0.8s;
-
-    @keyframes fadeInLeft {
-      from {
-        opacity: 0;
-        transform: translate3d(-20%, 0, 0);
-      }
-      to {
-        opacity: 1;
-        transform: translateZ(0);
-      }
-    } */
         animation: fadein 0.8s;
         @keyframes fadein {
           from {
@@ -139,7 +128,7 @@ export const CheckBox = styled.input<ICheckBoxButtonProps>`
   }
 
   position: absolute;
-  top: 30%;
+  top: 35%;
   right: -2.5%;
 `;
 

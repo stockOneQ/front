@@ -6,10 +6,8 @@ import * as S from './style';
 
 const PostListBox = ({
   writerId,
-  isSetting,
 }: {
   writerId?: number; // 내가 쓴 글을 보여주기 위한
-  isSetting?: boolean;
 }) => {
   let postList = useRecoilValue(filteredPostListState);
 
@@ -29,7 +27,6 @@ const PostListBox = ({
             views={value.views}
             commentCount={value.commentCount}
             likes={value.likes}
-            isSetting={isSetting}
           />
         ))}
     </S.Box>

@@ -336,3 +336,8 @@ export const deleteCheckedItemsState = atom<number[]>({
   key: 'deleteCheckedItemsState',
   default: [],
 });
+
+export const isDeleteModeState = atom<boolean>({
+  key: 'isDeleteModeState',
+  default: false,
+});
