@@ -1,14 +1,14 @@
-import { useRecoilValue } from "recoil";
-import * as S from "./style";
-import { postCommentListState } from "recoil/states";
-import PostCommentItemBox from "./PostCommentItemBox";
+import { useRecoilValue } from 'recoil';
+import { postCommentListState } from 'recoil/states';
+import PostCommentItemBox from './PostCommentItemBox';
+import { styled } from 'styled-components';
 
 const PostCommentListBox = () => {
   const postCommentList = useRecoilValue(postCommentListState);
 
   return (
-    <S.Box>
-      {postCommentList.map((value) => (
+    <>
+      {postCommentList.map(value => (
         <PostCommentItemBox
           key={value.id}
           writer={value.writer}
@@ -16,7 +16,7 @@ const PostCommentListBox = () => {
           date={value.uploadTime}
         />
       ))}
-    </S.Box>
+    </>
   );
 };
 

@@ -1,8 +1,7 @@
-import { SetStateAction, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { postContentState } from "recoil/states";
+import { useRecoilState } from 'recoil';
+import { postContentState } from 'recoil/states';
 
-import * as S from "./style";
+import * as S from './style';
 
 const EditorContentInput = () => {
   const [content, setContent] = useRecoilState(postContentState);
@@ -12,7 +11,7 @@ const EditorContentInput = () => {
       <S.Text>내용</S.Text>
       <S.Input
         value={content}
-        onChange={(e: { target: { value: SetStateAction<string> } }) =>
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
           setContent(e.target.value)
         }
         maxLength={5000}

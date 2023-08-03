@@ -1,6 +1,6 @@
-import { useSetRecoilState } from "recoil";
-import { searchInputState } from "recoil/states";
-import * as S from "./style";
+import { useSetRecoilState } from 'recoil';
+import { searchInputState } from 'recoil/states';
+import * as S from './style';
 
 const BoardSearchInput = ({
   value,
@@ -12,7 +12,7 @@ const BoardSearchInput = ({
   const setSearchInput = useSetRecoilState(searchInputState);
 
   const handleEnter = (e: { key: string }) => {
-    if (e.key === "Enter") setSearchInput(value);
+    if (e.key === 'Enter') setSearchInput(value);
   };
   return (
     <S.InputBar

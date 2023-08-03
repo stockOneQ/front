@@ -6,8 +6,6 @@ export const Box = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-
-  // border: 1px solid gray;
 `;
 
 export const Main = styled.main`

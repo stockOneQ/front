@@ -1,6 +1,6 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
-export const Box = styled.div`
+export const InputBox = styled.div`
   position: relative;
   margin-top: 2.6rem;
 `;
