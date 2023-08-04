@@ -1,4 +1,4 @@
-import New from "components/community/Board/New";
+import New from 'components/community/Board/New';
 
 const NewPage = () => {
   return <New />;

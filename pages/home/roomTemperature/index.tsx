@@ -1,6 +1,6 @@
 // http://localhost:8080/home/roomTemperature
 
-import RoomTempPage from "components/main/RoomTemp";
+import RoomTempPage from 'components/main/RoomTemp';
 
 /** home - 상온 페이지 */
 const RoomTemperaturePage = () => {

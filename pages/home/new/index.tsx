@@ -1,20 +1,31 @@
 // http://localhost:8080/home/new
 
-import Link from "next/link";
+import Link from 'next/link';
 import Image from 'next/image';
-import { calculateDaysRemaining } from "utils/calculateCondition";
+import { calculateDaysRemaining } from 'utils/calculateCondition';
 import axios from 'axios';
-import ImgIcon from "../public/assets/icons/imgUpload.svg";
-import * as S from "../../../components/main/style";
-import { useState, SetStateAction, useEffect } from "react";
-import { useRouter } from "next/router";
-import { Title } from "components/community/Board/PostListBox/PostItemBox/style";
-import { useSetRecoilState, useRecoilValue, RecoilRoot, useRecoilState } from "recoil";
-import { approachingExpirationState, postMainTitleState, mainPostListState, expiredIngredientsState, insufficientIngredientsState, storageMethodState } from "../../../recoil/states";
-import Ingredients from "components/main/Ingredients";
+import ImgIcon from '../public/assets/icons/imgUpload.svg';
+import * as S from '../../../components/main/style';
+import { useState, SetStateAction, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { Title } from 'components/community/Board/PostListBox/PostItemBox/style';
+import {
+  useSetRecoilState,
+  useRecoilValue,
+  RecoilRoot,
+  useRecoilState,
+} from 'recoil';
+import {
+  approachingExpirationState,
+  postMainTitleState,
+  mainPostListState,
+  expiredIngredientsState,
+  insufficientIngredientsState,
+  storageMethodState,
+} from '../../../recoil/states';
+import Ingredients from 'components/main/Ingredients';
 
-
-const sortOptionList = ["냉동", "냉장", "상온"];
+const sortOptionList = ['냉동', '냉장', '상온'];
 
 let id = 1;
 const getId = () => {
@@ -29,58 +40,66 @@ const New = () => {
   const setPostListState = useSetRecoilState(mainPostListState);
 
   //냉동상온냉장
-  const [selectedStorageMethod, setSelectedStorageMethod] = useState<string>('');
-  const handleStorageMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [selectedStorageMethod, setSelectedStorageMethod] =
+    useState<string>('');
+  const handleStorageMethodChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setSelectedStorageMethod(e.target.value);
   };
 
   const [formData, setFormData] = useState({
-    productName: "",
-    price: "",
-    seller: "",
-    receiptYear: "",
-    receiptMonth: "",
-    receiptDay: "",
-    expirationYear: "",
-    expirationMonth: "",
-    expirationDay: "",
-    ingredientLocation: "",
-    requiredQuantity: "",
-    quantity: "",
-    orderingSite: "",
-    orderingFrequency: "",
-    imageInfo: "",
+    productName: '',
+    price: '',
+    seller: '',
+    receiptYear: '',
+    receiptMonth: '',
+    receiptDay: '',
+    expirationYear: '',
+    expirationMonth: '',
+    expirationDay: '',
+    ingredientLocation: '',
+    requiredQuantity: '',
+    quantity: '',
+    orderingSite: '',
+    orderingFrequency: '',
+    imageInfo: '',
     storageMethod: '',
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleImageChange = (event) => {
+  const handleImageChange = event => {
     setSelectedImage(event.target.files[0]);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     const { name, value } = e.target;
-    console.log("Input Changed:", name, value);
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    console.log('Input Changed:', name, value);
+    setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
   };
 
   //빈도순 정렬
   const [postList, setPostList] = useRecoilState(mainPostListState);
   const [sortedPostList, setSortedPostList] = useState([]);
   useEffect(() => {
-    const sortedList = [...postList].sort((a, b) => a.orderingFrequency - b.orderingFrequency);
+    const sortedList = [...postList].sort(
+      (a, b) => a.orderingFrequency - b.orderingFrequency,
+    );
     setSortedPostList(sortedList);
   }, [postList]);
 
-
-  //유통기한임박 재료 
-  const setApproachingExpiration = useSetRecoilState(approachingExpirationState);
-  //유통기한 지난 재료 
+  //유통기한임박 재료
+  const setApproachingExpiration = useSetRecoilState(
+    approachingExpirationState,
+  );
+  //유통기한 지난 재료
   const expiredIngredients = useRecoilValue(expiredIngredientsState);
   const setExpiredIngredients = useSetRecoilState(expiredIngredientsState);
-  //부족한 재료 
-  const setinsufficientIngredients = useSetRecoilState(insufficientIngredientsState);
+  //부족한 재료
+  const setinsufficientIngredients = useSetRecoilState(
+    insufficientIngredientsState,
+  );
   //냉장 냉동 상온
   const setstorageMethod = useRecoilValue(storageMethodState);
 
@@ -88,31 +107,30 @@ const New = () => {
   const daysRemaining = calculateDaysRemaining(
     formData.expirationYear,
     formData.expirationMonth,
-    formData.expirationDay
+    formData.expirationDay,
   );
 
-  // 저장하기 
+  // 저장하기
   const handleSubmit = () => {
-
     if (productName.length >= 11) {
-      alert("제목을 11글자 이하로 입력해 주세요.");
+      alert('제목을 11글자 이하로 입력해 주세요.');
       return;
     }
     if (formData.orderingSite.length >= 200) {
-      alert("발주사이트를 200자 이하로 입력해 주세요.");
+      alert('발주사이트를 200자 이하로 입력해 주세요.');
       return;
     }
     if (formData.seller.length >= 200) {
-      alert("판매업체 29자 이하로 입력해 주세요.");
+      alert('판매업체 29자 이하로 입력해 주세요.');
       return;
     }
     if (formData.ingredientLocation.length >= 200) {
-      alert("재료위치 29자 이하로 입력해 주세요.");
+      alert('재료위치 29자 이하로 입력해 주세요.');
       return;
     }
 
     const requiredFields = [
-      "seller",
+      'seller',
       // "receiptYear",
       // "receiptMonth",
       // "receiptDay",
@@ -148,79 +166,82 @@ const New = () => {
       quantity: formData.quantity,
       orderingSite: formData.orderingSite,
       orderingFrequency: formData.orderingFrequency,
-      imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : "", 
+      imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : '',
       storageMethod: selectedStorageMethod,
     };
 
     // 업데이트 recoil state
-    setPostListState((prevPostList) => [...prevPostList, newProduct]);
-    const sortedList = [...postList].sort((a, b) => a.orderingFrequency - b.orderingFrequency);
+    setPostListState(prevPostList => [...prevPostList, newProduct]);
+    const sortedList = [...postList].sort(
+      (a, b) => a.orderingFrequency - b.orderingFrequency,
+    );
     setSortedPostList(sortedList);
 
     const newProductId = newProduct.id.toString();
-    //부족한 재료 
+    //부족한 재료
     const newQuantity = parseInt(formData.quantity, 10);
     const newRequiredQuantity = parseInt(formData.requiredQuantity, 10);
     // 유통기한 계산
     const daysRemaining = calculateDaysRemaining();
 
-
     if (newQuantity <= newRequiredQuantity) {
       //부족한 재료
-      setinsufficientIngredients((prevInsufficientIngredients) => [...prevInsufficientIngredients, newProductId]);
-      setPostList((prevPostList) =>
-        prevPostList.map((item) =>
-          item.id === newProductId ? { ...item, category: "no" } : item
-        )
+      setinsufficientIngredients(prevInsufficientIngredients => [
+        ...prevInsufficientIngredients,
+        newProductId,
+      ]);
+      setPostList(prevPostList =>
+        prevPostList.map(item =>
+          item.id === newProductId ? { ...item, category: 'no' } : item,
+        ),
       );
     } else if (daysRemaining <= 0) {
       // 유통기한지난 재료
-      setExpiredIngredients((prevExpiredIngredients) => [...prevExpiredIngredients, newProductId]);
-      setPostList((prevPostList) =>
-        prevPostList.map((item) =>
-          item.id === newProductId
-            ? { ...item, category: "afterDate" }
-            : item
-        )
+      setExpiredIngredients(prevExpiredIngredients => [
+        ...prevExpiredIngredients,
+        newProductId,
+      ]);
+      setPostList(prevPostList =>
+        prevPostList.map(item =>
+          item.id === newProductId ? { ...item, category: 'afterDate' } : item,
+        ),
       );
     } else if (daysRemaining <= 3) {
       // 유통기한임박 재료
-      setApproachingExpiration((prevApproachingExpiration) => {
+      setApproachingExpiration(prevApproachingExpiration => {
         if (Array.isArray(prevApproachingExpiration)) {
           return [...prevApproachingExpiration, newProductId];
         } else {
           return [prevApproachingExpiration, newProductId];
         }
       });
-      setPostList((prevPostList) =>
-        prevPostList.map((item) =>
-          item.id === newProductId
-            ? { ...item, category: "beforeDate" }
-            : item
-        )
+      setPostList(prevPostList =>
+        prevPostList.map(item =>
+          item.id === newProductId ? { ...item, category: 'beforeDate' } : item,
+        ),
       );
     }
     // 저장하고 form data 초기화
     setFormData({
-      productName: "",
-      price: "",
-      seller: "",
-      receiptYear: "",
-      receiptMonth: "",
-      receiptDay: "",
-      expirationYear: "",
-      expirationMonth: "",
-      expirationDay: "",
-      ingredientLocation: "",
-      requiredQuantity: "",
-      quantity: "",
-      orderingSite: "",
-      orderingFrequency: "",
-      imageInfo: "",
-      storageMethod: "",
+      productName: '',
+      price: '',
+      seller: '',
+      receiptYear: '',
+      receiptMonth: '',
+      receiptDay: '',
+      expirationYear: '',
+      expirationMonth: '',
+      expirationDay: '',
+      ingredientLocation: '',
+      requiredQuantity: '',
+      quantity: '',
+      orderingSite: '',
+      orderingFrequency: '',
+      imageInfo: '',
+      storageMethod: '',
     });
 
-    setProductName("");
+    setProductName('');
     // router.push("/");
   };
 
@@ -242,7 +263,7 @@ const New = () => {
   //     stockQuant: formData.quantity,
   //     siteToOrder: formData.orderingSite,
   //     orderFreq: formData.orderingFrequency,
-  //     imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : "", //파일선택 
+  //     imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : "", //파일선택
   //     storageMethod: selectedStorageMethod,
   //   };
   //   return jsonFormData;
@@ -296,7 +317,7 @@ const New = () => {
   //     // 업데이트
   //     setPostListState((prevPostList) => [...prevPostList, newProduct]);
 
-  //     // 초기화 
+  //     // 초기화
   //     setFormData({
   //       productName: "",
   //       price: "",
@@ -318,7 +339,6 @@ const New = () => {
   //     setProductName("");
   //     setSelectedStorageMethod("");
 
-
   //     //router.push("/");
   //   } catch (error) {
   //     console.error('Error adding product:', error);
@@ -331,14 +351,15 @@ const New = () => {
   return (
     <S.Box>
       <RecoilRoot>
-
         <Title title="재료 등록">재료등록</Title>
         <S.TopSection>
-          <Link href='/'>작성취소</Link>
-          <S.Button type="submit" onClick={handleSubmit}><Link href='/'>저장</Link></S.Button>
+          <Link href="/">작성취소</Link>
+          <S.Button type="submit" onClick={handleSubmit}>
+            <Link href="/">저장</Link>
+          </S.Button>
         </S.TopSection>
 
-        <S.Form >
+        <S.Form>
           <S.InforSection>
             <S.LeftSection>
               <S.StyledInput>
@@ -379,10 +400,12 @@ const New = () => {
               </S.StyledInput>
 
               <S.ImgInput>
-                <input type="file"
+                <input
+                  type="file"
                   name="imageInfo"
                   value={formData.imageInfo}
-                  onChange={handleImageChange} />
+                  onChange={handleImageChange}
+                />
                 {selectedImage && (
                   <img
                     src={URL.createObjectURL(selectedImage)}
@@ -400,9 +423,9 @@ const New = () => {
                   type="text"
                   name="productName"
                   value={productName}
-                  onChange={(e: { target: { value: SetStateAction<string> } }) =>
-                    setProductName(e.target.value)
-                  }
+                  onChange={(e: {
+                    target: { value: SetStateAction<string> };
+                  }) => setProductName(e.target.value)}
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -527,18 +550,19 @@ const New = () => {
                   value={formData.orderingFrequency}
                   step="20"
                   onChange={handleInputChange}
-                >
-                </S.Slider>
+                ></S.Slider>
               </S.StyledInput>
             </S.RightSection>
           </S.InforSection>
         </S.Form>
         {/* 추후 삭제 예정.. */}
-        <Ingredients productsToShow={sortedPostList} storageMethod={formData.storageMethod} />
+        <Ingredients
+          productsToShow={sortedPostList}
+          storageMethod={formData.storageMethod}
+        />
       </RecoilRoot>
     </S.Box>
   );
 };
-
 
 export default New;

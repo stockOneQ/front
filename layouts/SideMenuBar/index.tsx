@@ -12,7 +12,12 @@ interface ISideMenuBarProps {
   setSideBarIdx: Dispatch<SetStateAction<number>>;
 }
 
-const SideMenuBar = ({ items, currentPath, sideBarIdx, setSideBarIdx }: ISideMenuBarProps) => {
+const SideMenuBar = ({
+  items,
+  currentPath,
+  sideBarIdx,
+  setSideBarIdx,
+}: ISideMenuBarProps) => {
   return (
     <S.SideMenuBar>
       <S.SideMenuBarList>
@@ -20,8 +25,13 @@ const SideMenuBar = ({ items, currentPath, sideBarIdx, setSideBarIdx }: ISideMen
           <S.SideMenuBarItem
             key={idx}
             className={currentPath.indexOf(end) !== -1 ? 'active' : ''}
+          >
+            <Link
+              href={url}
+              onClick={() => {
+                setSideBarIdx(idx);
+              }}
             >
-            <Link href={url} onClick={() => { setSideBarIdx(idx) }}>
               {label}
             </Link>
           </S.SideMenuBarItem>
