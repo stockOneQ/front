@@ -6,6 +6,7 @@ import movePageL from 'public/assets/icons/connect/movePageL.svg';
 import movePageR from 'public/assets/icons/connect/movePageR.svg';
 import Image from 'next/image';
 import DataDetail from './DataDetail';
+import { useState } from 'react';
 
 const DataBox = styled.div`
   padding: 0 1.2rem 3.6rem;
@@ -115,7 +116,7 @@ const DataListBox = styled(Label)`
   cursor: pointer;
 
   &:hover {
-    background-color: #eee;
+    background-color: #F7F7F9;
   }
 
   div {
@@ -179,102 +180,106 @@ const PaginationBox = styled.div`
 
 /** connect - 자료 페이지 */
 const Data = () => {
+  const [temp, setTemp] = useState(true);
+
   return (
     <>
-      {/* <DataBox>
-        <SelectSupervisorBox>
-          <p>이혜리 슈퍼바이저</p>
-          <Image src={supervisorCategoryOpen} alt='supervisor-toggle-icon' width={8} height={7} />
-        </SelectSupervisorBox>
-        <DataNavBox>
-          <DataNav>
-            <ul>
-              <li>공지사항</li>
-              <li>레시피</li>
-              <li>행사내용</li>
-              <li>기타</li>
-            </ul>
-          </DataNav>
-          <DataNavInputBox>
-            <DataDropDownBox>
-              <DropDown width={16.3} height={3.5} fontSize={1.3} toggleSize={15} toggleTopSize={50} list={['글 제목', '글 내용']} />
-            </DataDropDownBox>
-            <input type='text' />
-          </DataNavInputBox>
-        </DataNavBox>
-        <LabelBox>
-          <p className='label__1'>번호</p>
-          <p className='label__2'>제목</p>
-          <p className='label__3'>작성일자</p>
-          <p className='label__4'>이해리 슈퍼바이저</p>
-        </LabelBox>
-        <div>
-          <DataListBox>
-            <p className='label__1'>06</p>
-            <div className='label__2'>
-              <p>알바생 교육관련 6월 공지사항</p>
-              <Image src={fileExist} alt='file-icon' width={15} height={12} />
-            </div>
-            <p className='label__3'>2023.06.13</p>
-            <p className='label__4'>이혜리 슈퍼바이저</p>
-          </DataListBox>
-          <DataListBox>
-            <p className='label__1'>05</p>
-            <div className='label__2'>
-              <p>알바생 교육관련 5월 공지사항</p>
-              <Image src={fileExist} alt='file-icon' width={15} height={12} />
-            </div>
-            <p className='label__3'>2023.05.13</p>
-            <p className='label__4'>이혜리 슈퍼바이저</p>
-          </DataListBox>
-          <DataListBox>
-            <p className='label__1'>04</p>
-            <div className='label__2'>
-              <p>알바생 교육관련 4월 공지사항</p>
-              <Image src={fileExist} alt='file-icon' width={15} height={12} />
-            </div>
-            <p className='label__3'>2023.04.13</p>
-            <p className='label__4'>이혜리 슈퍼바이저</p>
-          </DataListBox>
-          <DataListBox>
-            <p className='label__1'>03</p>
-            <div className='label__2'>
-              <p>알바생 교육관련 3월 공지사항</p>
-              <Image src={fileExist} alt='file-icon' width={15} height={12} />
-            </div>
-            <p className='label__3'>2023.03.13</p>
-            <p className='label__4'>이혜리 슈퍼바이저</p>
-          </DataListBox>
-          <DataListBox>
-            <p className='label__1'>02</p>
-            <div className='label__2'>
-              <p>알바생 교육관련 2월 공지사항</p>
-              <Image src={fileExist} alt='file-icon' width={15} height={12} />
-            </div>
-            <p className='label__3'>2023.02.13</p>
-            <p className='label__4'>이혜리 슈퍼바이저</p>
-          </DataListBox>
-          <DataListBox>
-            <p className='label__1'>01</p>
-            <div className='label__2'>
-              <p>알바생 교육관련 1월 공지사항</p>
-              <Image src={fileExist} alt='file-icon' width={15} height={12} />
-            </div>
-            <p className='label__3'>2023.01.13</p>
-            <p className='label__4'>이혜리 슈퍼바이저</p>
-          </DataListBox>
-        </div>
-        <PaginationBox>
-          <Image src={movePageL} alt='pagination-move-left' width={16} height={9} />
-          <p className='pagination__active'>1</p>
-          <p>2</p>
-          <p>3</p>
-          <p>4</p>
-          <p>5</p>
-          <Image src={movePageR} alt='pagination-move-right' width={16} height={9} />
-        </PaginationBox>
-      </DataBox> */}
-      <DataDetail />
+      {temp && (
+        <DataBox>
+          <SelectSupervisorBox>
+            <p>이혜리 슈퍼바이저</p>
+            <Image src={supervisorCategoryOpen} alt='supervisor-toggle-icon' width={8} height={7} />
+          </SelectSupervisorBox>
+          <DataNavBox>
+            <DataNav>
+              <ul>
+                <li>공지사항</li>
+                <li>레시피</li>
+                <li>행사내용</li>
+                <li>기타</li>
+              </ul>
+            </DataNav>
+            <DataNavInputBox>
+              <DataDropDownBox>
+                <DropDown width={16.3} height={3.5} fontSize={1.3} toggleSize={15} toggleTopSize={50} list={['글 제목', '글 내용']} />
+              </DataDropDownBox>
+              <input type='text' />
+            </DataNavInputBox>
+          </DataNavBox>
+          <LabelBox>
+            <p className='label__1'>번호</p>
+            <p className='label__2'>제목</p>
+            <p className='label__3'>작성일자</p>
+            <p className='label__4'>이해리 슈퍼바이저</p>
+          </LabelBox>
+          <div>
+            <DataListBox>
+              <p className='label__1'>06</p>
+              <div className='label__2'>
+                <p>알바생 교육관련 6월 공지사항</p>
+                <Image src={fileExist} alt='file-icon' width={15} height={12} />
+              </div>
+              <p className='label__3'>2023.06.13</p>
+              <p className='label__4'>이혜리 슈퍼바이저</p>
+            </DataListBox>
+            <DataListBox onClick={() => { setTemp(false)} }>
+              <p className='label__1'>05</p>
+              <div className='label__2'>
+                <p>알바생 교육관련 5월 공지사항</p>
+                <Image src={fileExist} alt='file-icon' width={15} height={12} />
+              </div>
+              <p className='label__3'>2023.05.13</p>
+              <p className='label__4'>이혜리 슈퍼바이저</p>
+            </DataListBox>
+            <DataListBox>
+              <p className='label__1'>04</p>
+              <div className='label__2'>
+                <p>알바생 교육관련 4월 공지사항</p>
+                <Image src={fileExist} alt='file-icon' width={15} height={12} />
+              </div>
+              <p className='label__3'>2023.04.13</p>
+              <p className='label__4'>이혜리 슈퍼바이저</p>
+            </DataListBox>
+            <DataListBox>
+              <p className='label__1'>03</p>
+              <div className='label__2'>
+                <p>알바생 교육관련 3월 공지사항</p>
+                <Image src={fileExist} alt='file-icon' width={15} height={12} />
+              </div>
+              <p className='label__3'>2023.03.13</p>
+              <p className='label__4'>이혜리 슈퍼바이저</p>
+            </DataListBox>
+            <DataListBox>
+              <p className='label__1'>02</p>
+              <div className='label__2'>
+                <p>알바생 교육관련 2월 공지사항</p>
+                <Image src={fileExist} alt='file-icon' width={15} height={12} />
+              </div>
+              <p className='label__3'>2023.02.13</p>
+              <p className='label__4'>이혜리 슈퍼바이저</p>
+            </DataListBox>
+            <DataListBox>
+              <p className='label__1'>01</p>
+              <div className='label__2'>
+                <p>알바생 교육관련 1월 공지사항</p>
+                <Image src={fileExist} alt='file-icon' width={15} height={12} />
+              </div>
+              <p className='label__3'>2023.01.13</p>
+              <p className='label__4'>이혜리 슈퍼바이저</p>
+            </DataListBox>
+          </div>
+          <PaginationBox>
+            <Image src={movePageL} alt='pagination-move-left' width={16} height={9} />
+            <p className='pagination__active'>1</p>
+            <p>2</p>
+            <p>3</p>
+            <p>4</p>
+            <p>5</p>
+            <Image src={movePageR} alt='pagination-move-right' width={16} height={9} />
+          </PaginationBox>
+        </DataBox>
+      )}
+      {!temp && <DataDetail />}
     </>
   );
 };
