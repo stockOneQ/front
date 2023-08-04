@@ -10,7 +10,7 @@ export interface IProfilesProps {
 /** 친구 목록 */
 const Profiles = ({ setReqFriends }: IProfilesProps) => {
   return (
-    <Card width="38.5rem">
+    <Card width='38.5rem' height='73.8rem'>
       <MyChatProfile setReqFriends={setReqFriends} />
       <FriendsList />
     </Card>

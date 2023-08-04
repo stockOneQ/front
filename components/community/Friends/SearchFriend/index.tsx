@@ -1,13 +1,13 @@
-import Card from "components/common/Card";
-import Image from "next/image";
-import searchIcon from "public/assets/icons/community/searchIcon.svg";
-import * as S from "./style";
-import { Dispatch, SetStateAction, useState } from "react";
-import SearchResults from "./SearchResults";
-import ReqFriends from "./ReqFriends";
-import DropDown from "components/common/DropDown";
+import Card from 'components/common/Card';
+import Image from 'next/image';
+import searchIcon from 'public/assets/icons/community/searchIcon.svg';
+import * as S from './style';
+import { Dispatch, SetStateAction, useState } from 'react';
+import SearchResults from './SearchResults';
+import ReqFriends from './ReqFriends';
+import DropDown from 'components/common/DropDown';
 
-const DROP_DOWN_LIST = ["이름", "상호명", "지역명"];
+const DROP_DOWN_LIST = ['이름', '상호명', '지역명'];
 
 interface ISearchFriendProps {
   reqFriends: boolean;
@@ -16,15 +16,15 @@ interface ISearchFriendProps {
 
 /** 친구 찾기 */
 const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
-  const [searchBy, setSearchBy] = useState("이름"); // 카테고리 선택
+  const [searchBy, setSearchBy] = useState('이름'); // 카테고리 선택
   const [isSearch, setIsSearch] = useState(false); // 검색 중인지
 
   const onWriteHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    setIsSearch(e.currentTarget.value !== (undefined || null || ""));
+    setIsSearch(e.currentTarget.value !== (undefined || null || ''));
   };
 
   return (
-    <Card width="65.9rem">
+    <Card width='65.9rem' height='73.8rem'>
       {!reqFriends && (
         <>
           <S.SearchFriendText>친구 찾기</S.SearchFriendText>
@@ -42,15 +42,15 @@ const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
             </S.DropBoxContainer>
             <S.InputBox
               onChange={onWriteHandler}
-              type="text"
+              type='text'
               placeholder={`${
-                searchBy === "지역명" ? "읍, 면, 동으로 입력해주세요" : ""
+                searchBy === '지역명' ? '읍, 면, 동으로 입력해주세요' : ''
               }`}
             />
             <button>
               <Image
                 src={searchIcon}
-                alt="my_page_icon"
+                alt='my_page_icon'
                 width={17}
                 height={17}
               />
@@ -62,7 +62,7 @@ const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
       {reqFriends && <ReqFriends setReqFriends={setReqFriends} />}
     </Card>
 
-    // <Card width="65.9rem">
+    // <Card width='65.9rem'>
     //   <FriendStock />
     // </Card>
   );
