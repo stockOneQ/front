@@ -17,14 +17,14 @@ interface ISearchFriendProps {
 /** 친구 찾기 */
 const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
   const [searchBy, setSearchBy] = useState('이름'); // 카테고리 선택
-  const [isSearch, setIsSearch] = useState(false); // 검색 중인지
+  const [enteredValue, setEnteredValue] = useState(''); // 검색 중인지
 
   const onWriteHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    setIsSearch(e.currentTarget.value !== (undefined || null || ''));
+    setEnteredValue(e.currentTarget.value);
   };
 
   return (
-    <Card width='65.9rem' height='73.8rem'>
+    <Card width="65.9rem" height="73.8rem">
       {!reqFriends && (
         <>
           <S.SearchFriendText>친구 찾기</S.SearchFriendText>
@@ -42,7 +42,7 @@ const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
             </S.DropBoxContainer>
             <S.InputBox
               onChange={onWriteHandler}
-              type='text'
+              type="text"
               placeholder={`${
                 searchBy === '지역명' ? '읍, 면, 동으로 입력해주세요' : ''
               }`}
@@ -50,13 +50,13 @@ const SearchFriend = ({ reqFriends, setReqFriends }: ISearchFriendProps) => {
             <button>
               <Image
                 src={searchIcon}
-                alt='my_page_icon'
+                alt="my_page_icon"
                 width={17}
                 height={17}
               />
             </button>
           </S.SearchFriendBox>
-          <SearchResults isSearch={isSearch} />
+          <SearchResults enteredValue={enteredValue} searchBy={searchBy} />
         </>
       )}
       {reqFriends && <ReqFriends setReqFriends={setReqFriends} />}
