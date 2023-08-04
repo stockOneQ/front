@@ -1,25 +1,23 @@
-import Image from "next/image";
-import * as S from "./style";
-
-import Upload from "public/assets/imgs/community/upload.png";
-import {  postCommentState } from "recoil/states";
-import { useRecoilState} from "recoil";
-
+import Image from 'next/image';
+import { useRecoilState } from 'recoil';
+import { postCommentInputState } from 'recoil/states';
+import * as S from './style';
+import PhotoUploadSVG from 'public/assets/icons/community/photoUpload.svg';
 
 const PostCommentInput = () => {
-  const [comment, setComment] = useRecoilState(postCommentState);
+  const [input, setInput] = useRecoilState(postCommentInputState);
 
   return (
     <S.Box>
       <S.UploadButton>
-        <Image src={Upload} alt="upload" />
+        <Image src={PhotoUploadSVG} alt="upload" />
       </S.UploadButton>
       <S.Input
-        value={comment}
+        value={input}
         maxLength={1000}
-        onChange={(e: {
-          target: { value: string | ((currVal: string) => string) };
-        }) => setComment(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+          setInput(e.target.value)
+        }
       />
     </S.Box>
   );

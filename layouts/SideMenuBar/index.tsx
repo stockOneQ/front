@@ -16,7 +16,7 @@ const SideMenuBar = ({ items, currentPath, sideBarIdx, setSideBarIdx }: ISideMen
   return (
     <S.SideMenuBar>
       <S.SideMenuBarList>
-        {items.map(({ label, url, end }, idx) => (
+        {items?.map(({ label, url, end }, idx) => (
           <S.SideMenuBarItem
             key={idx}
             className={currentPath.indexOf(end) !== -1 ? 'active' : ''}

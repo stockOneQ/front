@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Box = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ export const Input = styled.textarea`
 
   padding: 0 6.2rem 0 0;
 
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: 500;
   font-size: 1.8rem;
   line-height: 2.1rem;

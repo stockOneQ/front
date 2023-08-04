@@ -1,17 +1,17 @@
-import React from "react";
-import * as S from "./style";
+import React from 'react';
+import * as S from './style';
 
-interface PropsType {
+interface IPropsType {
   value: string;
   onChange: React.Dispatch<React.SetStateAction<string>>;
-  optionList: Array<string>;
+  optionList: string[];
 }
 
-const ControlMenu = ({ value, onChange, optionList }: PropsType) => {
+const ControlMenu = ({ value, onChange, optionList }: IPropsType) => {
   return (
     <S.Select
       value={value}
-      onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
         onChange(e.target.value)
       }
     >

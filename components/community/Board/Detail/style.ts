@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Box = styled.div`
   position: relative;
@@ -36,7 +36,7 @@ export const CommentCountContainer = styled.div`
   border-bottom: 1px solid #e1e1e1;
 
   span {
-    font-family: "Roboto";
+    font-family: 'Roboto';
     font-weight: 400;
     font-size: 1.5rem;
     line-height: 1.8rem;

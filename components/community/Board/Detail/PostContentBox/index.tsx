@@ -1,8 +1,7 @@
-import * as S from "./style";
-import Image from "next/image";
-
-import ViewsIcon from "public/assets/icons/views.png";
-import LikeIcon from "public/assets/icons/like.png";
+import Image from 'next/image';
+import * as S from './style';
+import ViewsSVG from 'public/assets/icons/views.svg';
+import LikesSVG from 'public/assets/icons/likes.svg';
 
 type IPostContentType = {
   title: string;
@@ -14,19 +13,20 @@ type IPostContentType = {
 const PostContentBox = ({ title, content, views, likes }: IPostContentType) => {
   return (
     <S.Box>
-      <S.Header>
+      <S.HeaderSection>
         <S.Title>{title}</S.Title>
-        <S.ActionBox>
-          <S.ActionContainer color="#F2B2CF">
-            <Image alt="조회수" src={ViewsIcon} />
+        <S.InteractionSection>
+          <S.Container color="#F2B2CF">
+            <Image alt="views" src={ViewsSVG} />
             <span>{views}</span>
-          </S.ActionContainer>
-          <S.ActionContainer color="#7BAED7">
-            <Image alt="좋아요" src={LikeIcon} />
+          </S.Container>
+          {/** 좋아요 버튼으로 구현하기 */}
+          <S.Container color="#7BAED7">
+            <Image alt="likes" src={LikesSVG} />
             <span>{likes}</span>
-          </S.ActionContainer>
-        </S.ActionBox>
-      </S.Header>
+          </S.Container>
+        </S.InteractionSection>
+      </S.HeaderSection>
       <S.Content>{content}</S.Content>
     </S.Box>
   );
