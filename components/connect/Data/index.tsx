@@ -5,6 +5,7 @@ import supervisorCategoryOpen from 'public/assets/icons/connect/supervisorCatego
 import movePageL from 'public/assets/icons/connect/movePageL.svg';
 import movePageR from 'public/assets/icons/connect/movePageR.svg';
 import Image from 'next/image';
+import DataDetail from './DataDetail';
 
 const DataBox = styled.div`
   padding: 0 1.2rem 3.6rem;
@@ -180,7 +181,7 @@ const PaginationBox = styled.div`
 const Data = () => {
   return (
     <>
-      <DataBox>
+      {/* <DataBox>
         <SelectSupervisorBox>
           <p>이혜리 슈퍼바이저</p>
           <Image src={supervisorCategoryOpen} alt='supervisor-toggle-icon' width={8} height={7} />
@@ -272,7 +273,8 @@ const Data = () => {
           <p>5</p>
           <Image src={movePageR} alt='pagination-move-right' width={16} height={9} />
         </PaginationBox>
-      </DataBox>
+      </DataBox> */}
+      <DataDetail />
     </>
   );
 };
