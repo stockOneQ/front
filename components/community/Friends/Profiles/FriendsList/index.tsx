@@ -83,6 +83,9 @@ const FriendsList = () => {
   /** 삭제 버튼 허용 */
   const [isPermitted, setIsPermitted] = useState(10); // 일단 9(친구 수)로 하드 코딩
   const [isStock, setIsStock] = useState(false);
+  const [deleteItem, setDeleteItem] = useState<number[]>([]);
+
+  console.log('delete', deleteItem);
 
   useEffect(() => {
     getData();
@@ -100,6 +103,7 @@ const FriendsList = () => {
         {DUMMY_DATA.map(({ id, name, location, phone }) => (
           <FriendProfile
             key={id}
+            id={id}
             name={name}
             location={location}
             phone={phone}
@@ -107,6 +111,7 @@ const FriendsList = () => {
             isStock={isStock}
             setIsStock={setIsStock}
             setIsPermitted={setIsPermitted}
+            setDeleteItem={setDeleteItem}
           />
         ))}
       </S.FriendList>
