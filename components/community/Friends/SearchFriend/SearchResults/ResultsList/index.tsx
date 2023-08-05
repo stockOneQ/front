@@ -14,19 +14,17 @@ const ResultsList = ({ enteredValue, searchBy }: IResultsListProps) => {
 
   const filteredData = DUMMY_DATA.filter(({ name, location }) => {
     if (searchBy === '이름') {
-      return name.indexOf(enteredValue) !== -1;
+      return name.includes(enteredValue);
     }
     if (searchBy === '상호명') {
       spaceIdxRef.current = location.indexOf(' ');
 
-      return location.slice(spaceIdxRef.current).indexOf(enteredValue) !== -1;
+      return location.slice(spaceIdxRef.current).includes(enteredValue);
     }
     if (searchBy === '지역명') {
       spaceIdxRef.current = location.indexOf(' ');
 
-      return (
-        location.slice(0, spaceIdxRef.current).indexOf(enteredValue) !== -1
-      );
+      return location.slice(0, spaceIdxRef.current).includes(enteredValue);
     }
   });
 
