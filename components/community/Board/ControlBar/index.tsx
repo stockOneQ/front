@@ -1,29 +1,55 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
+  postListState,
   searchInputState,
   searchTypeState,
   sortTypeState,
 } from 'recoil/states';
-
 import * as S from './style';
-
 import DropDown from 'components/common/DropDown';
 import SearchInputBar from './SearchInputBar';
-
 import SearchIcon from 'public/assets/icons/community/searchIcon.svg';
+import { API } from 'pages/api/api';
 
 const sortOptionList = ['최신순', '조회순'];
 const searchOptionList = ['글 제목', '글 내용', '작성자'];
 
 const ControlBar = () => {
-  const setSortType = useSetRecoilState(sortTypeState);
-  const setSearchType = useSetRecoilState(searchTypeState);
+  const [sortType, setSortType] = useRecoilState(sortTypeState);
+  const [searchType, setSearchType] = useRecoilState(searchTypeState);
 
   /* 실시간 검색이 아닌 검색 아이콘을 통해 한번만 검색 필터를 거치므로 저장해둠 */
   const [input, setInput] = useState('');
-  const setSearchInput = useSetRecoilState(searchInputState);
+  const [searchInput, setSearchInput] = useRecoilState(searchInputState);
+
+  const setPostList = useSetRecoilState(postListState);
+
+  useEffect(() => {
+    API.get('/api/boards', {
+      params: {
+        last: '-1',
+        sort: sortType,
+        search:
+          searchType === '글 제목'
+            ? '제목'
+            : searchType === '글 내용'
+            ? '내용'
+            : '작성자',
+        word: searchInput,
+      },
+    })
+      .then(response => {
+        console.log('게시글 검색 목록 불러오기 성공');
+        console.log(response.data.boardListResponse);
+        setPostList(response.data.boardListResponse);
+      })
+      .catch(e => {
+        console.log(e);
+        throw e;
+      });
+  }, [sortType, searchType, searchInput]);
 
   const handleSearch = () => {
     setSearchInput(input);
@@ -53,7 +79,6 @@ const ControlBar = () => {
             toggleTopSize={48}
             list={searchOptionList}
             onChange={setSearchType}
-            onReset={setSearchInput}
           />
         </S.DropBoxContainer>
         <SearchInputBar value={input} onChange={setInput} />
