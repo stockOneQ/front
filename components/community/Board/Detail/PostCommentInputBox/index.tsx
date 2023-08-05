@@ -1,6 +1,6 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { postCommentListState, postCommentInputState } from 'recoil/states';
-import { getDetailDate, getStringDate } from 'utils/date';
+import { getCurrentDate } from 'utils/date';
 import * as S from './style';
 import WriterInfoBox from 'components/community/Board/Detail/WriterInfoBox';
 import PostCommentInput from 'components/community/Board/Detail/PostCommentInput';
@@ -22,7 +22,7 @@ const PostCommentInputBox = () => {
       {
         id: getId(),
         writer: '임하림',
-        uploadTime: getStringDate(getDetailDate()),
+        uploadTime: getCurrentDate(),
         content: commentInput,
       },
     ]);
@@ -32,7 +32,7 @@ const PostCommentInputBox = () => {
 
   return (
     <S.InputBox>
-      <WriterInfoBox writer={'임하림'} date={getStringDate(getDetailDate())} />
+      <WriterInfoBox writer={'임하림'} createdDate={getCurrentDate()} />
       <PostCommentInput />
       <S.SubmitButton onClick={handleSubmit}>
         <span>댓글 등록</span>
