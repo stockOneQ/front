@@ -10,22 +10,15 @@ import * as S from './style';
 import Link from 'next/link';
 
 interface IPostTypes {
-  postId: number;
+  id: number;
   title: string;
   content: string;
-  views: number;
-  commentCount: number;
-  likes: number;
+  hit: number;
+  comment: number;
+  like: number;
 }
 
-const PostItem = ({
-  postId,
-  title,
-  content,
-  views,
-  commentCount,
-  likes,
-}: IPostTypes) => {
+const PostItem = ({ id, title, content, hit, comment, like }: IPostTypes) => {
   const [isChecked, setIsChecked] = useState(false);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
@@ -36,9 +29,9 @@ const PostItem = ({
     setIsChecked(prev => !prev);
 
     isChecked
-      ? setDeleteCheckedItems(prev => [...prev, postId])
+      ? setDeleteCheckedItems(prev => [...prev, id])
       : setDeleteCheckedItems(
-          deleteCheckedItems.filter(checkedItem => checkedItem !== postId),
+          deleteCheckedItems.filter(checkedItem => checkedItem !== id),
         );
   };
 
@@ -52,15 +45,15 @@ const PostItem = ({
         <S.PostInteractionSection>
           <S.Interaction>
             <Image alt="views" src={ViewsSVG} />
-            <span>{views}</span>
+            <span>{hit}</span>
           </S.Interaction>
           <S.Interaction>
             <Image alt="comments" src={CommentsSVG} />
-            <span>{commentCount}</span>
+            <span>{comment}</span>
           </S.Interaction>
           <S.Interaction>
             <Image alt="likes" src={LikesSVG} />
-            <span>{likes}</span>
+            <span>{like}</span>
           </S.Interaction>
         </S.PostInteractionSection>
       </S.Container>
@@ -69,11 +62,11 @@ const PostItem = ({
       {isDeleteMode ? (
         <S.CheckBox
           type="checkbox"
-          checked={deleteCheckedItems.includes(postId)}
+          checked={deleteCheckedItems.includes(id)}
           onClick={handleChecked}
         />
       ) : (
-        <Link href={`/community/board/${postId}`}>
+        <Link href={`/community/board/${id}`}>
           <S.StyledLink />
         </Link>
       )}

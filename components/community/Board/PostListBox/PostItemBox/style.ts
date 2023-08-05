@@ -2,10 +2,10 @@ import { css, styled } from 'styled-components';
 
 export const Box = styled.div<{ isDeleteMode: boolean }>`
   position: relative;
-  width: 111.4rem;
+  width: 111.5rem;
   min-height: 21.6rem;
 
-  padding: 3.2rem 5rem;
+  padding: 3.3rem 5rem;
 
   background: rgba(255, 255, 255, 0.2);
   mix-blend-mode: normal;
@@ -66,13 +66,16 @@ export const Container = styled.div`
   justify-content: space-between;
 `;
 
-export const PostContentSection = styled.div``;
+export const PostContentSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+`;
 
 export const Title = styled.div`
   font-weight: 600;
   font-size: 2.5rem;
   line-height: 2.9rem;
-  margin-bottom: 0.8rem;
 `;
 
 export const Content = styled.div`
@@ -85,14 +88,14 @@ export const Content = styled.div`
 
 export const PostInteractionSection = styled.div`
   display: flex;
-  gap: 3.2rem;
+  gap: 3.6rem;
 `;
 
 export const Interaction = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
 
   font-weight: 400;
   font-size: 1.5rem;
