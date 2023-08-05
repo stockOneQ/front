@@ -6,11 +6,11 @@ import LikesSVG from 'public/assets/icons/community/likes.svg';
 type IPostContentType = {
   title: string;
   content: string;
-  views: number;
+  hit: number;
   likes: number;
 };
 
-const PostContentBox = ({ title, content, views, likes }: IPostContentType) => {
+const PostContentBox = ({ title, content, hit, likes }: IPostContentType) => {
   return (
     <S.Box>
       <S.HeaderSection>
@@ -18,7 +18,7 @@ const PostContentBox = ({ title, content, views, likes }: IPostContentType) => {
         <S.InteractionSection>
           <S.Container color="#F2B2CF">
             <Image alt="views" src={ViewsSVG} />
-            <span>{views}</span>
+            <span>{hit}</span>
           </S.Container>
           {/** 좋아요 버튼으로 구현하기 */}
           <S.Container color="#7BAED7">
