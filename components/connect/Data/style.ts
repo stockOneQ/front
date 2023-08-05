@@ -4,20 +4,41 @@ const DataBox = styled.div`
   padding: 0 1.2rem 0.1rem;
 `;
 
-const SelectSupervisorBox = styled.div`
+interface ISelectSupervisorBoxProps {
+  isSelectSupervisor: boolean;
+}
+
+const SelectSupervisorBox = styled.div<ISelectSupervisorBoxProps>`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
   text-align: center;
-  padding: 7.3rem 0 9.4rem;
+  width: 25.4rem;
+  height: 4.5rem;
+  margin: 7.3rem auto 8.5rem;
   cursor: pointer;
+  color: ${({ isSelectSupervisor }) =>
+    isSelectSupervisor ? 'var(--color-white)' : 'var(--color-black)'};
+  background-color: ${({ isSelectSupervisor }) =>
+    isSelectSupervisor ? 'var(--color-black)' : 'var(--color-white)'};
+  border-radius: 5rem;
 
-  color: var(--color-black);
   text-align: center;
   font-size: 1.8rem;
   font-weight: 600;
   line-height: normal;
+
+  img {
+    filter: ${({ isSelectSupervisor }) =>
+      isSelectSupervisor
+        ? `invert(94%) sepia(75%) saturate(0%) hue-rotate(296deg)
+        brightness(107%) contrast(100%)`
+        : ``};
+    transform: ${({ isSelectSupervisor }) =>
+      isSelectSupervisor ? 'rotate(180deg)' : 'rotate(0)'};
+    transition: transform 0.5s ease;
+  }
 `;
 
 const DataNavBox = styled.div`

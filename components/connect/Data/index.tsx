@@ -12,12 +12,18 @@ import * as S from './style';
 const Data = () => {
   const [activeNum, setActiveNum] = useState(0);
   const [temp, setTemp] = useState(true);
+  const [isSelectSupervisor, setIsSelectSupervisor] = useState(true);
 
   return (
     <>
       {temp && (
         <S.DataBox>
-          <S.SelectSupervisorBox>
+          <S.SelectSupervisorBox
+            isSelectSupervisor={isSelectSupervisor}
+            onClick={() => {
+              setIsSelectSupervisor(prev => !prev);
+            }}
+          >
             <p>이혜리 슈퍼바이저</p>
             <Image
               src={supervisorCategoryOpen}
