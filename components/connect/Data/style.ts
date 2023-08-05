@@ -28,7 +28,11 @@ const DataNavBox = styled.div`
   position: relative;
 `;
 
-const DataNav = styled.nav`
+interface IDataNavProps {
+  activeNum: number;
+}
+
+const DataNav = styled.nav<IDataNavProps>`
   color: #979797;
   text-align: center;
   font-size: 1.8rem;
@@ -42,10 +46,40 @@ const DataNav = styled.nav`
 
   li {
     width: 9.2rem;
+    cursor: pointer;
+    position: relative;
 
     &:not(:last-child) {
       margin-right: 6rem;
     }
+  }
+
+  li:hover {
+    color: var(--color-black);
+  }
+
+  li::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0.3rem;
+    left: 0;
+    bottom: -2.9rem;
+    background-color: var(--color-black);
+    transition: all 0.3s ease-out;
+  }
+
+  li:hover::after {
+    width: 100%;
+  }
+
+  .active {
+    color: var(--color-black);
+  }
+
+  .active::after {
+    content: '';
+    width: 100%;
   }
 `;
 

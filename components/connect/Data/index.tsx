@@ -5,11 +5,12 @@ import movePageL from 'public/assets/icons/connect/movePageL.svg';
 import movePageR from 'public/assets/icons/connect/movePageR.svg';
 import Image from 'next/image';
 import DataDetail from './DataDetail';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import * as S from './style';
 
 /** connect - 자료 페이지 */
 const Data = () => {
+  const [activeNum, setActiveNum] = useState(0);
   const [temp, setTemp] = useState(true);
 
   return (
@@ -26,12 +27,40 @@ const Data = () => {
             />
           </S.SelectSupervisorBox>
           <S.DataNavBox>
-            <S.DataNav>
+            <S.DataNav activeNum={activeNum}>
               <ul>
-                <li>공지사항</li>
-                <li>레시피</li>
-                <li>행사내용</li>
-                <li>기타</li>
+                <li
+                  className={activeNum === 0 ? 'active' : ''}
+                  onClick={() => {
+                    setActiveNum(0);
+                  }}
+                >
+                  공지사항
+                </li>
+                <li
+                  className={activeNum === 1 ? 'active' : ''}
+                  onClick={() => {
+                    setActiveNum(1);
+                  }}
+                >
+                  레시피
+                </li>
+                <li
+                  className={activeNum === 2 ? 'active' : ''}
+                  onClick={() => {
+                    setActiveNum(2);
+                  }}
+                >
+                  행사내용
+                </li>
+                <li
+                  className={activeNum === 3 ? 'active' : ''}
+                  onClick={() => {
+                    setActiveNum(3);
+                  }}
+                >
+                  기타
+                </li>
               </ul>
             </S.DataNav>
             <S.DataNavInputBox>
