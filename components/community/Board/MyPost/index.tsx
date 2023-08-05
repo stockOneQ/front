@@ -107,7 +107,7 @@ const MyPost = () => {
         )}
       </S.HeaderSection>
 
-      <PostListBox writerId={82831} />
+      <PostListBox />
     </S.Box>
   );
 };
