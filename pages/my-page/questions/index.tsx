@@ -1,4 +1,4 @@
-// http://localhost:8080/myPage/questions
+// http://localhost:8080/my-page/questions
 
 /** My Page - F & A 페이지 */
 const QuestionsPage = () => {

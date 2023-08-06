@@ -1,4 +1,4 @@
-// http://localhost:8080/myPage/edit
+// http://localhost:8080/my-page/edit
 
 /** My Page - 회원 정보 수정 페이지 */
 const EditPage = () => {

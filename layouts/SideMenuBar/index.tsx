@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import menuIcon from '../../public/assets/icons/menu.png';
-import * as S from './SideMenuBarModule';
+import * as S from './style';
 import { Item } from 'hooks/layouts/useGetSideMenuBarItems';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
@@ -18,15 +18,13 @@ const SideMenuBar = ({
   sideBarIdx,
   setSideBarIdx,
 }: ISideMenuBarProps) => {
-  console.log('aaa', sideBarIdx);
-
   return (
     <S.SideMenuBar>
       <S.SideMenuBarList>
         {items?.map(({ label, url, end }, idx) => (
           <S.SideMenuBarItem
             key={idx}
-            className={currentPath.endsWith(end) ? 'active' : ''}
+            className={currentPath.indexOf(end) !== -1 ? 'active' : ''}
           >
             <Link
               href={url}

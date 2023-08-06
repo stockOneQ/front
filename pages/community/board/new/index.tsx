@@ -1,7 +1,7 @@
-import New from "components/community/Board/New";
+import New from 'components/community/Board/New';
 
-const Index = () => {
+const NewPage = () => {
   return <New />;
 };
 
-export default Index;
+export default NewPage;

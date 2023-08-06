@@ -12,7 +12,7 @@ import * as S from './style';
 import DropDown from 'components/common/DropDown';
 import SearchInputBar from './SearchInputBar';
 
-import SearchIcon from 'public/assets/icons/community/searchIcon.svg';
+import SearchIcon from 'public/assets/icons/common/searchIcon.svg';
 
 const sortOptionList = ['최신순', '조회순'];
 const searchOptionList = ['글 제목', '글 내용', '작성자'];
