@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+const ConnectionBox = styled.div`
+  margin: 4.5rem 0 0 20rem;
+`;
+
 const ConnectionHeaderBox = styled.div`
   display: flex;
   align-items: center;
@@ -65,4 +69,9 @@ const ConnectionBodyBox = styled.div<IConnectionBodyBoxProps>`
   }
 `;
 
-export { ConnectionHeaderBox, ConnectionInputBox, ConnectionBodyBox };
+export {
+  ConnectionBox,
+  ConnectionHeaderBox,
+  ConnectionInputBox,
+  ConnectionBodyBox,
+};

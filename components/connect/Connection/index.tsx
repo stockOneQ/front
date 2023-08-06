@@ -79,30 +79,32 @@ const Connection = () => {
   };
 
   return (
-    <Card width="75rem" height="73.8rem" padding="2rem 2rem 5.2rem">
-      <S.ConnectionHeaderBox>
-        <p>나와 연결되어 있는 슈퍼바이저</p>
-        <S.ConnectionInputBox>
-          <input type="text" onChange={onWriteHandler} />
-          <Image src={searchIcon} alt="search-icon" width={20} height={20} />
-        </S.ConnectionInputBox>
-      </S.ConnectionHeaderBox>
-      <S.ConnectionBodyBox hideScroll={hideScroll} onScroll={scrollHandler}>
-        {DUMMY_DATA.filter(
-          ({ name, location, digit }) =>
-            name.includes(enteredValue) ||
-            location.includes(enteredValue) ||
-            digit.includes(enteredValue),
-        ).map(({ id, name, location, digit }) => (
-          <ConnectionProfile
-            key={id}
-            name={name}
-            location={location}
-            digit={digit}
-          />
-        ))}
-      </S.ConnectionBodyBox>
-    </Card>
+    <S.ConnectionBox>
+      <Card width="75rem" height="73.8rem" padding="2rem 2rem 5.2rem">
+        <S.ConnectionHeaderBox>
+          <p>나와 연결되어 있는 슈퍼바이저</p>
+          <S.ConnectionInputBox>
+            <input type="text" onChange={onWriteHandler} />
+            <Image src={searchIcon} alt="search-icon" width={20} height={20} />
+          </S.ConnectionInputBox>
+        </S.ConnectionHeaderBox>
+        <S.ConnectionBodyBox hideScroll={hideScroll} onScroll={scrollHandler}>
+          {DUMMY_DATA.filter(
+            ({ name, location, digit }) =>
+              name.includes(enteredValue) ||
+              location.includes(enteredValue) ||
+              digit.includes(enteredValue),
+          ).map(({ id, name, location, digit }) => (
+            <ConnectionProfile
+              key={id}
+              name={name}
+              location={location}
+              digit={digit}
+            />
+          ))}
+        </S.ConnectionBodyBox>
+      </Card>
+    </S.ConnectionBox>
   );
 };
 
