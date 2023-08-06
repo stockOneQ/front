@@ -1,6 +1,6 @@
 import Card from 'components/common/Card';
 import Image from 'next/image';
-import searchIcon from 'public/assets/icons/community/searchIcon.svg';
+import searchIcon from 'public/assets/icons/common/searchIcon.svg';
 import * as S from './style';
 import { Dispatch, SetStateAction, useState } from 'react';
 import SearchResults from './SearchResults';
