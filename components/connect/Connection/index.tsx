@@ -89,19 +89,16 @@ const Connection = () => {
           </S.ConnectionInputBox>
         </S.ConnectionHeaderBox>
         <S.ConnectionBodyBox hideScroll={hideScroll} onScroll={scrollHandler}>
-          {DUMMY_DATA.filter(
-            ({ name, location, digit }) =>
-              name.includes(enteredValue) ||
-              location.includes(enteredValue) ||
-              digit.includes(enteredValue),
-          ).map(({ id, name, location, digit }) => (
-            <ConnectionProfile
-              key={id}
-              name={name}
-              location={location}
-              digit={digit}
-            />
-          ))}
+          {DUMMY_DATA.filter(({ name }) => name.includes(enteredValue)).map(
+            ({ id, name, location, digit }) => (
+              <ConnectionProfile
+                key={id}
+                name={name}
+                location={location}
+                digit={digit}
+              />
+            ),
+          )}
         </S.ConnectionBodyBox>
       </Card>
     </S.ConnectionBox>
