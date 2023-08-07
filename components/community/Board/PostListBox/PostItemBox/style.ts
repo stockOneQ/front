@@ -22,7 +22,7 @@ export const Box = styled.div<{ isDeleteMode: boolean }>`
     !props.isDeleteMode &&
     css`
       &:hover::after {
-        content: url("data:image/svg+xml,%3Csvg width='39' height='40' viewBox='0 0 39 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 20H34' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M19 4L35 20L19 36' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        content: url('/assets/icons/community/movePost.svg');
         display: flex;
         justify-content: center;
         align-items: center;
