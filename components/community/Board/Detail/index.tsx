@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { postCommentListState } from 'recoil/states';
 
@@ -12,7 +14,8 @@ import * as S from './style';
 
 import CloseSVG from 'public/assets/icons/community/close.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
-import Link from 'next/link';
+
+import { API } from 'pages/api/api';
 
 interface IPostTypes {
   id: number;
@@ -24,11 +27,25 @@ interface IPostTypes {
   writer: string;
 }
 
-const Detail = (props: IPostTypes) => {
+const Detail = ({ id }: { id: number }) => {
   const router = useRouter();
-  const { id, title, content, hit, likes, createdDate, writer } = props;
   const postCommentList =
     useRecoilValue(postCommentListState); /** 더미 데이터 */
+
+  const [post, setPost] = useState<IPostTypes>();
+
+  useEffect(() => {
+    API.get(`/api/boards/${id}`)
+      .then(response => {
+        console.log(`${id}번의 게시글 상세 불러오기 성공`);
+        console.log(response.data);
+        setPost(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+        throw e;
+      });
+  }, []);
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
@@ -46,16 +63,17 @@ const Detail = (props: IPostTypes) => {
           <Image src={CloseSVG} alt="close" />
         </S.CloseButton>
       </S.ButtonContainer>
-
-      <S.PostSection>
-        <WriterInfoBox writer={writer} createdDate={createdDate} />
-        <PostContentBox
-          title={title}
-          content={content}
-          hit={hit}
-          likes={likes}
-        />
-      </S.PostSection>
+      {post && (
+        <S.PostSection>
+          <WriterInfoBox writer={post.writer} createdDate={post.createdDate} />
+          <PostContentBox
+            title={post.title}
+            content={post.content}
+            hit={post.hit}
+            likes={post.likes}
+          />
+        </S.PostSection>
+      )}
 
       <PostCommentInputBox />
 
