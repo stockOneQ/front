@@ -16,7 +16,7 @@ const WriterInfoBox = ({ writer, createdDate }: IPostInfoType) => {
         <S.Info>
           <h1>{writer} 사장님</h1>
           <span>
-            {createdDate.length === 13
+            {createdDate && createdDate.length === 13
               ? createdDate
               : formatCreatedDateToString(createdDate)}
           </span>

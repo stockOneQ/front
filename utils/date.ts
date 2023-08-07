@@ -10,7 +10,8 @@ export const getCurrentDate = () => {
 
 /** props : "2023-07-22T01:01:00" */
 export const formatCreatedDateToString = (props: string) => {
-  const date = props.slice(0, 10).split('-');
-
-  return `${date[0]}년 ${date[1]}월 ${date[2]}일`;
+  if (props) {
+    const date = props.slice(0, 10).split('-');
+    return `${date[0]}년 ${date[1]}월 ${date[2]}일`;
+  }
 };
