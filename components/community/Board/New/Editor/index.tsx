@@ -25,7 +25,9 @@ const Editor = ({
 
   useEffect(() => {
     if (title) setTitleInput(title);
+    else setTitleInput('');
     if (content) setContentInput(content);
+    else setContentInput('');
   }, [title, content]);
 
   const handleSubmit = () => {
@@ -66,9 +68,6 @@ const Editor = ({
 
       router.push('/community/board');
     }
-
-    setTitleInput('');
-    setContentInput('');
   };
   return (
     <S.Box>
