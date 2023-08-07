@@ -24,10 +24,8 @@ const Editor = ({
   const [contentInput, setContentInput] = useRecoilState(postContentState);
 
   useEffect(() => {
-    if (title) setTitleInput(title);
-    else setTitleInput('');
-    if (content) setContentInput(content);
-    else setContentInput('');
+    title ? setTitleInput(title) : setTitleInput('');
+    content ? setContentInput(content) : setContentInput('');
   }, [title, content]);
 
   const handleSubmit = () => {
