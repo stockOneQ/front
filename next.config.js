@@ -18,20 +18,11 @@
 // };
 
 /** @type {import('next').NextConfig} */
-<<<<<<< HEAD
-module.exports = {
-  reactStrictMode: true,
-  swcMinify: true,
-=======
 const nextConfig = {
   reactStrictMode: true,
->>>>>>> e9526d33bbf0d21f0ef1a0f37258e6acdfd952b6
   compiler: {
     styledComponents: true,
   },
 };
-<<<<<<< HEAD
-=======
 
-module.exports = nextConfig
->>>>>>> e9526d33bbf0d21f0ef1a0f37258e6acdfd952b6
+module.exports = nextConfig;
