@@ -51,7 +51,7 @@ const Categories: React.FC<ControlBarProps> = ({
     return (
         <S.ControlBar>
             <S.NavBar>
-                <div style={{ display: linksVisible ? 'flex' : 'none' }}>
+                <div style={{  display: 'flex', visibility: linksVisible ? 'visible' : 'hidden' }}>
                     <S.StyledLink
                         isactive={activeLink === "전체"}
                         onClick={() => handleLinkClick("전체")}
@@ -106,7 +106,6 @@ const Categories: React.FC<ControlBarProps> = ({
                             display: linksVisible ? 'none' : 'block',
 
                             width: `${inputWidth}px`,
-                            height: `${inputHeight}px`,
                             transition: 'width 1s ease, height 0.3s ease', // Add transition properties
                         }}
                     />
@@ -124,3 +123,4 @@ const Categories: React.FC<ControlBarProps> = ({
 };
 
 export default Categories;
+

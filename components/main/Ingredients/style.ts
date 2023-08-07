@@ -1,5 +1,5 @@
+//main/ingredients/style
 import styled, { keyframes }  from "styled-components";
-
 
 const slideDown = keyframes`
   from {
@@ -11,7 +11,6 @@ const slideDown = keyframes`
     opacity: 1;
   }
 `;
-
 
 
 export const MainSection = styled.div`
@@ -44,7 +43,6 @@ export const MainSection = styled.div`
 
 `;
 
-
 export const DropBoxContainer = styled.div`
   margin-left: 3%;
 `;
@@ -76,13 +74,13 @@ export const MainItem = styled.div`
 export const ProductName = styled.h3`
   font-size: 18px;
   font-weight: bold;
+  text-align: center;
   margin-top: 45px;
 `;
 
 export const MainItemImg = styled.div`
   margin-top: 20px;
 `
-
 
 export const StyledLink = styled.button<{ isactive: boolean }>`
   display: flex;
@@ -147,20 +145,18 @@ export const SearchMenu = styled.div`
 `;
 
 export const SerchSection = styled.div`
-  position: relative;
+  position: absolute;
+  left: 78%;
+  top: 18%;
   font-size: 13px;
-  
   border-radius: 20px;
-  background-color: white;
   display: flex;
   margin: 0px 42px 0 20px;
 
   
 
   img {
-    top: 26%;
-    position: relative;
-    left: 10%;
+    position: absolute;
   }
 `;
 
@@ -169,7 +165,6 @@ export const CountValue = styled.p`
   left: 10px;
   position: relative;
 `;
-
 
 export const SearchByBox = styled.div`
   width: 16.3rem;
@@ -241,3 +236,4 @@ export const OptionList = styled.ul`
     }
   }
 `
+
