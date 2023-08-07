@@ -12,6 +12,28 @@ export const TopSection = styled.div`
 export const InforSection = styled.div`
   display: flex;
 `;
+export const HiddenComponent = styled.div`
+  display: none;
+`;
+
+export const RangeValues = styled.div`
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 5px;
+    position: absolute;
+    width: 402px;
+    margin-top: 40px;
+    left: 59%;
+`;
+
+export const RangeValue = styled.span`
+  text-align: center;
+`;
+
+export const FileInput = styled.input.attrs({ type: "file" })`
+  display: none;
+`;
+
 
 export const StyledRadioInput = styled.label`
   font-family: sans-serif;
@@ -155,9 +177,12 @@ export const QuantityInput = styled.div`
 `;
 export const StyledInput = styled.div`
   display: flex;
-  margin: 3%;
+  margin: 3% 3% 6%;
 `;
 
+export const Range = styled.div`
+  display: block;
+`;
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
