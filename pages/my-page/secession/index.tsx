@@ -1,4 +1,4 @@
-// http://localhost:8080/myPage/secession
+// http://localhost:8080/my-page/secession
 
 /** My Page - 회원 탈퇴 페이지 */
 const SecessionPage = () => {

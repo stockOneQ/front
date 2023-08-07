@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+<<<<<<< HEAD
 
 import Detail from 'components/community/Board/Detail';
 import { useEffect, useState } from 'react';
@@ -14,12 +15,23 @@ interface IPostTypes {
   createdDate: string;
   writer: string;
 }
+=======
+import { useRecoilValue } from 'recoil';
+import { postListState } from 'recoil/states';
+
+import Detail from 'components/community/Board/Detail';
+>>>>>>> e9526d33bbf0d21f0ef1a0f37258e6acdfd952b6
 
 const PostDetailPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
+<<<<<<< HEAD
   const [post, setPost] = useState<IPostTypes>();
+=======
+  const postList = useRecoilValue(postListState);
+  const post = postList.filter(post => post.id === Number(id));
+>>>>>>> e9526d33bbf0d21f0ef1a0f37258e6acdfd952b6
 
   useEffect(() => {
     API.get(`/api/boards/${id}`)

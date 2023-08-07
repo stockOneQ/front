@@ -53,7 +53,7 @@ const DropDown = ({
         </S.ToggleContainer>
       </S.SelectedValueButton>
       {categoryToggle && (
-        <S.OptionList width={width} fontSize={fontSize}>
+        <S.OptionList fontSize={fontSize}>
           {list.map((label, idx) => (
             <li
               key={idx}

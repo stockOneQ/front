@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SideMenuBar = styled.nav`
   height: 100%;
@@ -11,6 +11,7 @@ export const SideMenuBarList = styled.ul`
   height: 95%;
   border-right: 1px solid var(--color-gray);
   text-align: center;
+  padding-top: 16.4rem;
 `;
 
 export const SideMenuBarItem = styled.li`
@@ -29,9 +30,10 @@ interface ILogoBoxProps {
   sideBarIdx: number;
 }
 export const LogoBox = styled.div<ILogoBoxProps>`
-  top: ${({ sideBarIdx }) => sideBarIdx === 0 ? '9.9rem' : sideBarIdx === 1 ? '20.7rem' : '31.5rem'};
+  top: ${({ sideBarIdx }) =>
+    sideBarIdx === 0 ? '26.3rem' : sideBarIdx === 1 ? '37.1rem' : '47.9rem'};
   right: 0;
   transform: translate(50%, -50%);
   position: absolute;
-  transition: all .7s ease;
+  transition: all 0.7s ease;
 `;

@@ -1,15 +1,15 @@
-import { Roboto } from "next/font/google";
-import type { AppProps } from "next/app";
-import AppLayout from "layouts/AppLayout";
-import Globals from "styles/Globals";
-import Login from "./login";
-import Head from "next/head";
+import { Roboto } from 'next/font/google';
+import type { AppProps } from 'next/app';
+import AppLayout from 'layouts/AppLayout';
+import Globals from 'styles/Globals';
+import Login from './login';
+import Head from 'next/head';
 
-import { RecoilRoot } from "recoil";
+import { RecoilRoot } from 'recoil';
 
 const roboto = Roboto({
-  weight: "400",
-  subsets: ["latin"],
+  weight: '400',
+  subsets: ['latin'],
 });
 
 const App = ({ Component, pageProps }: AppProps) => {

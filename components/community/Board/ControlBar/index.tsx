@@ -10,8 +10,13 @@ import {
 import * as S from './style';
 import DropDown from 'components/common/DropDown';
 import SearchInputBar from './SearchInputBar';
+<<<<<<< HEAD
 import SearchIcon from 'public/assets/icons/community/searchIcon.svg';
 import { API } from 'pages/api/api';
+=======
+
+import SearchIcon from 'public/assets/icons/common/searchIcon.svg';
+>>>>>>> e9526d33bbf0d21f0ef1a0f37258e6acdfd952b6
 
 const sortOptionList = ['최신순', '조회순'];
 const searchOptionList = ['글 제목', '글 내용', '작성자'];

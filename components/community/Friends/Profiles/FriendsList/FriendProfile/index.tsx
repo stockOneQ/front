@@ -7,6 +7,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import FriendInfo from './FriendInfo';
 
 interface IFriendProfileProps {
+  id: number;
   name: string;
   location: string;
   phone: string;
@@ -14,27 +15,49 @@ interface IFriendProfileProps {
   isStock: boolean;
   setIsPermitted: Dispatch<SetStateAction<number>>;
   setIsStock: Dispatch<SetStateAction<boolean>>;
+  setDeleteItem: Dispatch<SetStateAction<number[]>>;
 }
 
 /** 나의 채팅 프로필 */
-const FriendProfile = ({ name, location, phone, onSetting, isStock, setIsPermitted, setIsStock }: IFriendProfileProps) => {
+const FriendProfile = ({
+  id,
+  name,
+  location,
+  phone,
+  onSetting,
+  isStock,
+  setIsPermitted,
+  setIsStock,
+  setDeleteItem,
+}: IFriendProfileProps) => {
   const didMount = useRef(false); // 첫 렌더링 useEffect 실행 막기 위해
 
   const [isChecked, setIsChecked] = useState(false); // 각 개별 친구, 체크 여부
   const [isStockSelected, setIsStockSelected] = useState(false);
 
+  const deleteItemHandler = () => {
+    setIsChecked(prev => !prev);
+
+    if (isChecked) {
+      return setDeleteItem(prev => prev.filter(item => ![id].includes(item)));
+    }
+    if (!isChecked) {
+      return setDeleteItem(prev => [...prev, id]);
+    }
+  };
+
   const stockButtonHandler = () => {
     setIsStockSelected(prev => !prev);
     setIsStock(true);
-  }
+  };
 
   useEffect(() => {
     if (didMount.current) {
       if (isChecked) {
-        setIsPermitted(prev => prev += 1);
+        setIsPermitted(prev => (prev += 1));
       } else {
-        setIsPermitted(perv => perv -= 1);
-      };
+        setIsPermitted(perv => (perv -= 1));
+      }
     } else {
       didMount.current = true;
     }
@@ -43,14 +66,34 @@ const FriendProfile = ({ name, location, phone, onSetting, isStock, setIsPermitt
   return (
     <S.FriendProfileBox className="friend-profile">
       {onSetting && (
-        <S.CheckBoxButton checked={isChecked} onClick={() => setIsChecked(prev => !prev)}>
+        <S.CheckBoxButton checked={isChecked} onClick={deleteItemHandler}>
           <Image src={checkedIcon} alt="checked_icon" width={14} height={11} />
         </S.CheckBoxButton>
       )}
-      <FriendInfo name={name} location={location} phone={phone} width={60} imgMarginRight="1.2rem" />
+      <FriendInfo
+        name={name}
+        location={location}
+        phone={phone}
+        width={60}
+        imgMarginRight="1.2rem"
+      />
       <S.FriendPageButton onClick={stockButtonHandler}>
-        {((isStockSelected && isStock ) || !isStock) && <Image src={friendStockIcon} alt="my_page_icon" width={19.64} height={26.84} />}
-        {!isStockSelected && isStock && <Image src={friendStockIcGray} alt="my_page_icon_black" width={19.64} height={26.84} />}
+        {((isStockSelected && isStock) || !isStock) && (
+          <Image
+            src={friendStockIcon}
+            alt="my_page_icon"
+            width={19.64}
+            height={26.84}
+          />
+        )}
+        {!isStockSelected && isStock && (
+          <Image
+            src={friendStockIcGray}
+            alt="my_page_icon_black"
+            width={19.64}
+            height={26.84}
+          />
+        )}
       </S.FriendPageButton>
     </S.FriendProfileBox>
   );
