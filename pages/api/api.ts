@@ -182,7 +182,7 @@ export const fetchProductDetails = async (id: number): Promise<ProductItem> => {
     try {
       const response = await API.get(`/api/product/${id}`);
       if (response.data) {
-        return response.data; 
+        return response.data.result; 
       } else {
         throw new Error("Response data is undefined or has unexpected structure");
       }

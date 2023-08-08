@@ -10,7 +10,6 @@ import { useRecoilValue, useSetRecoilState } from "recoil"
 import * as S from "../../components/main/style";
 import { fetchProductDetails} from "../../pages/api/api";
 import ImgIcon from "../../public/assets/icons/imgUpload.svg";
-import { API } from "../../pages/api/api";
 
 const ProductPage = () => {
   const router = useRouter();
@@ -56,16 +55,15 @@ useEffect(() => {
   /** --------------------------------------------------------- */
   /** --------------------------------------------------------- */
   
-// 수정 API
-const handleEditProduct = async () => {
-  try {
-    const response = await API.patch(`/api/product/edit/${id}`, formData);
-    console.log("Success editing product", response.data);
-  } catch (error) {
-    console.error("Error editing product:", error);
-  }
-};
-
+  // 수정 API
+  const handleEditProduct = async () => {
+    try {
+      const response = await axios.put(`/api/product/edit/${id}`, formData);
+      console.log("Success editing product", response.data);
+    } catch (error) {
+      console.error("Error editing product:", error);
+    }
+  };
 
   /** --------------------------------------------------------- */
   /** --------------------------------------------------------- */
@@ -191,7 +189,7 @@ const handleEditProduct = async () => {
               <S.Input
                 type="text"
                 name="price"
-                value={formData.price.toString()}
+                value={formData.price}
                 onChange={handleInputChange}
               />
             </S.StyledInput>
