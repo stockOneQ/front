@@ -9,27 +9,35 @@ interface ISelectSupervisorBoxProps {
 }
 
 const SelectSupervisorBox = styled.div<ISelectSupervisorBoxProps>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  text-align: center;
-  width: 25.4rem;
-  height: 4.5rem;
-  margin: 7.3rem auto 8.5rem;
-  cursor: pointer;
-  color: ${({ isSelectSupervisor }) =>
-    isSelectSupervisor ? 'var(--color-white)' : 'var(--color-black)'};
-  background-color: ${({ isSelectSupervisor }) =>
-    isSelectSupervisor ? 'var(--color-black)' : 'var(--color-white)'};
-  border-radius: 5rem;
+  .haha {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25.4rem;
+    height: 4.5rem;
+    margin: 7.3rem auto 8.5rem;
+    border-radius: 5rem;
+    position: relative;
+    cursor: pointer;
+    z-index: 9;
 
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  line-height: normal;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: normal;
+
+    color: ${({ isSelectSupervisor }) =>
+      isSelectSupervisor ? 'var(--color-white)' : 'var(--color-black)'};
+    background-color: ${({ isSelectSupervisor }) =>
+      isSelectSupervisor ? 'var(--color-black)' : ''};
+  }
 
   img {
+    position: absolute;
+    top: 22.3rem;
+    left: 88.7rem;
+    z-index: 10;
     filter: ${({ isSelectSupervisor }) =>
       isSelectSupervisor
         ? `invert(94%) sepia(75%) saturate(0%) hue-rotate(296deg)
@@ -38,6 +46,45 @@ const SelectSupervisorBox = styled.div<ISelectSupervisorBoxProps>`
     transform: ${({ isSelectSupervisor }) =>
       isSelectSupervisor ? 'rotate(180deg)' : 'rotate(0)'};
     transition: transform 0.5s ease;
+  }
+`;
+
+const SupervisorDropDownBox = styled.div`
+  width: 25.4rem;
+  height: 19.6rem;
+  position: absolute;
+  top: 20.4rem;
+  left: 68.5rem;
+  padding-top: 6.3rem;
+  border: 1px solid #f7f7f9;
+  background-color: var(--color-white);
+  border-radius: 2.1rem;
+  z-index: 1;
+`;
+
+const SupervisorList = styled.ul`
+  /* margin-top: 10.8rem; */
+  height: 13.5rem;
+  overflow: auto;
+
+  color: #979797;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 2.1rem;
+
+  li {
+    height: 4.5rem;
+    border-radius: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  li:hover {
+    color: var(--color-black);
+    background-color: #f7f7f9;
   }
 `;
 
@@ -229,6 +276,8 @@ const PaginationBox = styled.div`
 export {
   DataBox,
   SelectSupervisorBox,
+  SupervisorDropDownBox,
+  SupervisorList,
   DataNavBox,
   DataNav,
   DataNavInputBox,

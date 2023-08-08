@@ -10,9 +10,9 @@ import * as S from './style';
 
 /** connect - 자료 페이지 */
 const Data = () => {
-  const [activeNum, setActiveNum] = useState(0);
-  const [temp, setTemp] = useState(true);
-  const [isSelectSupervisor, setIsSelectSupervisor] = useState(true);
+  const [activeNum, setActiveNum] = useState(0); // navigation active 상태 주기 위함
+  const [temp, setTemp] = useState(true); // 상세 페이지 연결하려고 임시로 만듦. 삭제 예정
+  const [isSelectSupervisor, setIsSelectSupervisor] = useState(true); // 슈퍼바이저 고르기
 
   return (
     <>
@@ -24,7 +24,21 @@ const Data = () => {
               setIsSelectSupervisor(prev => !prev);
             }}
           >
-            <p>이혜리 슈퍼바이저</p>
+            <div className="haha">
+              <p>이혜리 슈퍼바이저</p>
+            </div>
+            {isSelectSupervisor && (
+              <S.SupervisorDropDownBox>
+                <S.SupervisorList>
+                  <li>이가영 슈퍼바이저</li>
+                  <li>임하림 슈퍼바이저</li>
+                  <li>전언석 슈퍼바이저</li>
+                  <li>율카 슈퍼바이저</li>
+                  <li>리하 슈퍼바이저</li>
+                  <li>언짱 슈퍼바이저</li>
+                </S.SupervisorList>
+              </S.SupervisorDropDownBox>
+            )}
             <Image
               src={supervisorCategoryOpen}
               alt="supervisor-toggle-icon"
