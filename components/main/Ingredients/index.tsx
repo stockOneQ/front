@@ -19,10 +19,11 @@ type IngredientsProps = {
   storageMethodFilter: StorageMethod;
 };
 
+
 interface productAll {
   id: number;
   name : string;
-  image : null;
+  image : string;
 }
 
 const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) => {
@@ -40,7 +41,9 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   const [storeId, setStoreId] = useState(1);
   const [userId, setUserId] = useState(1);
   const [sortedProducts, setSortedProducts] = useState<ProductItem[]>([]);
-  
+
+  const [selectedProduct, setSelectedProduct] = useState<productAll | null>(null);
+
   const [selectedSortOption, setSelectedSortOption] = useState("가나다순");
   const [activeLink, setActiveLink] = useState<string>('전체');
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
@@ -76,12 +79,18 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   // sortedProducts 업데이트 
  
   /** 제품조회 API 완 ------------------------------------------------------------------ */
-  const fetchSortedProducts =  async (sortParameter: string) => {
+  const fetchSortedProducts =  async (sortParameter: string, lastProductId?: number) => {
     try {
-      const response = await productList(storeId, storageMethodFilter, 1, sortParameter);
+      const response = await productList(storeId, storageMethodFilter, lastProductId, sortParameter);
       const productAll = response.data.result;
+      setSelectedProduct(response.data.result);
+
       console.log("응답 response data 값: ",productAll);
-      setSortedProducts(productAll);
+      console.log("컨디션 : ", storageMethodFilter);
+      setSortedProducts((prevProducts) =>
+      lastProductId ? [...prevProducts, ...productAll] : productAll
+    );
+
       console.log("현재 sortedProducts : ", sortedProducts);
       
     } catch (error) {
@@ -90,12 +99,20 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
     }
   };
 
+  const handleLoadMore = async () => {
+    if (sortedProducts.length > 0) {
+      const lastProductId = sortedProducts[sortedProducts.length - 1].id;
+      fetchSortedProducts(selectedSortOption === "빈도" ? "빈도" : "가나다", lastProductId);
+    }
+  };
+
+  
   //useEffect로 업데이트 후 업데이트된 값 반영되어야하는데 
   useEffect(() => {
       console.log("sortedProducts updated:", sortedProducts);//null 
     }, [sortedProducts]);
 
-  console.log(storageMethodFilter);
+  // console.log(storageMethodFilter);
   
   //가나다순, 빈도순 옵션 변경
   const handleSortChange = (selectedOption: string) => {
@@ -113,7 +130,7 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
       const response = await API.get("/api/product/search", {
         params: {
           store: storeId,
-          condition: storageMethodFilter, // 지금 내가 있는 카테고리여야 하는데 -> activeLink
+          condition: storageMethodFilter, 
           name: searchValue,
         },
       });
@@ -126,13 +143,13 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   };
 
   // // condition별 api 호출 완
-  const handleLinkClick = async (category: string) => {
+  const handleLinkClick = async (category: string, lastProductId?: number)  => {
     setSelectedSortOption('가나다순');
     setActiveLink(category);
-    setSelectedCategory(category);//음?
+    setSelectedCategory(category);
 
     try {
-      const products = await getProductByCategory(category, storeId, storageMethodFilter, 1, '가나다');
+      const products = await getProductByCategory(category, storeId, storageMethodFilter, lastProductId, '가나다');
       console.log("컨디션 별 호출 성공", products);
       setSortedProducts(products);
     } catch (error) {
@@ -164,17 +181,21 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
   }, [sortedProducts]);
 
   /** 제품 상세 페이지 조회 API------------------------------------------------------ */
-  const handleItemClick = async (product: ProductItem) => {
-    try {
-      const productId = product.id;
-      const productDetails = await fetchProductDetails(productId);
-      console.log(productDetails);
+  // const handleItemClick = async (product: ProductItem) => {
+  //   try {
+  //     const productId = product.id;
+  //     const productDetails = await fetchProductDetails(productId);
+  //     console.log(productDetails);
 
 
-      router.push(`/product/${productId}`);
-    } catch (error) {
-      console.error("Error handling item click:", error);
-    }
+  //     router.push(`/product/${productId}`);
+  //   } catch (error) {
+  //     console.error("Error handling item click:", error);
+  //   }
+  // };
+
+  const handleItemClick = (productId: number) => {
+    router.push(`/product/${productId}`);
   };
 
   /** --------------------------------------------------------- */
@@ -197,37 +218,30 @@ const Ingredients = ({ productsToShow, storageMethodFilter }: IngredientsProps) 
         searchTerm={searchTerm}
       />
 
-      {/* <MainSection
-        selectedCategory={selectedCategory}
-        filteredApproachingExpiration={filteredApproachingExpiration}
-        filteredExpiredItems={filteredExpiredItems}
-        filteredInsufficientIngredients={filteredInsufficientIngredients}
-        searchResults={searchResults}
-        filteredItems={filteredItems}
-        renderItems={renderItems}
-        searchTerm={searchTerm}
-      /> */}
-
-
       {/* api 호출에 따른 MAIN SECTION */}
       <S.MainSection>
-      {Array.isArray(sortedProducts) ? (
-        sortedProducts.map((product) => (
-          <S.MainItem key={product.id} onClick={() => handleItemClick(product)}>
-            <Link href={`/product/${product.id}`} key={product.id}>
-              <S.MainItemImg>
-                <Image src={exampleMain} alt="my_page_icon" width={140} height={140} />
-              </S.MainItemImg>
-              <S.ProductName>
-                {product.name} 
-              </S.ProductName>
-            </Link>
-          </S.MainItem>
-        ))
-      ) : (
-        <p>Loading...</p>
+        {Array.isArray(sortedProducts) ? (
+          sortedProducts.map((product) => (
+            <S.MainItem key={product.id} onClick={() => handleItemClick(product.id)}>
+              <Link href={`/product/${product.id}`} passHref>
+                <S.MainItemImg>
+                  
+                  {product.image && (
+                    <img src={`data:image/jpeg;base64,${product.image}`} alt={product.name} width={140} height={140} />
+                  )}
+                </S.MainItemImg>
+                <S.ProductName>
+                  {product.name} 
+                </S.ProductName>
+              </Link>
+            </S.MainItem>
+          ))
+        ) : (
+          <p>Loading...</p>
       )}
       </ S.MainSection>
+
+      <button onClick={handleLoadMore}>더보기</button>
 
     </>
   );
