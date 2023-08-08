@@ -157,9 +157,15 @@ const New = () => {
 
     //const imgInf =  selectedImage ? URL.createObjectURL(selectedImage) : "";
     const formDatas = new FormData();
-    const jsonFormData = convertFormDataToJson();
     formDatas.append('imageInfo', selectedImage);
-    formDatas.append('jsonFormData', JSON.stringify(jsonFormData));
+  
+    
+     const jsonFormData = convertFormDataToJson();
+     formDatas.append('jsonFormData', JSON.stringify(jsonFormData));
+     formDatas.set('data-header', 'application/json');
+
+     console.log('formDatas:', formDatas);
+
     // console.log("storageMethodFilter : ", StorageMethod);
     // const jsonFormData = convertFormDataToJson();
     
@@ -171,10 +177,12 @@ const New = () => {
  
     const condition = "냉동";
     try {
-      const response = await API.post(`/api/product/add?store=${storeId}&condition=${condition}`, formDatas);
-      const newProduct = response.data;
-      console.log(response);
-      alert("제품추가 성공");
+      await API.post(`/api/product/add?store=${storeId}&condition=${condition}`, formDatas, {
+        headers: {
+          'Content-Type' : 'multipart/form-data' },
+      });
+      alert("제품 추가 성공");
+      
 
       // 업데이트
       // setPostListState((prevPostList) => [...prevPostList, newProduct]);
@@ -205,6 +213,9 @@ const New = () => {
       router.push("/");
     } catch (error) {
       console.error('Error adding product:', error);
+      console.log(formDatas);
+      console.log(selectedImage);
+      console.log(jsonFormData);
     }
   };
 
@@ -264,6 +275,7 @@ const New = () => {
               <S.ImgInput>
                 <input type="file"
                   name="imageInfo"
+                  
                   value={formData.imageInfo}
                   onChange={handleImageChange} />
                 {selectedImage && (
