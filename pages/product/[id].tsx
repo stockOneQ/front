@@ -1,5 +1,5 @@
 //pages/product[id]
-import React, { useState,ChangeEvent } from "react";
+import React, {  useEffect, useState,ChangeEvent } from "react";
 import axios from 'axios';
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -8,45 +8,72 @@ import { approachingExpirationState, expiredIngredientsState, insufficientIngred
 import { Title } from "components/community/Board/PostListBox/PostItemBox/style";
 import { useRecoilValue, useSetRecoilState } from "recoil"
 import * as S from "../../components/main/style";
-import ImgIcon from "../../public/assets/icons/imgUpload.svg"
+import { fetchProductDetails} from "../../pages/api/api";
+import ImgIcon from "../../public/assets/icons/imgUpload.svg";
+import { API } from "../../pages/api/api";
 
 const ProductPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  // /** API 호출------------------------------------------------- */
-  // /** --------------------------------------------------------- */
-  // /** --------------------------------------------------------- */
-  
-  // // 수정 API
-  // const handleEditProduct = async () => {
-  //   try {
-  //     const response = await axios.put(`/api/product/edit/${id}`, formData);
-  //     console.log("Success editing product", response.data);
-  //   } catch (error) {
-  //     console.error("Error editing product:", error);
-  //   }
-  // };
+  const [formData, setFormData] = useState<ProductItem>({
+    name: "",
+    price: "",
+    seller: "",
+    receivingDate: "",
+    expirationDate: "",
+    ingredientLocation: "",
+    requiredQuantity: "",
+    stockQuant: "",
+    siteToOrder: "",
+    orderFreq: "",
+    image: "",
+  });
 
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
 
-  const calculateDaysRemaining = (expirationDate) => {
-    const currentDate = new Date();
-    const expirationDateObj = new Date(expirationDate);
-    const timeDifference = expirationDateObj.getTime() - currentDate.getTime();
-    const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-    return daysRemaining;
+useEffect(() => {
+  const fetchDetails = async () => {
+    try {
+      const response = await fetchProductDetails(Number(id));
+      setFormData(response); 
+      console.log(response);
+    } catch (error) {
+      console.error('Error fetching product details:', error);
+    }
   };
 
-  const setApproachingExpiration = useSetRecoilState(approachingExpirationState);
-  const setExpiredIngredients = useSetRecoilState(expiredIngredientsState);
-  const setInsufficientIngredients = useSetRecoilState(insufficientIngredientsState);
+  if (id) {
+    fetchDetails();
+  }
+}, [id]);
 
-  const ingredients = useRecoilValue(mainPostListState);
-  const item = ingredients.find((item) => item.id === Number(id));
-  const [formData, setFormData] = useState(item || {});
+// ... (rest of the code)
+
+
+  
+
+  /** API 호출------------------------------------------------- */
+  /** --------------------------------------------------------- */
+  /** --------------------------------------------------------- */
+  
+// 수정 API
+const handleEditProduct = async () => {
+  try {
+    const response = await API.patch(`/api/product/edit/${id}`, formData);
+    console.log("Success editing product", response.data);
+  } catch (error) {
+    console.error("Error editing product:", error);
+  }
+};
+
+
+  /** --------------------------------------------------------- */
+  /** --------------------------------------------------------- */
+  /** --------------------------------------------------------- */
+
+
+
+
   const setPostListState = useSetRecoilState(mainPostListState);
 
   const handleInputChange = (e) => {
@@ -59,47 +86,14 @@ const ProductPage = () => {
 
   const handleSubmit = () => {
 
-    const daysRemaining = calculateDaysRemaining(
-      `${formData.expirationYear}-${formData.expirationMonth}-${formData.expirationDay}`
-    );
 
-    if (formData.quantity <= formData.requiredQuantity) {
-      setInsufficientIngredients((prevInsufficientIngredients) => [...prevInsufficientIngredients, item.id]);
-      setPostListState((prevPostList) =>
-        prevPostList.map((product) =>
-          product.id === Number(id) ? { ...product, category: "no" } : product
-        )
-      );
-    } else if (daysRemaining <= 0) {
-      setExpiredIngredients((prevExpiredIngredients) => [...prevExpiredIngredients, item.id]);
-      setPostListState((prevPostList) =>
-        prevPostList.map((product) =>
-          product.id === Number(id) ? { ...product, category: "afterDate" } : product
-        )
-      );
-    } else if (daysRemaining <= 3) {
-      setApproachingExpiration((prevApproachingExpiration) => {
-        if (Array.isArray(prevApproachingExpiration)) {
-          return [...prevApproachingExpiration, item.id];
-        } else {
-          return [prevApproachingExpiration, item.id];
-        }
-      });
-      setPostListState((prevPostList) =>
-      prevPostList.map((product) =>
-        product.id === Number(id) ? { ...product, category: "beforeDate" } : product
-      )
-    );
-    }
+
     /** 수정 API  */
-    //handleEditProduct();
+    handleEditProduct();
 
     router.push("/");
   };
 
-  if (!item) {
-    return <div>Product not found</div>;
-  }
     
   const [selectedStorageMethod, setSelectedStorageMethod] = useState(
     formData.storageMethod || "냉동"
@@ -125,7 +119,7 @@ const ProductPage = () => {
       <S.TopSection>
         <Link href="/">작성취소</Link>
         <S.Button type="submit" onClick={handleSubmit}>
-          <Link href="/">저장</Link>
+          <Link href="/">수정</Link>
         </S.Button>
       </S.TopSection>
 
@@ -173,7 +167,7 @@ const ProductPage = () => {
               <S.ImgInput>
               <S.ImgInput>
               <Image
-                src={formData.imageInfo || ImgIcon}
+                src={`data:image/jpeg;base64,${formData.image}`}
                 alt="my_page_icon"
                 width={124}
                 height={83}
@@ -187,8 +181,8 @@ const ProductPage = () => {
               <S.Label>제품명</S.Label>
               <S.Input
                 type="text"
-                name="productName"
-                value={formData.productName || ""}
+                name="name"
+                value={formData.name}
                 onChange={handleInputChange}
               />
             </S.StyledInput>
@@ -197,7 +191,7 @@ const ProductPage = () => {
               <S.Input
                 type="text"
                 name="price"
-                value={formData.price || ""}
+                value={formData.price.toString()}
                 onChange={handleInputChange}
               />
             </S.StyledInput>
@@ -206,7 +200,7 @@ const ProductPage = () => {
               <S.Input
                 type="text"
                 name="seller"
-                value={formData.seller || ""}
+                value={formData.vendor}
                 onChange={handleInputChange}
               />
             </S.StyledInput>
@@ -216,26 +210,12 @@ const ProductPage = () => {
                   <S.ReceiptDateInputYearField
                     type="text"
                     name="receiptYear"
-                    value={formData.receiptYear}
+                    value={formData.receivingDate}
                     onChange={handleInputChange}
                     placeholder="년도"
                   />
                   <p>년</p>
-                  <S.ReceiptDateInputField
-                    type="text"
-                    name="receiptMonth"
-                    value={formData.receiptMonth}
-                    onChange={handleInputChange}
-                    placeholder="월"
-                  />
-                  <p>월</p>
-                  <S.ReceiptDateInputField
-                    type="text"
-                    name="receiptDay"
-                    value={formData.receiptDay}
-                    onChange={handleInputChange}
-                    placeholder="일"
-                  />
+
                 </S.ReceiptDateInput>
               </S.StyledInput>
               <S.StyledInput>
@@ -244,26 +224,12 @@ const ProductPage = () => {
                   <S.ReceiptDateInputYearField
                     type="text"
                     name="expirationYear"
-                    value={formData.expirationYear}
+                    value={formData.expirationDate}
                     onChange={handleInputChange}
                     placeholder="년도"
                   />
                   <p>년</p>
-                  <S.ReceiptDateInputField
-                    type="text"
-                    name="expirationMonth"
-                    value={formData.expirationMonth}
-                    onChange={handleInputChange}
-                    placeholder="월"
-                  />
-                  <p>월</p>
-                  <S.ReceiptDateInputField
-                    type="text"
-                    name="expirationDay"
-                    value={formData.expirationDay}
-                    onChange={handleInputChange}
-                    placeholder="일"
-                  />
+                  
                 </S.ReceiptDateInput>
               </S.StyledInput>
               <S.StyledInput>
@@ -271,7 +237,7 @@ const ProductPage = () => {
                 <S.Input
                   type="text"
                   name="ingredientLocation"
-                  value={formData.ingredientLocation}
+                  value={formData.location}
                   onChange={handleInputChange}
                 />
               </S.StyledInput>
@@ -281,7 +247,7 @@ const ProductPage = () => {
                   <S.QuantityInputField
                     type="text"
                     name="requiredQuantity"
-                    value={formData.requiredQuantity}
+                    value={formData.requireQuant}
                     onChange={handleInputChange}
                   />
                 </S.QuantityInput>
@@ -290,7 +256,7 @@ const ProductPage = () => {
                   <S.QuantityInputField
                     type="text"
                     name="quantity"
-                    value={formData.quantity}
+                    value={formData.stockQuant}
                     onChange={handleInputChange}
                   />
                 </S.QuantityInput>
@@ -300,7 +266,7 @@ const ProductPage = () => {
                 <S.Input
                   type="text"
                   name="orderingSite"
-                  value={formData.orderingSite}
+                  value={formData.siteToOrder}
                   onChange={handleInputChange}
                 />
               </S.StyledInput>
@@ -310,7 +276,7 @@ const ProductPage = () => {
                 <S.Slider
                   type="range"
                   name="orderingFrequency"
-                  value={formData.orderingFrequency}
+                  value={formData.orderFreq}
                   step="20"
                   onChange={handleInputChange}
                 >

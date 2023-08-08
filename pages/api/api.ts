@@ -166,18 +166,32 @@ export const getProductByCategory = async (
 };
 
 //상세페이지
-export const fetchProductDetails = async (
-    id: number
-): Promise<AxiosResponse<ProductItem[]>> => {
+// export const fetchProductDetails = async (
+//     id: number
+// ): Promise<AxiosResponse<ProductItem[]>> => {
+//     try {
+//       const response = await API.get(`/api/product/${id}`);
+//       return response.data.result;
+//       console.log(response);
+//     } catch (error) {
+//       throw new Error("Error fetching product details: ");
+//     }
+//   };
+  
+export const fetchProductDetails = async (id: number): Promise<ProductItem> => {
     try {
-        const response = await API.get("/api/product/${id}");
-        return response.data.result;
-        console.log(response);
+      const response = await API.get(`/api/product/${id}`);
+      if (response.data) {
+        return response.data; 
+      } else {
+        throw new Error("Response data is undefined or has unexpected structure");
+      }
     } catch (error) {
-        throw new Error("Error fetching product details: ");
+      console.error("Error fetching product details:", error);
+      throw new Error("Error fetching product details: " + error.message);
     }
-};
-
+  };
+  
 //제품검색
 export const searchProducts = async (
     storageMethodFilter: string,
