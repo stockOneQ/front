@@ -13,14 +13,7 @@ import { approachingExpirationState, postMainTitleState, mainPostListState, expi
 import Ingredients from "components/main/Ingredients";
 import { API } from "./api/api";
 
-
 const sortOptionList = ["냉동", "냉장", "상온"];
-
-let id = 1;
-const getId = () => {
-  return id++;
-};
-
 type IngredientsProps = {
   productsToShow: ProductItem[];
   storageMethodFilter: StorageMethod;
@@ -58,13 +51,12 @@ const New = () => {
     storageMethod: '',
   });
 
-  const [selectedImage, setSelectedImage] = useState(null);
 
+  // 이미지 input 값 받기 
+  const [selectedImage, setSelectedImage] = useState(null);
   const handleImageChange = (e) => {
     setSelectedImage(e.target.files[0]);
   };
-  
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     console.log("Input Changed:", name, value);
@@ -101,7 +93,7 @@ const New = () => {
       name: formData.productName,
       price: formData.price,
       vendor: formData.seller,
-      receiptDate: `${formData.receiptYear}-${formData.receiptMonth}-${formData.receiptDay}`,
+      receivingDate: `${formData.receiptYear}-${formData.receiptMonth}-${formData.receiptDay}`,
       expirationDate: `${formData.expirationYear}-${formData.expirationMonth}-${formData.expirationDay}`,
       location: formData.ingredientLocation,
       requireQuant: formData.requiredQuantity,
@@ -134,58 +126,47 @@ const New = () => {
     //   return;
     // }
 
-    const requiredFields = [
-      "seller",
-      "receiptYear",
-      "receiptMonth",
-      "receiptDay",
-      "expirationYear",
-      "expirationMonth",
-      "expirationDay",
-      "ingredientLocation",
-      "requiredQuantity",
-      "quantity",
-      "orderingFrequency",
-    ];
+    // const requiredFields = [
+    //   "seller",
+    //   "receiptYear",
+    //   "receiptMonth",
+    //   "receiptDay",
+    //   "expirationYear",
+    //   "expirationMonth",
+    //   "expirationDay",
+    //   "ingredientLocation",
+    //   "requiredQuantity",
+    //   "quantity",
+    //   "orderingFrequency",
+    // ];
 
-    for (const field of requiredFields) {
-      if (!formData[field]) {
-        alert(`${field}을(를) 채워주세요.`);
-        return;
-      }
-    }
+    // for (const field of requiredFields) {
+    //   if (!formData[field]) {
+    //     alert(`${field}을(를) 채워주세요.`);
+    //     return;
+    //   }
+    // }
 
-    //const imgInf =  selectedImage ? URL.createObjectURL(selectedImage) : "";
     const formDatas = new FormData();
-    formDatas.append('imageInfo', selectedImage);
-  
+    const jsonFormData = convertFormDataToJson();
+    formDatas.append('image', selectedImage);
+    formDatas.append("editProductRequest", new Blob([JSON.stringify(jsonFormData)] , {type: "application/json"}));
     
-     const jsonFormData = convertFormDataToJson();
-     formDatas.append('jsonFormData', JSON.stringify(jsonFormData));
-     formDatas.set('data-header', 'application/json');
-
-     console.log('formDatas:', formDatas);
-
+    //  formDatas.append('editProductRequest', JSON.stringify(jsonFormData))
     // console.log("storageMethodFilter : ", StorageMethod);
     // const jsonFormData = convertFormDataToJson();
-    
     // formDatas.append('imgInf', imgInf); // Multipart-form으로 사진 전송
     // formDatas.append('jsonFormData', JSON.stringify(jsonFormData)); // application/json으로 폼데이터 전송
-
     // console.log('imgInf:', formDatas.get('imgInf'));
     // console.log('jsonFormData:', formDatas.get('jsonFormData'));
  
-    const condition = "냉동";
+    const condition = "냉동"; //지금 임시로 이렇게 보내볼게요!
     try {
       await API.post(`/api/product/add?store=${storeId}&condition=${condition}`, formDatas, {
         headers: {
           'Content-Type' : 'multipart/form-data' },
       });
       alert("제품 추가 성공");
-      
-
-      // 업데이트
-      // setPostListState((prevPostList) => [...prevPostList, newProduct]);
 
       // 초기화 
       setFormData({
@@ -207,9 +188,6 @@ const New = () => {
         storageMethod: "",
       });
       setProductName("");
-      //setSelectedStorageMethod("");
-
-
       router.push("/");
     } catch (error) {
       console.error('Error adding product:', error);
