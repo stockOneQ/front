@@ -3,11 +3,11 @@ import PostItemBox from 'components/community/Board/PostListBox/PostItemBox';
 import { IPostPreviewTypes } from 'recoil/states';
 
 const PostListBox = ({
-  isAll,
+  isCurrentPathMain,
   list,
 }: {
+  isCurrentPathMain: boolean;
   list: IPostPreviewTypes[];
-  isAll: boolean;
 }) => {
   return (
     <S.List>
@@ -20,7 +20,7 @@ const PostListBox = ({
             hit={value.hit}
             comment={value.comment}
             likes={value.likes}
-            isAll={isAll}
+            isCurrentPathMain={isCurrentPathMain}
           />
         ))}
     </S.List>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { deleteCheckedItemsState, isDeleteModeState } from 'recoil/states';
+import { IPostPreviewTypes } from 'recoil/states';
 import ViewsSVG from 'public/assets/icons/community/views.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
 import LikesSVG from 'public/assets/icons/community/likes.svg';
@@ -9,14 +10,8 @@ import LikesSVG from 'public/assets/icons/community/likes.svg';
 import * as S from './style';
 import Link from 'next/link';
 
-interface IPostTypes {
-  id: number;
-  title: string;
-  content: string;
-  hit: number;
-  comment?: number;
-  like?: number;
-  isAll: boolean;
+interface IPropsTypes extends IPostPreviewTypes {
+  isCurrentPathMain: boolean;
 }
 
 const PostItem = ({
@@ -25,9 +20,9 @@ const PostItem = ({
   content,
   hit,
   comment,
-  like,
-  isAll,
-}: IPostTypes) => {
+  likes,
+  isCurrentPathMain,
+}: IPropsTypes) => {
   const [isChecked, setIsChecked] = useState(false);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
@@ -62,7 +57,7 @@ const PostItem = ({
           </S.Interaction>
           <S.Interaction>
             <Image alt="likes" src={LikesSVG} />
-            <span>{like}</span>
+            <span>{likes}</span>
           </S.Interaction>
         </S.PostInteractionSection>
       </S.Container>
@@ -76,7 +71,7 @@ const PostItem = ({
         />
       ) : (
         <Link
-          href={`/community/board/${id}?isAll=${isAll}`}
+          href={`/community/board/${id}?isCurrentPathMain=${isCurrentPathMain}`}
           as={`/community/board/${id}`}
         >
           <S.StyledLink />

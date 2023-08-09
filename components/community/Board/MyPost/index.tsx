@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
-  searchTypeState,
   sortTypeState,
+  searchTypeState,
+  searchInputState,
   deleteCheckedItemsState,
   isDeleteModeState,
   myPostListState,
-  searchInputState,
+  isCurrentPathMainState,
 } from 'recoil/states';
 import * as S from './style';
 
@@ -35,6 +36,8 @@ const MyPosts = () => {
 
   const [myPostList, setMyPostList] = useRecoilState(myPostListState);
   const [myPostListCount, setMyPostListCount] = useState(0);
+
+  const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
   /** 내가 쓴 글 목록 조회 */
   useEffect(() => {
@@ -67,6 +70,7 @@ const MyPosts = () => {
   /** '전체글로' 버튼 클릭 시 처리 함수 */
   const handleGoMain = () => {
     setIsDeleteMode(false);
+    setIsCurrentPathMain(true);
 
     /** 내가 쓴 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
     setSortType('최신순');
@@ -150,7 +154,7 @@ const MyPosts = () => {
         )}
       </S.HeaderSection>
 
-      <PostListBox isAll={false} list={myPostList} />
+      <PostListBox isCurrentPathMain={false} list={myPostList} />
     </S.Box>
   );
 };

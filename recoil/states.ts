@@ -162,7 +162,7 @@ export interface IPostPreviewTypes {
   content: string;
   hit: number;
   comment: number;
-  like: number;
+  likes: number;
 }
 
 /** 게시글 제목 */
@@ -291,6 +291,11 @@ export const postCommentListState = atom<IPostCommentTypes[]>({
       content: '안녕하세요. 저 하고 있습니다. 마진 괜찮습니다.',
     },
   ],
+});
+
+export const isCurrentPathMainState = atom<boolean>({
+  key: 'isCurrentPathMainState',
+  default: true,
 });
 
 /** 내가 쓴 글 페이지 */

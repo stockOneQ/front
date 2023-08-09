@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
+  isCurrentPathMainState,
   postListState,
   searchInputState,
   searchTypeState,
@@ -27,6 +28,8 @@ const Board = () => {
   const [searchInput, setSearchInput] = useRecoilState(searchInputState);
 
   const [postList, setPostList] = useRecoilState(postListState);
+
+  const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
   /** 전체 글 목록 조회 */
   useEffect(() => {
@@ -55,6 +58,7 @@ const Board = () => {
   }, [sortType, searchType, searchInput]);
 
   const handleMyPostsClick = () => {
+    setIsCurrentPathMain(false);
     /** 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
     setSortType('최신순');
     setSearchType('글 제목');
@@ -78,7 +82,7 @@ const Board = () => {
           </Link>
         </S.WriteButtonContainer>
       </S.HeaderSection>
-      <PostListBox isAll={true} list={postList} />
+      <PostListBox isCurrentPathMain={true} list={postList} />
     </S.Box>
   );
 };

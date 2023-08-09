@@ -28,7 +28,13 @@ interface IPostTypes {
   writerName: string;
 }
 
-const Detail = ({ id, isAll }: { id: number; isAll: boolean }) => {
+const Detail = ({
+  id,
+  isCurrentPathMain,
+}: {
+  id: number;
+  isCurrentPathMain: boolean;
+}) => {
   const router = useRouter();
   const postCommentList =
     useRecoilValue(postCommentListState); /** 더미 데이터 */
@@ -50,7 +56,7 @@ const Detail = ({ id, isAll }: { id: number; isAll: boolean }) => {
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
-    isAll
+    isCurrentPathMain
       ? router.push('/community/board')
       : router.push('/community/board/myPosts');
   };
