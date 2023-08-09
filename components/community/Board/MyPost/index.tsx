@@ -1,14 +1,14 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import { IPostPreviewTypes } from 'recoil/states';
 import {
   deleteCheckedItemsState,
   isDeleteModeState,
   postListState,
 } from 'recoil/states';
 import * as S from './style';
-import { IPostTypes } from 'recoil/states';
 
 import ControlBar from '../ControlBar';
 import PostListBox from '../PostListBox';
@@ -18,46 +18,34 @@ import AcceptBtn from 'components/common/button/AcceptBtn';
 import SettingSVG from 'public/assets/icons/community/settingsIcon.svg';
 import LeftArrowSVG from 'public/assets/icons/community/leftArrow.svg';
 
-const MyPost = () => {
+const MyPosts = () => {
   const router = useRouter();
   const [isDeleteMode, setIsDeleteMode] = useRecoilState(isDeleteModeState);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
   );
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const [postAllItems, setPostAllItems] = useRecoilState(postListState);
-  const [myPostItems, setMyPostItems] = useState<IPostTypes[]>();
+  const [myPostList, setMyPostList] = useState<IPostPreviewTypes[]>();
 
-  useEffect(() => {
-    const filteredPosts: IPostTypes[] = postAllItems.filter(
-      post => post.writerId === 82831,
-    );
-    setMyPostItems(filteredPosts);
-  }, [postAllItems]);
-
-  /** 전체글로 버튼 클릭 시 처리 함수 */
+  /** '전체글로' 버튼 클릭 시 처리 함수 */
   const handleGoMain = () => {
     router.push('/community/board');
   };
 
-  /** 환경설정 버튼 or 취소/삭제 버튼 토글 이벤트 */
+  /** 환경설정 버튼 or 취소/삭제 버튼 토글 함수*/
   const handleToggle = () => {
     setIsDeleteMode(prev => !prev);
+    setDeleteCheckedItems([]);
   };
 
   /** 취소 버튼 클릭 시 처리 함수 */
   const handleCancel = () => {
     handleToggle();
-    setDeleteCheckedItems([]);
   };
 
   /** 삭제 버튼 클릭 시 처리 함수 */
   const handleDelete = () => {
-    const newItem = postAllItems.filter(
-      item => !deleteCheckedItems.includes(item.postId),
-    );
-
-    setPostAllItems(newItem);
+    /** 삭제 api 로직 추가하기 */
     handleToggle();
   };
 
@@ -67,7 +55,7 @@ const MyPost = () => {
     if (!isAllChecked) return setDeleteCheckedItems([]);
 
     const allCheckedItems: number[] = [];
-    myPostItems?.forEach(myPost => allCheckedItems.push(myPost.postId));
+    myPostList?.forEach(myPost => allCheckedItems.push(myPost.id));
     setDeleteCheckedItems(allCheckedItems);
   };
 
@@ -99,7 +87,7 @@ const MyPost = () => {
               <S.StyledInput
                 type="checkbox"
                 id="allItemsCheckbox"
-                checked={deleteCheckedItems.length === myPostItems?.length}
+                checked={deleteCheckedItems.length === myPostList?.length}
                 onClick={handleAllChecked}
               ></S.StyledInput>
             </S.SelectAllContainer>
@@ -107,9 +95,9 @@ const MyPost = () => {
         )}
       </S.HeaderSection>
 
-      <PostListBox />
+      <PostListBox isAll={false} />
     </S.Box>
   );
 };
 
-export default MyPost;
+export default MyPosts;

@@ -8,10 +8,11 @@ type IPostInfoType = {
   createdDate: string;
 };
 
-const WriterInfoBox = ({ writerName, createdDate }: IPostInfoType) => {
+const PostInfoBox = ({ writerName, createdDate }: IPostInfoType) => {
   return (
     <S.Box>
       <S.Container>
+        {/** 게시글 작성자의 프로필 사진 받아오기 */}
         <Image src={ProfileImg} alt="profile" />
         <S.Info>
           <h1>{writerName} 사장님</h1>
@@ -25,4 +26,4 @@ const WriterInfoBox = ({ writerName, createdDate }: IPostInfoType) => {
     </S.Box>
   );
 };
-export default WriterInfoBox;
+export default PostInfoBox;

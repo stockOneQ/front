@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { postCommentListState } from 'recoil/states';
 
-import WriterInfoBox from './WriterInfoBox';
+import PostInfoBox from './PostInfoBox';
 import PostContentBox from './PostContentBox';
 import PostCommentListBox from './PostCommentListBox';
 import PostCommentInputBox from './PostCommentInputBox';
@@ -28,7 +28,7 @@ interface IPostTypes {
   writerName: string;
 }
 
-const Detail = ({ id }: { id: number }) => {
+const Detail = ({ id, isAll }: { id: number; isAll: boolean }) => {
   const router = useRouter();
   const postCommentList =
     useRecoilValue(postCommentListState); /** 더미 데이터 */
@@ -50,13 +50,15 @@ const Detail = ({ id }: { id: number }) => {
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
-    router.push('/community/board');
+    isAll
+      ? router.push('/community/board')
+      : router.push('/community/board/myPosts');
   };
 
   return (
     <S.Box>
       <S.ButtonContainer>
-        {/** 수정하기 버튼은 추후 로그인 한 사용자의 loginId와 게시글의 writerId와 대응 시킬 것. 일단 모든 게시글에 존재. */}
+        {/** 수정하기 버튼은 추후 로그인 한 사용자의 loginId와 게시글의 writerId와 비교. 일단 모든 게시글에 버튼 존재. */}
         <Link href={`/community/board/edit/${id}`}>
           <S.EditButton>수정</S.EditButton>
         </Link>
@@ -65,8 +67,8 @@ const Detail = ({ id }: { id: number }) => {
         </S.CloseButton>
       </S.ButtonContainer>
       {post && (
-        <S.PostSection>
-          <WriterInfoBox
+        <S.PostBox>
+          <PostInfoBox
             writerName={post.writerName}
             createdDate={post.createdDate}
           />
@@ -76,18 +78,18 @@ const Detail = ({ id }: { id: number }) => {
             hit={post.hit}
             likes={post.likes}
           />
-        </S.PostSection>
+        </S.PostBox>
       )}
 
       <PostCommentInputBox />
 
-      <S.CommentListContainer>
-        <S.CommentCountContainer>
+      <S.CommentList>
+        <S.CommentCount>
           <Image src={CommentsSVG} alt="comment" />
           <span>댓글 {postCommentList.length}</span>
-        </S.CommentCountContainer>
+        </S.CommentCount>
         <PostCommentListBox />
-      </S.CommentListContainer>
+      </S.CommentList>
     </S.Box>
   );
 };

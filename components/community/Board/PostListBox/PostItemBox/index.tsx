@@ -14,11 +14,20 @@ interface IPostTypes {
   title: string;
   content: string;
   hit: number;
-  comment: number;
-  like: number;
+  comment?: number;
+  like?: number;
+  isAll: boolean;
 }
 
-const PostItem = ({ id, title, content, hit, comment, like }: IPostTypes) => {
+const PostItem = ({
+  id,
+  title,
+  content,
+  hit,
+  comment,
+  like,
+  isAll,
+}: IPostTypes) => {
   const [isChecked, setIsChecked] = useState(false);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
@@ -66,7 +75,10 @@ const PostItem = ({ id, title, content, hit, comment, like }: IPostTypes) => {
           onClick={handleChecked}
         />
       ) : (
-        <Link href={`/community/board/${id}`}>
+        <Link
+          href={`/community/board/${id}?isAll=${isAll}`}
+          as={`/community/board/${id}`}
+        >
           <S.StyledLink />
         </Link>
       )}

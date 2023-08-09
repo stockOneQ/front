@@ -32,7 +32,7 @@ const Board = () => {
           </Link>
         </S.WriteButtonContainer>
       </S.HeaderSection>
-      <PostListBox />
+      <PostListBox isAll={true} />
     </S.Box>
   );
 };
