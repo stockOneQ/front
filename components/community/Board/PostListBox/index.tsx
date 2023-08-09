@@ -23,11 +23,12 @@ const PostListBox = ({ isAll }: { isAll: boolean }) => {
 
   /** 전체 글 목록인지 내가 쓴 글 목록인지 */
   const [list, setList] = useState<IPostPreviewTypes[]>();
+  const [pageInfo, setPageInfo] = useState();
 
   useEffect(() => {
     API.get(`/api/boards${isAll ? '' : '/my'}`, {
       params: {
-        last: '14',
+        page: '0',
         sort: sortType,
         search:
           searchType === '글 제목'
@@ -46,11 +47,11 @@ const PostListBox = ({ isAll }: { isAll: boolean }) => {
             ? '전체 글 목록 불러오기 성공'
             : '내가 쓴 글 목록 불러오기 성공',
         );
-        console.log(res.data.boardListResponse);
+        console.log(res.data);
         isAll
-          ? setPostList(res.data.boardListResponse)
-          : setMyPostList(res.data.boardListResponse);
-        setList(res.data.boardListResponse);
+          ? setPostList(res.data.boardList)
+          : setMyPostList(res.data.boardList);
+        setList(res.data.boardList);
       })
       .catch(e => {
         console.log(e);
