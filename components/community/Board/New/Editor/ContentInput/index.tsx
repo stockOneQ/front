@@ -4,16 +4,18 @@ import { postContentState } from 'recoil/states';
 import * as S from './style';
 
 const EditorContentInput = () => {
-  const [content, setContent] = useRecoilState(postContentState);
+  const [contentInput, setContentInput] = useRecoilState(postContentState);
+
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContentInput(e.target.value);
+  };
 
   return (
     <S.Box>
       <S.Text>내용</S.Text>
       <S.Input
-        value={content}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-          setContent(e.target.value)
-        }
+        value={contentInput}
+        onChange={handleInput}
         maxLength={5000}
       ></S.Input>
     </S.Box>

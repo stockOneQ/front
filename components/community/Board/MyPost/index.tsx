@@ -2,7 +2,11 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { deleteCheckedItemsState, postListState } from 'recoil/states';
+import {
+  deleteCheckedItemsState,
+  isDeleteModeState,
+  postListState,
+} from 'recoil/states';
 import * as S from './style';
 import { IPostTypes } from 'recoil/states';
 
@@ -16,7 +20,7 @@ import LeftArrowSVG from 'public/assets/icons/community/leftArrow.svg';
 
 const MyPost = () => {
   const router = useRouter();
-  const [isSetting, setIsSetting] = useState(false);
+  const [isDeleteMode, setIsDeleteMode] = useRecoilState(isDeleteModeState);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
   );
@@ -38,7 +42,7 @@ const MyPost = () => {
 
   /** 환경설정 버튼 or 취소/삭제 버튼 토글 이벤트 */
   const handleToggle = () => {
-    setIsSetting(prev => !prev);
+    setIsDeleteMode(prev => !prev);
   };
 
   /** 취소 버튼 클릭 시 처리 함수 */
@@ -76,7 +80,7 @@ const MyPost = () => {
         </S.NavButton>
         <HeadingText>내가 쓴 글</HeadingText>
         <ControlBar />
-        {!isSetting ? (
+        {!isDeleteMode ? (
           <S.SettingButton onClick={handleToggle}>
             <Image src={SettingSVG} alt="setting" />
           </S.SettingButton>
@@ -103,7 +107,7 @@ const MyPost = () => {
         )}
       </S.HeaderSection>
 
-      <PostListBox writerId={82831} isSetting={isSetting} />
+      <PostListBox />
     </S.Box>
   );
 };

@@ -22,6 +22,16 @@ export const SubmitButton = styled.button`
 
   border-radius: 30px;
 
+  &:hover {
+    background: linear-gradient(
+      146.58deg,
+      #f9e499 -81.58%,
+      #f2b2cf 77.01%,
+      #b1b0d7 248.81%,
+      #55abd7 425.9%
+    );
+  }
+
   span {
     color: #ffffff;
     font-weight: 600;
