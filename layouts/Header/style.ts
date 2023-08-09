@@ -40,6 +40,7 @@ export const NavList = styled.ul`
   }
 `;
 
+// FIXME: transition: transform 적용 안되는 에러
 export const NavItem = styled.li`
   width: 16.5rem;
   height: 5.4rem;
