@@ -58,10 +58,12 @@ const Detail = ({ id, isAll }: { id: number; isAll: boolean }) => {
   return (
     <S.Box>
       <S.ButtonContainer>
-        {/** 수정하기 버튼은 추후 로그인 한 사용자의 loginId와 게시글의 writerId와 비교. 일단 모든 게시글에 버튼 존재. */}
-        <Link href={`/community/board/edit/${id}`}>
-          <S.EditButton>수정</S.EditButton>
-        </Link>
+        {/** 현재 임시 토큰은 사용자 2번임 */}
+        {post?.writerId === 'manager2id' && (
+          <Link href={`/community/board/edit/${id}`}>
+            <S.EditButton>수정</S.EditButton>
+          </Link>
+        )}
         <S.CloseButton onClick={handleClose}>
           <Image src={CloseSVG} alt="close" />
         </S.CloseButton>

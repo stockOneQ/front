@@ -23,8 +23,7 @@ const Board = () => {
   const setSearchInput = useSetRecoilState(searchInputState);
 
   const handleMyPostsClick = () => {
-    /** 전체 글 목록에서 적용됐던 조건 초기화 */
-
+    /** 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
