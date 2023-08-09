@@ -116,7 +116,7 @@ const MyPosts = () => {
                 type="checkbox"
                 id="allItemsCheckbox"
                 checked={deleteCheckedItems.length === myPostList?.length}
-                onClick={handleAllChecked}
+                onChange={handleAllChecked}
               ></S.StyledInput>
             </S.SelectAllContainer>
           </S.DeleteOptionBox>

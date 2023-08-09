@@ -72,7 +72,7 @@ const PostItem = ({
         <S.CheckBox
           type="checkbox"
           checked={deleteCheckedItems.includes(id)}
-          onClick={handleChecked}
+          onChange={handleChecked}
         />
       ) : (
         <Link
