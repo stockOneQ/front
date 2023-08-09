@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useRecoilState } from 'recoil';
-import { IPostPreviewTypes } from 'recoil/states';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
+  searchTypeState,
+  sortTypeState,
   deleteCheckedItemsState,
   isDeleteModeState,
-  postListState,
+  myPostListState,
+  searchInputState,
 } from 'recoil/states';
 import * as S from './style';
 
@@ -17,6 +19,7 @@ import RejectBtn from 'components/common/button/RejectBtn';
 import AcceptBtn from 'components/common/button/AcceptBtn';
 import SettingSVG from 'public/assets/icons/community/settingsIcon.svg';
 import LeftArrowSVG from 'public/assets/icons/community/leftArrow.svg';
+import { API } from 'pages/api/api';
 
 const MyPosts = () => {
   const router = useRouter();
@@ -25,11 +28,22 @@ const MyPosts = () => {
     deleteCheckedItemsState,
   );
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const [myPostList, setMyPostList] = useState<IPostPreviewTypes[]>();
+  const myPostList = useRecoilValue(myPostListState);
+
+  const setSortType = useSetRecoilState(sortTypeState);
+  const setSearchType = useSetRecoilState(searchTypeState);
+  const setSearchInput = useSetRecoilState(searchInputState);
 
   /** '전체글로' 버튼 클릭 시 처리 함수 */
   const handleGoMain = () => {
     router.push('/community/board');
+
+    /** 전체 글 목록에서 적용됐던 조건 초기화 */
+
+    setSortType('최신순');
+    setSearchType('글 제목');
+    setSearchInput('');
+    console.log('초기화!');
   };
 
   /** 환경설정 버튼 or 취소/삭제 버튼 토글 함수*/
@@ -45,8 +59,22 @@ const MyPosts = () => {
 
   /** 삭제 버튼 클릭 시 처리 함수 */
   const handleDelete = () => {
-    /** 삭제 api 로직 추가하기 */
-    handleToggle();
+    console.log(deleteCheckedItems);
+
+    deleteCheckedItems.map(boardId => {
+      API.delete('/api/boards/my', {
+        params: {
+          boardId: boardId,
+        },
+      })
+        .then(() => {
+          handleToggle();
+        })
+        .catch(e => {
+          console.log('게시글 삭제 실패');
+          throw e;
+        });
+    });
   };
 
   const handleAllChecked = () => {
@@ -55,7 +83,7 @@ const MyPosts = () => {
     if (!isAllChecked) return setDeleteCheckedItems([]);
 
     const allCheckedItems: number[] = [];
-    myPostList?.forEach(myPost => allCheckedItems.push(myPost.id));
+    myPostList?.forEach(post => allCheckedItems.push(post.id));
     setDeleteCheckedItems(allCheckedItems);
   };
 
