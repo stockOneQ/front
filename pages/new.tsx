@@ -33,20 +33,20 @@ const New = () => {
   };
 
   const [formData, setFormData] = useState({
-    productName: "",
-    price: "",
-    seller: "",
-    receiptYear: "",
-    receiptMonth: "",
-    receiptDay: "",
-    expirationYear: "",
-    expirationMonth: "",
-    expirationDay: "",
-    ingredientLocation: "",
-    requiredQuantity: "",
-    quantity: "",
-    orderingSite: "",
-    orderingFrequency: "",
+    productName: "가나",
+    price: 100,
+    seller: "아",
+    receiptYear: "2023",
+    receiptMonth: "05",
+    receiptDay: "05",
+    expirationYear: "2024",
+    expirationMonth: "09",
+    expirationDay: "08",
+    ingredientLocation: "선반",
+    requiredQuantity: 6,
+    quantity: 8,
+    orderingSite: "www",
+    orderingFrequency: "80",
     imageInfo: "",
     storageMethod: '',
   });
@@ -148,9 +148,10 @@ const New = () => {
     // }
 
     const formDatas = new FormData();
+  
     const jsonFormData = convertFormDataToJson();
     formDatas.append('image', selectedImage);
-    formDatas.append("editProductRequest", new Blob([JSON.stringify(jsonFormData)] , {type: "application/json"}));
+    formDatas.append("editProductRequest",  new Blob([JSON.stringify(jsonFormData)], { type: "application/json" }));
     
     //  formDatas.append('editProductRequest', JSON.stringify(jsonFormData))
     // console.log("storageMethodFilter : ", StorageMethod);
@@ -160,7 +161,7 @@ const New = () => {
     // console.log('imgInf:', formDatas.get('imgInf'));
     // console.log('jsonFormData:', formDatas.get('jsonFormData'));
  
-    const condition = "냉동"; //지금 임시로 이렇게 보내볼게요!
+    const condition = selectedStorageMethod; // 선택한 저장 방법으로 condition 값 설정
     try {
       await API.post(`/api/product/add?store=${storeId}&condition=${condition}`, formDatas, {
         headers: {
@@ -188,7 +189,7 @@ const New = () => {
         storageMethod: "",
       });
       setProductName("");
-      router.push("/");
+      // router.push("/");
     } catch (error) {
       console.error('Error adding product:', error);
       console.log(formDatas);
