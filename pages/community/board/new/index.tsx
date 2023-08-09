@@ -1,7 +1,7 @@
 import Editor from 'components/community/Board/New/Editor';
 
-const New = () => {
+const NewPage = () => {
   return <Editor isEdit={false} />;
 };
 
-export default New;
+export default NewPage;
