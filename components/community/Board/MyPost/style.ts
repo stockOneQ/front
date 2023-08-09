@@ -19,7 +19,7 @@ export const HeaderSection = styled.div`
 export const SettingButton = styled.div`
   position: absolute;
   top: 75%;
-  right: 2%;
+  right: 0;
 
   cursor: pointer;
 `;
@@ -47,7 +47,7 @@ export const DeleteOptionBox = styled.div`
 
   position: absolute;
   top: 65%;
-  right: 0;
+  right: -3%;
 `;
 
 export const ActionButtonGroup = styled.div`

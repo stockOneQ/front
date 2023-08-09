@@ -1,66 +1,66 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { postListState } from 'recoil/states';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  myPostListState,
+  postListState,
+  sortTypeState,
+  searchTypeState,
+  searchInputState,
+} from 'recoil/states';
 import * as S from './style';
 import { API } from 'pages/api/api';
+import { IPostPreviewTypes } from 'recoil/states';
 import PostItemBox from 'components/community/Board/PostListBox/PostItemBox';
-
-interface IPostTypes {
-  id: number;
-  title: string;
-  content: string;
-  hit: number;
-  likes: number;
-  createdDate: string;
-  writerId: string;
-  writerName: string;
-}
 
 const PostListBox = ({ isAll }: { isAll: boolean }) => {
   /** 페이지네이션 구현 필요 */
-  const [postList, setPostList] = useRecoilState(postListState);
-  const [myPostList, setMyPostList] = useState<IPostTypes[]>();
+  const sortType = useRecoilValue(sortTypeState);
+  const searchType = useRecoilValue(searchTypeState);
+  const searchInput = useRecoilValue(searchInputState);
 
-  if (isAll) {
-    useEffect(() => {
-      API.get('/api/boards', {
-        params: {
-          last: '11',
-        },
-      })
-        .then(response => {
-          console.log('게시글 목록 불러오기 성공');
-          console.log(response.data.boardListResponse);
-          setPostList(response.data.boardListResponse);
-        })
-        .catch(error => {
-          console.log(error);
-          throw error;
-        });
-    }, []);
-  } else {
-    useEffect(() => {
-      API.get('/api/boards/my', {
-        params: {
-          last: '4',
-        },
-      })
-        .then(response => {
-          console.log('내가 쓴 글 불러오기 성공');
-          console.log(response.data.boardListResponse);
-          setMyPostList(response.data.boardListResponse);
-        })
-        .catch(error => {
-          console.log(error);
-          throw error;
-        });
-    }, []);
-  }
+  const setPostList = useSetRecoilState(postListState);
+  const setMyPostList = useSetRecoilState(myPostListState);
 
-  const list = isAll ? postList : myPostList;
+  /** 전체 글 목록인지 내가 쓴 글 목록인지 */
+  const [list, setList] = useState<IPostPreviewTypes[]>();
+  const [pageInfo, setPageInfo] = useState();
+
+  useEffect(() => {
+    API.get(`/api/boards${isAll ? '' : '/my'}`, {
+      params: {
+        page: '0',
+        sort: sortType,
+        search:
+          searchType === '글 제목'
+            ? '제목'
+            : isAll
+            ? searchType === '글 내용'
+              ? '내용'
+              : '작성자'
+            : '내용',
+        word: searchInput,
+      },
+    })
+      .then(res => {
+        console.log(
+          isAll
+            ? '전체 글 목록 불러오기 성공'
+            : '내가 쓴 글 목록 불러오기 성공',
+        );
+        console.log(res.data);
+        isAll
+          ? setPostList(res.data.boardList)
+          : setMyPostList(res.data.boardList);
+        setList(res.data.boardList);
+      })
+      .catch(e => {
+        console.log(e);
+        throw e;
+      });
+  }, [sortType, searchType, searchInput]);
 
   return (
-    <S.Box>
+    <S.List>
       {list &&
         list.map(value => (
           <PostItemBox
@@ -68,13 +68,12 @@ const PostListBox = ({ isAll }: { isAll: boolean }) => {
             title={value.title}
             content={value.content}
             hit={value.hit}
-            like={
-              isAll ? value.like : value.likes
-            } /** 좋아요수 필드명 통일 필요 */
+            comment={value.comment}
+            like={value.like} /** 좋아요수 필드명 통일 필요 */
             isAll={isAll}
           />
         ))}
-    </S.Box>
+    </S.List>
   );
 };
 

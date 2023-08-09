@@ -183,6 +183,11 @@ export const postListState = atom<IPostPreviewTypes[]>({
   default: [],
 });
 
+export const myPostListState = atom<IPostPreviewTypes[]>({
+  key: 'myPostListState',
+  default: [],
+});
+
 /** 게시글 정렬 */
 export const sortTypeState = atom<string>({
   key: 'sortTypeState',

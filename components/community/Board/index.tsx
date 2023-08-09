@@ -8,12 +8,26 @@ import HeadingText from 'components/common/HeadingText';
 
 import RightArrowSVG from 'public/assets/icons/community/rightArrow.svg';
 import WriteSVG from 'public/assets/icons/community/write.svg';
+import { useSetRecoilState } from 'recoil';
+import {
+  searchInputState,
+  searchTypeState,
+  sortTypeState,
+} from 'recoil/states';
 
 /* 커뮤니티 - 게시판 메인 페이지 */
 const Board = () => {
   const router = useRouter();
+  const setSortType = useSetRecoilState(sortTypeState);
+  const setSearchType = useSetRecoilState(searchTypeState);
+  const setSearchInput = useSetRecoilState(searchInputState);
 
   const handleMyPostsClick = () => {
+    /** 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
+    setSortType('최신순');
+    setSearchType('글 제목');
+    setSearchInput('');
+
     router.push('/community/board/myPosts');
   };
 
