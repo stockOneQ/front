@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
-import Link from 'next/link';
 import router from 'next/router';
-import { useRecoilState } from 'recoil';
-import { postContentState, postTitleState } from 'recoil/states';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  isCurrentPathMainState,
+  postContentState,
+  postTitleState,
+} from 'recoil/states';
 import TitleInput from './TitleInput';
 import ContentInput from './ContentInput';
 import HeadingText from 'components/common/HeadingText';
@@ -23,17 +26,25 @@ const Editor = ({
   const [titleInput, setTitleInput] = useRecoilState(postTitleState);
   const [contentInput, setContentInput] = useRecoilState(postContentState);
 
+  const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
+
   useEffect(() => {
     title ? setTitleInput(title) : setTitleInput('');
     content ? setContentInput(content) : setContentInput('');
   }, [title, content]);
 
+  const handleRouter = () => {
+    isEdit
+      ? router.push(`/community/board/${id}`)
+      : router.push('/community/board');
+  };
+
   const handleSubmit = () => {
     if (titleInput.length < 1) return alert('제목을 1자 이상 입력해 주세요.');
     if (contentInput.length < 1) return alert('내용을 1자 이상 입력해 주세요.');
 
-    /** 게시글 수정 */
     if (isEdit) {
+      /** 게시글 수정 */
       API.patch(`/api/boards/${id}`, {
         title: titleInput,
         content: contentInput,
@@ -47,7 +58,6 @@ const Editor = ({
           console.log(e);
           throw e;
         });
-      router.push(`/community/board/${id}`);
     } else {
       /** 게시글 등록 */
       API.post('/api/boards', {
@@ -63,16 +73,16 @@ const Editor = ({
           console.log(e);
           throw e;
         });
-      router.push('/community/board');
     }
+
+    handleRouter();
   };
   return (
     <S.Box>
       <HeadingText>{isEdit ? '게시글 수정' : '게시글 작성'}</HeadingText>
       <S.ActionButtonGroup>
-        <Link href="/community/board">
-          <S.Button>취소</S.Button>
-        </Link>
+        <S.Button onClick={handleRouter}>취소</S.Button>
+
         <S.Button onClick={handleSubmit}>저장</S.Button>
       </S.ActionButtonGroup>
       <S.EditorContainer>
