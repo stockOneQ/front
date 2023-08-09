@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -23,16 +23,40 @@ import { API } from 'pages/api/api';
 
 const MyPosts = () => {
   const router = useRouter();
+  const [sortType, setSortType] = useRecoilState(sortTypeState);
+  const [searchType, setSearchType] = useRecoilState(searchTypeState);
+  const [searchInput, setSearchInput] = useRecoilState(searchInputState);
+
   const [isDeleteMode, setIsDeleteMode] = useRecoilState(isDeleteModeState);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
   );
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const myPostList = useRecoilValue(myPostListState);
 
-  const setSortType = useSetRecoilState(sortTypeState);
-  const setSearchType = useSetRecoilState(searchTypeState);
-  const setSearchInput = useSetRecoilState(searchInputState);
+  const [myPostList, setMyPostList] = useRecoilState(myPostListState);
+  const [myPostListCount, setMyPostListCount] = useState(0);
+
+  /** 내가 쓴 글 목록 조회 */
+  useEffect(() => {
+    API.get('/api/boards/my', {
+      params: {
+        page: '0',
+        sort: sortType,
+        search: searchType === '글 제목' ? '제목' : '내용',
+        word: searchInput,
+      },
+    })
+      .then(res => {
+        console.log('내가 쓴 글 조회 성공');
+        console.log(res.data);
+        setMyPostList(res.data.boardList);
+        setMyPostListCount(() => myPostList.length);
+      })
+      .catch(e => {
+        alert('내가 쓴 글 조회 실패');
+        console.log(e);
+      });
+  }, [myPostListCount, sortType, searchType, searchInput]);
 
   /** 환경설정 버튼 or 취소/삭제 버튼 토글 함수*/
   const handleToggle = () => {
@@ -58,7 +82,7 @@ const MyPosts = () => {
 
   /** 삭제 버튼 클릭 시 처리 함수 */
   const handleDelete = () => {
-    console.log(deleteCheckedItems);
+    console.log(`삭제 할 게시글 목록 ${deleteCheckedItems}`);
 
     deleteCheckedItems.map(boardId => {
       API.delete('/api/boards/my', {
@@ -67,15 +91,14 @@ const MyPosts = () => {
         },
       })
         .then(() => {
-          alert(`${boardId}번 게시글 삭제 성공`);
-          handleToggle();
+          setMyPostListCount(prev => prev - 1);
         })
         .catch(e => {
           alert('게시글 삭제 실패');
-          handleToggle();
-          throw e;
+          console.log(e);
         });
     });
+    handleToggle();
   };
 
   const handleAllChecked = () => {
@@ -116,7 +139,10 @@ const MyPosts = () => {
               <S.StyledInput
                 type="checkbox"
                 id="allItemsCheckbox"
-                checked={deleteCheckedItems.length === myPostList?.length}
+                checked={
+                  myPostList?.length !== 0 &&
+                  deleteCheckedItems.length === myPostList?.length
+                }
                 onChange={handleAllChecked}
               ></S.StyledInput>
             </S.SelectAllContainer>
@@ -124,7 +150,7 @@ const MyPosts = () => {
         )}
       </S.HeaderSection>
 
-      <PostListBox isAll={false} />
+      <PostListBox isAll={false} list={myPostList} />
     </S.Box>
   );
 };
