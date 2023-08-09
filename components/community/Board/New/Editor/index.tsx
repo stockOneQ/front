@@ -1,12 +1,8 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import router from 'next/router';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  isCurrentPathMainState,
-  postContentState,
-  postTitleState,
-} from 'recoil/states';
+import { useRecoilState } from 'recoil';
+import { postContentState, postTitleState } from 'recoil/states';
 import TitleInput from './TitleInput';
 import ContentInput from './ContentInput';
 import HeadingText from 'components/common/HeadingText';
@@ -26,8 +22,6 @@ const Editor = ({
 }) => {
   const [titleInput, setTitleInput] = useRecoilState(postTitleState);
   const [contentInput, setContentInput] = useRecoilState(postContentState);
-
-  const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
 
   useEffect(() => {
     title ? setTitleInput(title) : setTitleInput('');
@@ -53,6 +47,7 @@ const Editor = ({
           console.log(e);
           throw e;
         });
+      router.push(`/community/board/${id}`);
     } else {
       /** 게시글 등록 */
       API.post('/api/boards', {
@@ -68,11 +63,8 @@ const Editor = ({
           console.log(e);
           throw e;
         });
+      router.push('/community/board');
     }
-
-    isCurrentPathMain
-      ? router.push('/community/board')
-      : router.push('/community/board/myPosts');
   };
   return (
     <S.Box>
