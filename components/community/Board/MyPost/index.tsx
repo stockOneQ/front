@@ -34,22 +34,21 @@ const MyPosts = () => {
   const setSearchType = useSetRecoilState(searchTypeState);
   const setSearchInput = useSetRecoilState(searchInputState);
 
-  /** '전체글로' 버튼 클릭 시 처리 함수 */
-  const handleGoMain = () => {
-    router.push('/community/board');
-
-    /** 전체 글 목록에서 적용됐던 조건 초기화 */
-
-    setSortType('최신순');
-    setSearchType('글 제목');
-    setSearchInput('');
-    console.log('초기화!');
-  };
-
   /** 환경설정 버튼 or 취소/삭제 버튼 토글 함수*/
   const handleToggle = () => {
     setIsDeleteMode(prev => !prev);
     setDeleteCheckedItems([]);
+  };
+
+  /** '전체글로' 버튼 클릭 시 처리 함수 */
+  const handleGoMain = () => {
+    setIsDeleteMode(false);
+
+    /** 내가 쓴 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
+    setSortType('최신순');
+    setSearchType('글 제목');
+    setSearchInput('');
+    router.push('/community/board');
   };
 
   /** 취소 버튼 클릭 시 처리 함수 */
@@ -68,10 +67,12 @@ const MyPosts = () => {
         },
       })
         .then(() => {
+          alert(`${boardId}번 게시글 삭제 성공`);
           handleToggle();
         })
         .catch(e => {
-          console.log('게시글 삭제 실패');
+          alert('게시글 삭제 실패');
+          handleToggle();
           throw e;
         });
     });
