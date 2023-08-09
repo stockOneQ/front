@@ -1,39 +1,44 @@
-import Link from 'next/link';
-import { useRecoilValue } from 'recoil';
-import { filteredPostListState } from 'recoil/states';
-import PostItemBox from 'components/community/Board/PostListBox/PostItemBox';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { postListState } from 'recoil/states';
 import * as S from './style';
+import { API } from 'pages/api/api';
+import PostItemBox from 'components/community/Board/PostListBox/PostItemBox';
 
-const PostListBox = ({
-  writerId,
-  isSetting,
-}: {
-  writerId?: number; // 내가 쓴 글을 보여주기 위한
-  isSetting?: boolean;
-}) => {
-  let postList = useRecoilValue(filteredPostListState);
+const PostListBox = () => {
+  /** 게시글 전체 목록 불러오기
+   * 페이지네이션 구현 필요 */
+  const [postList, setPostList] = useRecoilState(postListState);
 
-  if (writerId && postList) {
-    postList = postList.filter(post => post.writerId === 82831);
-  }
+  useEffect(() => {
+    API.get('/api/boards', {
+      params: {
+        last: '12',
+      },
+    })
+      .then(response => {
+        console.log('게시글 목록 불러오기 성공');
+        console.log(response.data.boardListResponse);
+        setPostList(response.data.boardListResponse);
+      })
+      .catch(error => {
+        console.log(error);
+        throw error;
+      });
+  }, []);
 
   return (
     <S.Box>
-      {postList &&
-        postList.map(value => (
-          // <Link key={value.id} href={`/community/board/${value.id}`}>
-          <PostItemBox
-            key={value.postId}
-            postId={value.postId}
-            title={value.title}
-            content={value.content}
-            views={value.views}
-            commentCount={value.commentCount}
-            likes={value.likes}
-            isSetting={isSetting}
-          />
-          // </Link>
-        ))}
+      {postList.map(value => (
+        <PostItemBox
+          id={value.id}
+          title={value.title}
+          content={value.content}
+          hit={value.hit}
+          comment={value.comment}
+          like={value.like}
+        />
+      ))}
     </S.Box>
   );
 };

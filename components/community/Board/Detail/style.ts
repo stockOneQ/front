@@ -16,13 +16,40 @@ export const Box = styled.div`
   }
 `;
 
-export const CloseButtonContainer = styled.button`
+export const ButtonContainer = styled.div`
   position: absolute;
-  top: 1%;
+  top: 1.4%;
   right: 4%;
+
+  display: flex;
+  gap: 3rem;
 `;
 
-export const PostContainer = styled.div``;
+export const EditButton = styled.button`
+  color: white;
+  background: #000000;
+  border-radius: 2.3rem;
+  padding: 0.7rem 1.7rem;
+
+  font-weight: 600;
+  font-size: 1.8rem;
+  line-height: 2.1rem;
+
+  &:hover {
+    background: linear-gradient(
+        225.48deg,
+        #f9e499 -61.63%,
+        #f2b2cf 72.42%,
+        #b1b0d7 170.6%,
+        #55abd7 300.87%
+      ),
+      #000000;
+  }
+`;
+
+export const CloseButton = styled.button``;
+
+export const PostSection = styled.div``;
 
 export const CommentListContainer = styled.div``;
 

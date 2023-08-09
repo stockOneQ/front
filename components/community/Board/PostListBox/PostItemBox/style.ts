@@ -1,10 +1,11 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
-export const Box = styled.div`
-  width: 111.4rem;
+export const Box = styled.div<{ isDeleteMode: boolean }>`
+  position: relative;
+  width: 111.5rem;
   min-height: 21.6rem;
 
-  padding: 3.2rem 5rem;
+  padding: 3.3rem 5rem;
 
   background: rgba(255, 255, 255, 0.2);
   mix-blend-mode: normal;
@@ -15,18 +16,70 @@ export const Box = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  /**  deleteMode가 아닌 경우에만 이동 버튼이 생김 */
+  ${props =>
+    !props.isDeleteMode &&
+    css`
+      &:hover::after {
+        content: url('/assets/icons/community/movePost.svg');
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 18.4rem;
+        height: 21.6rem;
+        background: linear-gradient(
+          110.52deg,
+          rgba(85, 171, 215, 0.7) -23.23%,
+          rgba(177, 176, 215, 0.7) 20.47%,
+          rgba(242, 178, 207, 0.7) 55.88%,
+          rgba(249, 228, 153, 0.7) 121.42%
+        );
+
+        box-shadow: 0px 11px 20px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2px);
+        border-radius: 3rem;
+
+        cursor: pointer;
+
+        animation: fadein 0.8s;
+        @keyframes fadein {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      }
+    `}
 `;
 
-export const PostContentSection = styled.div``;
+export const Container = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const PostContentSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+`;
 
 export const Title = styled.div`
   font-weight: 600;
   font-size: 2.5rem;
   line-height: 2.9rem;
-  margin-bottom: 1.2rem;
 `;
 
 export const Content = styled.div`
+  width: 79rem;
   font-weight: 400;
   font-size: 1.8rem;
   line-height: 2.1rem;
@@ -35,14 +88,14 @@ export const Content = styled.div`
 
 export const PostInteractionSection = styled.div`
   display: flex;
-  gap: 3.2rem;
+  gap: 3.6rem;
 `;
 
-export const Container = styled.div`
+export const Interaction = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
 
   font-weight: 400;
   font-size: 1.5rem;
@@ -78,6 +131,16 @@ export const CheckBox = styled.input<ICheckBoxButtonProps>`
   }
 
   position: absolute;
-  top: 30%;
+  top: 35%;
   right: -2.5%;
+`;
+
+export const StyledLink = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18.4rem;
+  height: 21.6rem;
+  background-color: transparent;
+  z-index: 999;
 `;
