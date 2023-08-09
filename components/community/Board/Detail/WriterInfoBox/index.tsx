@@ -4,17 +4,17 @@ import ProfileImg from 'public/assets/imgs/community/profileImage.png';
 import { formatCreatedDateToString } from 'utils/date';
 
 type IPostInfoType = {
-  writer: string;
+  writerName: string;
   createdDate: string;
 };
 
-const WriterInfoBox = ({ writer, createdDate }: IPostInfoType) => {
+const WriterInfoBox = ({ writerName, createdDate }: IPostInfoType) => {
   return (
     <S.Box>
       <S.Container>
         <Image src={ProfileImg} alt="profile" />
         <S.Info>
-          <h1>{writer} 사장님</h1>
+          <h1>{writerName} 사장님</h1>
           <span>
             {createdDate && createdDate.length === 13
               ? createdDate

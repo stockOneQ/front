@@ -32,7 +32,7 @@ const PostCommentInputBox = () => {
 
   return (
     <S.InputBox>
-      <WriterInfoBox writer={'임하림'} createdDate={getCurrentDate()} />
+      <WriterInfoBox writerName={'임하림'} createdDate={getCurrentDate()} />
       <PostCommentInput />
       <S.SubmitButton onClick={handleSubmit}>
         <span>댓글 등록</span>

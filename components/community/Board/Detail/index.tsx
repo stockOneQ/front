@@ -24,7 +24,8 @@ interface IPostTypes {
   hit: number;
   likes: number;
   createdDate: string;
-  writer: string;
+  writerId: string;
+  writerName: string;
 }
 
 const Detail = ({ id }: { id: number }) => {
@@ -55,7 +56,7 @@ const Detail = ({ id }: { id: number }) => {
   return (
     <S.Box>
       <S.ButtonContainer>
-        {/** 수정하기 버튼은 추후 로그인 한 사용자의 데이터와 대응 시킬 것. 일단 모든 게시글에 존재. */}
+        {/** 수정하기 버튼은 추후 로그인 한 사용자의 loginId와 게시글의 writerId와 대응 시킬 것. 일단 모든 게시글에 존재. */}
         <Link href={`/community/board/edit/${id}`}>
           <S.EditButton>수정</S.EditButton>
         </Link>
@@ -65,7 +66,10 @@ const Detail = ({ id }: { id: number }) => {
       </S.ButtonContainer>
       {post && (
         <S.PostSection>
-          <WriterInfoBox writer={post.writer} createdDate={post.createdDate} />
+          <WriterInfoBox
+            writerName={post.writerName}
+            createdDate={post.createdDate}
+          />
           <PostContentBox
             title={post.title}
             content={post.content}
