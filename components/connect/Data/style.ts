@@ -9,35 +9,34 @@ interface ISelectSupervisorBoxProps {
 }
 
 const SelectSupervisorBox = styled.div<ISelectSupervisorBoxProps>`
-  .haha {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 25.4rem;
-    height: 4.5rem;
-    margin: 7.3rem auto 8.5rem;
-    border-radius: 5rem;
-    position: relative;
-    cursor: pointer;
-    z-index: 9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 25.4rem;
+  height: 4.5rem;
+  margin: 7.3rem auto 8.5rem;
+  border-radius: 5rem;
+  position: relative;
+  cursor: pointer;
+  z-index: 2;
 
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: 600;
-    line-height: normal;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: normal;
 
-    color: ${({ isSelectSupervisor }) =>
-      isSelectSupervisor ? 'var(--color-white)' : 'var(--color-black)'};
-    background-color: ${({ isSelectSupervisor }) =>
-      isSelectSupervisor ? 'var(--color-black)' : ''};
-  }
+  color: ${({ isSelectSupervisor }) =>
+    isSelectSupervisor ? 'var(--color-white)' : 'var(--color-black)'};
+  background-color: ${({ isSelectSupervisor }) =>
+    isSelectSupervisor ? 'var(--color-black)' : ''};
 
   img {
     position: absolute;
-    top: 22.3rem;
-    left: 88.7rem;
+    top: 2rem;
+    right: 4.1rem;
     z-index: 10;
+
     filter: ${({ isSelectSupervisor }) =>
       isSelectSupervisor
         ? `invert(94%) sepia(75%) saturate(0%) hue-rotate(296deg)
@@ -53,19 +52,35 @@ const SupervisorDropDownBox = styled.div`
   width: 25.4rem;
   height: 19.6rem;
   position: absolute;
-  top: 20.4rem;
-  left: 68.5rem;
-  padding-top: 6.3rem;
+  top: 0;
   border: 1px solid #f7f7f9;
   background-color: var(--color-white);
   border-radius: 2.1rem;
-  z-index: 1;
+
+  p {
+    width: 25.4rem;
+    height: 4.5rem;
+    border-radius: 5rem;
+    background-color: var(--color-black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
-const SupervisorList = styled.ul`
-  /* margin-top: 10.8rem; */
-  height: 13.5rem;
+interface ISupervisorListProps {
+  hideScroll: boolean;
+}
+
+// FIXME: 스크롤 바 때문에 너비 변경되는 에러
+// FIXME: 스크롤 바 css 피그마와 동일하게 변경
+const SupervisorList = styled.ul<ISupervisorListProps>`
+  width: 25.4rem;
+  min-width: 25.4rem;
+  max-width: 25.4rem;
+  height: 14.9rem;
   overflow: auto;
+  padding-top: 1.6rem;
 
   color: #979797;
   text-align: center;
@@ -85,6 +100,28 @@ const SupervisorList = styled.ul`
   li:hover {
     color: var(--color-black);
     background-color: #f7f7f9;
+  }
+
+  &::-webkit-scrollbar {
+    display: ${props => (props.hideScroll ? 'none' : 'inline-block')};
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: 0.8rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 0.3rem solid transparent;
+    height: 4rem;
+    border-radius: 0.8rem;
+    background-color: var(--color-black);
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: 0.8rem;
+    background-color: #eee;
   }
 `;
 
@@ -167,6 +204,7 @@ const DataNavInputBox = styled.div`
 
 const DataDropDownBox = styled.div`
   position: absolute;
+  z-index: 1;
   top: 0;
   right: 27.3rem;
 `;
