@@ -12,12 +12,14 @@ export const Box = styled.div`
 `;
 
 export const HeaderSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
 `;
 
 export const InteractionSection = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+
   display: flex;
   gap: 3.2rem;
 `;
@@ -36,10 +38,10 @@ export const Container = styled.div<{ color: string }>`
 `;
 
 export const Title = styled.div`
+  width: 70rem;
   font-weight: 600;
   font-size: 2.5rem;
   line-height: 2.9rem;
-  position: relative;
 `;
 
 export const Content = styled.div`
