@@ -156,7 +156,7 @@ export const searchTermState = atom<string>({
 });
 
 /** ----------------- 게시판 페이지 ----------------- */
-export interface IPostTypes {
+export interface IPostPreviewTypes {
   id: number;
   title: string;
   content: string;
@@ -178,7 +178,7 @@ export const postContentState = atom<string>({
 });
 
 /** 게시글 목록 */
-export const postListState = atom<IPostTypes[]>({
+export const postListState = atom<IPostPreviewTypes[]>({
   key: 'postListState',
   default: [],
 });
