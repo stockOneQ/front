@@ -82,7 +82,7 @@ const Board = () => {
           </Link>
         </S.WriteButtonContainer>
       </S.HeaderSection>
-      <PostListBox isCurrentPathMain={true} list={postList} />
+      <PostListBox list={postList} />
     </S.Box>
   );
 };

@@ -10,10 +10,6 @@ import LikesSVG from 'public/assets/icons/community/likes.svg';
 import * as S from './style';
 import Link from 'next/link';
 
-interface IPropsTypes extends IPostPreviewTypes {
-  isCurrentPathMain: boolean;
-}
-
 const PostItem = ({
   id,
   title,
@@ -21,8 +17,7 @@ const PostItem = ({
   hit,
   comment,
   likes,
-  isCurrentPathMain,
-}: IPropsTypes) => {
+}: IPostPreviewTypes) => {
   const [isChecked, setIsChecked] = useState(false);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
@@ -70,10 +65,7 @@ const PostItem = ({
           onChange={handleChecked}
         />
       ) : (
-        <Link
-          href={`/community/board/${id}?isCurrentPathMain=${isCurrentPathMain}`}
-          as={`/community/board/${id}`}
-        >
+        <Link href={`/community/board/${id}`}>
           <S.StyledLink />
         </Link>
       )}

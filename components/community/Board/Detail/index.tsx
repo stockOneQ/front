@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
-import { postCommentListState } from 'recoil/states';
+import { isCurrentPathMainState, postCommentListState } from 'recoil/states';
 
 import PostInfoBox from './PostInfoBox';
 import PostContentBox from './PostContentBox';
@@ -28,18 +28,14 @@ interface IPostTypes {
   writerName: string;
 }
 
-const Detail = ({
-  id,
-  isCurrentPathMain,
-}: {
-  id: number;
-  isCurrentPathMain: boolean;
-}) => {
+const Detail = ({ id }: { id: number }) => {
   const router = useRouter();
   const postCommentList =
     useRecoilValue(postCommentListState); /** 더미 데이터 */
 
   const [post, setPost] = useState<IPostTypes>();
+
+  const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
 
   useEffect(() => {
     API.get(`/api/boards/${id}`)
