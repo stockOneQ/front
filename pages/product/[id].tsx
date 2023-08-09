@@ -8,34 +8,58 @@ import { approachingExpirationState, expiredIngredientsState, insufficientIngred
 import { Title } from "components/community/Board/PostListBox/PostItemBox/style";
 import { useRecoilValue, useSetRecoilState } from "recoil"
 import * as S from "../../components/main/style";
-import { fetchProductDetails} from "../../pages/api/api";
+import { fetchProductDetails, addProduct} from "../../pages/api/api";
 import ImgIcon from "../../public/assets/icons/imgUpload.svg";
 
 const ProductPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [formData, setFormData] = useState<ProductItem>({
-    name: "",
-    price: "",
-    seller: "",
-    receivingDate: "",
-    expirationDate: "",
-    ingredientLocation: "",
-    requiredQuantity: "",
-    stockQuant: "",
-    siteToOrder: "",
-    orderFreq: "",
+  const [selectedImage, setSelectedImage] = useState("");
+  const handleImageChange = (e) => {
+    setSelectedImage(e.target.files[0]);
+  };
+  
+  const [formData, setFormData] = useState({
+    name: "가나",
+    price: 10,
+    vendor: "op",
+    receivingDate: "2000-10-02",
+    expirationDate: "2000-10-02",
+    location: "선반",
+    requireQuant: "3",
+    stockQuant: "4",
+    siteToOrder: "www",
+    orderFreq: "80",
     image: "",
   });
+
+  const convertFormDataToJson = () => {
+    const jsonFormData = {
+      // id: getId(),
+      name: formData.name,
+      price: formData.price,
+      vendor: formData.vendor,
+      receivingDate: formData.receivingDate,
+      expirationDate: formData.expirationDate,
+      location: formData.location,
+      requireQuant: formData.requireQuant,
+      stockQuant: formData.stockQuant,
+      siteToOrder: formData.siteToOrder,
+      orderFreq: formData.orderFreq,
+    };
+    return jsonFormData;
+  };
 
 
 useEffect(() => {
   const fetchDetails = async () => {
     try {
+      
       const response = await fetchProductDetails(Number(id));
       setFormData(response); 
-      console.log(response);
+      setSelectedImage(response.image || "");
+      console.log("받아온 값: ", response);
     } catch (error) {
       console.error('Error fetching product details:', error);
     }
@@ -46,10 +70,6 @@ useEffect(() => {
   }
 }, [id]);
 
-// ... (rest of the code)
-
-
-  
 
   /** API 호출------------------------------------------------- */
   /** --------------------------------------------------------- */
@@ -58,8 +78,15 @@ useEffect(() => {
   // 수정 API
   const handleEditProduct = async () => {
     try {
-      const response = await axios.put(`/api/product/edit/${id}`, formData);
-      console.log("Success editing product", response.data);
+      const formDatas = new FormData();
+  
+      const jsonFormData = convertFormDataToJson();
+      if (selectedImage) {
+        formDatas.append('image', selectedImage); 
+      }
+
+      formDatas.append("editProductRequest",  new Blob([JSON.stringify(jsonFormData)], { type: "application/json" }));
+      await addProduct(Number(id), formDatas);
     } catch (error) {
       console.error("Error editing product:", error);
     }
@@ -83,9 +110,8 @@ useEffect(() => {
   
 
   const handleSubmit = () => {
-
-
-
+    
+    
     /** 수정 API  */
     handleEditProduct();
 
@@ -163,15 +189,18 @@ useEffect(() => {
                 </S.StorageMethodRadioGroup>
               </S.StyledInput>
               <S.ImgInput>
-              <S.ImgInput>
-              <Image
-                src={`data:image/jpeg;base64,${formData.image}`}
-                alt="my_page_icon"
-                width={124}
-                height={83}
-                onClick={handleImageClick} 
-              />
-            </S.ImgInput>
+                <input type="file"
+                  name="imageInfo"
+                  
+                  value={formData.image}
+                  onChange={handleImageChange} />
+                {selectedImage && (
+                   <img
+                   src={selectedImage instanceof File ? URL.createObjectURL(selectedImage) : `data:image/jpeg;base64,${selectedImage}`}
+                   alt="Selected Image"
+                   style={{ maxWidth: '100%', marginTop: '10px' }}
+                 />
+                )}
               </S.ImgInput>
           </S.LeftSection>
           <S.RightSection>

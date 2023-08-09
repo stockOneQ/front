@@ -177,6 +177,20 @@ export const getProductByCategory = async (
 //       throw new Error("Error fetching product details: ");
 //     }
 //   };
+
+export const addProduct = async (id: number, formDatas: FormData): Promise<void> => {
+    try {
+      await API.patch(`/api/product/edit/${id}`, formDatas, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      alert("제품 수정 성공");
+    } catch (error) {
+      console.error('Error adding product:', error);
+      throw new Error("Error adding product: ");
+    }
+  };
   
 export const fetchProductDetails = async (id: number): Promise<ProductItem> => {
     try {
@@ -188,7 +202,7 @@ export const fetchProductDetails = async (id: number): Promise<ProductItem> => {
       }
     } catch (error) {
       console.error("Error fetching product details:", error);
-      throw new Error("Error fetching product details: " + error.message);
+      throw new Error("Error fetching product details: " );
     }
   };
   
