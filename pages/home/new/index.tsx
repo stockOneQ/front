@@ -22,14 +22,16 @@ import {
   expiredIngredientsState,
   insufficientIngredientsState,
   storageMethodState,
+  ProductItem,
+  StorageMethod,
 } from '../../../recoil/states';
 import Ingredients from 'components/main/Ingredients';
+import { API } from '../../api/api';
 
 const sortOptionList = ['냉동', '냉장', '상온'];
-
-let id = 1;
-const getId = () => {
-  return id++;
+type IngredientsProps = {
+  productsToShow: ProductItem[];
+  storageMethodFilter: StorageMethod;
 };
 
 /** 제품 추가 페이지 */
@@ -49,200 +51,33 @@ const New = () => {
   };
 
   const [formData, setFormData] = useState({
-    productName: '',
-    price: '',
-    seller: '',
-    receiptYear: '',
-    receiptMonth: '',
-    receiptDay: '',
-    expirationYear: '',
-    expirationMonth: '',
-    expirationDay: '',
-    ingredientLocation: '',
-    requiredQuantity: '',
-    quantity: '',
-    orderingSite: '',
-    orderingFrequency: '',
+    productName: '가나',
+    price: 100,
+    seller: '아',
+    receiptYear: '2023',
+    receiptMonth: '05',
+    receiptDay: '05',
+    expirationYear: '2024',
+    expirationMonth: '09',
+    expirationDay: '08',
+    ingredientLocation: '선반',
+    requiredQuantity: 6,
+    quantity: 8,
+    orderingSite: 'www',
+    orderingFrequency: '80',
     imageInfo: '',
     storageMethod: '',
   });
 
+  // 이미지 input 값 받기
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const handleImageChange = event => {
-    setSelectedImage(event.target.files[0]);
+  const handleImageChange = e => {
+    setSelectedImage(e.target.files[0]);
   };
-
   const handleInputChange = e => {
     const { name, value } = e.target;
     console.log('Input Changed:', name, value);
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
-  };
-
-  //빈도순 정렬
-  const [postList, setPostList] = useRecoilState(mainPostListState);
-  const [sortedPostList, setSortedPostList] = useState([]);
-  useEffect(() => {
-    const sortedList = [...postList].sort(
-      (a, b) => a.orderingFrequency - b.orderingFrequency,
-    );
-    setSortedPostList(sortedList);
-  }, [postList]);
-
-  //유통기한임박 재료
-  const setApproachingExpiration = useSetRecoilState(
-    approachingExpirationState,
-  );
-  //유통기한 지난 재료
-  const expiredIngredients = useRecoilValue(expiredIngredientsState);
-  const setExpiredIngredients = useSetRecoilState(expiredIngredientsState);
-  //부족한 재료
-  const setinsufficientIngredients = useSetRecoilState(
-    insufficientIngredientsState,
-  );
-  //냉장 냉동 상온
-  const setstorageMethod = useRecoilValue(storageMethodState);
-
-  //현재 날짜와 만료 날짜 사이의 일수 차이를 계산하는 함수
-  const daysRemaining = calculateDaysRemaining(
-    formData.expirationYear,
-    formData.expirationMonth,
-    formData.expirationDay,
-  );
-
-  // 저장하기
-  const handleSubmit = () => {
-    if (productName.length >= 11) {
-      alert('제목을 11글자 이하로 입력해 주세요.');
-      return;
-    }
-    if (formData.orderingSite.length >= 200) {
-      alert('발주사이트를 200자 이하로 입력해 주세요.');
-      return;
-    }
-    if (formData.seller.length >= 200) {
-      alert('판매업체 29자 이하로 입력해 주세요.');
-      return;
-    }
-    if (formData.ingredientLocation.length >= 200) {
-      alert('재료위치 29자 이하로 입력해 주세요.');
-      return;
-    }
-
-    const requiredFields = [
-      'seller',
-      // "receiptYear",
-      // "receiptMonth",
-      // "receiptDay",
-      // "expirationYear",
-      // "expirationMonth",
-      // "expirationDay",
-      // "ingredientLocation",
-      // "requiredQuantity",
-      // "quantity",
-      // "orderingFrequency",
-    ];
-
-    for (const field of requiredFields) {
-      if (!formData[field]) {
-        alert(`${field}을(를) 채워주세요.`);
-        return;
-      }
-    }
-
-    const newProduct = {
-      id: getId(),
-      productName: productName,
-      price: formData.price,
-      seller: formData.seller,
-      receiptYear: formData.receiptYear,
-      receiptMonth: formData.receiptMonth,
-      receiptDay: formData.receiptDay,
-      expirationYear: formData.expirationYear,
-      expirationMonth: formData.expirationMonth,
-      expirationDay: formData.expirationDay,
-      ingredientLocation: formData.ingredientLocation,
-      requiredQuantity: formData.requiredQuantity,
-      quantity: formData.quantity,
-      orderingSite: formData.orderingSite,
-      orderingFrequency: formData.orderingFrequency,
-      imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : '',
-      storageMethod: selectedStorageMethod,
-    };
-
-    // 업데이트 recoil state
-    setPostListState(prevPostList => [...prevPostList, newProduct]);
-    const sortedList = [...postList].sort(
-      (a, b) => a.orderingFrequency - b.orderingFrequency,
-    );
-    setSortedPostList(sortedList);
-
-    const newProductId = newProduct.id.toString();
-    //부족한 재료
-    const newQuantity = parseInt(formData.quantity, 10);
-    const newRequiredQuantity = parseInt(formData.requiredQuantity, 10);
-    // 유통기한 계산
-    const daysRemaining = calculateDaysRemaining();
-
-    if (newQuantity <= newRequiredQuantity) {
-      //부족한 재료
-      setinsufficientIngredients(prevInsufficientIngredients => [
-        ...prevInsufficientIngredients,
-        newProductId,
-      ]);
-      setPostList(prevPostList =>
-        prevPostList.map(item =>
-          item.id === newProductId ? { ...item, category: 'no' } : item,
-        ),
-      );
-    } else if (daysRemaining <= 0) {
-      // 유통기한지난 재료
-      setExpiredIngredients(prevExpiredIngredients => [
-        ...prevExpiredIngredients,
-        newProductId,
-      ]);
-      setPostList(prevPostList =>
-        prevPostList.map(item =>
-          item.id === newProductId ? { ...item, category: 'afterDate' } : item,
-        ),
-      );
-    } else if (daysRemaining <= 3) {
-      // 유통기한임박 재료
-      setApproachingExpiration(prevApproachingExpiration => {
-        if (Array.isArray(prevApproachingExpiration)) {
-          return [...prevApproachingExpiration, newProductId];
-        } else {
-          return [prevApproachingExpiration, newProductId];
-        }
-      });
-      setPostList(prevPostList =>
-        prevPostList.map(item =>
-          item.id === newProductId ? { ...item, category: 'beforeDate' } : item,
-        ),
-      );
-    }
-    // 저장하고 form data 초기화
-    setFormData({
-      productName: '',
-      price: '',
-      seller: '',
-      receiptYear: '',
-      receiptMonth: '',
-      receiptDay: '',
-      expirationYear: '',
-      expirationMonth: '',
-      expirationDay: '',
-      ingredientLocation: '',
-      requiredQuantity: '',
-      quantity: '',
-      orderingSite: '',
-      orderingFrequency: '',
-      imageInfo: '',
-      storageMethod: '',
-    });
-
-    setProductName('');
-    // router.push("/");
   };
 
   /** ---------------------------------------------------------- */
@@ -250,100 +85,133 @@ const New = () => {
   /** ---------------------------------------------------------- */
 
   //데이터 json 이미지 아직 미구현
-  // const convertFormDataToJson = () => {
-  //   const jsonFormData = {
-  //     id: getId(),
-  //     name: productName,
-  //     price: formData.price,
-  //     vendor: formData.seller,
-  //     receiptDate: `${formData.receiptYear}-${formData.receiptMonth}-${formData.receiptDay}`,
-  //     expirationDate: `${formData.expirationYear}-${formData.expirationMonth}-${formData.expirationDay}`,
-  //     location: formData.ingredientLocation,
-  //     requireQuant: formData.requiredQuantity,
-  //     stockQuant: formData.quantity,
-  //     siteToOrder: formData.orderingSite,
-  //     orderFreq: formData.orderingFrequency,
-  //     imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : "", //파일선택
-  //     storageMethod: selectedStorageMethod,
-  //   };
-  //   return jsonFormData;
-  // };
 
-  // //제품 추가 api 호출
-  // const handleSubmit = async () => {
-  //   if (productName.length >= 11) {
-  //     alert("제목을 11글자 이하로 입력해 주세요.");
-  //     return;
-  //   }
-  //   if (formData.orderingSite.length >= 200) {
-  //     alert("발주사이트를 200자 이하로 입력해 주세요.");
-  //     return;
-  //   }
-  //   if (formData.seller.length >= 200) {
-  //     alert("판매업체 29자 이하로 입력해 주세요.");
-  //     return;
-  //   }
-  //   if (formData.ingredientLocation.length >= 200) {
-  //     alert("재료위치 29자 이하로 입력해 주세요.");
-  //     return;
-  //   }
+  const [storeId, setStoreId] = useState(1);
 
-  //   const requiredFields = [
-  //     "seller",
-  //     "receiptYear",
-  //     "receiptMonth",
-  //     "receiptDay",
-  //     "expirationYear",
-  //     "expirationMonth",
-  //     "expirationDay",
-  //     "ingredientLocation",
-  //     "requiredQuantity",
-  //     "quantity",
-  //     "orderingFrequency",
-  //   ];
+  useEffect(() => {
+    API.get('/api/product')
+      .then(response => {
+        alert('요청성공');
+        console.log('-------------------------');
+        console.log('첫 storeId api 호출: ', response);
+        // 업데이트
+        setStoreId(response.data?.result?.storeId ?? null);
+      })
+      .catch(error => {
+        alert('요청실패');
+        console.log(error);
+      });
+  }, []);
 
-  //   for (const field of requiredFields) {
-  //     if (!formData[field]) {
-  //       alert(`${field}을(를) 채워주세요.`);
-  //       return;
-  //     }
-  //   }
+  const convertFormDataToJson = () => {
+    const jsonFormData = {
+      // id: getId(),
+      name: formData.productName,
+      price: formData.price,
+      vendor: formData.seller,
+      receivingDate: `${formData.receiptYear}-${formData.receiptMonth}-${formData.receiptDay}`,
+      expirationDate: `${formData.expirationYear}-${formData.expirationMonth}-${formData.expirationDay}`,
+      location: formData.ingredientLocation,
+      requireQuant: formData.requiredQuantity,
+      stockQuant: formData.quantity,
+      siteToOrder: formData.orderingSite,
+      orderFreq: formData.orderingFrequency,
+      // image: selectedImage ? URL.createObjectURL(selectedImage) : "", //파일선택
+      // storageMethod: selectedStorageMethod,
+    };
+    return jsonFormData;
+  };
 
-  //   const jsonFormData = convertFormDataToJson();
-  //   try {
-  //     const response = await axios.post('/api/product/add', jsonFormData);
-  //     const newProduct = response.data;
+  //제품 추가 api 호출
+  const handleSubmit = async () => {
+    // if (productName.length >= 11) {
+    //   alert("제목을 11글자 이하로 입력해 주세요.");
+    //   return;
+    // }
+    // if (formData.orderingSite.length >= 200) {
+    //   alert("발주사이트를 200자 이하로 입력해 주세요.");
+    //   return;
+    // }
+    // if (formData.seller.length >= 200) {
+    //   alert("판매업체 29자 이하로 입력해 주세요.");
+    //   return;
+    // }
+    // if (formData.ingredientLocation.length >= 200) {
+    //   alert("재료위치 29자 이하로 입력해 주세요.");
+    //   return;
+    // }
 
-  //     // 업데이트
-  //     setPostListState((prevPostList) => [...prevPostList, newProduct]);
+    // const requiredFields = [
+    //   "seller",
+    //   "receiptYear",
+    //   "receiptMonth",
+    //   "receiptDay",
+    //   "expirationYear",
+    //   "expirationMonth",
+    //   "expirationDay",
+    //   "ingredientLocation",
+    //   "requiredQuantity",
+    //   "quantity",
+    //   "orderingFrequency",
+    // ];
 
-  //     // 초기화
-  //     setFormData({
-  //       productName: "",
-  //       price: "",
-  //       seller: "",
-  //       receiptYear: "",
-  //       receiptMonth: "",
-  //       receiptDay: "",
-  //       expirationYear: "",
-  //       expirationMonth: "",
-  //       expirationDay: "",
-  //       ingredientLocation: "",
-  //       requiredQuantity: "",
-  //       quantity: "",
-  //       orderingSite: "",
-  //       orderingFrequency: "",
-  //       imageInfo: "",
-  //       storageMethod: "",
-  //     });
-  //     setProductName("");
-  //     setSelectedStorageMethod("");
+    // for (const field of requiredFields) {
+    //   if (!formData[field]) {
+    //     alert(`${field}을(를) 채워주세요.`);
+    //     return;
+    //   }
+    // }
 
-  //     //router.push("/");
-  //   } catch (error) {
-  //     console.error('Error adding product:', error);
-  //   }
-  // };
+    const formDatas = new FormData();
+
+    const jsonFormData = convertFormDataToJson();
+    formDatas.append('image', selectedImage);
+    formDatas.append(
+      'editProductRequest',
+      new Blob([JSON.stringify(jsonFormData)], { type: 'application/json' }),
+    );
+
+    const condition = selectedStorageMethod; // 선택한 저장 방법으로 condition 값 설정
+    try {
+      await API.post(
+        `/api/product/add?store=${storeId}&condition=${condition}`,
+        formDatas,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+      alert('제품 추가 성공');
+
+      // 초기화
+      setFormData({
+        productName: '',
+        price: '',
+        seller: '',
+        receiptYear: '',
+        receiptMonth: '',
+        receiptDay: '',
+        expirationYear: '',
+        expirationMonth: '',
+        expirationDay: '',
+        ingredientLocation: '',
+        requiredQuantity: '',
+        quantity: '',
+        orderingSite: '',
+        orderingFrequency: '',
+        imageInfo: '',
+        storageMethod: '',
+      });
+      setProductName('');
+      // router.push("/");
+    } catch (error) {
+      console.error('Error adding product:', error);
+      console.log(formDatas);
+      console.log(selectedImage);
+      console.log(jsonFormData);
+    }
+  };
 
   /** ---------------------------------------------------------- */
   /** ---------------------------------------------------------- */
@@ -422,10 +290,11 @@ const New = () => {
                 <S.Input
                   type="text"
                   name="productName"
-                  value={productName}
-                  onChange={(e: {
-                    target: { value: SetStateAction<string> };
-                  }) => setProductName(e.target.value)}
+                  value={formData.productName}
+                  // onChange={(e: { target: { value: SetStateAction<string> } }) =>
+                  //   setProductName(e.target.value)
+                  // }
+                  onChange={handleInputChange}
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -556,10 +425,7 @@ const New = () => {
           </S.InforSection>
         </S.Form>
         {/* 추후 삭제 예정.. */}
-        <Ingredients
-          productsToShow={sortedPostList}
-          storageMethod={formData.storageMethod}
-        />
+        {/* <Ingredients productsToShow={sortedPostList} storageMethod={formData.storageMethod} /> */}
       </RecoilRoot>
     </S.Box>
   );
