@@ -1,5 +1,5 @@
-import styled, { keyframes }  from "styled-components";
-
+//ingredients/style
+import styled, { keyframes } from 'styled-components';
 
 const slideDown = keyframes`
   from {
@@ -12,58 +12,74 @@ const slideDown = keyframes`
   }
 `;
 
+export const LoadMoreButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  margin: 20px auto;
+  font-size: 1.5rem;
+  font-weight: bold;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
+  span {
+    margin-left: 8px;
+  }
+`;
 
 export const MainSection = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 95vh; 
-  overflow-y: auto; 
+  height: 95vh;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
-    display: ${props => props.hideScroll ? 'none' : 'inline-block'};
+    display: ${props => (props.hideScroll ? 'none' : 'inline-block')};
     width: 1.5rem;
     height: 19.3rem;
-    border-radius: .8rem;
+    border-radius: 0.8rem;
   }
 
   &::-webkit-scrollbar-thumb {
     background-clip: padding-box;
-    border: .3rem solid transparent;
+    border: 0.3rem solid transparent;
     height: 4rem;
-    border-radius: .8rem;
+    border-radius: 0.8rem;
     background-color: var(--color-black);
   }
 
   &::-webkit-scrollbar-track {
     width: 1.5rem;
     height: 19.3rem;
-    border-radius: .8rem;
+    border-radius: 0.8rem;
     background-color: #eee;
   }
-
 `;
-
 
 export const DropBoxContainer = styled.div`
   margin-left: 3%;
 `;
 
 export const Input = styled.input`
-    background: none;
-    color: inherit;
-    border: none;
-    font-size: 13px;
-    padding: 0 0 0 15%;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-    
+  background: none;
+  color: inherit;
+  border: none;
+  font-size: 13px;
+  padding: 0 0 0 15%;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 `;
 
 export const MainItem = styled.div`
   width: 180px;
-  box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   height: 180px;
   margin: 1% 3% 3% 3%;
@@ -81,8 +97,7 @@ export const ProductName = styled.h3`
 
 export const MainItemImg = styled.div`
   margin-top: 20px;
-`
-
+`;
 
 export const StyledLink = styled.button<{ isactive: boolean }>`
   display: flex;
@@ -91,14 +106,14 @@ export const StyledLink = styled.button<{ isactive: boolean }>`
   margin: 0 0 0 2%;
   padding-left: 10px;
   border-radius: 100px;
-  color: ${(props) => (props.isactive ? "#ffffff" : "#e0e0e0")};
+  color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
   font-size: 13px;
-  font-weight: 600;  
+  font-weight: 600;
   line-height: 35px;
   text-align: center;
   cursor: pointer;
-  background-color: ${(props) => (props.isactive ? "#000000" : "")};
-  border: none; 
+  background-color: ${props => (props.isactive ? '#000000' : '')};
+  border: none;
 `;
 
 export const ActionButtonBox = styled.div`
@@ -129,8 +144,8 @@ export const Add = styled.div`
 `;
 
 export const NavBar = styled.div`
-    display: flex;
-    width: 90%;
+  display: flex;
+  width: 90%;
 `;
 
 export const ControlBar = styled.div`
@@ -149,13 +164,9 @@ export const SearchMenu = styled.div`
 export const SerchSection = styled.div`
   position: relative;
   font-size: 13px;
-  
   border-radius: 20px;
-  background-color: white;
   display: flex;
   margin: 0px 42px 0 20px;
-
-  
 
   img {
     top: 26%;
@@ -170,7 +181,6 @@ export const CountValue = styled.p`
   position: relative;
 `;
 
-
 export const SearchByBox = styled.div`
   width: 16.3rem;
   height: 20.3rem;
@@ -181,9 +191,7 @@ export const SearchByBox = styled.div`
   text-align: center;
   font-size: 1.5rem;
   line-height: normal;
-  
- 
-`
+`;
 
 export const SelectedValueButton = styled.button`
   width: 163px;
@@ -200,7 +208,7 @@ export const SelectedValueButton = styled.button`
     top: 2.1rem;
     right: 3rem;
     transform: translateY(-50%) rotate(0deg);
-    transition: transform .5s linear;
+    transition: transform 0.5s linear;
   }
 
   p {
@@ -212,9 +220,9 @@ export const SelectedValueButton = styled.button`
 
   .categoryToggle {
     transform: translateY(-50%) rotate(180deg);
-    transition: transform .5s linear;
+    transition: transform 0.5s linear;
   }
-`
+`;
 
 export const OptionList = styled.ul`
   width: 16.3rem;
@@ -222,7 +230,7 @@ export const OptionList = styled.ul`
   color: #979797;
   font-weight: 500;
   padding-top: 4.15rem;
-  border: 1px solid #F7F7F9;
+  border: 1px solid #f7f7f9;
   z-index: 0;
   margin-top: -22.5px;
   border-bottom-left-radius: 3rem;
@@ -237,7 +245,7 @@ export const OptionList = styled.ul`
 
     &:hover {
       color: var(--color-black);
-      background-color: #F7F7F9;
+      background-color: #f7f7f9;
     }
   }
-`
+`;
