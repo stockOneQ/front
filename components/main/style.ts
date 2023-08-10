@@ -1,5 +1,5 @@
 //components/main/style
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const TopSection = styled.div`
   display: flex;
@@ -11,6 +11,27 @@ export const TopSection = styled.div`
 `;
 export const InforSection = styled.div`
   display: flex;
+`;
+export const HiddenComponent = styled.div`
+  display: none;
+`;
+
+export const RangeValues = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 5px;
+  position: absolute;
+  width: 402px;
+  margin-top: 40px;
+  left: 59%;
+`;
+
+export const RangeValue = styled.span`
+  text-align: center;
+`;
+
+export const FileInput = styled.input.attrs({ type: 'file' })`
+  display: none;
 `;
 
 export const StyledRadioInput = styled.label`
@@ -28,43 +49,31 @@ export const StyledRadioInput = styled.label`
     background: #eee;
   }
 
-  input[type="radio"]
-
-  input[type="radio"]:checked + & {
+  input[type='radio'] input[type='radio']:checked + & {
     background: #becbff;
   }
 `;
 
-export const DropBoxContainer = styled.div`
-  
-`;
-
+export const DropBoxContainer = styled.div``;
 
 export const LeftSection = styled.div`
   width: 40%;
 `;
 
-export const RightSection = styled.div`
-  
-`;
+export const RightSection = styled.div``;
 
 export const StorageMethodRadioGroup = styled.div`
-    left: -8%;
-    position: relative;
-    width: 100%;
-    font-size: 18px;
-
+  left: -8%;
+  position: relative;
+  width: 100%;
+  font-size: 18px;
 `;
 
-export const StorageMethodRadio = styled.input`
-
-`;
-
-
+export const StorageMethodRadio = styled.input``;
 
 export const ImgInput = styled.div`
   width: 230px;
-  box-shadow: 0px 1.1rem 2rem 2px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 1.1rem 2rem 2px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   display: flex;
   top: 10%;
@@ -76,17 +85,17 @@ export const ImgInput = styled.div`
 `;
 
 export const Slider = styled.input`
-    -webkit-appearance: none;
-    width: 100%;
-    height: 5px;
-    left: 30px;
-    top: 19px;
-    border-radius: 5px;
-    background: #eeeeee;
-    outline: none;
-    position: relative;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 5px;
+  left: 30px;
+  top: 19px;
+  border-radius: 5px;
+  background: #eeeeee;
+  outline: none;
+  position: relative;
 
-    &::-webkit-slider-thumb {
+  &::-webkit-slider-thumb {
     -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
     appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
     width: 15px;
@@ -136,14 +145,13 @@ export const ReceiptDateInputField = styled.input`
 `;
 
 export const ReceiptDateInputYearField = styled(ReceiptDateInputField)`
-  width: 100px; 
+  width: 100px;
 `;
-
 
 export const Box = styled.div`
   display: flex;
   background-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
   flex-direction: column;
   justify-content: center;
@@ -155,9 +163,12 @@ export const QuantityInput = styled.div`
 `;
 export const StyledInput = styled.div`
   display: flex;
-  margin: 3%;
+  margin: 3% 3% 6%;
 `;
 
+export const Range = styled.div`
+  display: block;
+`;
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
