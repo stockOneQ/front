@@ -152,16 +152,7 @@ const New = () => {
     const jsonFormData = convertFormDataToJson();
     formDatas.append('image', selectedImage);
     formDatas.append("editProductRequest",  new Blob([JSON.stringify(jsonFormData)], { type: "application/json" }));
-    
-    //  formDatas.append('editProductRequest', JSON.stringify(jsonFormData))
-    // console.log("storageMethodFilter : ", StorageMethod);
-    // const jsonFormData = convertFormDataToJson();
-    // formDatas.append('imgInf', imgInf); // Multipart-form으로 사진 전송
-    // formDatas.append('jsonFormData', JSON.stringify(jsonFormData)); // application/json으로 폼데이터 전송
-    // console.log('imgInf:', formDatas.get('imgInf'));
-    // console.log('jsonFormData:', formDatas.get('jsonFormData'));
- 
-    const condition = selectedStorageMethod; // 선택한 저장 방법으로 condition 값 설정
+
     try {
       await API.post(`/api/product/add?store=${storeId}&condition=${condition}`, formDatas, {
         headers: {

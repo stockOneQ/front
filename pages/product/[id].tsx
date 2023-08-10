@@ -94,11 +94,6 @@ useEffect(() => {
 
   /** --------------------------------------------------------- */
   /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
-
-
-
-
   const setPostListState = useSetRecoilState(mainPostListState);
 
   const handleInputChange = (e) => {
@@ -110,11 +105,8 @@ useEffect(() => {
   
 
   const handleSubmit = () => {
-    
-    
     /** 수정 API  */
     handleEditProduct();
-
     router.push("/");
   };
 
@@ -309,7 +301,6 @@ useEffect(() => {
                 >
                 </S.Slider>
               </S.StyledInput>
-            
           </S.RightSection>
         </S.InforSection>
       </S.Form>
