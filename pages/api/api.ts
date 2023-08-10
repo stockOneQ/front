@@ -160,18 +160,49 @@ export const getProductByCategory = async (
     });
   }
 
-  return response.data;
+  return response.data.result;
 };
 
 //상세페이지
-export const fetchProductDetails = async (
+// export const fetchProductDetails = async (
+//     id: number
+// ): Promise<AxiosResponse<ProductItem[]>> => {
+//     try {
+//       const response = await API.get(`/api/product/${id}`);
+//       return response.data.result;
+//       console.log(response);
+//     } catch (error) {
+//       throw new Error("Error fetching product details: ");
+//     }
+//   };
+
+export const addProduct = async (
   id: number,
-): Promise<AxiosResponse<ProductItem[]>> => {
+  formDatas: FormData,
+): Promise<void> => {
   try {
-    const response = await API.get('/api/product/${id}');
-    return response.data.result;
-    console.log(response);
+    await API.patch(`/api/product/edit/${id}`, formDatas, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    alert('제품 수정 성공');
   } catch (error) {
+    console.error('Error adding product:', error);
+    throw new Error('Error adding product: ');
+  }
+};
+
+export const fetchProductDetails = async (id: number): Promise<ProductItem> => {
+  try {
+    const response = await API.get(`/api/product/${id}`);
+    if (response.data) {
+      return response.data.result;
+    } else {
+      throw new Error('Response data is undefined or has unexpected structure');
+    }
+  } catch (error) {
+    console.error('Error fetching product details:', error);
     throw new Error('Error fetching product details: ');
   }
 };
