@@ -82,7 +82,12 @@ const Editor = ({
       <HeadingText>{isEdit ? '게시글 수정' : '게시글 작성'}</HeadingText>
       <S.ActionButtonGroup>
         <S.Button onClick={handleRouter}>취소</S.Button>
-        <S.Button onClick={handleSubmit}>저장</S.Button>
+        <S.Button
+          onClick={handleSubmit}
+          disabled={titleInput.length === 0 || contentInput.length === 0}
+        >
+          저장
+        </S.Button>
       </S.ActionButtonGroup>
       <S.EditorContainer>
         <TitleInput />
