@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
-import ImgIcon from '../public/assets/icons/imgUpload.svg';
+import ImgIcon from '../../../public/assets/icons/main/imgUpload.svg';
 import * as S from '../../../components/main/style';
 import { useState, SetStateAction, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -103,7 +103,6 @@ const New = () => {
   useEffect(() => {
     API.get('/api/product')
       .then(response => {
-        alert('요청성공');
         console.log('-------------------------');
         console.log('첫 storeId api 호출: ', response);
         // 업데이트
@@ -128,8 +127,6 @@ const New = () => {
       stockQuant: formData.quantity,
       siteToOrder: formData.orderingSite,
       orderFreq: formData.orderingFrequency,
-      // image: selectedImage ? URL.createObjectURL(selectedImage) : "", //파일선택
-      // storageMethod: selectedStorageMethod,
     };
     return jsonFormData;
   };
@@ -188,16 +185,14 @@ const New = () => {
     }
   };
 
-  /** ---------------------------------------------------------- */
-  /** ---------------------------------------------------------- */
-  /** ---------------------------------------------------------- */
-
   return (
     <S.Box>
       <RecoilRoot>
         <Title title="재료 등록">재료등록</Title>
         <S.TopSection>
-          <Link href="/">작성취소</Link>
+          <S.Button>
+            <Link href="/">취소</Link>
+          </S.Button>
           <S.Button type="submit" onClick={handleSubmit}>
             <Link href="/">저장</Link>
           </S.Button>
@@ -242,12 +237,22 @@ const New = () => {
                   </S.StyledInput>
                 </S.StorageMethodRadioGroup>
               </S.StyledInput>
-
               <S.ImgInput>
+                <label htmlFor="imageUpload">
+                  {!selectedImage ? (
+                    <Image
+                      src={ImgIcon}
+                      alt="Upload Icon"
+                      width={124}
+                      height={83}
+                    />
+                  ) : null}
+                </label>
                 <input
                   type="file"
+                  id="imageUpload"
                   name="imageInfo"
-                  value={formData.imageInfo}
+                  style={{ display: 'none' }}
                   onChange={handleImageChange}
                 />
                 {selectedImage && (
@@ -257,7 +262,6 @@ const New = () => {
                     style={{ maxWidth: '100%', marginTop: '10px' }}
                   />
                 )}
-                {/* <Image src={ImgIcon} alt="my_page_icon" width={124} height={83} /> */}
               </S.ImgInput>
             </S.LeftSection>
             <S.RightSection>
