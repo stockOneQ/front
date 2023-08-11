@@ -18,10 +18,11 @@ export const LogoBox = styled.div`
 `;
 
 export const NavBar = styled.div`
+  position: relative;
   width: 100%;
 
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 `;
 
@@ -29,38 +30,14 @@ export const NavList = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 7.2rem;
+  gap: 10rem;
   padding-left: 7rem;
-
-  width: 100%;
   height: 100%;
   white-space: nowrap;
-
-  p:last-child {
-    font-size: 1.4rem;
-    color: #aeaeae;
-  }
-
-  NavItem:nth-child(1) {
-    width: 12.2rem;
-  }
-
-  NavItem:nth-child(2) {
-    width: 16.3rem;
-  }
-
-  NavItem:nth-child(3) {
-    width: 13.7rem;
-  }
-
-  NavItem:nth-child(4) {
-    width: 13.9rem;
-  }
 `;
 
 // FIXME: transition: transform 적용 안되는 에러
 export const NavItem = styled.li`
-  width: 100%;
   height: 100%;
 
   display: flex;
@@ -100,10 +77,6 @@ export const NavItem = styled.li`
       transform: translate(0, -50%);
     }
   }
-
-  .login {
-    margin-left: 1.2rem;
-  }
 `;
 
 export const NavArrowBox = styled.div`
@@ -122,5 +95,27 @@ export const NavArrowBox = styled.div`
     top: 50%;
     right: 50%;
     transform: translate(50%, -50%);
+  }
+`;
+
+export const Login = styled.div`
+  position: absolute;
+  right: 7.2%;
+  font-size: 1.4rem;
+  color: #aeaeae;
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.6rem;
+
+  &.active {
+    color: var(--color-black);
+  }
+
+  &:hover {
+    p {
+      color: var(--color-black);
+    }
   }
 `;

@@ -113,20 +113,18 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
               </H.NavArrowBox>
             </Link>
           </H.NavItem>
-          <H.NavItem
-            className={currentPath.startsWith('/login') ? 'active' : ''}
-          >
-            <Link
-              href="/login"
-              onClick={() => {
-                setSideBarIdx(0);
-              }}
-              className="login"
-            >
-              <p>로그아웃</p>
-            </Link>
-          </H.NavItem>
         </H.NavList>
+
+        <H.Login className={currentPath.startsWith('/login') ? 'active' : ''}>
+          <Link
+            href="/login"
+            onClick={() => {
+              setSideBarIdx(0);
+            }}
+          >
+            <p>로그아웃</p>
+          </Link>
+        </H.Login>
       </H.NavBar>
     </H.Header>
   );
