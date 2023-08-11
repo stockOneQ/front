@@ -19,7 +19,7 @@ export const HeaderSection = styled.div`
 export const SettingButton = styled.button`
   position: absolute;
   top: 75%;
-  right: 7.2%;
+  right: 8%;
 
   cursor: pointer;
 `;
