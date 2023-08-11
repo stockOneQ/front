@@ -36,5 +36,5 @@ export const MyPostButtonContainer = styled.button`
 export const WriteButtonContainer = styled.button`
   position: absolute;
   top: 75%;
-  right: 2%;
+  right: 8%;
 `;
