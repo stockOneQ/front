@@ -6,6 +6,7 @@ export const TopSection = styled.div`
   left: 40%;
   font-size: 16px;
   line-height: 35px;
+  margin-top: 47px;
   font-weight: bold;
   position: relative;
 `;
@@ -58,12 +59,17 @@ export const DropBoxContainer = styled.div``;
 
 export const LeftSection = styled.div`
   width: 40%;
+  position: absolute;
+  left: 30%;
 `;
 
-export const RightSection = styled.div``;
+export const RightSection = styled.div`
+  margin-left: 30%;
+  z-index: 999;
+`;
 
 export const StorageMethodRadioGroup = styled.div`
-  left: -8%;
+  left: -4%;
   position: relative;
   width: 100%;
   font-size: 18px;
@@ -78,7 +84,6 @@ export const ImgInput = styled.div`
   display: flex;
   top: 10%;
   position: relative;
-  margin-right: 155px;
   height: 230px;
   align-items: center;
   justify-content: center;
@@ -173,6 +178,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-top: 4%;
 `;
 
 export const Label = styled.label`
@@ -180,6 +186,14 @@ export const Label = styled.label`
   font-weight: bold;
   width: 150px;
   line-height: 49px;
+`;
+
+export const Title = styled.h1`
+  font-weight: 600;
+  font-size: 2.5rem;
+  line-height: 2.9rem;
+  position: absolute;
+  top: 34%;
 `;
 
 export const Input = styled.input`
@@ -192,14 +206,24 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  width: 65px;
-  height: 35px;
-  background-color: #000000;
+  width: 7.1rem;
+  height: 3.5rem;
   color: white;
-  border: none;
-  margin-left: 15px;
-  border-radius: 23px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+  padding-top: 0.2rem;
+  display: flex;
+  align-items: center;
+  margin-right: 5%;
+  justify-content: center;
+  background: ${props =>
+    props.children === '취소'
+      ? 'linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)'
+      : '#979797'};
+  border-radius: 2.3rem;
+  transition: background 0.3s ease-in-out; /* Add transition for smooth hover effect */
+  &:hover {
+    background: ${props =>
+      props.children === '취소'
+        ? 'linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)'
+        : 'linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)'};
+  }
 `;

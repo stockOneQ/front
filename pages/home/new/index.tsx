@@ -7,7 +7,7 @@ import ImgIcon from '../../../public/assets/icons/main/imgUpload.svg';
 import * as S from '../../../components/main/style';
 import { useState, SetStateAction, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Title } from 'components/community/Board/PostListBox/PostItemBox/style';
+import { Title } from 'components/community/Board/Detail/PostContentBox/style';
 import { useSetRecoilState, RecoilRoot, useRecoilState } from 'recoil';
 import {
   approachingExpirationState,
@@ -188,7 +188,7 @@ const New = () => {
   return (
     <S.Box>
       <RecoilRoot>
-        <Title title="재료 등록">재료등록</Title>
+        <S.Title title="재료 등록">재료등록</S.Title>
         <S.TopSection>
           <S.Button>
             <Link href="/">취소</Link>
