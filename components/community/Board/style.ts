@@ -20,11 +20,11 @@ export const MyPostButtonContainer = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.7rem;
 
   position: absolute;
-  top: 12%;
-  right: 0%;
+  top: 15%;
+  right: 5.8%;
 
   span {
     font-weight: 600;
