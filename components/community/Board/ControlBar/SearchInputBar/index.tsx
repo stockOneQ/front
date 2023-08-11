@@ -2,7 +2,7 @@ import { useSetRecoilState } from 'recoil';
 import { searchInputState } from 'recoil/states';
 import * as S from './style';
 
-const BoardSearchInput = ({
+const SearchInputBar = ({
   value,
   onChange,
 }: {
@@ -16,7 +16,7 @@ const BoardSearchInput = ({
   };
 
   return (
-    <S.InputBar
+    <S.Input
       value={value}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
         onChange(e.target.value)
@@ -26,4 +26,4 @@ const BoardSearchInput = ({
   );
 };
 
-export default BoardSearchInput;
+export default SearchInputBar;

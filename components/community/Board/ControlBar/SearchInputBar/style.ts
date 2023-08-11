@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const InputBar = styled.input`
+export const Input = styled.input`
   width: 56.7rem;
   height: 3.5rem;
 
