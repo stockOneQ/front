@@ -19,7 +19,7 @@ export const ActionButtonGroup = styled.div`
   font-size: 1.8rem;
   font-weight: 600;
   padding-bottom: 3rem;
-  margin-right: 4rem;
+  margin-right: 1.5rem;
 `;
 
 export const Button = styled.button<{ disabled?: boolean }>`
