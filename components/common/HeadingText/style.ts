@@ -1,7 +1,7 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const Box = styled.div`
-  width: 100%;
+  width: 94.2%;
   padding: 10px 0px 40px 0px;
   display: flex;
   justify-content: center;
