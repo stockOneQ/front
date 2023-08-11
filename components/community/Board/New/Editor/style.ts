@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
+  width: 94%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+  padding-left: 1rem;
 `;
 
 export const ActionButtonGroup = styled.div`
-  width: 90%;
-
   display: flex;
   justify-content: end;
   align-items: center;
@@ -19,7 +18,7 @@ export const ActionButtonGroup = styled.div`
   font-size: 1.8rem;
   font-weight: 600;
   padding-bottom: 3rem;
-  margin-right: 1.5rem;
+  margin-right: 2rem;
 `;
 
 export const Button = styled.button<{ disabled?: boolean }>`
