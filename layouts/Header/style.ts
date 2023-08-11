@@ -85,7 +85,7 @@ export const NavItem = styled.li`
   }
 
   .login {
-    margin-left: 2rem;
+    margin-left: 1.2rem;
   }
 `;
 
