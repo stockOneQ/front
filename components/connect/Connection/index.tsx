@@ -93,6 +93,7 @@ const Connection = () => {
             ({ id, name, location, digit }) => (
               <ConnectionProfile
                 key={id}
+                id={id}
                 name={name}
                 location={location}
                 digit={digit}

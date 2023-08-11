@@ -3,6 +3,7 @@ import Image from 'next/image';
 import * as S from './style';
 
 interface IConnectionProfileProps {
+  id: number;
   name: string;
   location: string;
   digit: string;
@@ -10,12 +11,13 @@ interface IConnectionProfileProps {
 
 /** 슈퍼바이저 프로필 */
 const ConnectionProfile = ({
+  id,
   name,
   location,
   digit,
 }: IConnectionProfileProps) => {
   return (
-    <S.ConnectionProfileBox>
+    <S.ConnectionProfileBox id={id}>
       <Image src={profileImg} alt="user-profile-img" width={60} height={60} />
       <p>{name}</p>
       <p>{location} 슈퍼바이저</p>

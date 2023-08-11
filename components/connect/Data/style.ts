@@ -10,26 +10,33 @@ interface ISelectSupervisorBoxProps {
 
 const SelectSupervisorBox = styled.div<ISelectSupervisorBoxProps>`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
-  text-align: center;
   width: 25.4rem;
   height: 4.5rem;
   margin: 7.3rem auto 8.5rem;
-  cursor: pointer;
-  color: ${({ isSelectSupervisor }) =>
-    isSelectSupervisor ? 'var(--color-white)' : 'var(--color-black)'};
-  background-color: ${({ isSelectSupervisor }) =>
-    isSelectSupervisor ? 'var(--color-black)' : 'var(--color-white)'};
   border-radius: 5rem;
+  position: relative;
+  cursor: pointer;
+  z-index: 2;
 
   text-align: center;
   font-size: 1.8rem;
   font-weight: 600;
   line-height: normal;
 
+  color: ${({ isSelectSupervisor }) =>
+    isSelectSupervisor ? 'var(--color-white)' : 'var(--color-black)'};
+  background-color: ${({ isSelectSupervisor }) =>
+    isSelectSupervisor ? 'var(--color-black)' : ''};
+
   img {
+    position: absolute;
+    top: 2rem;
+    right: 4.1rem;
+    z-index: 10;
+
     filter: ${({ isSelectSupervisor }) =>
       isSelectSupervisor
         ? `invert(94%) sepia(75%) saturate(0%) hue-rotate(296deg)
@@ -38,6 +45,83 @@ const SelectSupervisorBox = styled.div<ISelectSupervisorBoxProps>`
     transform: ${({ isSelectSupervisor }) =>
       isSelectSupervisor ? 'rotate(180deg)' : 'rotate(0)'};
     transition: transform 0.5s ease;
+  }
+`;
+
+const SupervisorDropDownBox = styled.div`
+  width: 25.4rem;
+  height: 19.6rem;
+  position: absolute;
+  top: 0;
+  border: 1px solid #f7f7f9;
+  background-color: var(--color-white);
+  border-radius: 2.1rem;
+
+  p {
+    width: 25.4rem;
+    height: 4.5rem;
+    border-radius: 5rem;
+    background-color: var(--color-black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+interface ISupervisorListProps {
+  hideScroll: boolean;
+}
+
+// FIXME: 스크롤 바 때문에 너비 변경되는 에러
+// FIXME: 스크롤 바 css 피그마와 동일하게 변경
+const SupervisorList = styled.ul<ISupervisorListProps>`
+  width: 25.4rem;
+  min-width: 25.4rem;
+  max-width: 25.4rem;
+  height: 14.9rem;
+  overflow: auto;
+  padding-top: 1.6rem;
+
+  color: #979797;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 2.1rem;
+
+  li {
+    height: 4.5rem;
+    border-radius: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  li:hover {
+    color: var(--color-black);
+    background-color: #f7f7f9;
+  }
+
+  &::-webkit-scrollbar {
+    display: ${props => (props.hideScroll ? 'none' : 'inline-block')};
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: 0.8rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 0.3rem solid transparent;
+    height: 4rem;
+    border-radius: 0.8rem;
+    background-color: var(--color-black);
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: 0.8rem;
+    background-color: #eee;
   }
 `;
 
@@ -120,6 +204,7 @@ const DataNavInputBox = styled.div`
 
 const DataDropDownBox = styled.div`
   position: absolute;
+  z-index: 1;
   top: 0;
   right: 27.3rem;
 `;
@@ -229,6 +314,8 @@ const PaginationBox = styled.div`
 export {
   DataBox,
   SelectSupervisorBox,
+  SupervisorDropDownBox,
+  SupervisorList,
   DataNavBox,
   DataNav,
   DataNavInputBox,

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from 'public/favicon/favicon-192.png';
+import headerNavArrow from 'public/assets/icons/header/headerNavArrow.svg';
 import * as H from './style';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
@@ -41,7 +42,15 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
                 setSideBarIdx(0);
               }}
             >
-              Home
+              <p>Home</p>
+              <H.NavArrowBox>
+                <Image
+                  src={headerNavArrow}
+                  alt="header-hover-arrow-icon"
+                  width={9.5}
+                  height={9.8}
+                />
+              </H.NavArrowBox>
             </Link>
           </H.NavItem>
           <H.NavItem
@@ -53,7 +62,15 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
                 setSideBarIdx(0);
               }}
             >
-              Community
+              <p>Community</p>
+              <H.NavArrowBox>
+                <Image
+                  src={headerNavArrow}
+                  alt="header-hover-arrow-icon"
+                  width={9.5}
+                  height={9.8}
+                />
+              </H.NavArrowBox>
             </Link>
           </H.NavItem>
           <H.NavItem
@@ -65,7 +82,15 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
                 setSideBarIdx(0);
               }}
             >
-              Connect
+              <p>Connect</p>
+              <H.NavArrowBox>
+                <Image
+                  src={headerNavArrow}
+                  alt="header-hover-arrow-icon"
+                  width={9.5}
+                  height={9.8}
+                />
+              </H.NavArrowBox>
             </Link>
           </H.NavItem>
           <H.NavItem
@@ -77,7 +102,15 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
                 setSideBarIdx(0);
               }}
             >
-              My Page
+              <p>My Page</p>
+              <H.NavArrowBox>
+                <Image
+                  src={headerNavArrow}
+                  alt="header-hover-arrow-icon"
+                  width={9.5}
+                  height={9.8}
+                />
+              </H.NavArrowBox>
             </Link>
           </H.NavItem>
           <H.NavItem
@@ -89,7 +122,7 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
                 setSideBarIdx(0);
               }}
             >
-              로그아웃
+              <p>로그아웃</p>
             </Link>
           </H.NavItem>
         </H.NavList>
