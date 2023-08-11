@@ -33,6 +33,7 @@ export const NavList = styled.ul`
   padding-left: 7rem;
 
   width: 100%;
+  height: 100%;
 
   p:last-child {
     font-size: 1.4rem;
@@ -42,10 +43,10 @@ export const NavList = styled.ul`
 
 // FIXME: transition: transform 적용 안되는 에러
 export const NavItem = styled.li`
-  width: 16.5rem;
-  height: 5.4rem;
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   font-size: 18px;
   font-weight: 600;
@@ -53,7 +54,6 @@ export const NavItem = styled.li`
   transition: all 0.5s ease;
 
   a {
-    width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -82,6 +82,10 @@ export const NavItem = styled.li`
       right: 1.2rem;
       transform: translate(0, -50%);
     }
+  }
+
+  .login {
+    margin-left: 2rem;
   }
 `;
 

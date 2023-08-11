@@ -121,6 +121,7 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
               onClick={() => {
                 setSideBarIdx(0);
               }}
+              className="login"
             >
               <p>로그아웃</p>
             </Link>
