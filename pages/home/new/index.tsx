@@ -2,30 +2,21 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { calculateDaysRemaining } from 'utils/calculateCondition';
 import axios from 'axios';
 import ImgIcon from '../public/assets/icons/imgUpload.svg';
 import * as S from '../../../components/main/style';
 import { useState, SetStateAction, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Title } from 'components/community/Board/PostListBox/PostItemBox/style';
-import {
-  useSetRecoilState,
-  useRecoilValue,
-  RecoilRoot,
-  useRecoilState,
-} from 'recoil';
+import { useSetRecoilState, RecoilRoot, useRecoilState } from 'recoil';
 import {
   approachingExpirationState,
   postMainTitleState,
   mainPostListState,
-  expiredIngredientsState,
-  insufficientIngredientsState,
   storageMethodState,
   ProductItem,
   StorageMethod,
 } from '../../../recoil/states';
-import Ingredients from 'components/main/Ingredients';
 import { API } from '../../api/api';
 
 const sortOptionList = ['냉동', '냉장', '상온'];
@@ -48,6 +39,33 @@ const New = () => {
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setSelectedStorageMethod(e.target.value);
+  };
+
+  /** 필수 필드 ------------------------------------------------------------ */
+  const validateRequiredFields = () => {
+    const requiredFields = [
+      'productName',
+      'price',
+      'seller',
+      'receiptYear',
+      'receiptMonth',
+      'receiptDay',
+      'expirationYear',
+      'expirationMonth',
+      'expirationDay',
+      'requiredQuantity',
+      'quantity',
+      'orderingFrequency',
+    ];
+
+    for (const field of requiredFields) {
+      if (!formData[field]) {
+        alert(`${field}을(를) 채워주세요.`);
+        return false;
+      }
+    }
+
+    return true;
   };
 
   const [formData, setFormData] = useState({
@@ -79,12 +97,6 @@ const New = () => {
     console.log('Input Changed:', name, value);
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
   };
-
-  /** ---------------------------------------------------------- */
-  /** ---------------------------------------------------------- */
-  /** ---------------------------------------------------------- */
-
-  //데이터 json 이미지 아직 미구현
 
   const [storeId, setStoreId] = useState(1);
 
@@ -122,56 +134,22 @@ const New = () => {
     return jsonFormData;
   };
 
-  //제품 추가 api 호출
+  /** 제품 추가 api 호출 -------------------------------------------------------- */
   const handleSubmit = async () => {
-    // if (productName.length >= 11) {
-    //   alert("제목을 11글자 이하로 입력해 주세요.");
-    //   return;
-    // }
-    // if (formData.orderingSite.length >= 200) {
-    //   alert("발주사이트를 200자 이하로 입력해 주세요.");
-    //   return;
-    // }
-    // if (formData.seller.length >= 200) {
-    //   alert("판매업체 29자 이하로 입력해 주세요.");
-    //   return;
-    // }
-    // if (formData.ingredientLocation.length >= 200) {
-    //   alert("재료위치 29자 이하로 입력해 주세요.");
-    //   return;
-    // }
-
-    // const requiredFields = [
-    //   "seller",
-    //   "receiptYear",
-    //   "receiptMonth",
-    //   "receiptDay",
-    //   "expirationYear",
-    //   "expirationMonth",
-    //   "expirationDay",
-    //   "ingredientLocation",
-    //   "requiredQuantity",
-    //   "quantity",
-    //   "orderingFrequency",
-    // ];
-
-    // for (const field of requiredFields) {
-    //   if (!formData[field]) {
-    //     alert(`${field}을(를) 채워주세요.`);
-    //     return;
-    //   }
-    // }
+    //유효성 검사
+    if (!validateRequiredFields()) {
+      return;
+    }
 
     const formDatas = new FormData();
-
     const jsonFormData = convertFormDataToJson();
+    const condition = selectedStorageMethod; // 선택한 저장 방법으로 condition 값 설정
+
     formDatas.append('image', selectedImage);
     formDatas.append(
       'editProductRequest',
       new Blob([JSON.stringify(jsonFormData)], { type: 'application/json' }),
     );
-
-    const condition = selectedStorageMethod; // 선택한 저장 방법으로 condition 값 설정
     try {
       await API.post(
         `/api/product/add?store=${storeId}&condition=${condition}`,
@@ -207,15 +185,13 @@ const New = () => {
       // router.push("/");
     } catch (error) {
       console.error('Error adding product:', error);
-      console.log(formDatas);
-      console.log(selectedImage);
-      console.log(jsonFormData);
     }
   };
 
   /** ---------------------------------------------------------- */
   /** ---------------------------------------------------------- */
   /** ---------------------------------------------------------- */
+
   return (
     <S.Box>
       <RecoilRoot>
@@ -291,9 +267,7 @@ const New = () => {
                   type="text"
                   name="productName"
                   value={formData.productName}
-                  // onChange={(e: { target: { value: SetStateAction<string> } }) =>
-                  //   setProductName(e.target.value)
-                  // }
+                  maxLength={11}
                   onChange={handleInputChange}
                 />
               </S.StyledInput>
@@ -312,6 +286,7 @@ const New = () => {
                   type="text"
                   name="seller"
                   value={formData.seller}
+                  maxLength={29}
                   onChange={handleInputChange}
                 />
               </S.StyledInput>
@@ -378,6 +353,7 @@ const New = () => {
                   type="text"
                   name="ingredientLocation"
                   value={formData.ingredientLocation}
+                  maxLength={29}
                   onChange={handleInputChange}
                 />
               </S.StyledInput>
@@ -407,6 +383,7 @@ const New = () => {
                   type="text"
                   name="orderingSite"
                   value={formData.orderingSite}
+                  maxLength={200}
                   onChange={handleInputChange}
                 />
               </S.StyledInput>
