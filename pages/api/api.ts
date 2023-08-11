@@ -27,19 +27,6 @@ export const API = axios.create({
   withCredentials: true,
 });
 
-// export const fetchDataFromApi = async (storeId, userId) => {
-//     try {
-//       const response = await axios.post('/api/product', {
-//         storeID: storeId,
-//         userID: userId,
-//       });
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error fetching data from API:', error);
-//       throw error;
-//     }
-//   };
-
 //정렬 제품 api 호출
 export const productList = (
   store: number,
@@ -55,25 +42,6 @@ export const productList = (
       sort,
     },
   });
-
-// export const countingProduct = async (
-//     store: string,
-//     condition: string
-// ): Promise<AxiosResponse<ProductCounts>> => {
-//     try {
-//         const response = await axios.get('/api/product/count', {
-//             params: {
-//                 store,
-//                 condition,
-//             },
-//         });
-
-//         return response.data;
-//     } catch (error) {
-//         console.error('Error fetching product counts:', error);
-//         throw error;
-//     }
-// };
 
 //제품개수
 export const fetchProductCounts = async (
@@ -163,19 +131,16 @@ export const getProductByCategory = async (
   return response.data.result;
 };
 
-//상세페이지
-// export const fetchProductDetails = async (
-//     id: number
-// ): Promise<AxiosResponse<ProductItem[]>> => {
-//     try {
-//       const response = await API.get(`/api/product/${id}`);
-//       return response.data.result;
-//       console.log(response);
-//     } catch (error) {
-//       throw new Error("Error fetching product details: ");
-//     }
-//   };
+/** 제품 삭제  */
+export const handleDeleteProduct = async productId => {
+  try {
+    await API.delete(`/api/product/delete/${productId}`);
+  } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+};
 
+/** 제품 수정  */
 export const addProduct = async (
   id: number,
   formDatas: FormData,

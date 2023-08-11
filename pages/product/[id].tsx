@@ -13,8 +13,11 @@ import {
 import { Title } from 'components/community/Board/PostListBox/PostItemBox/style';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import * as S from '../../components/main/style';
-import { fetchProductDetails, addProduct } from '../../pages/api/api';
-import ImgIcon from '../../public/assets/icons/imgUpload.svg';
+import {
+  fetchProductDetails,
+  addProduct,
+  handleDeleteProduct,
+} from '../../pages/api/api';
 
 const ProductPage = () => {
   const router = useRouter();
@@ -135,12 +138,15 @@ const ProductPage = () => {
 
   return (
     <S.Box>
-      <Title title="재료 등록">재료등록</Title>
+      <S.Title title="재료 등록">재료상세</S.Title>
       <S.TopSection>
-        <Link href="/">작성취소</Link>
+        <S.Button onClick={() => handleDeleteProduct(id)}>
+          <Link href="/">삭제</Link>
+        </S.Button>
         <S.Button type="submit" onClick={handleSubmit}>
           <Link href="/">수정</Link>
         </S.Button>
+        <Link href="/">X</Link>
       </S.TopSection>
 
       <S.Form>
@@ -185,15 +191,29 @@ const ProductPage = () => {
               </S.StorageMethodRadioGroup>
             </S.StyledInput>
             <S.ImgInput>
-              <img
-                src={
-                  selectedImage instanceof File
-                    ? URL.createObjectURL(selectedImage)
-                    : `data:image/jpeg;base64,${selectedImage}`
-                }
-                alt="Selected Image"
-                style={{ maxWidth: '100%', marginTop: '10px' }}
+              <input
+                type="file"
+                id="imageInput"
+                style={{ display: 'none' }}
+                onChange={handleImageChange}
               />
+              <label htmlFor="imageInput">
+                <S.ImgInput>
+                  <img
+                    src={
+                      selectedImage instanceof File
+                        ? URL.createObjectURL(selectedImage)
+                        : `data:image/jpeg;base64,${selectedImage}`
+                    }
+                    alt="Selected Image"
+                    style={{
+                      maxWidth: '100%',
+                      marginTop: '10px',
+                      cursor: 'pointer',
+                    }}
+                  />
+                </S.ImgInput>
+              </label>
             </S.ImgInput>
           </S.LeftSection>
           <S.RightSection>
@@ -219,7 +239,7 @@ const ProductPage = () => {
               <S.Label>판매 업체</S.Label>
               <S.Input
                 type="text"
-                name="seller"
+                name="vendor"
                 value={formData.vendor}
                 onChange={handleInputChange}
               />
@@ -230,11 +250,25 @@ const ProductPage = () => {
                 <S.ReceiptDateInputYearField
                   type="text"
                   name="receiptYear"
-                  value={formData.receivingDate}
+                  value={formData.receivingDate.split('-')[0]} // 년도
                   onChange={handleInputChange}
                   placeholder="년도"
                 />
                 <p>년</p>
+                <S.ReceiptDateInputField
+                  type="text"
+                  name="receivingMonth"
+                  value={formData.receivingDate.split('-')[1]} // 월
+                  onChange={handleInputChange}
+                />
+                <p>월</p>
+                <S.ReceiptDateInputField
+                  type="text"
+                  name="receivingDay"
+                  value={formData.receivingDate.split('-')[2]} // 일
+                  onChange={handleInputChange}
+                  placeholder="일"
+                />
               </S.ReceiptDateInput>
             </S.StyledInput>
             <S.StyledInput>
@@ -243,18 +277,32 @@ const ProductPage = () => {
                 <S.ReceiptDateInputYearField
                   type="text"
                   name="expirationYear"
-                  value={formData.expirationDate}
+                  value={formData.expirationDate.split('-')[0]} // 년도
                   onChange={handleInputChange}
                   placeholder="년도"
                 />
                 <p>년</p>
+                <S.ReceiptDateInputField
+                  type="text"
+                  name="expirationMonth"
+                  value={formData.expirationDate.split('-')[1]} // 월
+                  onChange={handleInputChange}
+                />
+                <p>월</p>
+                <S.ReceiptDateInputField
+                  type="text"
+                  name="expirationDay"
+                  value={formData.expirationDate.split('-')[2]} // 일
+                  onChange={handleInputChange}
+                  placeholder="일"
+                />
               </S.ReceiptDateInput>
             </S.StyledInput>
             <S.StyledInput>
               <S.Label>재료위치</S.Label>
               <S.Input
                 type="text"
-                name="ingredientLocation"
+                name="location"
                 value={formData.location}
                 onChange={handleInputChange}
               />
@@ -264,7 +312,7 @@ const ProductPage = () => {
                 <S.Label>필수 수량</S.Label>
                 <S.QuantityInputField
                   type="text"
-                  name="requiredQuantity"
+                  name="requireQuant"
                   value={formData.requireQuant}
                   onChange={handleInputChange}
                 />
@@ -273,7 +321,7 @@ const ProductPage = () => {
                 <S.Label>| 재고 수량</S.Label>
                 <S.QuantityInputField
                   type="text"
-                  name="quantity"
+                  name="stockQuant"
                   value={formData.stockQuant}
                   onChange={handleInputChange}
                 />
@@ -283,7 +331,7 @@ const ProductPage = () => {
               <S.Label>발주사이트</S.Label>
               <S.Input
                 type="text"
-                name="orderingSite"
+                name="siteToOrder"
                 value={formData.siteToOrder}
                 onChange={handleInputChange}
               />
@@ -293,7 +341,7 @@ const ProductPage = () => {
               <S.Label>발주 빈도</S.Label>
               <S.Slider
                 type="range"
-                name="orderingFrequency"
+                name="orderFreq"
                 value={formData.orderFreq}
                 step="20"
                 onChange={handleInputChange}
