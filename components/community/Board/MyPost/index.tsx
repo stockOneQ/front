@@ -154,7 +154,7 @@ const MyPosts = () => {
         )}
       </S.HeaderSection>
 
-      <PostListBox isCurrentPathMain={false} list={myPostList} />
+      <PostListBox list={myPostList} />
     </S.Box>
   );
 };
