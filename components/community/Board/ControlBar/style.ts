@@ -1,12 +1,13 @@
 import { styled } from 'styled-components';
 
 export const ControlBarBox = styled.div`
+  width: 93.4%;
   display: flex;
   gap: 11rem;
 
   position: relative;
 
-  margin-left: 1.6rem;
+  margin-left: 1rem;
 `;
 
 export const SearchBar = styled.div`
