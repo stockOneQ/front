@@ -93,27 +93,33 @@ export const ProductName = styled.h3`
   font-size: 18px;
   font-weight: bold;
   margin-top: 45px;
+  text-align: center;
 `;
 
 export const MainItemImg = styled.div`
   margin-top: 20px;
 `;
-
 export const StyledLink = styled.button<{ isactive: boolean }>`
   display: flex;
   width: 190px;
   height: 35px;
   margin: 0 0 0 2%;
-  padding-left: 10px;
   border-radius: 100px;
   color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
   font-size: 13px;
   font-weight: 600;
   line-height: 35px;
   text-align: center;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   background-color: ${props => (props.isactive ? '#000000' : '')};
   border: none;
+  transition: background-color 0.3s ease-in-out; /* 배경색 변경 트랜지션 */
+
+  &:hover {
+    background-color: ${props => (props.isactive ? '#000000' : '#f0f0f0')};
+  }
 `;
 
 export const ActionButtonBox = styled.div`
