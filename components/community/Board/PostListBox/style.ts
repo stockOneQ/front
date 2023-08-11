@@ -6,7 +6,7 @@ export const List = styled.div`
   gap: 4.5rem;
   overflow-y: auto;
   height: 82%;
-  padding: 0rem 3.2rem 2.8rem 1.6rem;
+  padding: 0rem 3.2rem 2.8rem 1.2rem;
 
   position: absolute;
   top: 17.5%;
