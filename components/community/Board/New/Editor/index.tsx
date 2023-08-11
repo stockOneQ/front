@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import router from 'next/router';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   isCurrentPathMainState,
   postContentState,
   postTitleState,
+  searchInputState,
+  searchTypeState,
+  sortTypeState,
 } from 'recoil/states';
 import TitleInput from './TitleInput';
 import ContentInput from './ContentInput';
@@ -25,8 +28,9 @@ const Editor = ({
 }) => {
   const [titleInput, setTitleInput] = useRecoilState(postTitleState);
   const [contentInput, setContentInput] = useRecoilState(postContentState);
-
-  const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
+  const setSortType = useSetRecoilState(sortTypeState);
+  const setSearchType = useSetRecoilState(searchTypeState);
+  const setSearchInput = useSetRecoilState(searchInputState);
 
   useEffect(() => {
     title ? setTitleInput(title) : setTitleInput('');
@@ -37,12 +41,13 @@ const Editor = ({
     isEdit
       ? router.push(`/community/board/${id}`)
       : router.push('/community/board');
+
+    setSortType('최신순');
+    setSearchType('글 제목');
+    setSearchInput('');
   };
 
   const handleSubmit = () => {
-    if (titleInput.length < 1) return alert('제목을 1자 이상 입력해 주세요.');
-    if (contentInput.length < 1) return alert('내용을 1자 이상 입력해 주세요.');
-
     if (isEdit) {
       /** 게시글 수정 */
       API.patch(`/api/boards/${id}`, {
