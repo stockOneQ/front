@@ -398,15 +398,23 @@ const New = () => {
                   type="range"
                   name="orderingFrequency"
                   value={formData.orderingFrequency}
+                  min="0"
+                  max="100"
                   step="20"
                   onChange={handleInputChange}
-                ></S.Slider>
+                />
+                <S.RangeValues>
+                  <S.RangeValue>0</S.RangeValue>
+                  <S.RangeValue>20</S.RangeValue>
+                  <S.RangeValue>40</S.RangeValue>
+                  <S.RangeValue>60</S.RangeValue>
+                  <S.RangeValue>80</S.RangeValue>
+                  <S.RangeValue>100</S.RangeValue>
+                </S.RangeValues>
               </S.StyledInput>
             </S.RightSection>
           </S.InforSection>
         </S.Form>
-        {/* 추후 삭제 예정.. */}
-        {/* <Ingredients productsToShow={sortedPostList} storageMethod={formData.storageMethod} /> */}
       </RecoilRoot>
     </S.Box>
   );

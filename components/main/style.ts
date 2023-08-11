@@ -1,6 +1,11 @@
 //components/main/style
 import styled from 'styled-components';
 
+export const DropBoxContainer = styled.div`
+  position: absolute;
+  top: 0%;
+`;
+
 export const TopSection = styled.div`
   display: flex;
   left: 40%;
@@ -22,7 +27,7 @@ export const RangeValues = styled.div`
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 5px;
   position: absolute;
-  width: 402px;
+  width: 394px;
   margin-top: 40px;
   left: 59%;
 `;
@@ -37,8 +42,11 @@ export const FileInput = styled.input.attrs({ type: 'file' })`
 
 export const StyledRadioInput = styled.label`
   font-family: sans-serif;
+  display: flex;
+  align-items: center;
   padding: 10px 16px;
   border-right: 1px solid #ccc;
+  position: relative;
   cursor: pointer;
   transition: all 0.3s;
 
@@ -50,12 +58,33 @@ export const StyledRadioInput = styled.label`
     background: #eee;
   }
 
-  input[type='radio'] input[type='radio']:checked + & {
-    background: #becbff;
+  input[type='radio'] {
+    display: none;
+  }
+
+  span {
+    font-size: 16px;
+  }
+
+  input[type='radio']:checked + span {
+    font-weight: bold;
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #000;
+      transition: width 0.3s ease-in-out;
+    }
+  }
+
+  input[type='radio']:checked:hover + span::before {
+    width: 100%;
   }
 `;
-
-export const DropBoxContainer = styled.div``;
 
 export const LeftSection = styled.div`
   width: 40%;
@@ -91,7 +120,7 @@ export const ImgInput = styled.div`
 
 export const Slider = styled.input`
   -webkit-appearance: none;
-  width: 100%;
+  width: 90%;
   height: 5px;
   left: 30px;
   top: 19px;
