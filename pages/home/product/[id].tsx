@@ -9,15 +9,15 @@ import {
   expiredIngredientsState,
   insufficientIngredientsState,
   mainPostListState,
-} from '../../recoil/states';
+} from '../../../recoil/states';
 import { Title } from 'components/community/Board/PostListBox/PostItemBox/style';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import * as S from '../../components/main/style';
+import * as S from '../../../components/main/style';
 import {
   fetchProductDetails,
   addProduct,
   handleDeleteProduct,
-} from '../../pages/api/api';
+} from '../../../pages/api/api';
 
 const ProductPage = () => {
   const router = useRouter();
@@ -156,36 +156,38 @@ const ProductPage = () => {
               <S.StorageMethodRadioGroup>
                 <S.StyledInput>
                   <S.StorageMethodRadioGroup>
-                    <S.StyledRadioInput>
-                      <input
-                        type="radio"
-                        name="storageMethod"
-                        value="냉동"
-                        checked={selectedStorageMethod === '냉동'}
-                        onChange={handleStorageMethodChange}
-                      />
-                      <span>냉동</span>
-                    </S.StyledRadioInput>
-                    <S.StyledRadioInput>
-                      <input
-                        type="radio"
-                        name="storageMethod"
-                        value="냉장"
-                        checked={selectedStorageMethod === '냉장'}
-                        onChange={handleStorageMethodChange}
-                      />
-                      <span>냉장</span>
-                    </S.StyledRadioInput>
-                    <S.StyledRadioInput>
-                      <input
-                        type="radio"
-                        name="storageMethod"
-                        value="상온"
-                        checked={selectedStorageMethod === '상온'}
-                        onChange={handleStorageMethodChange}
-                      />
-                      <span>상온</span>
-                    </S.StyledRadioInput>
+                    <S.StyledInput>
+                      <S.StyledRadioInput>
+                        <input
+                          type="radio"
+                          name="storageMethod"
+                          value="냉동"
+                          checked={selectedStorageMethod === '냉동'}
+                          onChange={handleStorageMethodChange}
+                        />
+                        <span>냉동</span>
+                      </S.StyledRadioInput>
+                      <S.StyledRadioInput>
+                        <input
+                          type="radio"
+                          name="storageMethod"
+                          value="냉장"
+                          checked={selectedStorageMethod === '냉장'}
+                          onChange={handleStorageMethodChange}
+                        />
+                        <span>냉장</span>
+                      </S.StyledRadioInput>
+                      <S.StyledRadioInput>
+                        <input
+                          type="radio"
+                          name="storageMethod"
+                          value="상온"
+                          checked={selectedStorageMethod === '상온'}
+                          onChange={handleStorageMethodChange}
+                        />
+                        <span>상온</span>
+                      </S.StyledRadioInput>
+                    </S.StyledInput>
                   </S.StorageMethodRadioGroup>
                 </S.StyledInput>
               </S.StorageMethodRadioGroup>
@@ -208,7 +210,6 @@ const ProductPage = () => {
                     alt="Selected Image"
                     style={{
                       maxWidth: '100%',
-                      marginTop: '10px',
                       cursor: 'pointer',
                     }}
                   />
@@ -341,11 +342,21 @@ const ProductPage = () => {
               <S.Label>발주 빈도</S.Label>
               <S.Slider
                 type="range"
-                name="orderFreq"
-                value={formData.orderFreq}
+                name="orderingFrequency"
+                value={formData.orderingFrequency}
+                min="0"
+                max="100"
                 step="20"
                 onChange={handleInputChange}
-              ></S.Slider>
+              />
+              <S.RangeValues>
+                <S.RangeValue>0</S.RangeValue>
+                <S.RangeValue>20</S.RangeValue>
+                <S.RangeValue>40</S.RangeValue>
+                <S.RangeValue>60</S.RangeValue>
+                <S.RangeValue>80</S.RangeValue>
+                <S.RangeValue>100</S.RangeValue>
+              </S.RangeValues>
             </S.StyledInput>
           </S.RightSection>
         </S.InforSection>
