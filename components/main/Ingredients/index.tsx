@@ -61,12 +61,9 @@ const Ingredients = ({
   useEffect(() => {
     API.get('/api/product')
       .then(response => {
-        alert('요청성공');
-        console.log('-------------------------');
         console.log('첫 storeId api 호출: ', response);
         // 업데이트
         setData(response.data);
-
         setUserId(response.data?.result?.userId ?? null);
         setStoreId(response.data?.result?.storeId ?? null);
       })
@@ -99,12 +96,9 @@ const Ingredients = ({
       setSelectedProduct(response.data.result);
 
       console.log('응답 response data 값: ', productAll);
-      console.log('컨디션 : ', storageMethodFilter);
       setSortedProducts(prevProducts =>
         lastProductId ? [...prevProducts, ...productAll] : productAll,
       );
-
-      console.log('현재 sortedProducts : ', sortedProducts);
     } catch (error) {
       console.log(storeId);
       console.error('Error fetching sorted products:', error);
