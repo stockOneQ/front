@@ -29,15 +29,32 @@ export const NavList = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 9rem;
+  gap: 7.2rem;
   padding-left: 7rem;
 
   width: 100%;
   height: 100%;
+  white-space: nowrap;
 
   p:last-child {
     font-size: 1.4rem;
     color: #aeaeae;
+  }
+
+  NavItem:nth-child(1) {
+    width: 12.2rem;
+  }
+
+  NavItem:nth-child(2) {
+    width: 16.3rem;
+  }
+
+  NavItem:nth-child(3) {
+    width: 13.7rem;
+  }
+
+  NavItem:nth-child(4) {
+    width: 13.9rem;
   }
 `;
 
@@ -45,6 +62,7 @@ export const NavList = styled.ul`
 export const NavItem = styled.li`
   width: 100%;
   height: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,7 +74,7 @@ export const NavItem = styled.li`
   a {
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 2rem;
   }
@@ -72,7 +90,6 @@ export const NavItem = styled.li`
 
     div {
       width: 5rem;
-
       opacity: 1;
       pointer-events: auto;
       visibility: visible;
