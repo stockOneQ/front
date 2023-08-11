@@ -14,7 +14,7 @@ export const LogoBox = styled.div`
   align-items: center;
 
   width: 18.4rem;
-  padding: 0 6.8rem;
+  padding: 0 7.9rem 0 5.7rem;
 `;
 
 export const NavBar = styled.div`
@@ -30,7 +30,7 @@ export const NavList = styled.ul`
   justify-content: center;
   align-items: center;
   gap: 9rem;
-  padding: 0 7rem;
+  padding-left: 7rem;
 
   width: 100%;
 
