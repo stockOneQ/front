@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-const ConnectionProfileBox = styled.div`
+interface IConnectionProfileBoxProps {
+  id: number;
+}
+
+const ConnectionProfileBox = styled.div<IConnectionProfileBoxProps>`
   margin-left: 1.4rem;
   display: flex;
   align-items: center;
@@ -19,7 +23,26 @@ const ConnectionProfileBox = styled.div`
     width: 5.5rem;
     height: 1.9rem;
     color: var(--color-white);
-    background-color: #68b7e8;
+    background-color: ${({ id }) =>
+      id % 9 === 0
+        ? 'rgb(100, 185, 220)'
+        : id % 9 === 1
+        ? 'rgb(140, 185, 220)'
+        : id % 9 === 2
+        ? 'rgb(180, 185, 220)'
+        : id % 9 === 3
+        ? 'rgb(220, 185, 220)'
+        : id % 9 === 4
+        ? 'rgb(240, 180, 220)'
+        : id % 9 === 5
+        ? 'rgb(240, 180, 200)'
+        : id % 9 === 6
+        ? 'rgb(240, 180, 180)'
+        : id % 9 === 7
+        ? 'rgb(240, 180, 160)'
+        : id % 9 === 8
+        ? 'rgb(240, 220, 180)'
+        : ''};
     display: flex;
     justify-content: center;
     align-items: center;

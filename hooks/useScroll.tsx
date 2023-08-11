@@ -5,10 +5,12 @@ const useScroll = () => {
   const [isScroll, setIsScroll] = useState(-100);
   const [hideScroll, setHideScroll] = useState(true);
 
-  const scrollHandler = (e: React.UIEvent<HTMLDivElement>) => {
+  const scrollHandler = (
+    e: React.UIEvent<HTMLDivElement | HTMLUListElement>,
+  ) => {
     setHideScroll(false);
     setIsScroll(e.currentTarget.scrollTop);
-  }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -16,7 +18,7 @@ const useScroll = () => {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [isScroll])
+  }, [isScroll]);
 
   return { hideScroll, scrollHandler };
 };
