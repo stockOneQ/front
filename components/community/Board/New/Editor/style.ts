@@ -8,7 +8,7 @@ export const Box = styled.div`
 `;
 
 export const ActionButtonGroup = styled.div`
-  width: 100%;
+  width: 90%;
 
   display: flex;
   justify-content: end;
@@ -19,7 +19,7 @@ export const ActionButtonGroup = styled.div`
   font-size: 1.8rem;
   font-weight: 600;
   padding-bottom: 3rem;
-  margin-right: 3.2rem;
+  margin-right: 4rem;
 `;
 
 {
