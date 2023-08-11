@@ -47,7 +47,7 @@ export const DeleteOptionBox = styled.div`
 
   position: absolute;
   top: 65%;
-  right: -3%;
+  right: 5%;
 `;
 
 export const ActionButtonGroup = styled.div`
