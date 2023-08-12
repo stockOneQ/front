@@ -15,6 +15,7 @@ const ResultsList = ({ enteredValue, searchBy }: IResultsListProps) => {
   const { friendsList } = useContext(FriendsListContext);
 
   const filteredData = friendsList.filter(({ name, storeName }) => {
+    // TODO: 분기 refactoring
     if (searchBy === '이름') {
       return name.includes(enteredValue);
     }

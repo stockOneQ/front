@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const SearchFriendText = styled.p`
   color: var(--color-black);
@@ -20,7 +20,7 @@ const SearchFriendBox = styled.div`
   margin: 0 auto 2rem;
 `;
 
-const InputBox = styled.input`
+const SearchFriendsInput = styled.input`
   width: 100%;
   padding: 0 3rem;
   font-size: 1.3rem;
@@ -39,4 +39,9 @@ const DropBoxContainer = styled.div`
   top: 0%;
 `;
 
-export { SearchFriendText, SearchFriendBox, DropBoxContainer, InputBox };
+export {
+  SearchFriendText,
+  SearchFriendBox,
+  DropBoxContainer,
+  SearchFriendsInput,
+};
