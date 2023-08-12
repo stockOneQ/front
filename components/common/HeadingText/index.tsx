@@ -1,6 +1,7 @@
+import { ReactNode } from 'react';
 import * as S from './style';
 
-const HeadingText = ({ children }: { children: string }) => {
+const HeadingText = ({ children }: { children: ReactNode }) => {
   return (
     <S.Box>
       <S.Text>{children}</S.Text>
