@@ -7,13 +7,13 @@ export const DropBoxContainer = styled.div`
 `;
 
 export const TopSection = styled.div`
+  top: 30%;
   display: flex;
-  left: 40%;
   font-size: 16px;
   line-height: 35px;
-  margin-top: 47px;
+  right: 9%;
   font-weight: bold;
-  position: relative;
+  position: absolute;
 `;
 export const InforSection = styled.div`
   display: flex;
@@ -25,11 +25,12 @@ export const HiddenComponent = styled.div`
 export const RangeValues = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-gap: 5px;
-  position: absolute;
+  grid-gap: 7px;
+  position: relative;
   width: 394px;
+  left: -25%;
+  /* margin-right: -22%; */
   margin-top: 40px;
-  left: 59%;
 `;
 
 export const RangeValue = styled.span`
@@ -89,7 +90,7 @@ export const StyledRadioInput = styled.label`
 export const LeftSection = styled.div`
   width: 40%;
   position: absolute;
-  left: 30%;
+  left: 26%;
 `;
 
 export const RightSection = styled.div`
@@ -118,11 +119,18 @@ export const ImgInput = styled.div`
   justify-content: center;
 `;
 
+export const LabelQuant = styled.label`
+  font-size: 18px;
+  font-weight: bold;
+  width: 120px;
+  line-height: 49px;
+`;
+
 export const Slider = styled.input`
   -webkit-appearance: none;
-  width: 90%;
+  width: 69%;
   height: 5px;
-  left: 30px;
+  left: 87px;
   top: 19px;
   border-radius: 5px;
   background: #eeeeee;
@@ -187,6 +195,31 @@ export const Box = styled.div`
   background-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
+  height: 100vh;
+  overflow-y: auto;
+  padding-right: ${props => (props.hideScroll ? '7.1rem' : '5.6rem')};
+
+  &::-webkit-scrollbar {
+    display: ${props => (props.hideScroll ? 'none' : 'inline-block')};
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: 0.8rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 0.3rem solid transparent;
+    height: 4rem;
+    border-radius: 0.8rem;
+    background-color: var(--color-black);
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 1.5rem;
+    height: 19.3rem;
+    border-radius: 0.8rem;
+    background-color: #eee;
+  }
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -213,7 +246,7 @@ export const Form = styled.form`
 export const Label = styled.label`
   font-size: 18px;
   font-weight: bold;
-  width: 150px;
+  width: 152px;
   line-height: 49px;
 `;
 
@@ -221,14 +254,15 @@ export const Title = styled.h1`
   font-weight: 600;
   font-size: 2.5rem;
   line-height: 2.9rem;
-  position: absolute;
-  top: 34%;
+  position: relative;
+  margin-top: 18%;
 `;
 
 export const Input = styled.input`
   width: 350px;
   height: 55px;
   padding: 6px 10px;
+  font-size: 15px;
   border: none;
   border-radius: 40px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);

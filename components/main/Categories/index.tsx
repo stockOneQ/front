@@ -54,7 +54,9 @@ const Categories: React.FC<ControlBarProps> = ({
         <div
           style={{
             display: 'flex',
-            visibility: linksVisible ? 'visible' : 'hidden',
+
+            opacity: linksVisible ? 1 : 0,
+            transition: 'opacity 0.3s ease', 
           }}
         >
           <S.StyledLink
@@ -113,7 +115,6 @@ const Categories: React.FC<ControlBarProps> = ({
             // onChange={handleSearchChange} api 호출 함수
             style={{
               display: linksVisible ? 'none' : 'block',
-
               width: `${inputWidth}px`,
               transition: 'width 1s ease, height 0.3s ease', // Add transition properties
             }}

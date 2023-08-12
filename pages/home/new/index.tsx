@@ -7,7 +7,7 @@ import ImgIcon from '../../../public/assets/icons/main/imgUpload.svg';
 import * as S from '../../../components/main/style';
 import { useState, SetStateAction, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Title } from 'components/community/Board/Detail/PostContentBox/style';
+import useScroll from 'hooks/useScroll';
 import { useSetRecoilState, RecoilRoot, useRecoilState } from 'recoil';
 import {
   approachingExpirationState,
@@ -30,6 +30,7 @@ type IngredientsProps = {
 const New = () => {
   const router = useRouter();
   const [productName, setProductName] = useRecoilState(postMainTitleState);
+  const { hideScroll, scrollHandler } = useScroll();
   const setPostListState = useSetRecoilState(mainPostListState);
 
   //냉동상온냉장
@@ -186,7 +187,7 @@ const New = () => {
   };
 
   return (
-    <S.Box>
+    <S.Box hideScroll={hideScroll} onScroll={scrollHandler}>
       <RecoilRoot>
         <S.Title title="재료 등록">재료등록</S.Title>
         <S.TopSection>
@@ -273,6 +274,7 @@ const New = () => {
                   value={formData.productName}
                   maxLength={11}
                   onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -282,6 +284,7 @@ const New = () => {
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -292,6 +295,7 @@ const New = () => {
                   value={formData.seller}
                   maxLength={29}
                   onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
 
@@ -304,6 +308,7 @@ const New = () => {
                     value={formData.receiptYear}
                     onChange={handleInputChange}
                     placeholder="년도"
+                    autocomplete="off"
                   />
                   <p>년</p>
                   <S.ReceiptDateInputField
@@ -312,6 +317,7 @@ const New = () => {
                     value={formData.receiptMonth}
                     onChange={handleInputChange}
                     placeholder="월"
+                    autocomplete="off"
                   />
                   <p>월</p>
                   <S.ReceiptDateInputField
@@ -320,6 +326,7 @@ const New = () => {
                     value={formData.receiptDay}
                     onChange={handleInputChange}
                     placeholder="일"
+                    autocomplete="off"
                   />
                 </S.ReceiptDateInput>
               </S.StyledInput>
@@ -332,6 +339,7 @@ const New = () => {
                     value={formData.expirationYear}
                     onChange={handleInputChange}
                     placeholder="년도"
+                    autocomplete="off"
                   />
                   <p>년</p>
                   <S.ReceiptDateInputField
@@ -340,6 +348,7 @@ const New = () => {
                     value={formData.expirationMonth}
                     onChange={handleInputChange}
                     placeholder="월"
+                    autocomplete="off"
                   />
                   <p>월</p>
                   <S.ReceiptDateInputField
@@ -348,6 +357,7 @@ const New = () => {
                     value={formData.expirationDay}
                     onChange={handleInputChange}
                     placeholder="일"
+                    autocomplete="off"
                   />
                 </S.ReceiptDateInput>
               </S.StyledInput>
@@ -359,6 +369,7 @@ const New = () => {
                   value={formData.ingredientLocation}
                   maxLength={29}
                   onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
               <S.QuantitySection>
@@ -369,15 +380,17 @@ const New = () => {
                     name="requiredQuantity"
                     value={formData.requiredQuantity}
                     onChange={handleInputChange}
+                    autocomplete="off"
                   />
                 </S.QuantityInput>
                 <S.QuantityInput>
-                  <S.Label>| 재고 수량</S.Label>
+                  <S.LabelQuant> 재고 수량</S.LabelQuant>
                   <S.QuantityInputField
                     type="text"
                     name="quantity"
                     value={formData.quantity}
                     onChange={handleInputChange}
+                    autocomplete="off"
                   />
                 </S.QuantityInput>
               </S.QuantitySection>
@@ -389,6 +402,7 @@ const New = () => {
                   value={formData.orderingSite}
                   maxLength={200}
                   onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
 
