@@ -5,15 +5,21 @@ import * as S from './style';
 
 interface IFriendItemProps {
   name: string;
-  location: string;
-  phone: string;
+  storeName: string;
+  phoneNumber: string;
 }
 
 /** 친구 개별 component */
-const FriendItem = ({ name, location, phone }: IFriendItemProps) => {
+const FriendItem = ({ name, storeName, phoneNumber }: IFriendItemProps) => {
   return (
     <S.FriendItemBox className="friend-item">
-      <FriendInfo name={name} location={location} phone={phone} width={60} imgMarginRight="1.2rem" />
+      <FriendInfo
+        name={name}
+        storeName={storeName}
+        phoneNumber={phoneNumber}
+        width={60}
+        imgMarginRight="1.2rem"
+      />
       <button>
         <Image src={friendIcon} alt="friend_icon" width={32} height={31} />
       </button>

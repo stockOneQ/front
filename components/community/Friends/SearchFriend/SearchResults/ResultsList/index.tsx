@@ -1,7 +1,7 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import FriendItem from './FriendItem';
 import * as S from './style';
-import { DUMMY_DATA } from 'components/community/Friends/Profiles/FriendsList';
+import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 
 interface IResultsListProps {
   enteredValue: string;
@@ -12,19 +12,21 @@ interface IResultsListProps {
 const ResultsList = ({ enteredValue, searchBy }: IResultsListProps) => {
   const spaceIdxRef = useRef(-1); // '고양시 덕양점' 중 ' '의 index값
 
-  const filteredData = DUMMY_DATA.filter(({ name, location }) => {
+  const { friendsList } = useContext(FriendsListContext);
+
+  const filteredData = friendsList.filter(({ name, storeName }) => {
     if (searchBy === '이름') {
       return name.includes(enteredValue);
     }
     if (searchBy === '상호명') {
-      spaceIdxRef.current = location.indexOf(' ');
+      spaceIdxRef.current = storeName.indexOf(' ');
 
-      return location.slice(spaceIdxRef.current).includes(enteredValue);
+      return storeName.slice(spaceIdxRef.current).includes(enteredValue);
     }
     if (searchBy === '지역명') {
-      spaceIdxRef.current = location.indexOf(' ');
+      spaceIdxRef.current = storeName.indexOf(' ');
 
-      return location.slice(0, spaceIdxRef.current).includes(enteredValue);
+      return storeName.slice(0, spaceIdxRef.current).includes(enteredValue);
     }
   });
 
@@ -35,13 +37,13 @@ const ResultsList = ({ enteredValue, searchBy }: IResultsListProps) => {
         <div>{filteredData.length}</div>
       </S.ResultListTextBox>
       <S.FriendItemsBox>
-        {filteredData.map(({ id, name, location, phone }) => {
+        {filteredData.map(({ id, name, storeName, phoneNumber }) => {
           return (
             <FriendItem
               key={id}
               name={name}
-              location={location}
-              phone={phone}
+              storeName={storeName}
+              phoneNumber={phoneNumber}
             />
           );
         })}
