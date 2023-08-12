@@ -210,6 +210,7 @@ const Ingredients = ({
         handleSortChange={handleSortChange}
         handleSearchChange={handleSearchChange}
         searchTerm={searchTerm}
+        selectedSortOption={selectedSortOption}
       />
 
       {/* api 호출에 따른 MAIN SECTION */}

@@ -19,6 +19,7 @@ type ControlBarProps = {
   handleSortChange: (selectedOption: string) => void;
   handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchTerm: string;
+  selectedSortOption: string;
 };
 
 const Categories: React.FC<ControlBarProps> = ({
@@ -32,6 +33,7 @@ const Categories: React.FC<ControlBarProps> = ({
   handleSortChange,
   handleSearchChange,
   searchTerm,
+  selectedSortOption,
 }) => {
   const [linksVisible, setLinksVisible] = useState(true);
   const [inputWidth, setInputWidth] = useState(158);
@@ -56,7 +58,7 @@ const Categories: React.FC<ControlBarProps> = ({
             display: 'flex',
 
             opacity: linksVisible ? 1 : 0,
-            transition: 'opacity 0.3s ease', 
+            transition: 'opacity 0.3s ease',
           }}
         >
           <S.StyledLink
@@ -97,6 +99,7 @@ const Categories: React.FC<ControlBarProps> = ({
               toggleTopSize={48}
               list={sortOptionList}
               onChange={handleSortChange}
+              type={selectedSortOption}
             />
           </S.DropBoxContainer>
         </div>
