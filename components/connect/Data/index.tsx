@@ -101,6 +101,7 @@ const Data = () => {
                   toggleSize={15}
                   toggleTopSize={50}
                   list={['글 제목', '글 내용']}
+                  type={'글 제목'}
                 />
               </S.DataDropDownBox>
               <input type="text" />
