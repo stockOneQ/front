@@ -64,6 +64,7 @@ const MyPosts = () => {
   /** 환경설정 버튼 or 취소/삭제 버튼 토글 함수*/
   const handleToggle = () => {
     setIsDeleteMode(prev => !prev);
+    setIsAllChecked(false);
     setDeleteCheckedItems([]);
   };
 
