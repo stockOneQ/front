@@ -5,6 +5,7 @@ import friendStockIcGray from 'public/assets/icons/community/friendStockIcGray.s
 import * as S from './style';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import FriendInfo from './FriendInfo';
+import Link from 'next/link';
 
 interface IFriendProfileProps {
   id: number;
@@ -78,22 +79,24 @@ const FriendProfile = ({
         imgMarginRight="1.2rem"
       />
       <S.FriendPageButton onClick={stockButtonHandler}>
-        {((isStockSelected && isStock) || !isStock) && (
-          <Image
-            src={friendStockIcon}
-            alt="my_page_icon"
-            width={19.64}
-            height={26.84}
-          />
-        )}
-        {!isStockSelected && isStock && (
-          <Image
-            src={friendStockIcGray}
-            alt="my_page_icon_black"
-            width={19.64}
-            height={26.84}
-          />
-        )}
+        <Link href="/community/friends/stock">
+          {((isStockSelected && isStock) || !isStock) && (
+            <Image
+              src={friendStockIcon}
+              alt="my_page_icon"
+              width={19.64}
+              height={26.84}
+            />
+          )}
+          {!isStockSelected && isStock && (
+            <Image
+              src={friendStockIcGray}
+              alt="my_page_icon_black"
+              width={19.64}
+              height={26.84}
+            />
+          )}
+        </Link>
       </S.FriendPageButton>
     </S.FriendProfileBox>
   );

@@ -2,14 +2,10 @@ import Image from 'next/image';
 import myProfile from 'public/assets/imgs/community/myProfile.png';
 import myPageIcon from 'public/assets/icons/community/myPageIcon.svg';
 import * as S from './style';
-import { Dispatch, SetStateAction } from 'react';
-
-interface IMyChatProfileProps {
-  setReqFriends: Dispatch<SetStateAction<boolean>>;
-}
+import Link from 'next/link';
 
 /** 나의 채팅 프로필 */
-const MyChatProfile = ({ setReqFriends }: IMyChatProfileProps) => {
+const MyChatProfile = () => {
   return (
     <div>
       <S.MyProfileText>나</S.MyProfileText>
@@ -29,15 +25,15 @@ const MyChatProfile = ({ setReqFriends }: IMyChatProfileProps) => {
           <S.MyPhoneText>010-0000-0000</S.MyPhoneText>
         </div>
         <S.MyPageButton>
-          <div onClick={() => setReqFriends(prev => !prev)}>
-            <button>6</button>
+          <Link href="/community/friends/request">
+            <div>6</div>
             <Image
               src={myPageIcon}
               alt="my_page_icon"
               width={19.64}
               height={26.84}
             />
-          </div>
+          </Link>
         </S.MyPageButton>
       </S.MyProfileBox>
     </div>

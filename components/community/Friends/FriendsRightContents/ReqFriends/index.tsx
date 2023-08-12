@@ -1,19 +1,17 @@
-import { Dispatch, SetStateAction } from 'react';
 import WaitingFriends from './WaitingFriends';
 import WantingBefriends from './WantingBefriends';
 import * as S from './style';
-
-interface IReqFriendsProps {
-  setReqFriends: Dispatch<SetStateAction<boolean>>;
-}
+import Link from 'next/link';
 
 /** 친구 신청 목록 화면 */
-const ReqFriends = ({ setReqFriends }: IReqFriendsProps) => {
+const ReqFriends = () => {
   return (
     <S.ReqFriendsBox>
       <WaitingFriends />
       <WantingBefriends />
-      <S.CloseBtn onClick={() => setReqFriends(false)}>x</S.CloseBtn>
+      <S.CloseBtn>
+        <Link href="/community/friends/search">x</Link>
+      </S.CloseBtn>
     </S.ReqFriendsBox>
   );
 };
