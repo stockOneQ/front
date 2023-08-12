@@ -1,8 +1,8 @@
 import FriendProfile from './FriendProfile';
 import FriendsCount from './FriendsCount';
 import * as S from './style';
-import { useState } from 'react';
-import { IFriendsListProps } from '@Types/community/friends';
+import { useContext, useState } from 'react';
+import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 
 export const DUMMY_DATA = [
   {
@@ -68,13 +68,15 @@ export const DUMMY_DATA = [
 ];
 
 /** 친구 목록 */
-const FriendsList = ({ friendsList }: IFriendsListProps) => {
+const FriendsList = () => {
   /** 삭제, 취소 버튼 등장 */
   const [onSetting, setOnSetting] = useState(false);
   /** 삭제 버튼 허용 */
   const [isPermitted, setIsPermitted] = useState(10); // 일단 9(친구 수)로 하드 코딩
   const [isStock, setIsStock] = useState(false);
   const [deleteItem, setDeleteItem] = useState<number[]>([]);
+
+  const { friendsList } = useContext(FriendsListContext);
 
   return (
     <>

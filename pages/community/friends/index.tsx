@@ -1,16 +1,23 @@
-import { IFriendsListProps } from '@Types/community/friends';
 import Friends from 'components/community/Friends';
+import FriendsListContext, {
+  IFriendsListContextProps,
+} from 'contexts/community/friends/FriendsListProvider.ts';
 import { API } from 'pages/api/api';
 
 /** community - 친구 페이지 */
-const FriendsPage = ({ friendsList }: IFriendsListProps) => {
+const FriendsPage = ({ friendsList }: IFriendsListContextProps) => {
   console.log('aa', friendsList);
+  const contextValue = { friendsList };
 
-  return <Friends friendsList={friendsList} />;
+  return (
+    <FriendsListContext.Provider value={contextValue}>
+      <Friends />
+    </FriendsListContext.Provider>
+  );
 };
 
 export async function getStaticProps() {
-  let friendsList: IFriendsListProps['friendsList'] = [];
+  let friendsList: IFriendsListContextProps['friendsList'] = [];
   let offset = 0;
   const FRIENDS_COUNT = 8; // 백에서 8명 씩 끊어서 전송
 

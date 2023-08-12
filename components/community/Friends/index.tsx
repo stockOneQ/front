@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Profiles from './Profiles';
 import SearchFriend from './SearchFriend';
 import { useState } from 'react';
-import { IFriendsListProps } from '@Types/community/friends';
 
 const CommunitySection = styled.section`
   display: flex;
@@ -10,12 +9,12 @@ const CommunitySection = styled.section`
 `;
 
 /** community - 친구 */
-const Friends = ({ friendsList }: IFriendsListProps) => {
+const Friends = () => {
   const [reqFriends, setReqFriends] = useState(false);
 
   return (
     <CommunitySection>
-      <Profiles setReqFriends={setReqFriends} friendsList={friendsList} />
+      <Profiles setReqFriends={setReqFriends} />
       <SearchFriend reqFriends={reqFriends} setReqFriends={setReqFriends} />
     </CommunitySection>
   );
