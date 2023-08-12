@@ -86,24 +86,23 @@ const MyPosts = () => {
   };
 
   /** 삭제 버튼 클릭 시 처리 함수 */
-  const handleDelete = () => {
-    console.log(`삭제 할 게시글 목록 ${deleteCheckedItems}`);
-
-    deleteCheckedItems.map(boardId => {
-      API.delete('/api/boards/my', {
-        params: {
-          boardId: boardId,
-        },
-      })
-        .then(() => {
-          setMyPostListCount(prev => prev - 1);
-        })
-        .catch(e => {
-          alert('게시글 삭제 실패');
-          console.log(e);
-        });
-    });
-    handleToggle();
+  const handleDelete = async () => {
+    try {
+      await Promise.allSettled(
+        deleteCheckedItems.map(boardId =>
+          API.delete('/api/boards/my', {
+            params: {
+              boardId: boardId,
+            },
+          }),
+        ),
+      );
+      setMyPostListCount(prev => prev - deleteCheckedItems.length);
+      handleToggle();
+    } catch (error) {
+      alert('게시글 삭제 실패');
+      console.error(error);
+    }
   };
 
   const handleAllChecked = () => {
