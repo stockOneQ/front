@@ -1,7 +1,7 @@
-import MyPost from "components/community/Board/MyPost";
+import MyPosts from 'components/community/Board/MyPost';
 
-const MyPosts = () => {
-  return <MyPost />;
+const MyPostsPage = () => {
+  return <MyPosts />;
 };
 
-export default MyPosts;
+export default MyPostsPage;

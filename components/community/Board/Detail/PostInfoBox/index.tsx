@@ -4,17 +4,18 @@ import ProfileImg from 'public/assets/imgs/community/profileImage.png';
 import { formatCreatedDateToString } from 'utils/date';
 
 type IPostInfoType = {
-  writer: string;
+  writerName: string;
   createdDate: string;
 };
 
-const WriterInfoBox = ({ writer, createdDate }: IPostInfoType) => {
+const PostInfoBox = ({ writerName, createdDate }: IPostInfoType) => {
   return (
     <S.Box>
       <S.Container>
+        {/** 게시글 작성자의 프로필 사진 받아오기 */}
         <Image src={ProfileImg} alt="profile" />
         <S.Info>
-          <h1>{writer} 사장님</h1>
+          <h1>{writerName} 사장님</h1>
           <span>
             {createdDate && createdDate.length === 13
               ? createdDate
@@ -25,4 +26,4 @@ const WriterInfoBox = ({ writer, createdDate }: IPostInfoType) => {
     </S.Box>
   );
 };
-export default WriterInfoBox;
+export default PostInfoBox;

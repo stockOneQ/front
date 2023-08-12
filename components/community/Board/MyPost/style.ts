@@ -16,10 +16,10 @@ export const HeaderSection = styled.div`
   left: 0;
 `;
 
-export const SettingButton = styled.div`
+export const SettingButton = styled.button`
   position: absolute;
   top: 75%;
-  right: 2%;
+  right: 8%;
 
   cursor: pointer;
 `;
@@ -32,7 +32,7 @@ export const NavButton = styled.button`
 
   position: absolute;
   top: 15%;
-  left: 2%;
+  left: 1%;
 
   span {
     font-weight: 600;
@@ -47,7 +47,7 @@ export const DeleteOptionBox = styled.div`
 
   position: absolute;
   top: 65%;
-  right: 0;
+  right: 5%;
 `;
 
 export const ActionButtonGroup = styled.div`
@@ -83,11 +83,7 @@ export const StyledLabel = styled.label`
   user-select: none;
 `;
 
-type ICheckBoxButtonProps = {
-  checked: boolean;
-};
-
-export const StyledInput = styled.input<ICheckBoxButtonProps>`
+export const StyledInput = styled.input`
   appearance: none;
 
   width: 1.6rem;

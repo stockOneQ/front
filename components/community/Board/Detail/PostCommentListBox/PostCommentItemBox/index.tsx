@@ -4,18 +4,18 @@ import * as S from './style';
 import profileImage from 'public/assets/imgs/community/profileImage.png';
 
 type ICommentType = {
-  writer: string;
+  writerName: string;
   content: string;
   date: string;
 };
 
-const PostCommentItemBox = ({ writer, content, date }: ICommentType) => {
+const PostCommentItemBox = ({ writerName, content, date }: ICommentType) => {
   return (
     <S.Box>
       <Image src={profileImage} alt="profile" />
       <S.Container>
         <S.ContentContainer>
-          <h1>{writer} 사장님</h1>
+          <h1>{writerName} 사장님</h1>
           <span>{content}</span>
         </S.ContentContainer>
         <S.Date>{date}</S.Date>

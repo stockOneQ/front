@@ -156,13 +156,13 @@ export const searchTermState = atom<string>({
 });
 
 /** ----------------- 게시판 페이지 ----------------- */
-export interface IPostTypes {
+export interface IPostPreviewTypes {
   id: number;
   title: string;
   content: string;
   hit: number;
   comment: number;
-  like: number;
+  likes: number;
 }
 
 /** 게시글 제목 */
@@ -178,8 +178,13 @@ export const postContentState = atom<string>({
 });
 
 /** 게시글 목록 */
-export const postListState = atom<IPostTypes[]>({
+export const postListState = atom<IPostPreviewTypes[]>({
   key: 'postListState',
+  default: [],
+});
+
+export const myPostListState = atom<IPostPreviewTypes[]>({
+  key: 'myPostListState',
   default: [],
 });
 
@@ -286,6 +291,11 @@ export const postCommentListState = atom<IPostCommentTypes[]>({
       content: '안녕하세요. 저 하고 있습니다. 마진 괜찮습니다.',
     },
   ],
+});
+
+export const isCurrentPathMainState = atom<boolean>({
+  key: 'isCurrentPathMainState',
+  default: true,
 });
 
 /** 내가 쓴 글 페이지 */
