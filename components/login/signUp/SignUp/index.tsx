@@ -15,72 +15,291 @@ import DigitInput from 'components/common/loginInput/DigitInput';
 import IDInput from 'components/common/loginInput/IDInput';
 import * as S from 'components/common/loginInput/style';
 import * as SS from './style';
+import { API } from 'pages/api/api';
+import { useState } from 'react';
 
+const SignUp = ({ onSuccess }) => {
+  const [name, setName] = useState('이가영');
+  const [birthYear, setBirthYear] = useState('2001');
+  const [birthMonth, setBirthMonth] = useState('01');
+  const [birthDay, setBirthDay] = useState('01');
 
-/** 회원 가입 */
-const SignUp = () => {
+  const [phonePrefix, setPhonePrefix] = useState('010');
+  const [phoneFirstPart, setPhoneFirstPart] = useState('4708');
+  const [phoneSecondPart, setPhoneSecondPart] = useState('7703');
+
+  const [emailFirstPart, setEmailFirstPart] = useState('LKY062');
+  const [emailSecondPart, setEmailSecondPart] = useState('naver');
+  const [emailThirdPart, setEmailThirdPart] = useState('com');
+
+  const [loginId, setLoginId] = useState('lky062');
+  const [password, setPassword] = useState('abc123!');
+  const [storeName, setStoreName] = useState('스타벅스광화문');
+  const [storeSector, setStoreSector] = useState('카페');
+  const [storeAddress, setStoreAddress] = useState('서울시중구');
+
+  const handleSignUp = async () => {
+    const userData = {
+      name: name,
+      birth: `${birthYear}-${birthMonth}-${birthDay}`,
+      email: `${emailFirstPart}@${emailSecondPart}.${emailThirdPart}`,
+      loginId: loginId,
+      password: password,
+      phoneNumber: `${phonePrefix}${phoneFirstPart}${phoneSecondPart}`,
+      storeName: storeName,
+      storeSector: storeSector,
+      storeAddress: storeAddress,
+    };
+    try {
+      const response = await API.post(
+        '/api/user/sign-up/manager',
+        JSON.stringify(userData),
+      );
+      if (response.status === 200) {
+        // 성공적으로 회원 가입을 처리한 경우에 대한 로직을 여기에 작성합니다.
+        alert('회원가입성공');
+        onSuccess();
+        console.log('회원 가입 성공');
+      } else {
+        // 실패한 경우에 대한 로직을 여기에 작성합니다.
+        console.error('회원 가입 실패');
+      }
+    } catch (error) {
+      console.error('API 요청 중 오류 발생:', error);
+    }
+  };
+
   return (
     <SS.SignUpBox>
-      <div>
-        <SS.SignUpHeaderBox>
-          <Image src={mainLogo} alt="main-logo" width={67.5} height={65} />
-          <p>스톡원큐 회원가입</p>
-        </SS.SignUpHeaderBox>
-      </div>
+      <SS.SignUpHeaderBox>
+        <Image src={mainLogo} alt="main-logo" width={67.5} height={65} />
+        <p>스톡원큐 회원가입</p>
+      </SS.SignUpHeaderBox>
       <SS.SignUpForm>
         <div>
           <S.InputRow1Box>
-            <NameInput />
-            <BirthInput />
+            <S.SignUpInputBox>
+              <S.SignUpLabel>이름</S.SignUpLabel>
+              <S.SignUpInput
+                value={name}
+                width="18.3rem"
+                type="text"
+                id="name"
+                onChange={e => setName(e.target.value)}
+              />
+            </S.SignUpInputBox>
+            <S.SignUpInputBox>
+              <S.SignUpLabel>생년월일</S.SignUpLabel>
+              <SS.BirthInputBox>
+                <S.SignUpInput
+                  width="9.1rem"
+                  type="text"
+                  id="birthYear"
+                  placeholder="YYYY"
+                  value={birthYear}
+                  onChange={e => setBirthYear(e.target.value)}
+                />
+                <S.SignUpInput
+                  width="7.1rem"
+                  type="text"
+                  placeholder="MM"
+                  value={birthMonth}
+                  onChange={e => setBirthMonth(e.target.value)}
+                />
+                <S.SignUpInput
+                  width="7.1rem"
+                  type="text"
+                  placeholder="DD"
+                  value={birthDay}
+                  onChange={e => setBirthDay(e.target.value)}
+                />
+              </SS.BirthInputBox>
+            </S.SignUpInputBox>
           </S.InputRow1Box>
-          <EmailInput />
-          <DigitInput />
-          <IDInput />
+
           <S.InputRow2Box>
+            <S.SignUpLabel>E-mail</S.SignUpLabel>
+            <SS.EmailInputBox>
+              <S.SignUpInput
+                width="18.3rem"
+                type="text"
+                placeholder="example"
+                value={emailFirstPart}
+                onChange={e => setEmailFirstPart(e.target.value)}
+              />
+              <p>@</p>
+              <S.SignUpInput
+                width="18.3rem"
+                type="text"
+                placeholder="domain"
+                value={emailSecondPart}
+                onChange={e => setEmailSecondPart(e.target.value)}
+              />
+              <S.SignUpInput
+                width="18.3rem"
+                type="text"
+                placeholder="com"
+                value={emailThirdPart}
+                onChange={e => setEmailThirdPart(e.target.value)}
+              />
+            </SS.EmailInputBox>
+          </S.InputRow2Box>
+
+          <S.InputRow2Box>
+            <S.SignUpLabel>전화번호</S.SignUpLabel>
+            <SS.DigitInputBox>
+              <S.SignUpInput
+                width="7.1rem"
+                type="text"
+                id="digitPrefix"
+                placeholder="010"
+                value={phonePrefix}
+                onChange={e => setPhonePrefix(e.target.value)}
+              />
+              <S.SignUpInput
+                width="9.2rem"
+                type="text"
+                placeholder="0000"
+                value={phoneFirstPart}
+                onChange={e => setPhoneFirstPart(e.target.value)}
+              />
+              <S.SignUpInput
+                width="9.2rem"
+                type="text"
+                placeholder="0000"
+                value={phoneSecondPart}
+                onChange={e => setPhoneSecondPart(e.target.value)}
+              />
+            </SS.DigitInputBox>
+          </S.InputRow2Box>
+
+          <S.SignUpInputBox>
+            <S.SignUpLabel>아이디</S.SignUpLabel>
+            <S.SignUpInput
+              value={loginId}
+              width="18.3rem"
+              type="text"
+              id="name"
+              onChange={e => setLoginId(e.target.value)}
+            />
+          </S.SignUpInputBox>
+          <S.SignUpInputBox>
+            <S.SignUpLabel>비밀번호</S.SignUpLabel>
+            <S.SignUpInput
+              value={password}
+              width="18.3rem"
+              type="text"
+              id="name"
+              onChange={e => setPassword(e.target.value)}
+            />
+          </S.SignUpInputBox>
+          {/* <S.InputRow2Box>
             <SS.PwInputBox>
               <S.SignUpLabel htmlFor="password">비밀번호</S.SignUpLabel>
               <p>6-20자 영문, 숫자, 특수문자 사용</p>
             </SS.PwInputBox>
             <S.SignUpInput width="27.4rem" type="password" id="password" />
-          </S.InputRow2Box>
-          <S.InputRow2Box>
+          </S.InputRow2Box> */}
+          {/* <S.InputRow2Box>
             <S.SignUpLabel htmlFor="passwordCheck">비밀번호 확인</S.SignUpLabel>
             <S.SignUpInput width="27.4rem" type="password" id="passwordCheck" />
-          </S.InputRow2Box>
-          <S.InputRow3Box>
+          </S.InputRow2Box> */}
+          {/* <S.InputRow3Box>
             <S.SignUpLabel>사용자 권한</S.SignUpLabel>
             <SS.AuthBox>
               <SS.AuthImgBox>
-                <Image src={presidentActive} alt="select_user_type_icon" width={29} height={40} />
+                <Image
+                  src={presidentActive}
+                  alt="select_user_type_icon"
+                  width={29}
+                  height={40}
+                />
                 <p>사장님</p>
               </SS.AuthImgBox>
               <SS.AuthImgBox>
-                <Image src={employeeActive} alt="select_user_type_icon" width={29} height={40} />
+                <Image
+                  src={employeeActive}
+                  alt="select_user_type_icon"
+                  width={29}
+                  height={40}
+                />
                 <p>아르바이트 생</p>
               </SS.AuthImgBox>
               <SS.AuthImgBox>
-                <Image src={supervisorActive} alt="select_user_type_icon" width={29} height={40} />
+                <Image
+                  src={supervisorActive}
+                  alt="select_user_type_icon"
+                  width={29}
+                  height={40}
+                />
                 <p>슈퍼바이저</p>
               </SS.AuthImgBox>
             </SS.AuthBox>
-          </S.InputRow3Box>
+          </S.InputRow3Box> */}
           <S.InputRow2Box>
-            <S.SignUpLabel htmlFor="store">매장 정보</S.SignUpLabel>
-            <S.SignUpInput width="27.4rem" type="text" id="store" />
+            <S.SignUpLabel>매장 정보</S.SignUpLabel>
+            <S.SignUpInput
+              value={storeName}
+              width="27.4rem"
+              type="text"
+              id="store"
+              onChange={e => setStoreName(e.target.value)}
+            />
           </S.InputRow2Box>
           <S.InputRow2Box>
-            <S.SignUpLabel htmlFor="addr">주소</S.SignUpLabel>
+            <S.SignUpLabel>매장 분류</S.SignUpLabel>
+            <S.SignUpInput
+              value={storeSector}
+              width="27.4rem"
+              type="text"
+              id="store"
+              onChange={e => setStoreSector(e.target.value)}
+            />
+          </S.InputRow2Box>
+          <S.InputRow2Box>
+            <S.SignUpLabel>주소</S.SignUpLabel>
             <SS.AddrInputBox>
-              <S.SignUpInput width="16.2rem" placeholderLocation="left" type="text" id="addr" placeholder="우편번호" />
+              <S.SignUpInput
+                width="16.2rem"
+                placeholderLocation="left"
+                value={storeAddress}
+                type="text"
+                id="addr"
+                placeholder="우편번호"
+                onChange={e => setStoreAddress(e.target.value)}
+              />
               <button>주소검색</button>
             </SS.AddrInputBox>
-            <S.SignUpInput width="34.5rem" placeholderLocation="left" type="text" placeholder="기본주소" />
-            <S.SignUpInput width="34.5rem" placeholderLocation="left" type="text" placeholder="상세주소" />
+            {/* <S.SignUpInput
+              width="34.5rem"
+              placeholderLocation="left"
+              type="text"
+              placeholder="기본주소"
+            />
+            <S.SignUpInput
+              width="34.5rem"
+              placeholderLocation="left"
+              type="text"
+              placeholder="상세주소"
+            /> */}
           </S.InputRow2Box>
         </div>
         <SS.SignUpBtnBox>
-          <CancelBtn width="20.2rem" height="11rem" font="2.4rem" label="회원가입" disabled={false} />
-          <RejectBtn width="20.2rem" height="11rem" font="2.4rem" label="취소" />
+          <CancelBtn
+            width="20.2rem"
+            height="11rem"
+            font="2.4rem"
+            label="회원가입"
+            disabled={false}
+            type="button"
+            onClick={handleSignUp}
+          />
+          <RejectBtn
+            width="20.2rem"
+            height="11rem"
+            font="2.4rem"
+            label="취소"
+          />
         </SS.SignUpBtnBox>
       </SS.SignUpForm>
     </SS.SignUpBox>
