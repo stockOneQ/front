@@ -83,11 +83,7 @@ export const StyledLabel = styled.label`
   user-select: none;
 `;
 
-type ICheckBoxButtonProps = {
-  checked: boolean;
-};
-
-export const StyledInput = styled.input<ICheckBoxButtonProps>`
+export const StyledInput = styled.input`
   appearance: none;
 
   width: 1.6rem;
