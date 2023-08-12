@@ -220,7 +220,7 @@ const Ingredients = ({
               key={product.id}
               onClick={() => handleItemClick(product.id)}
             >
-              <Link href={`home/product/${product.id}`} passHref>
+              <Link href={`/home/product/${product.id}`} passHref>
                 <S.MainItemImg>
                   {product.image && (
                     <img

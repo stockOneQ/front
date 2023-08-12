@@ -17,7 +17,7 @@ import {
   fetchProductDetails,
   addProduct,
   handleDeleteProduct,
-} from '../../../pages/api/api';
+} from '../../api/api';
 
 const ProductPage = () => {
   const router = useRouter();
