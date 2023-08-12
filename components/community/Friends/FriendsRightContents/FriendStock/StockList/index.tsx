@@ -1,14 +1,14 @@
 import Image from 'next/image';
 import * as S from './style';
 
-interface IStockList {
+interface IStockListProps {
   stockName: string;
   amount: number;
   img: string;
 }
 
 /** 재고 목록 */
-const StockList = ({ stockName, amount, img }: IStockList) => {
+const StockList = ({ stockName, amount, img }: IStockListProps) => {
   return (
     <S.StockDataItem>
       <S.StockImgBox>
