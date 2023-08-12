@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
-import { postCommentListState } from 'recoil/states';
+import { isCurrentPathMainState, postCommentListState } from 'recoil/states';
 
-import WriterInfoBox from './WriterInfoBox';
+import PostInfoBox from './PostInfoBox';
 import PostContentBox from './PostContentBox';
 import PostCommentListBox from './PostCommentListBox';
 import PostCommentInputBox from './PostCommentInputBox';
@@ -24,7 +24,8 @@ interface IPostTypes {
   hit: number;
   likes: number;
   createdDate: string;
-  writer: string;
+  writerId: string;
+  writerName: string;
 }
 
 const Detail = ({ id }: { id: number }) => {
@@ -33,6 +34,8 @@ const Detail = ({ id }: { id: number }) => {
     useRecoilValue(postCommentListState); /** 더미 데이터 */
 
   const [post, setPost] = useState<IPostTypes>();
+
+  const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
 
   useEffect(() => {
     API.get(`/api/boards/${id}`)
@@ -49,41 +52,48 @@ const Detail = ({ id }: { id: number }) => {
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
-    router.push('/community/board');
+    isCurrentPathMain
+      ? router.push('/community/board')
+      : router.push('/community/board/myPosts');
   };
 
   return (
     <S.Box>
       <S.ButtonContainer>
-        {/** 수정하기 버튼은 추후 로그인 한 사용자의 데이터와 대응 시킬 것. 일단 모든 게시글에 존재. */}
-        <Link href={`/community/board/edit/${id}`}>
-          <S.EditButton>수정</S.EditButton>
-        </Link>
+        {/** 현재 임시 토큰은 사용자 2번임 */}
+        {post?.writerId === 'manager2id' && (
+          <Link href={`/community/board/edit/${id}`}>
+            <S.EditButton>수정</S.EditButton>
+          </Link>
+        )}
         <S.CloseButton onClick={handleClose}>
           <Image src={CloseSVG} alt="close" />
         </S.CloseButton>
       </S.ButtonContainer>
       {post && (
-        <S.PostSection>
-          <WriterInfoBox writer={post.writer} createdDate={post.createdDate} />
+        <S.PostBox>
+          <PostInfoBox
+            writerName={post.writerName}
+            createdDate={post.createdDate}
+          />
           <PostContentBox
             title={post.title}
             content={post.content}
             hit={post.hit}
             likes={post.likes}
           />
-        </S.PostSection>
+        </S.PostBox>
       )}
 
       <PostCommentInputBox />
 
-      <S.CommentListContainer>
-        <S.CommentCountContainer>
+      <S.CommentList>
+        <S.CommentCount>
           <Image src={CommentsSVG} alt="comment" />
           <span>댓글 {postCommentList.length}</span>
-        </S.CommentCountContainer>
+        </S.CommentCount>
         <PostCommentListBox />
-      </S.CommentListContainer>
+      </S.CommentList>
     </S.Box>
   );
 };

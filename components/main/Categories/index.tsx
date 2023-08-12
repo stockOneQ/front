@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import DropDown from '../../common/DropDown/index';
 import * as S from '../Ingredients/style';
-import searchIcon from 'public/assets/icons/common/searchIcon.svg';
+import searchIcon from 'public/assets/icons/community/search.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -19,6 +19,7 @@ type ControlBarProps = {
   handleSortChange: (selectedOption: string) => void;
   handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchTerm: string;
+  selectedSortOption: string;
 };
 
 const Categories: React.FC<ControlBarProps> = ({
@@ -32,6 +33,7 @@ const Categories: React.FC<ControlBarProps> = ({
   handleSortChange,
   handleSearchChange,
   searchTerm,
+  selectedSortOption,
 }) => {
   const [linksVisible, setLinksVisible] = useState(true);
   const [inputWidth, setInputWidth] = useState(158);
@@ -51,7 +53,14 @@ const Categories: React.FC<ControlBarProps> = ({
   return (
     <S.ControlBar>
       <S.NavBar>
-        <div style={{ display: linksVisible ? 'flex' : 'none' }}>
+        <div
+          style={{
+            display: 'flex',
+
+            opacity: linksVisible ? 1 : 0,
+            transition: 'opacity 0.3s ease',
+          }}
+        >
           <S.StyledLink
             isactive={activeLink === '전체'}
             onClick={() => handleLinkClick('전체')}
@@ -90,6 +99,7 @@ const Categories: React.FC<ControlBarProps> = ({
               toggleTopSize={48}
               list={sortOptionList}
               onChange={handleSortChange}
+              type={selectedSortOption}
             />
           </S.DropBoxContainer>
         </div>
@@ -108,9 +118,7 @@ const Categories: React.FC<ControlBarProps> = ({
             // onChange={handleSearchChange} api 호출 함수
             style={{
               display: linksVisible ? 'none' : 'block',
-
               width: `${inputWidth}px`,
-              height: `${inputHeight}px`,
               transition: 'width 1s ease, height 0.3s ease', // Add transition properties
             }}
           />

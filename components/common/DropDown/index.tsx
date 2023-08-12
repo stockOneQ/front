@@ -11,6 +11,7 @@ interface IDropDownProps {
   toggleTopSize: number;
   list: string[];
   onChange?: React.Dispatch<React.SetStateAction<string>>;
+  type: string;
 }
 
 /** 드롭다운 */
@@ -22,8 +23,9 @@ const DropDown = ({
   toggleTopSize,
   list,
   onChange,
+  type,
 }: IDropDownProps) => {
-  const [searchBy, setSearchBy] = useState(list[0]); // 카테고리 선택
+  const [searchBy, setSearchBy] = useState(type);
   const [categoryToggle, setCategoryToggle] = useState(false); // 카테고리 토글
 
   const changeValueHandler = (value: string) => {

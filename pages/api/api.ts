@@ -27,19 +27,6 @@ export const API = axios.create({
   withCredentials: true,
 });
 
-// export const fetchDataFromApi = async (storeId, userId) => {
-//     try {
-//       const response = await axios.post('/api/product', {
-//         storeID: storeId,
-//         userID: userId,
-//       });
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error fetching data from API:', error);
-//       throw error;
-//     }
-//   };
-
 //정렬 제품 api 호출
 export const productList = (
   store: number,
@@ -55,25 +42,6 @@ export const productList = (
       sort,
     },
   });
-
-// export const countingProduct = async (
-//     store: string,
-//     condition: string
-// ): Promise<AxiosResponse<ProductCounts>> => {
-//     try {
-//         const response = await axios.get('/api/product/count', {
-//             params: {
-//                 store,
-//                 condition,
-//             },
-//         });
-
-//         return response.data;
-//     } catch (error) {
-//         console.error('Error fetching product counts:', error);
-//         throw error;
-//     }
-// };
 
 //제품개수
 export const fetchProductCounts = async (
@@ -160,18 +128,46 @@ export const getProductByCategory = async (
     });
   }
 
-  return response.data;
+  return response.data.result;
 };
 
-//상세페이지
-export const fetchProductDetails = async (
-  id: number,
-): Promise<AxiosResponse<ProductItem[]>> => {
+/** 제품 삭제  */
+export const handleDeleteProduct = async productId => {
   try {
-    const response = await API.get('/api/product/${id}');
-    return response.data.result;
-    console.log(response);
+    await API.delete(`/api/product/delete/${productId}`);
   } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+};
+
+/** 제품 수정  */
+export const addProduct = async (
+  id: number,
+  formDatas: FormData,
+): Promise<void> => {
+  try {
+    await API.patch(`/api/product/edit/${id}`, formDatas, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    alert('제품 수정 성공');
+  } catch (error) {
+    console.error('Error adding product:', error);
+    throw new Error('Error adding product: ');
+  }
+};
+
+export const fetchProductDetails = async (id: number): Promise<ProductItem> => {
+  try {
+    const response = await API.get(`/api/product/${id}`);
+    if (response.data) {
+      return response.data.result;
+    } else {
+      throw new Error('Response data is undefined or has unexpected structure');
+    }
+  } catch (error) {
+    console.error('Error fetching product details:', error);
     throw new Error('Error fetching product details: ');
   }
 };
