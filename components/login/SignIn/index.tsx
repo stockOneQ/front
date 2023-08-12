@@ -2,6 +2,10 @@ import Image from 'next/image';
 import mainLogo from 'public/assets/icons/login/mainLogo.svg';
 import { useEffect, useState } from 'react';
 import * as S from './style';
+import { useRouter } from 'next/router';
+import { API } from 'pages/api/api';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 /** 로그인 초기 화면 */
 const SignIn = ({ onSignUpClick }) => {
@@ -26,6 +30,46 @@ const SignIn = ({ onSignUpClick }) => {
     console.log(isTyped);
   }, [enteredID, enteredPassword]);
 
+  const router = useRouter();
+
+  const apiInstance = axios.create({
+    baseURL: 'http://localhost:8080', // 8080 포트의 주소로 설정
+    headers: {
+      'Content-Type': 'application/json',
+      // 다른 헤더 설정
+    },
+  });
+
+  const handleLogin = async () => {
+    if (enteredID && enteredPassword) {
+      try {
+        const loginData = {
+          loginId: enteredID,
+          password: enteredPassword,
+        };
+
+        const response = await apiInstance.post(
+          '/api/auth/login',
+          JSON.stringify(loginData),
+        );
+        const accessToken = response.data.accessToken;
+        const refreshToken = response.data.refreshToken;
+        console.log('Login successful', response.data);
+        alert('로그인 성공');
+
+        // localStorage.setItem('accessToken', accessToken);
+        // localStorage.setItem('refreshToken', refreshToken);
+
+        Cookies.set('accessToken', accessToken);
+        Cookies.set('refreshToken', refreshToken);
+
+        router.push('/home/frozen'); // '/' 페이지로 이동
+      } catch (error) {
+        // 에러 처리 로직을 작성하면 됩니다.
+        console.error('Login error', error);
+      }
+    }
+  };
   return (
     <S.SignInSection>
       <S.SignInHeaderBox>
@@ -44,9 +88,7 @@ const SignIn = ({ onSignUpClick }) => {
         <S.SignInButton
           isTyped={isTyped}
           disabled={!isTyped}
-          onClick={() => {
-            console.log(123123);
-          }}
+          onClick={handleLogin}
         >
           로그인
         </S.SignInButton>
@@ -56,7 +98,9 @@ const SignIn = ({ onSignUpClick }) => {
         <div>&nbsp;</div>
         <button>비밀번호 찾기</button>
         <div>&nbsp;</div>
-        <button onClick={onSignUpClick}>회원가입</button>
+        <button onClick={onSignUpClick} type="button">
+          회원가입
+        </button>
       </S.SignInFooterBox>
     </S.SignInSection>
   );

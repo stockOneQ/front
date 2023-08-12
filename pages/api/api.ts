@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { ProductItem } from 'recoil/states';
+import Cookies from 'js-cookie';
 
 interface User {}
 
@@ -16,16 +17,33 @@ interface ProductCounts {
   totalCount: number;
 }
 
+// let accessToken = localStorage.getItem('accessToken');
+// const refreshToken = localStorage.getItem('refreshToken');
+
+const accessToken = Cookies.get('accessToken');
+console.log('accesstoken은 : ', accessToken);
+
 export const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+    Authorization: `Bearer ${accessToken}`,
     'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_API_URL,
     'Access-Control-Allow-Credentials': true,
   },
   withCredentials: true,
 });
+
+// export const API = axios.create({
+//   baseURL: process.env.NEXT_PUBLIC_API_URL,
+//   headers: {
+//     'Content-Type': 'application/json',
+//     Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+//     'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_API_URL,
+//     'Access-Control-Allow-Credentials': true,
+//   },
+//   withCredentials: true,
+// });
 
 //정렬 제품 api 호출
 export const productList = (
