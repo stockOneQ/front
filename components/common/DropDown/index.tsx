@@ -11,7 +11,7 @@ interface IDropDownProps {
   toggleTopSize: number;
   list: string[];
   onChange?: React.Dispatch<React.SetStateAction<string>>;
-  type?: string;
+  type: string;
 }
 
 /** 드롭다운 */
