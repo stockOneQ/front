@@ -6,7 +6,6 @@ import { API } from 'pages/api/api';
 
 /** community - 친구 페이지 */
 const FriendsPage = ({ friendsList }: IFriendsListContextProps) => {
-  console.log('aa', friendsList);
   const contextValue = { friendsList };
 
   return (

@@ -11,7 +11,7 @@ import {
   useState,
 } from 'react';
 import SearchResults from './SearchResults';
-import ReqFriends from './ReqFriends';
+import ReqFriends from '../ReqFriends';
 import DropDown from 'components/common/DropDown';
 
 const DROP_DOWN_LIST = ['이름', '상호명', '지역명'];
