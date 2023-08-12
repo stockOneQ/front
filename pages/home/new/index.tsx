@@ -2,34 +2,27 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { calculateDaysRemaining } from 'utils/calculateCondition';
 import axios from 'axios';
-import ImgIcon from '../public/assets/icons/imgUpload.svg';
+import ImgIcon from '../../../public/assets/icons/main/imgUpload.svg';
 import * as S from '../../../components/main/style';
 import { useState, SetStateAction, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Title } from 'components/community/Board/PostListBox/PostItemBox/style';
-import {
-  useSetRecoilState,
-  useRecoilValue,
-  RecoilRoot,
-  useRecoilState,
-} from 'recoil';
+import useScroll from 'hooks/useScroll';
+import { useSetRecoilState, RecoilRoot, useRecoilState } from 'recoil';
 import {
   approachingExpirationState,
   postMainTitleState,
   mainPostListState,
-  expiredIngredientsState,
-  insufficientIngredientsState,
   storageMethodState,
+  ProductItem,
+  StorageMethod,
 } from '../../../recoil/states';
-import Ingredients from 'components/main/Ingredients';
+import { API } from '../../api/api';
 
 const sortOptionList = ['냉동', '냉장', '상온'];
-
-let id = 1;
-const getId = () => {
-  return id++;
+type IngredientsProps = {
+  productsToShow: ProductItem[];
+  storageMethodFilter: StorageMethod;
 };
 
 /** 제품 추가 페이지 */
@@ -37,6 +30,7 @@ const getId = () => {
 const New = () => {
   const router = useRouter();
   const [productName, setProductName] = useRecoilState(postMainTitleState);
+  const { hideScroll, scrollHandler } = useScroll();
   const setPostListState = useSetRecoilState(mainPostListState);
 
   //냉동상온냉장
@@ -48,312 +42,158 @@ const New = () => {
     setSelectedStorageMethod(e.target.value);
   };
 
+  /** 필수 필드 ------------------------------------------------------------ */
+  const validateRequiredFields = () => {
+    const requiredFields = [
+      'productName',
+      'price',
+      'seller',
+      'receiptYear',
+      'receiptMonth',
+      'receiptDay',
+      'expirationYear',
+      'expirationMonth',
+      'expirationDay',
+      'requiredQuantity',
+      'quantity',
+      'orderingFrequency',
+    ];
+
+    for (const field of requiredFields) {
+      if (!formData[field]) {
+        alert(`${field}을(를) 채워주세요.`);
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const [formData, setFormData] = useState({
-    productName: '',
-    price: '',
-    seller: '',
-    receiptYear: '',
-    receiptMonth: '',
-    receiptDay: '',
-    expirationYear: '',
-    expirationMonth: '',
-    expirationDay: '',
-    ingredientLocation: '',
-    requiredQuantity: '',
-    quantity: '',
-    orderingSite: '',
-    orderingFrequency: '',
+    productName: '가나',
+    price: 100,
+    seller: '아',
+    receiptYear: '2023',
+    receiptMonth: '05',
+    receiptDay: '05',
+    expirationYear: '2024',
+    expirationMonth: '09',
+    expirationDay: '08',
+    ingredientLocation: '선반',
+    requiredQuantity: 6,
+    quantity: 8,
+    orderingSite: 'www',
+    orderingFrequency: '80',
     imageInfo: '',
     storageMethod: '',
   });
 
+  // 이미지 input 값 받기
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const handleImageChange = event => {
-    setSelectedImage(event.target.files[0]);
+  const handleImageChange = e => {
+    setSelectedImage(e.target.files[0]);
   };
-
   const handleInputChange = e => {
     const { name, value } = e.target;
     console.log('Input Changed:', name, value);
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
   };
 
-  //빈도순 정렬
-  const [postList, setPostList] = useRecoilState(mainPostListState);
-  const [sortedPostList, setSortedPostList] = useState([]);
+  const [storeId, setStoreId] = useState(1);
+
   useEffect(() => {
-    const sortedList = [...postList].sort(
-      (a, b) => a.orderingFrequency - b.orderingFrequency,
-    );
-    setSortedPostList(sortedList);
-  }, [postList]);
-
-  //유통기한임박 재료
-  const setApproachingExpiration = useSetRecoilState(
-    approachingExpirationState,
-  );
-  //유통기한 지난 재료
-  const expiredIngredients = useRecoilValue(expiredIngredientsState);
-  const setExpiredIngredients = useSetRecoilState(expiredIngredientsState);
-  //부족한 재료
-  const setinsufficientIngredients = useSetRecoilState(
-    insufficientIngredientsState,
-  );
-  //냉장 냉동 상온
-  const setstorageMethod = useRecoilValue(storageMethodState);
-
-  //현재 날짜와 만료 날짜 사이의 일수 차이를 계산하는 함수
-  const daysRemaining = calculateDaysRemaining(
-    formData.expirationYear,
-    formData.expirationMonth,
-    formData.expirationDay,
-  );
-
-  // 저장하기
-  const handleSubmit = () => {
-    if (productName.length >= 11) {
-      alert('제목을 11글자 이하로 입력해 주세요.');
-      return;
-    }
-    if (formData.orderingSite.length >= 200) {
-      alert('발주사이트를 200자 이하로 입력해 주세요.');
-      return;
-    }
-    if (formData.seller.length >= 200) {
-      alert('판매업체 29자 이하로 입력해 주세요.');
-      return;
-    }
-    if (formData.ingredientLocation.length >= 200) {
-      alert('재료위치 29자 이하로 입력해 주세요.');
-      return;
-    }
-
-    const requiredFields = [
-      'seller',
-      // "receiptYear",
-      // "receiptMonth",
-      // "receiptDay",
-      // "expirationYear",
-      // "expirationMonth",
-      // "expirationDay",
-      // "ingredientLocation",
-      // "requiredQuantity",
-      // "quantity",
-      // "orderingFrequency",
-    ];
-
-    for (const field of requiredFields) {
-      if (!formData[field]) {
-        alert(`${field}을(를) 채워주세요.`);
-        return;
-      }
-    }
-
-    const newProduct = {
-      id: getId(),
-      productName: productName,
-      price: formData.price,
-      seller: formData.seller,
-      receiptYear: formData.receiptYear,
-      receiptMonth: formData.receiptMonth,
-      receiptDay: formData.receiptDay,
-      expirationYear: formData.expirationYear,
-      expirationMonth: formData.expirationMonth,
-      expirationDay: formData.expirationDay,
-      ingredientLocation: formData.ingredientLocation,
-      requiredQuantity: formData.requiredQuantity,
-      quantity: formData.quantity,
-      orderingSite: formData.orderingSite,
-      orderingFrequency: formData.orderingFrequency,
-      imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : '',
-      storageMethod: selectedStorageMethod,
-    };
-
-    // 업데이트 recoil state
-    setPostListState(prevPostList => [...prevPostList, newProduct]);
-    const sortedList = [...postList].sort(
-      (a, b) => a.orderingFrequency - b.orderingFrequency,
-    );
-    setSortedPostList(sortedList);
-
-    const newProductId = newProduct.id.toString();
-    //부족한 재료
-    const newQuantity = parseInt(formData.quantity, 10);
-    const newRequiredQuantity = parseInt(formData.requiredQuantity, 10);
-    // 유통기한 계산
-    const daysRemaining = calculateDaysRemaining();
-
-    if (newQuantity <= newRequiredQuantity) {
-      //부족한 재료
-      setinsufficientIngredients(prevInsufficientIngredients => [
-        ...prevInsufficientIngredients,
-        newProductId,
-      ]);
-      setPostList(prevPostList =>
-        prevPostList.map(item =>
-          item.id === newProductId ? { ...item, category: 'no' } : item,
-        ),
-      );
-    } else if (daysRemaining <= 0) {
-      // 유통기한지난 재료
-      setExpiredIngredients(prevExpiredIngredients => [
-        ...prevExpiredIngredients,
-        newProductId,
-      ]);
-      setPostList(prevPostList =>
-        prevPostList.map(item =>
-          item.id === newProductId ? { ...item, category: 'afterDate' } : item,
-        ),
-      );
-    } else if (daysRemaining <= 3) {
-      // 유통기한임박 재료
-      setApproachingExpiration(prevApproachingExpiration => {
-        if (Array.isArray(prevApproachingExpiration)) {
-          return [...prevApproachingExpiration, newProductId];
-        } else {
-          return [prevApproachingExpiration, newProductId];
-        }
+    API.get('/api/product')
+      .then(response => {
+        console.log('-------------------------');
+        console.log('첫 storeId api 호출: ', response);
+        // 업데이트
+        setStoreId(response.data?.result?.storeId ?? null);
+      })
+      .catch(error => {
+        alert('요청실패');
+        console.log(error);
       });
-      setPostList(prevPostList =>
-        prevPostList.map(item =>
-          item.id === newProductId ? { ...item, category: 'beforeDate' } : item,
-        ),
-      );
-    }
-    // 저장하고 form data 초기화
-    setFormData({
-      productName: '',
-      price: '',
-      seller: '',
-      receiptYear: '',
-      receiptMonth: '',
-      receiptDay: '',
-      expirationYear: '',
-      expirationMonth: '',
-      expirationDay: '',
-      ingredientLocation: '',
-      requiredQuantity: '',
-      quantity: '',
-      orderingSite: '',
-      orderingFrequency: '',
-      imageInfo: '',
-      storageMethod: '',
-    });
+  }, []);
 
-    setProductName('');
-    // router.push("/");
+  const convertFormDataToJson = () => {
+    const jsonFormData = {
+      // id: getId(),
+      name: formData.productName,
+      price: formData.price,
+      vendor: formData.seller,
+      receivingDate: `${formData.receiptYear}-${formData.receiptMonth}-${formData.receiptDay}`,
+      expirationDate: `${formData.expirationYear}-${formData.expirationMonth}-${formData.expirationDay}`,
+      location: formData.ingredientLocation,
+      requireQuant: formData.requiredQuantity,
+      stockQuant: formData.quantity,
+      siteToOrder: formData.orderingSite,
+      orderFreq: formData.orderingFrequency,
+    };
+    return jsonFormData;
   };
 
-  /** ---------------------------------------------------------- */
-  /** ---------------------------------------------------------- */
-  /** ---------------------------------------------------------- */
+  /** 제품 추가 api 호출 -------------------------------------------------------- */
+  const handleSubmit = async () => {
+    //유효성 검사
+    if (!validateRequiredFields()) {
+      return;
+    }
 
-  //데이터 json 이미지 아직 미구현
-  // const convertFormDataToJson = () => {
-  //   const jsonFormData = {
-  //     id: getId(),
-  //     name: productName,
-  //     price: formData.price,
-  //     vendor: formData.seller,
-  //     receiptDate: `${formData.receiptYear}-${formData.receiptMonth}-${formData.receiptDay}`,
-  //     expirationDate: `${formData.expirationYear}-${formData.expirationMonth}-${formData.expirationDay}`,
-  //     location: formData.ingredientLocation,
-  //     requireQuant: formData.requiredQuantity,
-  //     stockQuant: formData.quantity,
-  //     siteToOrder: formData.orderingSite,
-  //     orderFreq: formData.orderingFrequency,
-  //     imageInfo: selectedImage ? URL.createObjectURL(selectedImage) : "", //파일선택
-  //     storageMethod: selectedStorageMethod,
-  //   };
-  //   return jsonFormData;
-  // };
+    const formDatas = new FormData();
+    const jsonFormData = convertFormDataToJson();
+    const condition = selectedStorageMethod; // 선택한 저장 방법으로 condition 값 설정
 
-  // //제품 추가 api 호출
-  // const handleSubmit = async () => {
-  //   if (productName.length >= 11) {
-  //     alert("제목을 11글자 이하로 입력해 주세요.");
-  //     return;
-  //   }
-  //   if (formData.orderingSite.length >= 200) {
-  //     alert("발주사이트를 200자 이하로 입력해 주세요.");
-  //     return;
-  //   }
-  //   if (formData.seller.length >= 200) {
-  //     alert("판매업체 29자 이하로 입력해 주세요.");
-  //     return;
-  //   }
-  //   if (formData.ingredientLocation.length >= 200) {
-  //     alert("재료위치 29자 이하로 입력해 주세요.");
-  //     return;
-  //   }
+    formDatas.append('image', selectedImage);
+    formDatas.append(
+      'editProductRequest',
+      new Blob([JSON.stringify(jsonFormData)], { type: 'application/json' }),
+    );
+    try {
+      await API.post(
+        `/api/product/add?store=${storeId}&condition=${condition}`,
+        formDatas,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+      alert('제품 추가 성공');
 
-  //   const requiredFields = [
-  //     "seller",
-  //     "receiptYear",
-  //     "receiptMonth",
-  //     "receiptDay",
-  //     "expirationYear",
-  //     "expirationMonth",
-  //     "expirationDay",
-  //     "ingredientLocation",
-  //     "requiredQuantity",
-  //     "quantity",
-  //     "orderingFrequency",
-  //   ];
+      // 초기화
+      setFormData({
+        productName: '',
+        price: '',
+        seller: '',
+        receiptYear: '',
+        receiptMonth: '',
+        receiptDay: '',
+        expirationYear: '',
+        expirationMonth: '',
+        expirationDay: '',
+        ingredientLocation: '',
+        requiredQuantity: '',
+        quantity: '',
+        orderingSite: '',
+        orderingFrequency: '',
+        imageInfo: '',
+        storageMethod: '',
+      });
+      setProductName('');
+      // router.push("/");
+    } catch (error) {
+      console.error('Error adding product:', error);
+    }
+  };
 
-  //   for (const field of requiredFields) {
-  //     if (!formData[field]) {
-  //       alert(`${field}을(를) 채워주세요.`);
-  //       return;
-  //     }
-  //   }
-
-  //   const jsonFormData = convertFormDataToJson();
-  //   try {
-  //     const response = await axios.post('/api/product/add', jsonFormData);
-  //     const newProduct = response.data;
-
-  //     // 업데이트
-  //     setPostListState((prevPostList) => [...prevPostList, newProduct]);
-
-  //     // 초기화
-  //     setFormData({
-  //       productName: "",
-  //       price: "",
-  //       seller: "",
-  //       receiptYear: "",
-  //       receiptMonth: "",
-  //       receiptDay: "",
-  //       expirationYear: "",
-  //       expirationMonth: "",
-  //       expirationDay: "",
-  //       ingredientLocation: "",
-  //       requiredQuantity: "",
-  //       quantity: "",
-  //       orderingSite: "",
-  //       orderingFrequency: "",
-  //       imageInfo: "",
-  //       storageMethod: "",
-  //     });
-  //     setProductName("");
-  //     setSelectedStorageMethod("");
-
-  //     //router.push("/");
-  //   } catch (error) {
-  //     console.error('Error adding product:', error);
-  //   }
-  // };
-
-  /** ---------------------------------------------------------- */
-  /** ---------------------------------------------------------- */
-  /** ---------------------------------------------------------- */
   return (
-    <S.Box>
+    <S.Box hideScroll={hideScroll} onScroll={scrollHandler}>
       <RecoilRoot>
-        <Title title="재료 등록">재료등록</Title>
+        <S.Title title="재료 등록">재료등록</S.Title>
         <S.TopSection>
-          <Link href="/">작성취소</Link>
+          <S.Button>
+            <Link href="/">취소</Link>
+          </S.Button>
           <S.Button type="submit" onClick={handleSubmit}>
             <Link href="/">저장</Link>
           </S.Button>
@@ -398,12 +238,22 @@ const New = () => {
                   </S.StyledInput>
                 </S.StorageMethodRadioGroup>
               </S.StyledInput>
-
               <S.ImgInput>
+                <label htmlFor="imageUpload">
+                  {!selectedImage ? (
+                    <Image
+                      src={ImgIcon}
+                      alt="Upload Icon"
+                      width={124}
+                      height={83}
+                    />
+                  ) : null}
+                </label>
                 <input
                   type="file"
+                  id="imageUpload"
                   name="imageInfo"
-                  value={formData.imageInfo}
+                  style={{ display: 'none' }}
                   onChange={handleImageChange}
                 />
                 {selectedImage && (
@@ -413,7 +263,6 @@ const New = () => {
                     style={{ maxWidth: '100%', marginTop: '10px' }}
                   />
                 )}
-                {/* <Image src={ImgIcon} alt="my_page_icon" width={124} height={83} /> */}
               </S.ImgInput>
             </S.LeftSection>
             <S.RightSection>
@@ -422,10 +271,10 @@ const New = () => {
                 <S.Input
                   type="text"
                   name="productName"
-                  value={productName}
-                  onChange={(e: {
-                    target: { value: SetStateAction<string> };
-                  }) => setProductName(e.target.value)}
+                  value={formData.productName}
+                  maxLength={11}
+                  onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -435,6 +284,7 @@ const New = () => {
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -443,7 +293,9 @@ const New = () => {
                   type="text"
                   name="seller"
                   value={formData.seller}
+                  maxLength={29}
                   onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
 
@@ -456,6 +308,7 @@ const New = () => {
                     value={formData.receiptYear}
                     onChange={handleInputChange}
                     placeholder="년도"
+                    autocomplete="off"
                   />
                   <p>년</p>
                   <S.ReceiptDateInputField
@@ -464,6 +317,7 @@ const New = () => {
                     value={formData.receiptMonth}
                     onChange={handleInputChange}
                     placeholder="월"
+                    autocomplete="off"
                   />
                   <p>월</p>
                   <S.ReceiptDateInputField
@@ -472,6 +326,7 @@ const New = () => {
                     value={formData.receiptDay}
                     onChange={handleInputChange}
                     placeholder="일"
+                    autocomplete="off"
                   />
                 </S.ReceiptDateInput>
               </S.StyledInput>
@@ -484,6 +339,7 @@ const New = () => {
                     value={formData.expirationYear}
                     onChange={handleInputChange}
                     placeholder="년도"
+                    autocomplete="off"
                   />
                   <p>년</p>
                   <S.ReceiptDateInputField
@@ -492,6 +348,7 @@ const New = () => {
                     value={formData.expirationMonth}
                     onChange={handleInputChange}
                     placeholder="월"
+                    autocomplete="off"
                   />
                   <p>월</p>
                   <S.ReceiptDateInputField
@@ -500,6 +357,7 @@ const New = () => {
                     value={formData.expirationDay}
                     onChange={handleInputChange}
                     placeholder="일"
+                    autocomplete="off"
                   />
                 </S.ReceiptDateInput>
               </S.StyledInput>
@@ -509,7 +367,9 @@ const New = () => {
                   type="text"
                   name="ingredientLocation"
                   value={formData.ingredientLocation}
+                  maxLength={29}
                   onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
               <S.QuantitySection>
@@ -520,15 +380,17 @@ const New = () => {
                     name="requiredQuantity"
                     value={formData.requiredQuantity}
                     onChange={handleInputChange}
+                    autocomplete="off"
                   />
                 </S.QuantityInput>
                 <S.QuantityInput>
-                  <S.Label>| 재고 수량</S.Label>
+                  <S.LabelQuant> 재고 수량</S.LabelQuant>
                   <S.QuantityInputField
                     type="text"
                     name="quantity"
                     value={formData.quantity}
                     onChange={handleInputChange}
+                    autocomplete="off"
                   />
                 </S.QuantityInput>
               </S.QuantitySection>
@@ -538,7 +400,9 @@ const New = () => {
                   type="text"
                   name="orderingSite"
                   value={formData.orderingSite}
+                  maxLength={200}
                   onChange={handleInputChange}
+                  autocomplete="off"
                 />
               </S.StyledInput>
 
@@ -548,18 +412,23 @@ const New = () => {
                   type="range"
                   name="orderingFrequency"
                   value={formData.orderingFrequency}
+                  min="0"
+                  max="100"
                   step="20"
                   onChange={handleInputChange}
-                ></S.Slider>
+                />
+                <S.RangeValues>
+                  <S.RangeValue>0</S.RangeValue>
+                  <S.RangeValue>20</S.RangeValue>
+                  <S.RangeValue>40</S.RangeValue>
+                  <S.RangeValue>60</S.RangeValue>
+                  <S.RangeValue>80</S.RangeValue>
+                  <S.RangeValue>100</S.RangeValue>
+                </S.RangeValues>
               </S.StyledInput>
             </S.RightSection>
           </S.InforSection>
         </S.Form>
-        {/* 추후 삭제 예정.. */}
-        <Ingredients
-          productsToShow={sortedPostList}
-          storageMethod={formData.storageMethod}
-        />
       </RecoilRoot>
     </S.Box>
   );
