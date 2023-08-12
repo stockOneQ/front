@@ -9,8 +9,8 @@ import FriendInfo from './FriendInfo';
 interface IFriendProfileProps {
   id: number;
   name: string;
-  location: string;
-  phone: string;
+  storeName: string;
+  phoneNumber: string;
   onSetting: boolean;
   isStock: boolean;
   setIsPermitted: Dispatch<SetStateAction<number>>;
@@ -22,8 +22,8 @@ interface IFriendProfileProps {
 const FriendProfile = ({
   id,
   name,
-  location,
-  phone,
+  storeName,
+  phoneNumber,
   onSetting,
   isStock,
   setIsPermitted,
@@ -72,8 +72,8 @@ const FriendProfile = ({
       )}
       <FriendInfo
         name={name}
-        location={location}
-        phone={phone}
+        storeName={storeName}
+        phoneNumber={phoneNumber}
         width={60}
         imgMarginRight="1.2rem"
       />

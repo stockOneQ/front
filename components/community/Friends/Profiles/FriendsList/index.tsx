@@ -1,8 +1,8 @@
 import FriendProfile from './FriendProfile';
 import FriendsCount from './FriendsCount';
 import * as S from './style';
-import { useEffect, useState } from 'react';
-import { API } from 'pages/api/api';
+import { useState } from 'react';
+import { IFriendsListProps } from '@Types/community/friends';
 
 export const DUMMY_DATA = [
   {
@@ -67,17 +67,8 @@ export const DUMMY_DATA = [
   },
 ];
 
-const getData = async () => {
-  try {
-    const friendsList = await API.get('/api/friends?last=5');
-    console.log('success', friendsList.data);
-  } catch (err) {
-    console.log('err', err);
-  }
-};
-
 /** 친구 목록 */
-const FriendsList = () => {
+const FriendsList = ({ friendsList }: IFriendsListProps) => {
   /** 삭제, 취소 버튼 등장 */
   const [onSetting, setOnSetting] = useState(false);
   /** 삭제 버튼 허용 */
@@ -85,28 +76,22 @@ const FriendsList = () => {
   const [isStock, setIsStock] = useState(false);
   const [deleteItem, setDeleteItem] = useState<number[]>([]);
 
-  console.log('delete', deleteItem);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
     <>
       <FriendsCount
-        count={DUMMY_DATA.length}
+        count={friendsList.length}
         onSetting={onSetting}
         isPermitted={isPermitted}
         setOnSetting={setOnSetting}
       />
       <S.FriendList>
-        {DUMMY_DATA.map(({ id, name, location, phone }) => (
+        {friendsList.map(({ id, name, storeName, phoneNumber }) => (
           <FriendProfile
             key={id}
             id={id}
             name={name}
-            location={location}
-            phone={phone}
+            storeName={storeName}
+            phoneNumber={phoneNumber}
             onSetting={onSetting}
             isStock={isStock}
             setIsStock={setIsStock}

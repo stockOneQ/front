@@ -2,15 +2,25 @@ import Image from 'next/image';
 import myProfile from 'public/assets/imgs/community/myProfile.png';
 import myPageIcon from 'public/assets/icons/community/myPageIcon.svg';
 import * as S from './style';
-import { IProfilesProps } from '..';
+import { Dispatch, SetStateAction } from 'react';
+
+interface IMyChatProfileProps {
+  setReqFriends: Dispatch<SetStateAction<boolean>>;
+}
 
 /** 나의 채팅 프로필 */
-const MyChatProfile = ({ setReqFriends }: IProfilesProps) => {
+const MyChatProfile = ({ setReqFriends }: IMyChatProfileProps) => {
   return (
     <div>
       <S.MyProfileText>나</S.MyProfileText>
       <S.MyProfileBox>
-        <Image src={myProfile} alt="my_profile" width={75} height={75} placeholder="blur" />
+        <Image
+          src={myProfile}
+          alt="my_profile"
+          width={75}
+          height={75}
+          placeholder="blur"
+        />
         <div>
           <S.MyInfoBox>
             <p>이나영</p>
@@ -19,10 +29,15 @@ const MyChatProfile = ({ setReqFriends }: IProfilesProps) => {
           <S.MyPhoneText>010-0000-0000</S.MyPhoneText>
         </div>
         <S.MyPageButton>
-        <div onClick={() => setReqFriends(prev => !prev)}>
-          <button>6</button>
-          <Image src={myPageIcon} alt="my_page_icon" width={19.64} height={26.84} />
-        </div>
+          <div onClick={() => setReqFriends(prev => !prev)}>
+            <button>6</button>
+            <Image
+              src={myPageIcon}
+              alt="my_page_icon"
+              width={19.64}
+              height={26.84}
+            />
+          </div>
         </S.MyPageButton>
       </S.MyProfileBox>
     </div>
