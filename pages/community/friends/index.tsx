@@ -1,20 +1,27 @@
+// http://localhost:3000/community/friends
+
 import Friends from 'components/community/Friends';
 import FriendsListContext, {
   IFriendsListContextProps,
 } from 'contexts/community/friends/FriendsListProvider.ts';
 import { API } from 'pages/api/api';
+import { PropsWithChildren } from 'react';
 
 /** community - 친구 페이지 */
-const FriendsPage = ({ friendsList }: IFriendsListContextProps) => {
+const FriendsPage = ({
+  friendsList,
+  children,
+}: PropsWithChildren<IFriendsListContextProps>) => {
   const contextValue = { friendsList };
 
   return (
     <FriendsListContext.Provider value={contextValue}>
-      <Friends />
+      <Friends>{children}</Friends>
     </FriendsListContext.Provider>
   );
 };
 
+// FIXME: 한 번만 api 호출하도록 수정
 export async function getStaticProps() {
   let friendsList: IFriendsListContextProps['friendsList'] = [];
   let offset = 0;

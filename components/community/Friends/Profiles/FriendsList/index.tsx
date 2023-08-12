@@ -81,13 +81,13 @@ const FriendsList = () => {
   return (
     <>
       <FriendsCount
-        count={friendsList.length}
+        count={friendsList?.length || 0}
         onSetting={onSetting}
         isPermitted={isPermitted}
         setOnSetting={setOnSetting}
       />
       <S.FriendList>
-        {friendsList.map(({ id, name, storeName, phoneNumber }) => (
+        {friendsList?.map(({ id, name, storeName, phoneNumber }) => (
           <FriendProfile
             key={id}
             id={id}
