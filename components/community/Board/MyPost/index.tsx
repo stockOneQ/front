@@ -1,14 +1,17 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
+  sortTypeState,
+  searchTypeState,
+  searchInputState,
   deleteCheckedItemsState,
   isDeleteModeState,
-  postListState,
+  myPostListState,
+  isCurrentPathMainState,
 } from 'recoil/states';
 import * as S from './style';
-import { IPostTypes } from 'recoil/states';
 
 import ControlBar from '../ControlBar';
 import PostListBox from '../PostListBox';
@@ -17,48 +20,89 @@ import RejectBtn from 'components/common/button/RejectBtn';
 import AcceptBtn from 'components/common/button/AcceptBtn';
 import SettingSVG from 'public/assets/icons/community/settingsIcon.svg';
 import LeftArrowSVG from 'public/assets/icons/community/leftArrow.svg';
+import { API } from 'pages/api/api';
 
-const MyPost = () => {
+const MyPosts = () => {
   const router = useRouter();
+  const [sortType, setSortType] = useRecoilState(sortTypeState);
+  const [searchType, setSearchType] = useRecoilState(searchTypeState);
+  const [searchInput, setSearchInput] = useRecoilState(searchInputState);
+
   const [isDeleteMode, setIsDeleteMode] = useRecoilState(isDeleteModeState);
   const [deleteCheckedItems, setDeleteCheckedItems] = useRecoilState(
     deleteCheckedItemsState,
   );
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const [postAllItems, setPostAllItems] = useRecoilState(postListState);
-  const [myPostItems, setMyPostItems] = useState<IPostTypes[]>();
 
+  const [myPostList, setMyPostList] = useRecoilState(myPostListState);
+  const [myPostListCount, setMyPostListCount] = useState(0);
+
+  const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
+
+  /** 내가 쓴 글 목록 조회 */
   useEffect(() => {
-    const filteredPosts: IPostTypes[] = postAllItems.filter(
-      post => post.writerId === 82831,
-    );
-    setMyPostItems(filteredPosts);
-  }, [postAllItems]);
+    API.get('/api/boards/my', {
+      params: {
+        page: '0',
+        sort: sortType,
+        search: searchType === '글 제목' ? '제목' : '내용',
+        word: searchInput,
+      },
+    })
+      .then(res => {
+        console.log('내가 쓴 글 조회 성공');
+        console.log(res.data);
+        setMyPostList(res.data.boardList);
+        setMyPostListCount(() => myPostList.length);
+      })
+      .catch(e => {
+        alert('내가 쓴 글 조회 실패');
+        console.log(e);
+      });
+  }, [myPostListCount, sortType, searchType, searchInput]);
 
-  /** 전체글로 버튼 클릭 시 처리 함수 */
-  const handleGoMain = () => {
-    router.push('/community/board');
-  };
-
-  /** 환경설정 버튼 or 취소/삭제 버튼 토글 이벤트 */
+  /** 환경설정 버튼 or 취소/삭제 버튼 토글 함수*/
   const handleToggle = () => {
     setIsDeleteMode(prev => !prev);
+    setIsAllChecked(false);
+    setDeleteCheckedItems([]);
+  };
+
+  /** '전체글로' 버튼 클릭 시 처리 함수 */
+  const handleGoMain = () => {
+    setIsDeleteMode(false);
+    setIsCurrentPathMain(true);
+
+    /** 내가 쓴 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
+    setSortType('최신순');
+    setSearchType('글 제목');
+    setSearchInput('');
+    router.push('/community/board');
   };
 
   /** 취소 버튼 클릭 시 처리 함수 */
   const handleCancel = () => {
     handleToggle();
-    setDeleteCheckedItems([]);
   };
 
   /** 삭제 버튼 클릭 시 처리 함수 */
-  const handleDelete = () => {
-    const newItem = postAllItems.filter(
-      item => !deleteCheckedItems.includes(item.postId),
-    );
-
-    setPostAllItems(newItem);
-    handleToggle();
+  const handleDelete = async () => {
+    try {
+      await Promise.allSettled(
+        deleteCheckedItems.map(boardId =>
+          API.delete('/api/boards/my', {
+            params: {
+              boardId: boardId,
+            },
+          }),
+        ),
+      );
+      setMyPostListCount(prev => prev - deleteCheckedItems.length);
+      handleToggle();
+    } catch (error) {
+      alert('게시글 삭제 실패');
+      console.error(error);
+    }
   };
 
   const handleAllChecked = () => {
@@ -67,7 +111,7 @@ const MyPost = () => {
     if (!isAllChecked) return setDeleteCheckedItems([]);
 
     const allCheckedItems: number[] = [];
-    myPostItems?.forEach(myPost => allCheckedItems.push(myPost.postId));
+    myPostList?.forEach(post => allCheckedItems.push(post.id));
     setDeleteCheckedItems(allCheckedItems);
   };
 
@@ -99,17 +143,20 @@ const MyPost = () => {
               <S.StyledInput
                 type="checkbox"
                 id="allItemsCheckbox"
-                checked={deleteCheckedItems.length === myPostItems?.length}
-                onClick={handleAllChecked}
+                checked={
+                  myPostList?.length !== 0 &&
+                  deleteCheckedItems.length === myPostList?.length
+                }
+                onChange={handleAllChecked}
               ></S.StyledInput>
             </S.SelectAllContainer>
           </S.DeleteOptionBox>
         )}
       </S.HeaderSection>
 
-      <PostListBox />
+      <PostListBox list={myPostList} />
     </S.Box>
   );
 };
 
-export default MyPost;
+export default MyPosts;

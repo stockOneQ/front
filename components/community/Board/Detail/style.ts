@@ -49,11 +49,11 @@ export const EditButton = styled.button`
 
 export const CloseButton = styled.button``;
 
-export const PostSection = styled.div``;
+export const PostBox = styled.div``;
 
-export const CommentListContainer = styled.div``;
+export const CommentList = styled.div``;
 
-export const CommentCountContainer = styled.div`
+export const CommentCount = styled.div`
   display: flex;
   align-items: center;
   gap: 0.7rem;

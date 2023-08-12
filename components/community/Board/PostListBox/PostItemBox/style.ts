@@ -70,6 +70,7 @@ export const PostContentSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  width: 79.1rem;
 `;
 
 export const Title = styled.div`
@@ -79,7 +80,6 @@ export const Title = styled.div`
 `;
 
 export const Content = styled.div`
-  width: 79rem;
   font-weight: 400;
   font-size: 1.8rem;
   line-height: 2.1rem;

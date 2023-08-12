@@ -11,7 +11,7 @@ const PostCommentListBox = () => {
       {postCommentList.map(value => (
         <PostCommentItemBox
           key={value.id}
-          writer={value.writer}
+          writerName={value.writer}
           content={value.content}
           date={value.uploadTime}
         />

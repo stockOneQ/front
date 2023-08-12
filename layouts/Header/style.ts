@@ -14,14 +14,15 @@ export const LogoBox = styled.div`
   align-items: center;
 
   width: 18.4rem;
-  padding: 0 6.8rem;
+  padding: 0 7.9rem 0 5.7rem;
 `;
 
 export const NavBar = styled.div`
+  position: relative;
   width: 100%;
 
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 `;
 
@@ -29,23 +30,18 @@ export const NavList = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 9rem;
-  padding: 0 7rem;
-
-  width: 100%;
-
-  p:last-child {
-    font-size: 1.4rem;
-    color: #aeaeae;
-  }
+  gap: 10rem;
+  padding-left: 7rem;
+  height: 100%;
+  white-space: nowrap;
 `;
 
 // FIXME: transition: transform 적용 안되는 에러
 export const NavItem = styled.li`
-  width: 16.5rem;
-  height: 5.4rem;
+  height: 100%;
+
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   font-size: 18px;
   font-weight: 600;
@@ -53,10 +49,9 @@ export const NavItem = styled.li`
   transition: all 0.5s ease;
 
   a {
-    width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 2rem;
   }
@@ -72,7 +67,6 @@ export const NavItem = styled.li`
 
     div {
       width: 5rem;
-
       opacity: 1;
       pointer-events: auto;
       visibility: visible;
@@ -101,5 +95,27 @@ export const NavArrowBox = styled.div`
     top: 50%;
     right: 50%;
     transform: translate(50%, -50%);
+  }
+`;
+
+export const Login = styled.div`
+  position: absolute;
+  right: 7.2%;
+  font-size: 1.4rem;
+  color: #aeaeae;
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.6rem;
+
+  &.active {
+    color: var(--color-black);
+  }
+
+  &:hover {
+    p {
+      color: var(--color-black);
+    }
   }
 `;

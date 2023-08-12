@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-
 import Detail from 'components/community/Board/Detail';
 
 const PostDetailPage = () => {
