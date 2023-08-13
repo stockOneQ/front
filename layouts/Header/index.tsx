@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Dispatch, SetStateAction } from 'react';
 import { useCookies } from 'react-cookie';
 import Cookies from 'js-cookie';
@@ -9,6 +10,15 @@ import logo from 'public/favicon/favicon-192.png';
 import headerNavArrow from 'public/assets/icons/header/headerNavArrow.svg';
 import * as H from './style';
 import { API } from 'pages/api/api';
+=======
+import Link from 'next/link';
+import Image from 'next/image';
+import logo from 'public/favicon/favicon-192.png';
+import headerNavArrow from 'public/assets/icons/header/headerNavArrow.svg';
+import * as H from './style';
+import { useRouter } from 'next/router';
+import { Dispatch, SetStateAction } from 'react';
+>>>>>>> ff4bb25 (Merge branch develop into main)
 
 interface IHeaderProps {
   setSideBarIdx: Dispatch<SetStateAction<number>>;
@@ -18,6 +28,7 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
   const router = useRouter();
   const currentPath = router.pathname;
 
+<<<<<<< HEAD
   const [, , removeRefCookie] = useCookies(['refreshToken']);
   const [, , removeAccCookie] = useCookies(['accessToken']);
   const [, , removeFcmCookie] = useCookies(['fcmToken']);
@@ -51,6 +62,8 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
     }
   };
 
+=======
+>>>>>>> ff4bb25 (Merge branch develop into main)
   return (
     <H.Header>
       <H.LogoBox>
@@ -94,7 +107,11 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
             className={currentPath.startsWith('/community') ? 'active' : ''}
           >
             <Link
+<<<<<<< HEAD
               href="/community/friends/search"
+=======
+              href="/community/friends"
+>>>>>>> ff4bb25 (Merge branch develop into main)
               onClick={() => {
                 setSideBarIdx(0);
               }}
@@ -153,7 +170,18 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
         </H.NavList>
 
         <H.Login className={currentPath.startsWith('/login') ? 'active' : ''}>
+<<<<<<< HEAD
           <button onClick={handleLogout}>로그아웃</button>
+=======
+          <Link
+            href="/login"
+            onClick={() => {
+              setSideBarIdx(0);
+            }}
+          >
+            <p>로그아웃</p>
+          </Link>
+>>>>>>> ff4bb25 (Merge branch develop into main)
         </H.Login>
       </H.NavBar>
     </H.Header>

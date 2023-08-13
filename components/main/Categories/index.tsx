@@ -2,9 +2,13 @@
 import React, { useState } from 'react';
 import DropDown from '../../common/DropDown/index';
 import * as S from '../Ingredients/style';
+<<<<<<< HEAD
 import searchIcon from 'public/assets/icons/main/mainSearch.svg';
 import addIcon from 'public/assets/icons/main/mainAdd.svg';
 import searchCancel from 'public/assets/icons/main/seachCancel.svg';
+=======
+import searchIcon from 'public/assets/icons/community/search.svg';
+>>>>>>> ff4bb25 (Merge branch develop into main)
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -48,7 +52,11 @@ const Categories: React.FC<ControlBarProps> = ({
     }
   };
 
+<<<<<<< HEAD
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+=======
+  const handleInputChange = event => {
+>>>>>>> ff4bb25 (Merge branch develop into main)
     setInputHeight(event.target.scrollHeight);
     handleSearchChange(event);
   };
@@ -63,6 +71,7 @@ const Categories: React.FC<ControlBarProps> = ({
             transition: 'opacity 0.3s ease',
           }}
         >
+<<<<<<< HEAD
           <S.StyledLinkTotal
             isactive={activeLink === '전체'}
             onClick={() => handleLinkClick('전체')}
@@ -142,6 +151,76 @@ const Categories: React.FC<ControlBarProps> = ({
             />
           </S.SeachBox>
         </S.SerchSection>
+=======
+          <S.StyledLink
+            isactive={activeLink === '전체'}
+            onClick={() => handleLinkClick('전체')}
+          >
+            전체
+            <S.CountValue>{totalCount}</S.CountValue>
+          </S.StyledLink>
+          <S.StyledLink
+            isactive={activeLink === 'afterDate'}
+            onClick={() => handleLinkClick('afterDate')}
+          >
+            유통기한 지난 재료
+            <S.CountValue>{expiredIngredientsCount}</S.CountValue>
+          </S.StyledLink>
+          <S.StyledLink
+            isactive={activeLink === 'beforeDate'}
+            onClick={() => handleLinkClick('beforeDate')}
+          >
+            유통기한 임박 재료
+            <S.CountValue>{approachingExpirationCount}</S.CountValue>
+          </S.StyledLink>
+          <S.StyledLink
+            isactive={activeLink === 'no'}
+            onClick={() => handleLinkClick('no')}
+          >
+            부족한 재료
+            <S.CountValue>{insufficientIngredientsCount}</S.CountValue>
+          </S.StyledLink>
+
+          <S.DropBoxContainer>
+            <DropDown
+              width={13.3}
+              height={3.5}
+              fontSize={1.3}
+              toggleSize={10}
+              toggleTopSize={48}
+              list={sortOptionList}
+              onChange={handleSortChange}
+              type={selectedSortOption}
+            />
+          </S.DropBoxContainer>
+        </div>
+
+        <S.SerchSection>
+          <Image
+            alt="search"
+            src={searchIcon}
+            onClick={toggleLinksVisibility}
+          />
+          <S.Input
+            type="text"
+            placeholder="제품 검색"
+            value={searchTerm}
+            onChange={handleInputChange}
+            // onChange={handleSearchChange} api 호출 함수
+            style={{
+              display: linksVisible ? 'none' : 'block',
+              width: `${inputWidth}px`,
+              transition: 'width 1s ease, height 0.3s ease', // Add transition properties
+            }}
+          />
+        </S.SerchSection>
+
+        <S.ActionButtonBox>
+          <Link href="/home/new">
+            <S.Add>+</S.Add>
+          </Link>
+        </S.ActionButtonBox>
+>>>>>>> ff4bb25 (Merge branch develop into main)
       </S.NavBar>
     </S.ControlBar>
   );

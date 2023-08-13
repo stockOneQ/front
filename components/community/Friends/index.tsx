@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Profiles from './Profiles';
 import Card from 'components/common/Card';
 import * as S from './style';
@@ -53,3 +54,28 @@ const Friends = ({ children }: IFriendsProps) => {
 };
 
 export default Friends;
+=======
+import styled from 'styled-components';
+import Profiles from './Profiles';
+import SearchFriend from './SearchFriend';
+import { useState } from 'react';
+
+const CommunitySection = styled.section`
+  display: flex;
+  gap: 7.1rem;
+`
+
+/** community - 친구 */
+const Friends = () => {
+  const [reqFriends, setReqFriends] = useState(false);
+
+  return (
+    <CommunitySection>
+      <Profiles setReqFriends={setReqFriends} />
+      <SearchFriend reqFriends={reqFriends} setReqFriends={setReqFriends} />
+    </CommunitySection>
+  );
+};
+
+export default Friends;
+>>>>>>> ff4bb25 (Merge branch develop into main)

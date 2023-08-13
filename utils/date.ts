@@ -15,6 +15,7 @@ export const formatCreatedDateToString = (props: string) => {
     return `${date[0]}년 ${date[1]}월 ${date[2]}일`;
   }
 };
+<<<<<<< HEAD
 
 /** props : "2023-07-22T01:01:00" */
 export const formatDetailCreatedDateToString = (props: string) => {
@@ -26,3 +27,5 @@ export const formatDetailCreatedDateToString = (props: string) => {
   }
   return '';
 };
+=======
+>>>>>>> ff4bb25 (Merge branch develop into main)

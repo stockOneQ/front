@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import MainPage from 'components/main/index';
 import React, { useEffect } from 'react';
 import { authState } from '../recoil/states';
@@ -9,6 +10,9 @@ import { API } from './api/api';
 import { useRecoilValue } from 'recoil';
 =======
 import HeadPart from './HeadPart';
+=======
+import MainPage from 'components/main/index';
+>>>>>>> ff4bb25 (Merge branch develop into main)
 
 >>>>>>> 4a75e27 (Revert "fix(global) : 배경화면 경로 설정")
 const Home = () => {
@@ -17,13 +21,17 @@ const Home = () => {
   return (
     <>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <MainPage />
 =======
       <HeadPart />
       <h1>hi</h1>
 >>>>>>> 4a75e27 (Revert "fix(global) : 배경화면 경로 설정")
+=======
+      <MainPage />
+>>>>>>> ff4bb25 (Merge branch develop into main)
     </>
-  )
-}
+  );
+};
 
 export default Home;

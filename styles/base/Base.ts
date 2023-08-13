@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const Base = createGlobalStyle`
   * {
@@ -13,6 +13,7 @@ const Base = createGlobalStyle`
   
   body {
 <<<<<<< HEAD
+<<<<<<< HEAD
     background: url('/background-img.png') no-repeat center center;
     background-attachment: fixed;
 =======
@@ -20,15 +21,19 @@ const Base = createGlobalStyle`
     height: 100vh;
     background: url('background-img.png') no-repeat center center;
 >>>>>>> 4a75e27 (Revert "fix(global) : 배경화면 경로 설정")
+=======
+    background: url('/background-img.png') no-repeat center center;
+    background-attachment: fixed;
+>>>>>>> ff4bb25 (Merge branch develop into main)
     background-size: cover;
   }
   
   #root {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Roboto', sans-serif;
     line-height: 1;
     font-weight: 400;
     color: var(--primary-color);
   }
-`
+`;
 
 export default Base;

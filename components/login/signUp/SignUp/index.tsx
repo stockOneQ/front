@@ -1,11 +1,19 @@
 import mainLogo from 'public/assets/icons/login/mainLogo.svg';
 import Image from 'next/image';
 import presidentActive from 'public/assets/icons/login/presidentActive.svg';
+<<<<<<< HEAD
 import presidentInactive from 'public/assets/icons/login/presidentInactive.svg';
 import employeeActive from 'public/assets/icons/login/employeeActive.svg';
 import employeeInactive from 'public/assets/icons/login/employeeInactive.svg';
 import supervisorActive from 'public/assets/icons/login/supervisorActive.svg';
 import supervisorInactive from 'public/assets/icons/login/supervisorInactive.svg';
+=======
+// import presidentInactive from 'public/assets/icons/login/presidentInactive.svg';
+import employeeActive from 'public/assets/icons/login/employeeActive.svg';
+// import employeeInactive from 'public/assets/icons/login/employeeInactive.svg';
+import supervisorActive from 'public/assets/icons/login/supervisorActive.svg';
+// import supervisorInactive from 'public/assets/icons/login/supervisorInactive.svg';
+>>>>>>> ff4bb25 (Merge branch develop into main)
 import CancelBtn from 'components/common/button/CancelBtn';
 import RejectBtn from 'components/common/button/RejectBtn';
 import NameInput from 'components/common/loginInput/NameInput';
@@ -15,6 +23,7 @@ import DigitInput from 'components/common/loginInput/DigitInput';
 import IDInput from 'components/common/loginInput/IDInput';
 import * as S from 'components/common/loginInput/style';
 import * as SS from './style';
+<<<<<<< HEAD
 import { API } from 'pages/api/api';
 import { FormEvent, MouseEvent, useState } from 'react';
 import axios from 'axios';
@@ -232,17 +241,49 @@ const SignUp = () => {
             />
           </S.SignUpInputBox>
           {/* <S.InputRow2Box>
+=======
+
+/** 회원 가입 */
+const SignUp = () => {
+  return (
+    <SS.SignUpBox>
+      <div>
+        <SS.SignUpHeaderBox>
+          <Image src={mainLogo} alt="main-logo" width={67.5} height={65} />
+          <p>스톡원큐 회원가입</p>
+        </SS.SignUpHeaderBox>
+      </div>
+      <SS.SignUpForm>
+        <div>
+          <S.InputRow1Box>
+            <NameInput />
+            <BirthInput />
+          </S.InputRow1Box>
+          <EmailInput />
+          <DigitInput />
+          <IDInput />
+          <S.InputRow2Box>
+>>>>>>> ff4bb25 (Merge branch develop into main)
             <SS.PwInputBox>
               <S.SignUpLabel htmlFor="password">비밀번호</S.SignUpLabel>
               <p>6-20자 영문, 숫자, 특수문자 사용</p>
             </SS.PwInputBox>
             <S.SignUpInput width="27.4rem" type="password" id="password" />
+<<<<<<< HEAD
           </S.InputRow2Box> */}
           {/* <S.InputRow2Box>
             <S.SignUpLabel htmlFor="passwordCheck">비밀번호 확인</S.SignUpLabel>
             <S.SignUpInput width="27.4rem" type="password" id="passwordCheck" />
           </S.InputRow2Box> */}
           {/* <S.InputRow3Box>
+=======
+          </S.InputRow2Box>
+          <S.InputRow2Box>
+            <S.SignUpLabel htmlFor="passwordCheck">비밀번호 확인</S.SignUpLabel>
+            <S.SignUpInput width="27.4rem" type="password" id="passwordCheck" />
+          </S.InputRow2Box>
+          <S.InputRow3Box>
+>>>>>>> ff4bb25 (Merge branch develop into main)
             <S.SignUpLabel>사용자 권한</S.SignUpLabel>
             <SS.AuthBox>
               <SS.AuthImgBox>
@@ -273,6 +314,7 @@ const SignUp = () => {
                 <p>슈퍼바이저</p>
               </SS.AuthImgBox>
             </SS.AuthBox>
+<<<<<<< HEAD
           </S.InputRow3Box> */}
           <S.InputRow2Box>
             <S.SignUpLabel>매장 정보</S.SignUpLabel>
@@ -300,10 +342,20 @@ const SignUp = () => {
           </S.InputRow2Box>
           <S.InputRow2Box>
             <S.SignUpLabel>주소</S.SignUpLabel>
+=======
+          </S.InputRow3Box>
+          <S.InputRow2Box>
+            <S.SignUpLabel htmlFor="store">매장 정보</S.SignUpLabel>
+            <S.SignUpInput width="27.4rem" type="text" id="store" />
+          </S.InputRow2Box>
+          <S.InputRow2Box>
+            <S.SignUpLabel htmlFor="addr">주소</S.SignUpLabel>
+>>>>>>> ff4bb25 (Merge branch develop into main)
             <SS.AddrInputBox>
               <S.SignUpInput
                 width="16.2rem"
                 placeholderLocation="left"
+<<<<<<< HEAD
                 value={storeAddress}
                 type="text"
                 id="addr"
@@ -315,6 +367,15 @@ const SignUp = () => {
               <button>주소검색</button>
             </SS.AddrInputBox>
             {/* <S.SignUpInput
+=======
+                type="text"
+                id="addr"
+                placeholder="우편번호"
+              />
+              <button>주소검색</button>
+            </SS.AddrInputBox>
+            <S.SignUpInput
+>>>>>>> ff4bb25 (Merge branch develop into main)
               width="34.5rem"
               placeholderLocation="left"
               type="text"
@@ -325,7 +386,11 @@ const SignUp = () => {
               placeholderLocation="left"
               type="text"
               placeholder="상세주소"
+<<<<<<< HEAD
             /> */}
+=======
+            />
+>>>>>>> ff4bb25 (Merge branch develop into main)
           </S.InputRow2Box>
         </div>
         <SS.SignUpBtnBox>
@@ -335,6 +400,7 @@ const SignUp = () => {
             font="2.4rem"
             label="회원가입"
             disabled={false}
+<<<<<<< HEAD
             type="submit"
             onClick={(event: any) => {
               event.preventDefault();
@@ -349,6 +415,15 @@ const SignUp = () => {
               label="취소"
             />
           </Link>
+=======
+          />
+          <RejectBtn
+            width="20.2rem"
+            height="11rem"
+            font="2.4rem"
+            label="취소"
+          />
+>>>>>>> ff4bb25 (Merge branch develop into main)
         </SS.SignUpBtnBox>
       </SS.SignUpForm>
     </SS.SignUpBox>

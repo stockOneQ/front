@@ -41,20 +41,29 @@ const Editor = ({
       ? router.push(`/community/board/${id}`)
       : router.push('/community/board');
 
+<<<<<<< HEAD
     /** 초기화 */
+=======
+>>>>>>> ff4bb25 (Merge branch develop into main)
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
   };
 
   const handleSubmit = () => {
+<<<<<<< HEAD
     /** ----------------- 게시글 수정 API ----------------- */
     if (isEdit) {
+=======
+    if (isEdit) {
+      /** 게시글 수정 */
+>>>>>>> ff4bb25 (Merge branch develop into main)
       API.patch(`/api/boards/${id}`, {
         title: titleInput,
         content: contentInput,
       })
         .then(() => {
+<<<<<<< HEAD
           console.log(`${id}번 게시글 수정 성공`);
         })
         .catch(e => {
@@ -63,6 +72,18 @@ const Editor = ({
         });
     } else {
       /** ----------------- 게시글 등록 API ----------------- */
+=======
+          console.log('게시글 수정 성공');
+        })
+        .catch(e => {
+          alert('게시글 수정 실패');
+          console.log(`수정할 제목 ${titleInput} 수정할 내용 ${contentInput}`);
+          console.log(e);
+          throw e;
+        });
+    } else {
+      /** 게시글 등록 */
+>>>>>>> ff4bb25 (Merge branch develop into main)
       API.post('/api/boards', {
         title: titleInput,
         content: contentInput,
@@ -71,7 +92,13 @@ const Editor = ({
           console.log('게시글 등록 성공');
         })
         .catch(e => {
+<<<<<<< HEAD
           console.error(e);
+=======
+          alert('게시글 등록 실패');
+          console.log(`등록할 제목 ${titleInput} 등록할 내용 ${contentInput}`);
+          console.log(e);
+>>>>>>> ff4bb25 (Merge branch develop into main)
           throw e;
         });
     }

@@ -4,8 +4,12 @@ export const Box = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+<<<<<<< HEAD
   justify-content: end;
   align-items: center;
+=======
+  justify-content: center;
+>>>>>>> ff4bb25 (Merge branch develop into main)
 
   height: 95%;
 `;
@@ -17,7 +21,11 @@ export const HeaderSection = styled.div`
   left: 0;
 `;
 
+<<<<<<< HEAD
 export const GoToMyPostButton = styled.button`
+=======
+export const MyPostButtonContainer = styled.button`
+>>>>>>> ff4bb25 (Merge branch develop into main)
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +42,11 @@ export const GoToMyPostButton = styled.button`
   }
 `;
 
+<<<<<<< HEAD
 export const PostUploadButtonContainer = styled.button`
+=======
+export const WriteButtonContainer = styled.button`
+>>>>>>> ff4bb25 (Merge branch develop into main)
   position: absolute;
   top: 75%;
   right: 8%;

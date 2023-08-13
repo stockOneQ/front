@@ -4,7 +4,11 @@ export const Box = styled.div`
   position: relative;
   height: 95%;
   overflow-y: auto;
+<<<<<<< HEAD
   padding: 0 6rem 0 1.6rem;
+=======
+  padding: 0 3.3rem 0 1.6rem;
+>>>>>>> ff4bb25 (Merge branch develop into main)
 
   &::-webkit-scrollbar {
     width: 0.9rem;
@@ -17,12 +21,21 @@ export const Box = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
+<<<<<<< HEAD
   display: flex;
   justify-content: center;
   align-items: start;
   gap: 3rem;
 
   margin-right: 1.5rem;
+=======
+  position: absolute;
+  top: 1.4%;
+  right: 4%;
+
+  display: flex;
+  gap: 3rem;
+>>>>>>> ff4bb25 (Merge branch develop into main)
 `;
 
 export const EditButton = styled.button`
@@ -47,6 +60,7 @@ export const EditButton = styled.button`
   }
 `;
 
+<<<<<<< HEAD
 export const CloseButton = styled.button`
   margin-top: 0.7rem;
 `;
@@ -61,13 +75,26 @@ export const HeaderSection = styled.div`
 export const CommentList = styled.div``;
 
 export const CommentTotalCount = styled.div`
+=======
+export const CloseButton = styled.button``;
+
+export const PostBox = styled.div``;
+
+export const CommentList = styled.div``;
+
+export const CommentCount = styled.div`
+>>>>>>> ff4bb25 (Merge branch develop into main)
   display: flex;
   align-items: center;
   gap: 0.7rem;
 
+<<<<<<< HEAD
   padding: 2.6rem 0 2rem 0;
 
   margin-bottom: 4.5rem;
+=======
+  padding: 9rem 0 2rem 0;
+>>>>>>> ff4bb25 (Merge branch develop into main)
 
   border-bottom: 1px solid #e1e1e1;
 
