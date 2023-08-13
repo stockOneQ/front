@@ -17,6 +17,7 @@ import * as S from 'components/common/loginInput/style';
 import * as SS from './style';
 import { API } from 'pages/api/api';
 import { useState } from 'react';
+import axios from 'axios';
 
 const SignUp = ({ onSuccess }) => {
   const [name, setName] = useState('이가영');
@@ -38,6 +39,14 @@ const SignUp = ({ onSuccess }) => {
   const [storeSector, setStoreSector] = useState('카페');
   const [storeAddress, setStoreAddress] = useState('서울시중구');
 
+  const apiInstance = axios.create({
+    baseURL: 'http://localhost:8080', // 8080 포트의 주소로 설정
+    headers: {
+      'Content-Type': 'application/json',
+      // 다른 헤더 설정
+    },
+  });
+
   const handleSignUp = async () => {
     const userData = {
       name: name,
@@ -51,7 +60,7 @@ const SignUp = ({ onSuccess }) => {
       storeAddress: storeAddress,
     };
     try {
-      const response = await API.post(
+      const response = await apiInstance.post(
         '/api/user/sign-up/manager',
         JSON.stringify(userData),
       );
