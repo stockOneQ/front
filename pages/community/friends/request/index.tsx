@@ -1,7 +1,7 @@
 // http://localhost:3000/community/friends/request
 
 import Friends from 'components/community/Friends';
-import ReqFriends from 'components/community/Friends/FriendsRightContents/ReqFriends';
+import ReqFriends from 'components/community/Friends/friendsRightContents/ReqFriends';
 import FriendsListContext, {
   IFriendsListContextProps,
 } from 'contexts/community/friends/FriendsListProvider.ts';

@@ -1,7 +1,7 @@
 // http://localhost:3000/community/friends/stock
 
 import Friends from 'components/community/Friends';
-import FriendStock from 'components/community/Friends/FriendsRightContents/FriendStock';
+import FriendStock from 'components/community/Friends/friendsRightContents/FriendStock';
 import FriendsListContext, {
   IFriendsListContextProps,
 } from 'contexts/community/friends/FriendsListProvider.ts';

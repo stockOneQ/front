@@ -1,7 +1,7 @@
 // http://localhost:3000/community/friends/search
 
 import Friends from 'components/community/Friends';
-import SearchFriend from 'components/community/Friends/FriendsRightContents/SearchFriend';
+import SearchFriend from 'components/community/Friends/friendsRightContents/SearchFriend';
 import FriendsListContext, {
   IFriendsListContextProps,
 } from 'contexts/community/friends/FriendsListProvider.ts';

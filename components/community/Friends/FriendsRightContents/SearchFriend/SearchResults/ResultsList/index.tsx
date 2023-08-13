@@ -22,12 +22,12 @@ const ResultsList = ({ enteredValue, searchBy }: IResultsListProps) => {
     if (searchBy === '상호명') {
       spaceIdxRef.current = storeName.indexOf(' ');
 
-      return storeName.slice(spaceIdxRef.current).includes(enteredValue);
+      return storeName.slice(0, spaceIdxRef.current).includes(enteredValue);
     }
     if (searchBy === '지역명') {
       spaceIdxRef.current = storeName.indexOf(' ');
 
-      return storeName.slice(0, spaceIdxRef.current).includes(enteredValue);
+      return storeName.slice(spaceIdxRef.current).includes(enteredValue);
     }
   });
 
