@@ -1,10 +1,10 @@
 import EachWaitingFriend from './EachWaitingFriend';
 import * as S from '../style';
 import useScroll from 'hooks/useScroll';
-import { IFriendsListContextProps } from 'contexts/community/friends/FriendsListProvider.ts';
+import { FriendsListType } from '@Types/community/friends/friendsList';
 
 interface IWaitingFriendsProps {
-  waitingFriendsList: IFriendsListContextProps['friendsList'];
+  waitingFriendsList: FriendsListType['friendsList'];
 }
 /** 대기중인 친구 */
 const WaitingFriends = ({ waitingFriendsList }: IWaitingFriendsProps) => {

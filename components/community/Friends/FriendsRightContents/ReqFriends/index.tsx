@@ -1,12 +1,12 @@
-import { IFriendsListContextProps } from 'contexts/community/friends/FriendsListProvider.ts';
 import WaitingFriends from './WaitingFriends';
 import WantingBefriends from './WantingBefriends';
 import * as S from './style';
 import Link from 'next/link';
+import { FriendsListType } from '@Types/community/friends/friendsList';
 
 interface IReqFriendsProps {
-  waitingFriendsList: IFriendsListContextProps['friendsList'];
-  reqFriendsList: IFriendsListContextProps['friendsList'];
+  waitingFriendsList: FriendsListType['friendsList'];
+  reqFriendsList: FriendsListType['friendsList'];
 }
 
 /** 친구 신청 목록 화면 */

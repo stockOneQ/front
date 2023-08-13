@@ -1,15 +1,5 @@
+import { FriendsListType } from '@Types/community/friends/friendsList';
 import { createContext } from 'react';
-
-type FriendsListType = {
-  friendsList: {
-    id: number;
-    name: string;
-    storeName: string;
-    phoneNumber: string;
-    friendStatus: string;
-    lastModifiedDate: string;
-  }[];
-};
 
 export interface IFriendsListContextProps {
   friendsList: FriendsListType['friendsList'];

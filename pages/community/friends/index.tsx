@@ -1,9 +1,8 @@
 // http://localhost:3000/community/friends
 
+import { FriendsListType } from '@Types/community/friends/friendsList';
 import Friends from 'components/community/Friends';
-import FriendsListContext, {
-  IFriendsListContextProps,
-} from 'contexts/community/friends/FriendsListProvider.ts';
+import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 import { API } from 'pages/api/api';
 import { PropsWithChildren } from 'react';
 
@@ -11,7 +10,7 @@ import { PropsWithChildren } from 'react';
 const FriendsPage = ({
   friendsList,
   children,
-}: PropsWithChildren<IFriendsListContextProps>) => {
+}: PropsWithChildren<FriendsListType>) => {
   const contextValue = { friendsList };
 
   return (
@@ -23,7 +22,7 @@ const FriendsPage = ({
 
 // FIXME: 한 번만 api 호출하도록 수정
 export async function getStaticProps() {
-  let friendsList: IFriendsListContextProps['friendsList'] = [];
+  let friendsList: FriendsListType['friendsList'] = [];
   let offset = 0;
   const FRIENDS_COUNT = 8; // 백에서 8명 씩 끊어서 전송
 

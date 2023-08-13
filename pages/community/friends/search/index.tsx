@@ -1,14 +1,13 @@
 // http://localhost:3000/community/friends/search
 
+import { FriendsListType } from '@Types/community/friends/friendsList';
 import Friends from 'components/community/Friends';
 import SearchFriend from 'components/community/Friends/friendsRightContents/SearchFriend';
-import FriendsListContext, {
-  IFriendsListContextProps,
-} from 'contexts/community/friends/FriendsListProvider.ts';
+import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 import { API } from 'pages/api/api';
 
 /** community - 친구 검색 페이지 */
-const SearchFriendsPage = ({ friendsList }: IFriendsListContextProps) => {
+const SearchFriendsPage = ({ friendsList }: FriendsListType) => {
   const contextValue = { friendsList };
 
   return (
@@ -22,7 +21,7 @@ const SearchFriendsPage = ({ friendsList }: IFriendsListContextProps) => {
 
 // FIXME: 한 번만 api 호출하도록 수정
 export async function getStaticProps() {
-  let friendsList: IFriendsListContextProps['friendsList'] = [];
+  let friendsList: FriendsListType['friendsList'] = [];
   let offset = 0;
   const FRIENDS_COUNT = 8; // 백에서 8명 씩 끊어서 전송
 

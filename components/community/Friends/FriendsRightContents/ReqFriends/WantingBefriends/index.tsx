@@ -1,10 +1,10 @@
 import EachWantingFriend from './EachWantingFriend';
 import * as S from '../style';
 import useScroll from 'hooks/useScroll';
-import { IFriendsListContextProps } from 'contexts/community/friends/FriendsListProvider.ts';
+import { FriendsListType } from '@Types/community/friends/friendsList';
 
 interface IWantingFriendsProps {
-  reqFriendsList: IFriendsListContextProps['friendsList'];
+  reqFriendsList: FriendsListType['friendsList'];
 }
 
 /** 친구 신청 목록 */

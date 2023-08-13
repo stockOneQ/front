@@ -1,16 +1,15 @@
 // http://localhost:3000/community/friends/request
 
+import { FriendsListType } from '@Types/community/friends/friendsList';
 import Friends from 'components/community/Friends';
 import ReqFriends from 'components/community/Friends/friendsRightContents/ReqFriends';
-import FriendsListContext, {
-  IFriendsListContextProps,
-} from 'contexts/community/friends/FriendsListProvider.ts';
+import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 import { API } from 'pages/api/api';
 
 interface IReqFriendsPageProps {
-  friendsList: IFriendsListContextProps['friendsList'];
-  waitingFriendsList: IFriendsListContextProps['friendsList'];
-  reqFriendsList: IFriendsListContextProps['friendsList'];
+  friendsList: FriendsListType['friendsList'];
+  waitingFriendsList: FriendsListType['friendsList'];
+  reqFriendsList: FriendsListType['friendsList'];
 }
 
 /** community - 친구 요청 페이지 */
@@ -35,9 +34,9 @@ const ReqFriendsPage = ({
 
 // FIXME: 한 번만 api 호출하도록 수정
 export async function getStaticProps() {
-  let friendsList: IFriendsListContextProps['friendsList'] = [];
-  let waitingFriendsList: IFriendsListContextProps['friendsList'] = [];
-  let reqFriendsList: IFriendsListContextProps['friendsList'] = [];
+  let friendsList: FriendsListType['friendsList'] = [];
+  let waitingFriendsList: FriendsListType['friendsList'] = [];
+  let reqFriendsList: FriendsListType['friendsList'] = [];
   let offset = 0;
   const FRIENDS_COUNT = 8; // 백에서 8명 씩 끊어서 전송
 
