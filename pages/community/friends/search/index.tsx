@@ -2,7 +2,7 @@
 
 import { FriendsListType } from '@Types/community/friends/friendsList';
 import Friends from 'components/community/Friends';
-import SearchFriend from 'components/community/Friends/friendsRightContents/SearchFriend';
+import SearchFriend from 'components/community/Friends/FriendsRightContents/SearchFriend';
 import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 import { API } from 'pages/api/api';
 

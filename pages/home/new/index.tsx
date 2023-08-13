@@ -2,33 +2,29 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import axios from 'axios';
 import ImgIcon from '../../../public/assets/icons/main/imgUpload.svg';
 import * as S from '../../../components/main/style';
-import { useState, SetStateAction, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import useScroll from 'hooks/useScroll';
 import { useSetRecoilState, RecoilRoot, useRecoilState } from 'recoil';
 import {
-  approachingExpirationState,
   postMainTitleState,
   mainPostListState,
-  storageMethodState,
   ProductItem,
   StorageMethod,
 } from '../../../recoil/states';
 import { API } from '../../api/api';
 
-const sortOptionList = ['냉동', '냉장', '상온'];
-type IngredientsProps = {
-  productsToShow: ProductItem[];
-  storageMethodFilter: StorageMethod;
-};
+// const sortOptionList = ['냉동', '냉장', '상온'];
+// type IngredientsProps = {
+//   productsToShow: ProductItem[];
+//   storageMethodFilter: StorageMethod;
+// };
 
 /** 제품 추가 페이지 */
 
 const New = () => {
-  const router = useRouter();
   const [productName, setProductName] = useRecoilState(postMainTitleState);
   const { hideScroll, scrollHandler } = useScroll();
   const setPostListState = useSetRecoilState(mainPostListState);

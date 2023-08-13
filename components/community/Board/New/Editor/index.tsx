@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import router from 'next/router';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
-  isCurrentPathMainState,
   postContentState,
   postTitleState,
   searchInputState,
