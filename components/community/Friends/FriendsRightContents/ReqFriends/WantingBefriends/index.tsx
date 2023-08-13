@@ -1,24 +1,31 @@
 import EachWantingFriend from './EachWantingFriend';
 import * as S from '../style';
-import { DUMMY_DATA } from 'components/community/Friends/Profiles/FriendsList';
 import useScroll from 'hooks/useScroll';
+import { IFriendsListContextProps } from 'contexts/community/friends/FriendsListProvider.ts';
+
+interface IWantingFriendsProps {
+  reqFriendsList: IFriendsListContextProps['friendsList'];
+}
 
 /** 친구 신청 목록 */
-const WantingBefriends = () => {
+const WantingBefriends = ({ reqFriendsList }: IWantingFriendsProps) => {
   const { hideScroll, scrollHandler } = useScroll();
 
   return (
     <div>
-      <S.HeadParagraph>친구 신청 목록 6</S.HeadParagraph>
+      <S.HeadParagraph>
+        친구 신청 목록 {reqFriendsList?.length || 0}
+      </S.HeadParagraph>
       <S.EachWantingFriendsBox hideScroll={hideScroll} onScroll={scrollHandler}>
-        {DUMMY_DATA.map(({ id, name, location, phone }) => (
-          <EachWantingFriend
-            key={id}
-            name={name}
-            location={location}
-            phone={phone}
-          />
-        ))}
+        {reqFriendsList &&
+          reqFriendsList.map(({ id, name, storeName, phoneNumber }) => (
+            <EachWantingFriend
+              key={id}
+              name={name}
+              storeName={storeName}
+              phoneNumber={phoneNumber}
+            />
+          ))}
       </S.EachWantingFriendsBox>
     </div>
   );

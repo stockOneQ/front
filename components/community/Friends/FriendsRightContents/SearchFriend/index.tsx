@@ -47,6 +47,7 @@ const SearchFriend = () => {
             toggleTopSize={46}
             list={DROP_DOWN_LIST}
             onChange={setSearchBy}
+            type={searchBy}
           />
         </S.DropBoxContainer>
         <S.SearchFriendsInput

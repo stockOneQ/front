@@ -7,14 +7,27 @@ import FriendsListContext, {
 } from 'contexts/community/friends/FriendsListProvider.ts';
 import { API } from 'pages/api/api';
 
+interface IReqFriendsPageProps {
+  friendsList: IFriendsListContextProps['friendsList'];
+  waitingFriendsList: IFriendsListContextProps['friendsList'];
+  reqFriendsList: IFriendsListContextProps['friendsList'];
+}
+
 /** community - 친구 요청 페이지 */
-const ReqFriendsPage = ({ friendsList }: IFriendsListContextProps) => {
+const ReqFriendsPage = ({
+  friendsList,
+  waitingFriendsList,
+  reqFriendsList,
+}: IReqFriendsPageProps) => {
   const contextValue = { friendsList };
 
   return (
     <FriendsListContext.Provider value={contextValue}>
       <Friends>
-        <ReqFriends />
+        <ReqFriends
+          waitingFriendsList={waitingFriendsList}
+          reqFriendsList={reqFriendsList}
+        />
       </Friends>
     </FriendsListContext.Provider>
   );
@@ -23,14 +36,16 @@ const ReqFriendsPage = ({ friendsList }: IFriendsListContextProps) => {
 // FIXME: 한 번만 api 호출하도록 수정
 export async function getStaticProps() {
   let friendsList: IFriendsListContextProps['friendsList'] = [];
+  let waitingFriendsList: IFriendsListContextProps['friendsList'] = [];
+  let reqFriendsList: IFriendsListContextProps['friendsList'] = [];
   let offset = 0;
   const FRIENDS_COUNT = 8; // 백에서 8명 씩 끊어서 전송
 
   while (true) {
     // TODO: Promise.allSettled 적용 해보기
     try {
-      const res = await API.get(`/api/friends?last=${offset}`);
-      const friendsData = res.data.friends;
+      const friendsListRes = await API.get(`/api/friends?last=${offset}`);
+      const friendsData = friendsListRes.data.friends;
 
       friendsList = [...friendsList, ...friendsData];
       offset += FRIENDS_COUNT;
@@ -42,9 +57,47 @@ export async function getStaticProps() {
     }
   }
 
+  while (true) {
+    // TODO: Promise.allSettled 적용 해보기
+    try {
+      const reqFriendsRes = await API.get(
+        `/api/friends/waiting?last=${offset}`,
+      );
+      const reqFriendsData = reqFriendsRes.data.friends;
+
+      waitingFriendsList = [...waitingFriendsList, ...reqFriendsData];
+      offset += FRIENDS_COUNT;
+
+      if (reqFriendsData.length < 8) break; // 더 이상 받아올 친구 목록 없으면 break;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
+  while (true) {
+    // TODO: Promise.allSettled 적용 해보기
+    try {
+      const reqFriendsRes = await API.get(
+        `/api/friends/requested?last=${offset}`,
+      );
+      const reqFriendsData = reqFriendsRes.data.friends;
+
+      reqFriendsList = [...reqFriendsList, ...reqFriendsData];
+      offset += FRIENDS_COUNT;
+
+      if (reqFriendsData.length < 8) break; // 더 이상 받아올 친구 목록 없으면 break;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
   return {
     props: {
       friendsList,
+      waitingFriendsList,
+      reqFriendsList,
     },
     revalidate: 10,
   };
