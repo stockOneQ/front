@@ -1,17 +1,12 @@
 //ingredients/index.tsx
-import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import * as S from './style';
 import Link from 'next/link';
 import Categories from '../Categories';
 import {
-  selectedProductState,
   mainPostListState,
-  approachingExpirationState,
-  expiredIngredientsState,
-  insufficientIngredientsState,
   StorageMethod,
   ProductItem,
 } from '../../../recoil/states';
@@ -20,7 +15,6 @@ import {
   API,
   productList,
   fetchProductCounts,
-  fetchProductDetails,
   getProductByCategory,
 } from 'pages/api/api';
 
@@ -36,10 +30,7 @@ interface productAll {
   image: string;
 }
 
-const Ingredients = ({
-  productsToShow,
-  storageMethodFilter,
-}: IngredientsProps) => {
+const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
 
   const router = useRouter();
