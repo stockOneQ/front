@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ResultsPlaceholderBox = styled.div`
+const SearchPlaceholderBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,8 +11,6 @@ const ResultsPlaceholderBox = styled.div`
   font-size: 1.3rem;
   font-weight: 500;
   line-height: normal;
-`
+`;
 
-export {
-  ResultsPlaceholderBox
-}
+export { SearchPlaceholderBox };

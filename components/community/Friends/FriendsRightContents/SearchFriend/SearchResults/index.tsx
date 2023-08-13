@@ -1,6 +1,6 @@
 import { FriendsListType } from '@Types/community/friends/friendsList';
 import ResultsList from './ResultsList';
-import ResultsPlaceholder from './ResultsPlaceholder';
+import * as S from './style';
 
 interface ISearchResultsProps {
   searchResultList: FriendsListType['friendsList'];
@@ -12,7 +12,11 @@ const SearchResults = ({ searchResultList }: ISearchResultsProps) => {
 
   return (
     <>
-      {!isSearch && <ResultsPlaceholder />}
+      {!isSearch && (
+        <S.NoSearchResultParagraph>
+          해당하는 가게가 존재하지 않습니다.
+        </S.NoSearchResultParagraph>
+      )}
       {isSearch && <ResultsList searchResultList={searchResultList} />}
     </>
   );

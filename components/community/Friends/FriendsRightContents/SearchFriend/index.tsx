@@ -6,6 +6,7 @@ import SearchResults from './SearchResults';
 import DropDown from 'components/common/DropDown';
 import { FriendsListType } from '@Types/community/friends/friendsList';
 import { API } from 'pages/api/api';
+import SearchPlaceholder from './SearchPlaceholder';
 
 const DROP_DOWN_LIST = ['이름', '상호명', '지역명'];
 
@@ -87,8 +88,11 @@ const SearchFriend = () => {
           <Image src={searchIcon} alt="my_page_icon" width={17} height={17} />
         </button>
       </S.SearchFriendBox>
-      {isLoading && <h1>Loading....</h1>}
-      {!isLoading && <SearchResults searchResultList={searchResultList} />}
+      {!enteredValue && <SearchPlaceholder />}
+      {enteredValue && isLoading && <h1>Loading....</h1>}
+      {enteredValue && !isLoading && (
+        <SearchResults searchResultList={searchResultList} />
+      )}
     </>
   );
 };
