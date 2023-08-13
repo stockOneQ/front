@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import searchIcon from 'public/assets/icons/common/searchIcon.svg';
 import * as S from './style';
-import { KeyboardEvent, MouseEvent, useRef, useState } from 'react';
+import { KeyboardEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import SearchResults from './SearchResults';
 import DropDown from 'components/common/DropDown';
+import { FriendsListType } from '@Types/community/friends/friendsList';
+import { API } from 'pages/api/api';
 
 const DROP_DOWN_LIST = ['이름', '상호명', '지역명'];
 
@@ -13,6 +15,10 @@ const SearchFriend = () => {
 
   const [searchBy, setSearchBy] = useState('이름'); // 카테고리 선택
   const [enteredValue, setEnteredValue] = useState(''); // 재렌더링하기 위함
+  const [searchResultList, setSearchResultList] = useState<
+    FriendsListType['friendsList']
+  >([]);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 중
 
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     // enter 입력 시 검색
@@ -33,6 +39,25 @@ const SearchFriend = () => {
       );
     }
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const getSearchedUserData = async () => {
+      try {
+        const searchedUserRes = await API.get(
+          `/api/user/friend?search=${searchBy}&word=${enteredValue}&last=-1`,
+        );
+
+        setIsLoading(false);
+        setSearchResultList(searchedUserRes.data.searchedUser);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    getSearchedUserData();
+  }, [searchBy, enteredValue]);
 
   return (
     <>
@@ -62,7 +87,8 @@ const SearchFriend = () => {
           <Image src={searchIcon} alt="my_page_icon" width={17} height={17} />
         </button>
       </S.SearchFriendBox>
-      <SearchResults enteredValue={enteredValue} searchBy={searchBy} />
+      {isLoading && <h1>Loading....</h1>}
+      {!isLoading && <SearchResults searchResultList={searchResultList} />}
     </>
   );
 };
