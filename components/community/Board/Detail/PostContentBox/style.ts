@@ -8,7 +8,7 @@ export const Box = styled.div`
   /* Note: backdrop-filter has minimal browser support */
   border-radius: 30px;
 
-  padding: 4rem 5rem;
+  padding: 5.2rem;
 `;
 
 export const HeaderSection = styled.div`
