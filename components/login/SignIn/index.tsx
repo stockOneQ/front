@@ -40,6 +40,23 @@ const SignIn = ({ onSignUpClick }) => {
     },
   });
 
+  const handleLogout = async () => {
+    try {
+      // 로그아웃 API 호출
+      const response = await API.post('/api/auth/logout');
+      if (response.status === 204) {
+        // 로그아웃 성공 시 다음 동작 수행
+        console.log('로그아웃 성공');
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
+        Cookies.remove('fcmToken');
+        // 여기에 추가적인 로직을 넣을 수 있습니다.
+      }
+    } catch (error) {
+      console.error('로그아웃 에러', error);
+    }
+  };
+
   const handleLogin = async () => {
     if (enteredID && enteredPassword) {
       try {
@@ -91,6 +108,13 @@ const SignIn = ({ onSignUpClick }) => {
           onClick={handleLogin}
         >
           로그인
+        </S.SignInButton>
+        <S.SignInButton
+          isTyped={isTyped}
+          disabled={!isTyped}
+          onClick={handleLogout}
+        >
+          로그아웃
         </S.SignInButton>
       </S.SignInBodyBox>
       <S.SignInFooterBox>
