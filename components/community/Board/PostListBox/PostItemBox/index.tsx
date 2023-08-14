@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { deleteCheckedItemsState, isDeleteModeState } from 'recoil/states';
-import { IPostPreviewTypes } from 'recoil/states';
+import {
+  deleteCheckedItemsState,
+  isDeleteModeState,
+  IPostPreviewTypes,
+} from 'recoil/states';
 import ViewsSVG from 'public/assets/icons/community/views.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
 import LikesSVG from 'public/assets/icons/community/likes.svg';
 
 import * as S from './style';
-import Link from 'next/link';
 
 const PostItem = ({
   id,
@@ -42,15 +45,18 @@ const PostItem = ({
           <S.Content>{content.substring(0, 100)}</S.Content>
         </S.PostContentSection>
         <S.PostInteractionSection>
-          <S.Interaction>
-            <Image alt="views" src={ViewsSVG} />
-            <span>{hit}</span>
-          </S.Interaction>
-          <S.Interaction>
-            <Image alt="comments" src={CommentsSVG} />
-            <span>{comment}</span>
-          </S.Interaction>
-          <S.Interaction>
+          <S.Left>
+            <S.Interaction type="views">
+              <Image alt="views" src={ViewsSVG} />
+              <span>{hit}</span>
+            </S.Interaction>
+            <S.Interaction type="comments">
+              <Image alt="comments" src={CommentsSVG} />
+              <span>{comment}</span>
+            </S.Interaction>
+          </S.Left>
+
+          <S.Interaction type="likes">
             <Image alt="likes" src={LikesSVG} />
             <span>{likes}</span>
           </S.Interaction>
