@@ -95,7 +95,7 @@ export const Interaction = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
 
   font-weight: 400;
   font-size: 1.5rem;
