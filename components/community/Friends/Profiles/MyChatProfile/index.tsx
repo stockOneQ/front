@@ -3,9 +3,14 @@ import myProfile from 'public/assets/imgs/community/myProfile.png';
 import myPageIcon from 'public/assets/icons/community/myPageIcon.svg';
 import * as S from './style';
 import Link from 'next/link';
+import { useContext } from 'react';
+import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 
 /** 나의 채팅 프로필 */
 const MyChatProfile = () => {
+  // FIXME: 페이지 이동 시 상태 날아가는 오류
+  const { reqFriendsList } = useContext(FriendsListContext);
+
   return (
     <div>
       <S.MyProfileText>나</S.MyProfileText>
@@ -26,7 +31,7 @@ const MyChatProfile = () => {
         </div>
         <S.MyPageButton>
           <Link href="/community/friends/request">
-            <div>6</div>
+            <div>{reqFriendsList.length}</div>
             <Image
               src={myPageIcon}
               alt="my_page_icon"

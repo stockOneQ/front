@@ -2,13 +2,17 @@
 
 import { FriendsListType } from '@Types/community/friends/friendsList';
 import Friends from 'components/community/Friends';
-import FriendStock from 'components/community/Friends/friendsRightContents/FriendStock';
+import FriendStock from 'components/community/Friends/FriendsRightContents/FriendStock';
 import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 import { API } from 'pages/api/api';
 
 /** community - 친구 재고 페이지 */
 const FriendStockPage = ({ friendsList }: FriendsListType) => {
-  const contextValue = { friendsList };
+  const contextValue = {
+    friendsList,
+    waitingFriendsList: [],
+    reqFriendsList: [],
+  };
 
   return (
     <FriendsListContext.Provider value={contextValue}>

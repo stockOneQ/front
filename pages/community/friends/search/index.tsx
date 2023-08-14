@@ -8,7 +8,11 @@ import { API } from 'pages/api/api';
 
 /** community - 친구 검색 페이지 */
 const SearchFriendsPage = ({ friendsList }: FriendsListType) => {
-  const contextValue = { friendsList };
+  const contextValue = {
+    friendsList,
+    waitingFriendsList: [],
+    reqFriendsList: [],
+  };
 
   return (
     <FriendsListContext.Provider value={contextValue}>
