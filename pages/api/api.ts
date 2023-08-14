@@ -1,8 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { ProductItem } from 'recoil/states';
 
-interface User {}
-
 //제품개수
 interface CountItem {
   name: string;

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import mainLogo from 'public/assets/icons/login/mainLogo.svg';
-import FindingID from './FindingID';
+// import FindingID from './FindingID';
 import * as S from './style';
 import FindingPW from './FindingPW';
 import { useState } from 'react';
@@ -20,7 +20,8 @@ const FindingInfo = () => {
         <S.FindingSection>
           {/* <FindingID /> */}
           <FindingPW />
-        </S.FindingSection>)}
+        </S.FindingSection>
+      )}
       {foundInfo && <FoundedInfo />}
     </S.FindingInfoBox>
   );
