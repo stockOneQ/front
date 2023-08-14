@@ -3,7 +3,7 @@ import Image from 'next/image';
 import menuIcon from '../../public/assets/icons/menu.png';
 import * as S from './style';
 import { Item } from 'hooks/layouts/useGetSideMenuBarItems';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 interface ISideMenuBarProps {
   items: Item[];

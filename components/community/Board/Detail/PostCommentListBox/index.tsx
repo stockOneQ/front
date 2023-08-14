@@ -1,7 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { postCommentListState } from 'recoil/states';
 import PostCommentItemBox from './PostCommentItemBox';
-import { styled } from 'styled-components';
 
 const PostCommentListBox = () => {
   const postCommentList = useRecoilValue(postCommentListState);

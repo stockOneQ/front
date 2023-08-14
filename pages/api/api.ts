@@ -2,8 +2,6 @@ import axios, { AxiosResponse } from 'axios';
 import { ProductItem } from 'recoil/states';
 import Cookies from 'js-cookie';
 
-interface User {}
-
 //제품개수
 interface CountItem {
   name: string;

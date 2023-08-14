@@ -1,17 +1,9 @@
 //pages/product[id]
 import React, { useEffect, useState, ChangeEvent } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Image from 'next/image';
-import {
-  approachingExpirationState,
-  expiredIngredientsState,
-  insufficientIngredientsState,
-  mainPostListState,
-} from '../../../recoil/states';
-import { Title } from 'components/community/Board/PostListBox/PostItemBox/style';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { mainPostListState } from '../../../recoil/states';
+import { useSetRecoilState } from 'recoil';
 import * as S from '../../../components/main/style';
 import {
   fetchProductDetails,
