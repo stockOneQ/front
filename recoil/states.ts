@@ -264,8 +264,8 @@ export const searchInputState = atom<string>({
 
 export interface IPostCommentTypes {
   id: number;
-  writer: string;
-  uploadTime: string;
+  writerName: string;
+  createdDate: string;
   content: string;
 }
 
@@ -274,23 +274,9 @@ export const postCommentInputState = atom<string>({
   default: '',
 });
 
-/** 게시글 댓글 더미 데이터 */
-export const postCommentListState = atom<IPostCommentTypes[]>({
-  key: 'postCommentListState',
-  default: [
-    {
-      id: 1,
-      writer: '전언석',
-      uploadTime: '2023년 07월 21일 01:25',
-      content: '알아봐드리겠습니다',
-    },
-    {
-      id: 2,
-      writer: '김아리',
-      uploadTime: '2023년 07월 22일 12:23',
-      content: '안녕하세요. 저 하고 있습니다. 마진 괜찮습니다.',
-    },
-  ],
+export const commentsRenderTriggerState = atom<boolean>({
+  key: 'commentsLengthState',
+  default: false,
 });
 
 export const isCurrentPathMainState = atom<boolean>({
