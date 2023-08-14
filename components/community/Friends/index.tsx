@@ -1,11 +1,6 @@
-import styled from 'styled-components';
 import Profiles from './Profiles';
 import Card from 'components/common/Card';
-
-const CommunitySection = styled.section`
-  display: flex;
-  gap: 7.1rem;
-`;
+import * as S from './style';
 
 interface IFriendsProps {
   children?: React.ReactNode;
@@ -14,12 +9,12 @@ interface IFriendsProps {
 /** community - 친구 */
 const Friends = ({ children }: IFriendsProps) => {
   return (
-    <CommunitySection>
+    <S.CommunitySection>
       <Profiles />
       <Card width="65.9rem" height="73.8rem">
         {children}
       </Card>
-    </CommunitySection>
+    </S.CommunitySection>
   );
 };
 
