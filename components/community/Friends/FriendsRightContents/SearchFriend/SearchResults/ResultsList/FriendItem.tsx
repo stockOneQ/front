@@ -1,16 +1,24 @@
 import FriendInfo from 'components/community/Friends/Profiles/FriendsList/FriendProfile/FriendInfo';
 import Image from 'next/image';
-import friendIcon from 'public/assets/icons/community/friendNow.svg';
+import connectionStatusWaiting from 'public/assets/icons/community/connectionStatusWaiting.svg';
+import connectionStatusAdd from 'public/assets/icons/community/connectionStatusAdd.svg';
+import connectionStatusFriend from 'public/assets/icons/community/connectionStatusFriend.svg';
 import * as S from './style';
 
 interface IFriendItemProps {
   name: string;
   storeName: string;
   phoneNumber: string;
+  relationStatus: string;
 }
 
 /** 친구 개별 component */
-const FriendItem = ({ name, storeName, phoneNumber }: IFriendItemProps) => {
+const FriendItem = ({
+  name,
+  storeName,
+  phoneNumber,
+  relationStatus,
+}: IFriendItemProps) => {
   return (
     <S.FriendItemBox className="friend-item">
       <FriendInfo
@@ -21,7 +29,20 @@ const FriendItem = ({ name, storeName, phoneNumber }: IFriendItemProps) => {
         imgMarginRight="1.2rem"
       />
       <button>
-        <Image src={friendIcon} alt="friend_icon" width={32} height={31} />
+        <Image
+          src={
+            relationStatus === '친구 요청'
+              ? connectionStatusWaiting
+              : relationStatus === '친구 아님'
+              ? connectionStatusAdd
+              : relationStatus === '친구 수락'
+              ? connectionStatusFriend
+              : null
+          }
+          alt="friend_icon"
+          width={32}
+          height={31}
+        />
       </button>
     </S.FriendItemBox>
   );

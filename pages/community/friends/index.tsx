@@ -11,7 +11,11 @@ const FriendsPage = ({
   friendsList,
   children,
 }: PropsWithChildren<FriendsListType>) => {
-  const contextValue = { friendsList };
+  const contextValue = {
+    friendsList,
+    waitingFriendsList: [],
+    reqFriendsList: [],
+  };
 
   return (
     <FriendsListContext.Provider value={contextValue}>
