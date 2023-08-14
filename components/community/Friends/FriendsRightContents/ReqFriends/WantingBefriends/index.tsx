@@ -3,6 +3,7 @@ import * as S from '../style';
 import useScroll from 'hooks/useScroll';
 import { useContext } from 'react';
 import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
+import { API } from 'pages/api/api';
 
 /** 친구 신청 목록 */
 const WantingBefriends = () => {

@@ -45,10 +45,10 @@ export async function getStaticProps() {
         `/api/friends?last=${friends_offset}`,
       );
       const friendsData = friendsListRes.data.friends;
-      const friendsDataLen = friendsList.length;
+      const friendsDataLen = friendsData.length;
 
       friendsList = [...friendsList, ...friendsData];
-      friends_offset = friendsList[friendsDataLen - 1]?.id || -1; // 마지막으로 데이터 넘어온 친구의 id
+      friends_offset = friendsData[friendsDataLen - 1]?.id || -1; // 마지막으로 데이터 넘어온 친구의 id
 
       if (friendsDataLen < 8) break; // 더 이상 받아올 친구 목록 없으면 break;
     } catch (err) {
@@ -86,7 +86,7 @@ export async function getStaticProps() {
       const reqFriendsListLen = reqFriendsData.length;
 
       reqFriendsList = [...reqFriendsList, ...reqFriendsData];
-      wanting_offset = reqFriendsList[reqFriendsListLen - 1]?.id || -1; // 마지막으로 데이터 넘어온 친구의 id
+      wanting_offset = reqFriendsData[reqFriendsListLen - 1]?.id || -1; // 마지막으로 데이터 넘어온 친구의 id
 
       if (reqFriendsListLen < 5) break; // 더 이상 받아올 친구 목록 없으면 break;
     } catch (err) {

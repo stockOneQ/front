@@ -22,19 +22,21 @@ const SearchFriendsPage = ({ friendsList }: FriendsListType) => {
 // FIXME: 한 번만 api 호출하도록 수정
 export async function getStaticProps() {
   let friendsList: FriendsListType['friendsList'] = [];
-  let offset = 0;
-  const FRIENDS_COUNT = 8; // 백에서 8명 씩 끊어서 전송
+  let friends_offset = -1;
 
   while (true) {
     // TODO: Promise.allSettled 적용 해보기
     try {
-      const res = await API.get(`/api/friends?last=${offset}`);
-      const friendsData = res.data.friends;
+      const friendsListRes = await API.get(
+        `/api/friends?last=${friends_offset}`,
+      );
+      const friendsData = friendsListRes.data.friends;
+      const friendsDataLen = friendsData.length;
 
       friendsList = [...friendsList, ...friendsData];
-      offset += FRIENDS_COUNT;
+      friends_offset = friendsData[friendsDataLen - 1]?.id || -1; // 마지막으로 데이터 넘어온 친구의 id
 
-      if (friendsData.length < 8) break; // 더 이상 받아올 친구 목록 없으면 break;
+      if (friendsDataLen < 8) break; // 더 이상 받아올 친구 목록 없으면 break;
     } catch (err) {
       console.error(err);
       throw err;
