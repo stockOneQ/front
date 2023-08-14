@@ -17,12 +17,12 @@ const PostContentBox = ({ title, content, hit, likes }: IPostContentType) => {
         <S.Title>{title}</S.Title>
         <S.InteractionSection>
           <S.Container color="#F2B2CF">
-            <Image alt="views" src={ViewsSVG} />
+            <Image alt="views" src={ViewsSVG} width={25} />
             <span>{hit}</span>
           </S.Container>
           {/** 좋아요 버튼으로 구현하기 */}
           <S.Container color="#7BAED7">
-            <Image alt="likes" src={LikesSVG} />
+            <Image alt="likes" src={LikesSVG} width={29} />
             <span>{likes}</span>
           </S.Container>
         </S.InteractionSection>

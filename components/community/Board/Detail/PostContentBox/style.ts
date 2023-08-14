@@ -5,9 +5,7 @@ export const Box = styled.div`
   mix-blend-mode: normal;
   box-shadow: 0px 11px 20px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(2px);
-  /* Note: backdrop-filter has minimal browser support */
   border-radius: 30px;
-
   padding: 5.2rem;
 `;
 
@@ -28,7 +26,7 @@ export const Container = styled.div<{ color: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.2rem;
+  gap: ${props => (props.color === '#F2B2CF' ? '1.4' : '1.2')}rem;
 
   font-weight: 400;
   font-size: 1.8rem;
