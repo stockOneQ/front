@@ -91,23 +91,25 @@ const Detail = ({ id }: { id: number }) => {
 
   return (
     <S.Box>
-      <S.ButtonContainer>
-        {/** 현재 임시 토큰은 사용자 2번임 */}
-        {post?.writerId === 'manager2id' && (
-          <Link href={`/community/board/edit/${id}`}>
-            <S.EditButton>수정</S.EditButton>
-          </Link>
-        )}
-        <S.CloseButton onClick={handleClose}>
-          <Image src={CloseSVG} alt="close" />
-        </S.CloseButton>
-      </S.ButtonContainer>
       {post && (
         <S.PostBox>
-          <PostInfoBox
-            writerName={post.writerName}
-            createdDate={post.createdDate}
-          />
+          <S.HeaderSection>
+            <PostInfoBox
+              writerName={post.writerName}
+              createdDate={post.createdDate}
+            />
+            <S.ButtonContainer>
+              {/** 현재 임시 토큰은 사용자 2번임 */}
+              {post?.writerId === 'manager2id' && (
+                <Link href={`/community/board/edit/${id}`}>
+                  <S.EditButton>수정</S.EditButton>
+                </Link>
+              )}
+              <S.CloseButton onClick={handleClose}>
+                <Image src={CloseSVG} alt="close" />
+              </S.CloseButton>
+            </S.ButtonContainer>
+          </S.HeaderSection>
           <PostContentBox
             title={post.title}
             content={post.content}
