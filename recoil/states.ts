@@ -3,31 +3,13 @@ import { useCallback } from 'react';
 
 /** ----------------메인 페이지------------- */
 
-// export interface ProductItem {
-//   id: number;
-//   category: string;
-//   productName: string;
-//   price:  number;
-//   seller: string;
-//   receiptYear: string;
-//   receiptMonth: string;
-//   receiptDay: string;
-//   expirationYear: string;
-//   expirationMonth: string;
-//   expirationDay: string;
-//   ingredientLocation: string;
-//   requiredQuantity: string;
-//   quantity: string;
-//   orderingSite: string;
-//   orderingFrequency: string;
-//   imageInfo: string;
-//   storageMethod: string;
-// };
+export type StorageMethod = '냉동' | '냉장' | '상온';
 
 export interface ProductItem {
   id: number;
   name: string;
   image: string | null;
+  storageMethod: string;
 }
 
 export const mainPostListState = atom<ProductItem[]>({
@@ -35,15 +17,6 @@ export const mainPostListState = atom<ProductItem[]>({
   default: [],
 });
 
-export const handleProductClick = () => {
-  const setSelectedProductState = useSetRecoilState(selectedProductState);
-  return useCallback(
-    (item: GradientsListItem) => {
-      setSelectedProductState(item);
-    },
-    [setSelectedProductState],
-  );
-};
 //유통기한 임박재료
 export const approachingExpirationState = atom<string[]>({
   key: 'approachingExpirationState',
