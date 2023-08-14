@@ -1,6 +1,6 @@
+import { IPostPreviewTypes } from 'recoil/states';
 import * as S from './style';
 import PostItemBox from 'components/community/Board/PostListBox/PostItemBox';
-import { IPostPreviewTypes } from 'recoil/states';
 
 const PostListBox = ({ list }: { list: IPostPreviewTypes[] }) => {
   return (

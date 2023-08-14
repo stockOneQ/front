@@ -7,18 +7,17 @@ import {
   commentsRenderTriggerState,
   isCurrentPathMainState,
 } from 'recoil/states';
+import { API } from 'pages/api/api';
+
+import * as S from './style';
 
 import PostInfoBox from './PostInfoBox';
 import PostContentBox from './PostContentBox';
 import PostCommentListBox from './PostCommentListBox';
 import PostCommentInputBox from './PostCommentInputBox';
 
-import * as S from './style';
-
 import CloseSVG from 'public/assets/icons/community/close.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
-
-import { API } from 'pages/api/api';
 
 interface IPostTypes {
   id: number;
@@ -50,6 +49,7 @@ const Detail = ({ id }: { id: number }) => {
 
   const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
 
+  /** ----------------- 게시글 상세 조회 API ----------------- */
   useEffect(() => {
     API.get(`/api/boards/${id}`)
       .then(res => {
@@ -63,6 +63,7 @@ const Detail = ({ id }: { id: number }) => {
       });
   }, [id]);
 
+  /** ----------------- 댓글 목록 조회 API ----------------- */
   useEffect(() => {
     console.log(commentRenderTrigger);
     API.get(`/api/comments/${id}`, {

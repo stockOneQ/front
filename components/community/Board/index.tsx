@@ -31,7 +31,7 @@ const Board = () => {
 
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
-  /** 전체 글 목록 조회 */
+  /** ----------------- 전체 글 목록 조회 API ----------------- */
   useEffect(() => {
     API.get('/api/boards', {
       params: {
@@ -47,19 +47,20 @@ const Board = () => {
       },
     })
       .then(res => {
-        console.log('전체 글 목록 불러오기 성공');
+        console.log('전체 글 목록 조회 성공');
         console.log(res.data);
         setPostList(res.data.boardList);
       })
       .catch(e => {
-        console.log(e);
+        console.error(e);
         throw e;
       });
   }, [sortType, searchType, searchInput]);
 
   const handleMyPostsClick = () => {
     setIsCurrentPathMain(false);
-    /** 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
+
+    /** 내가 쓴 글 페이지로 이동 할 시, 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');

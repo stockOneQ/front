@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import * as S from './style';
-import ProfileImg from 'public/assets/imgs/community/profileImage.png';
 import { formatCreatedDateToString } from 'utils/date';
+import ProfileImg from 'public/assets/imgs/community/profileImage.png';
 
 type IPostInfoType = {
   writerName: string;

@@ -18,11 +18,12 @@ const searchOptionList = ['글 제목', '글 내용', '작성자'];
 const ControlBar = () => {
   const [sortType, setSortType] = useRecoilState(sortTypeState);
   const [searchType, setSearchType] = useRecoilState(searchTypeState);
-
-  /* 실시간 검색이 아닌 검색 아이콘을 통해 한번만 검색 필터를 거치므로 저장해둠 */
-
   const [searchInput, setSearchInput] = useRecoilState(searchInputState);
-  const [input, setInput] = useState(searchInput);
+
+  const [input, setInput] =
+    useState(
+      searchInput,
+    ); /* 실시간 검색이 아닌 검색 아이콘을 통해 한번만 검색 필터를 거치므로 저장해둠 */
 
   const handleSearch = () => {
     setSearchInput(input);
@@ -42,7 +43,6 @@ const ControlBar = () => {
           type={sortType}
         />
       </S.DropBoxContainer>
-
       <S.SearchBar>
         <S.DropBoxContainer>
           <DropDown

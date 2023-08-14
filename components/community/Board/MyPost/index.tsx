@@ -12,15 +12,16 @@ import {
   isCurrentPathMainState,
 } from 'recoil/states';
 import * as S from './style';
+import { API } from 'pages/api/api';
 
 import ControlBar from '../ControlBar';
 import PostListBox from '../PostListBox';
 import HeadingText from 'components/common/HeadingText';
 import RejectBtn from 'components/common/button/RejectBtn';
 import AcceptBtn from 'components/common/button/AcceptBtn';
+
 import SettingSVG from 'public/assets/icons/community/settingsIcon.svg';
 import LeftArrowSVG from 'public/assets/icons/community/leftArrow.svg';
-import { API } from 'pages/api/api';
 
 const MyPosts = () => {
   const router = useRouter();
@@ -39,7 +40,7 @@ const MyPosts = () => {
 
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
-  /** 내가 쓴 글 목록 조회 */
+  /** ----------------- 내가 쓴 글 목록 조회 API ----------------- */
   useEffect(() => {
     API.get('/api/boards/my', {
       params: {
@@ -86,6 +87,7 @@ const MyPosts = () => {
   };
 
   /** 삭제 버튼 클릭 시 처리 함수 */
+  /** ----------------- 내가 쓴 글 삭제 API ----------------- */
   const handleDelete = async () => {
     try {
       await Promise.allSettled(
@@ -99,9 +101,8 @@ const MyPosts = () => {
       );
       setMyPostListCount(prev => prev - deleteCheckedItems.length);
       handleToggle();
-    } catch (error) {
-      alert('게시글 삭제 실패');
-      console.error(error);
+    } catch (e) {
+      console.error(e);
     }
   };
 
