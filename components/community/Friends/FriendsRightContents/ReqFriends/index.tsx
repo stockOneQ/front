@@ -3,6 +3,7 @@ import WantingBefriends from './WantingBefriends';
 import * as S from './style';
 import Link from 'next/link';
 import { FriendsListType } from '@Types/community/friends/friendsList';
+import { API } from 'pages/api/api';
 
 interface IReqFriendsProps {
   waitingFriendsList: FriendsListType['friendsList'];

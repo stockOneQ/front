@@ -19,6 +19,7 @@ const ReqFriendsPage = ({
   reqFriendsList,
 }: IReqFriendsPageProps) => {
   const contextValue = { friendsList };
+  console.log('whats wrong??', friendsList, waitingFriendsList, reqFriendsList);
 
   return (
     <FriendsListContext.Provider value={contextValue}>
@@ -48,14 +49,12 @@ export async function getStaticProps() {
         `/api/friends?last=${friends_offset}`,
       );
       const friendsData = friendsListRes.data.friends;
+      const friendsDataLen = friendsList.length;
 
       friendsList = [...friendsList, ...friendsData];
+      friends_offset = friendsList[friendsDataLen - 1]?.id || -1; // 마지막으로 데이터 넘어온 친구의 id
 
-      const friendsListLen = friendsList.length;
-
-      friends_offset = friendsList[friendsListLen - 1].id; // 마지막으로 데이터 넘어온 친구의 id
-
-      if (friendsData.length < 8) break; // 더 이상 받아올 친구 목록 없으면 break;
+      if (friendsDataLen < 8) break; // 더 이상 받아올 친구 목록 없으면 break;
     } catch (err) {
       console.error(err);
       throw err;
@@ -65,18 +64,16 @@ export async function getStaticProps() {
   while (true) {
     // TODO: Promise.allSettled 적용 해보기
     try {
-      const reqFriendsRes = await API.get(
+      const waitingFriendsRes = await API.get(
         `/api/friends/waiting?last=${waiting_offset}`,
       );
-      const reqFriendsData = reqFriendsRes.data.friends;
+      const waitingFriendsData = waitingFriendsRes.data.friends;
+      const waitingFriendsDataLen = waitingFriendsData.length;
 
-      waitingFriendsList = [...waitingFriendsList, ...reqFriendsData];
+      waitingFriendsList = [...waitingFriendsList, ...waitingFriendsData];
+      waiting_offset = waitingFriendsData[waitingFriendsDataLen - 1]?.id || -1; // 마지막으로 데이터 넘어온 친구의 id
 
-      const waitingFriendsListLen = waitingFriendsList.length;
-
-      waiting_offset = waitingFriendsList[waitingFriendsListLen - 1].id; // 마지막으로 데이터 넘어온 친구의 id
-
-      if (reqFriendsData.length < 3) break; // 더 이상 받아올 친구 목록 없으면 break;
+      if (waitingFriendsDataLen < 3) break; // 더 이상 받아올 친구 목록 없으면 break;
     } catch (err) {
       console.error(err);
       throw err;
@@ -90,14 +87,12 @@ export async function getStaticProps() {
         `/api/friends/requested?last=${wanting_offset}`,
       );
       const reqFriendsData = reqFriendsRes.data.friends;
+      const reqFriendsListLen = reqFriendsData.length;
 
       reqFriendsList = [...reqFriendsList, ...reqFriendsData];
+      wanting_offset = reqFriendsList[reqFriendsListLen - 1]?.id || -1; // 마지막으로 데이터 넘어온 친구의 id
 
-      const reqFriendsListLen = reqFriendsList.length;
-
-      friends_offset = reqFriendsList[reqFriendsListLen - 1].id; // 마지막으로 데이터 넘어온 친구의 id
-
-      if (reqFriendsData.length < 5) break; // 더 이상 받아올 친구 목록 없으면 break;
+      if (reqFriendsListLen < 5) break; // 더 이상 받아올 친구 목록 없으면 break;
     } catch (err) {
       console.error(err);
       throw err;
