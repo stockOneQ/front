@@ -3,7 +3,10 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
-import { isCurrentPathMainState, postCommentListState } from 'recoil/states';
+import {
+  commentsRenderTriggerState,
+  isCurrentPathMainState,
+} from 'recoil/states';
 
 import PostInfoBox from './PostInfoBox';
 import PostContentBox from './PostContentBox';
@@ -28,27 +31,56 @@ interface IPostTypes {
   writerName: string;
 }
 
+interface ICommentTypes {
+  id: number;
+  image: Array<string>;
+  content: string;
+  createdDate: string;
+  writerId: string;
+  writerName: string;
+}
+
 const Detail = ({ id }: { id: number }) => {
   const router = useRouter();
-  const postCommentList =
-    useRecoilValue(postCommentListState); /** 더미 데이터 */
 
   const [post, setPost] = useState<IPostTypes>();
+  const [commentList, setCommentList] = useState<ICommentTypes[]>();
+  const [totalElements, setTotalElements] = useState(0);
+  const commentRenderTrigger = useRecoilValue(commentsRenderTriggerState);
 
   const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
 
   useEffect(() => {
     API.get(`/api/boards/${id}`)
-      .then(response => {
+      .then(res => {
         console.log(`${id}번의 게시글 상세 불러오기 성공`);
-        console.log(response.data);
-        setPost(response.data);
+        console.log(res.data);
+        setPost(res.data);
       })
       .catch(e => {
-        console.log(e);
+        console.error(e);
         throw e;
       });
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    console.log(commentRenderTrigger);
+    API.get(`/api/comments/${id}`, {
+      params: {
+        page: 0,
+      },
+    })
+      .then(res => {
+        console.log(`${id}번 게시글의 댓글 목록 불러오기 성공`);
+        console.log(res.data.CommentListResponse);
+        setCommentList(res.data.CommentListResponse);
+        setTotalElements(res.data.pageInfo.totalElements);
+      })
+      .catch(e => {
+        console.error(e);
+        throw e;
+      });
+  }, [id, commentRenderTrigger]);
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
@@ -90,9 +122,9 @@ const Detail = ({ id }: { id: number }) => {
       <S.CommentList>
         <S.CommentCount>
           <Image src={CommentsSVG} alt="comment" />
-          <span>댓글 {postCommentList.length}</span>
+          <span>댓글 {totalElements}</span>
         </S.CommentCount>
-        <PostCommentListBox />
+        <PostCommentListBox list={commentList} />
       </S.CommentList>
     </S.Box>
   );

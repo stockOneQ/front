@@ -1,20 +1,32 @@
-import { useRecoilValue } from 'recoil';
-import { postCommentListState } from 'recoil/states';
+import { formatCreatedDateToString } from 'utils/date';
 import PostCommentItemBox from './PostCommentItemBox';
 
-const PostCommentListBox = () => {
-  const postCommentList = useRecoilValue(postCommentListState);
+interface ICommentTypes {
+  id: number;
+  image: Array<string>;
+  content: string;
+  createdDate: string;
+  writerId: string;
+  writerName: string;
+}
 
+const PostCommentListBox = ({
+  list,
+}: {
+  list: ICommentTypes[] | undefined;
+}) => {
   return (
     <>
-      {postCommentList.map(value => (
-        <PostCommentItemBox
-          key={value.id}
-          writerName={value.writer}
-          content={value.content}
-          date={value.uploadTime}
-        />
-      ))}
+      {list &&
+        list.map(value => (
+          <PostCommentItemBox
+            key={value.id}
+            id={value.id}
+            writerName={value.writerName}
+            content={value.content}
+            createdDate={formatCreatedDateToString(value.createdDate)}
+          />
+        ))}
     </>
   );
 };
