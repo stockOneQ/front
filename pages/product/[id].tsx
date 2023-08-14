@@ -21,7 +21,13 @@ import {
 
 const ProductPage = () => {
   const router = useRouter();
+
   const { id } = router.query;
+  const { pathname } = router;
+
+  const [selectedStorageMethod, setSelectedStorageMethod] = useState('');
+
+  // Extract storageMethodFilter from query
 
   const [selectedImage, setSelectedImage] = useState(null);
   const handleImageChange = e => {
@@ -65,7 +71,6 @@ const ProductPage = () => {
         const response = await fetchProductDetails(Number(id));
         setFormData(response);
         setSelectedImage(response.image || '');
-        console.log('받아온 값: ', response);
       } catch (error) {
         console.error('Error fetching product details:', error);
       }
@@ -119,19 +124,6 @@ const ProductPage = () => {
     router.push('/');
   };
 
-  const [selectedStorageMethod, setSelectedStorageMethod] = useState(
-    formData.storageMethod || '냉동',
-  );
-
-  const handleStorageMethodChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedStorageMethod(e.target.value);
-    // 업데이트 formData
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      storageMethod: e.target.value,
-    }));
-  };
-
   const handleImageClick = () => {
     console.log('Image clicked');
   };
@@ -163,7 +155,7 @@ const ProductPage = () => {
                           name="storageMethod"
                           value="냉동"
                           checked={selectedStorageMethod === '냉동'}
-                          onChange={handleStorageMethodChange}
+                          onChange={() => setSelectedStorageMethod('냉동')}
                         />
                         <span>냉동</span>
                       </S.StyledRadioInput>
@@ -173,7 +165,7 @@ const ProductPage = () => {
                           name="storageMethod"
                           value="냉장"
                           checked={selectedStorageMethod === '냉장'}
-                          onChange={handleStorageMethodChange}
+                          onChange={() => setSelectedStorageMethod('냉장')}
                         />
                         <span>냉장</span>
                       </S.StyledRadioInput>
@@ -183,7 +175,7 @@ const ProductPage = () => {
                           name="storageMethod"
                           value="상온"
                           checked={selectedStorageMethod === '상온'}
-                          onChange={handleStorageMethodChange}
+                          onChange={() => setSelectedStorageMethod('상온')}
                         />
                         <span>상온</span>
                       </S.StyledRadioInput>
