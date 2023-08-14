@@ -1,14 +1,12 @@
 import EachWantingFriend from './EachWantingFriend';
 import * as S from '../style';
 import useScroll from 'hooks/useScroll';
-import { FriendsListType } from '@Types/community/friends/friendsList';
-
-interface IWantingFriendsProps {
-  reqFriendsList: FriendsListType['friendsList'];
-}
+import { useContext } from 'react';
+import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 
 /** 친구 신청 목록 */
-const WantingBefriends = ({ reqFriendsList }: IWantingFriendsProps) => {
+const WantingBefriends = () => {
+  const { reqFriendsList } = useContext(FriendsListContext);
   const { hideScroll, scrollHandler } = useScroll();
 
   return (

@@ -18,16 +18,12 @@ const ReqFriendsPage = ({
   waitingFriendsList,
   reqFriendsList,
 }: IReqFriendsPageProps) => {
-  const contextValue = { friendsList };
-  console.log('whats wrong??', friendsList, waitingFriendsList, reqFriendsList);
+  const contextValue = { friendsList, waitingFriendsList, reqFriendsList };
 
   return (
     <FriendsListContext.Provider value={contextValue}>
       <Friends>
-        <ReqFriends
-          waitingFriendsList={waitingFriendsList}
-          reqFriendsList={reqFriendsList}
-        />
+        <ReqFriends />
       </Friends>
     </FriendsListContext.Provider>
   );

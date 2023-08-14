@@ -1,13 +1,12 @@
 import EachWaitingFriend from './EachWaitingFriend';
 import * as S from '../style';
 import useScroll from 'hooks/useScroll';
-import { FriendsListType } from '@Types/community/friends/friendsList';
+import { useContext } from 'react';
+import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 
-interface IWaitingFriendsProps {
-  waitingFriendsList: FriendsListType['friendsList'];
-}
 /** 대기중인 친구 */
-const WaitingFriends = ({ waitingFriendsList }: IWaitingFriendsProps) => {
+const WaitingFriends = () => {
+  const { waitingFriendsList } = useContext(FriendsListContext);
   const { hideScroll, scrollHandler } = useScroll();
 
   return (
