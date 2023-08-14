@@ -1,4 +1,4 @@
-import { formatCreatedDateToString } from 'utils/date';
+import { formatDetailCreatedDateToString } from 'utils/date';
 import PostCommentItemBox from './PostCommentItemBox';
 
 interface ICommentTypes {
@@ -24,7 +24,7 @@ const PostCommentListBox = ({
             id={value.id}
             writerName={value.writerName}
             content={value.content}
-            createdDate={formatCreatedDateToString(value.createdDate)}
+            createdDate={formatDetailCreatedDateToString(value.createdDate)}
           />
         ))}
     </>
