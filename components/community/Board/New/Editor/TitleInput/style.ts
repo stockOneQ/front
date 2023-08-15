@@ -7,12 +7,11 @@ export const Box = styled.div`
 
   padding-bottom: 4.5rem;
 
-  gap: 2.6rem;
+  gap: 3.8rem;
 `;
 
 export const TextContainer = styled.div`
-  padding: 1.3rem;
-
+  margin-left: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;

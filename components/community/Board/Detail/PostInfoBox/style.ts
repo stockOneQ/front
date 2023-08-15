@@ -4,6 +4,7 @@ export const Box = styled.div`
   display: flex;
   justify-items: start;
   margin-bottom: 2rem;
+  margin-left: 2rem;
 `;
 
 export const Container = styled.div`
