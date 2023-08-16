@@ -3,7 +3,6 @@ import * as S from '../style';
 import useScroll from 'hooks/useScroll';
 import { useContext } from 'react';
 import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
-import { API } from 'pages/api/api';
 
 /** 친구 신청 목록 */
 const WantingBefriends = () => {
@@ -20,6 +19,7 @@ const WantingBefriends = () => {
           reqFriendsList.map(({ id, name, storeName, phoneNumber }) => (
             <EachWantingFriend
               key={id}
+              id={id}
               name={name}
               storeName={storeName}
               phoneNumber={phoneNumber}
