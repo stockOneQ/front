@@ -6,6 +6,7 @@ import * as S from './style';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import FriendInfo from './FriendInfo';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface IFriendProfileProps {
   id: number;
@@ -32,9 +33,11 @@ const FriendProfile = ({
   setDeleteItem,
 }: IFriendProfileProps) => {
   const didMount = useRef(false); // 첫 렌더링 useEffect 실행 막기 위해
-
   const [isChecked, setIsChecked] = useState(false); // 각 개별 친구, 체크 여부
   const [isStockSelected, setIsStockSelected] = useState(false);
+
+  const { query } = useRouter();
+  const { friendID } = query;
 
   const deleteItemHandler = () => {
     setIsChecked(prev => !prev);
@@ -81,7 +84,11 @@ const FriendProfile = ({
       <S.FriendPageButton onClick={stockButtonHandler}>
         <Link href={`/community/friends/stock/${id}`}>
           <Image
-            src={isStockSelected ? friendStockIcon : friendStockIcGray}
+            src={
+              id.toString() === friendID || friendID === undefined
+                ? friendStockIcon
+                : friendStockIcGray
+            }
             alt="my_page_icon"
             width={19.64}
             height={26.84}
