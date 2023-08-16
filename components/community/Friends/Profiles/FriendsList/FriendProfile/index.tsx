@@ -14,9 +14,7 @@ interface IFriendProfileProps {
   storeName: string;
   phoneNumber: string;
   onSetting: boolean;
-  isStock: boolean;
   setIsPermitted: Dispatch<SetStateAction<number>>;
-  setIsStock: Dispatch<SetStateAction<boolean>>;
   setDeleteItem: Dispatch<SetStateAction<number[]>>;
 }
 
@@ -27,14 +25,11 @@ const FriendProfile = ({
   storeName,
   phoneNumber,
   onSetting,
-  isStock,
   setIsPermitted,
-  setIsStock,
   setDeleteItem,
 }: IFriendProfileProps) => {
   const didMount = useRef(false); // 첫 렌더링 useEffect 실행 막기 위해
   const [isChecked, setIsChecked] = useState(false); // 각 개별 친구, 체크 여부
-  const [isStockSelected, setIsStockSelected] = useState(false);
 
   const { query } = useRouter();
   const { friendID } = query;
@@ -48,11 +43,6 @@ const FriendProfile = ({
     if (!isChecked) {
       return setDeleteItem(prev => [...prev, id]);
     }
-  };
-
-  const stockButtonHandler = () => {
-    setIsStockSelected(prev => !prev);
-    setIsStock(true);
   };
 
   useEffect(() => {
@@ -81,7 +71,7 @@ const FriendProfile = ({
         width={60}
         imgMarginRight="1.2rem"
       />
-      <S.FriendPageButton onClick={stockButtonHandler}>
+      <S.FriendPageButton>
         <Link href={`/community/friends/stock/${id}`}>
           <Image
             src={

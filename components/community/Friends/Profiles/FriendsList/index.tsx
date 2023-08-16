@@ -73,7 +73,6 @@ const FriendsList = () => {
   const [onSetting, setOnSetting] = useState(false);
   /** 삭제 버튼 허용 */
   const [isPermitted, setIsPermitted] = useState(10); // 일단 9(친구 수)로 하드 코딩
-  const [isStock, setIsStock] = useState(false);
   const [deleteItem, setDeleteItem] = useState<number[]>([]);
 
   const { friendsList } = useContext(FriendsListContext);
@@ -95,8 +94,6 @@ const FriendsList = () => {
             storeName={storeName}
             phoneNumber={phoneNumber}
             onSetting={onSetting}
-            isStock={isStock}
-            setIsStock={setIsStock}
             setIsPermitted={setIsPermitted}
             setDeleteItem={setDeleteItem}
           />
