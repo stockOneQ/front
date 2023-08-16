@@ -10,25 +10,27 @@ import { useRouter } from 'next/router';
 interface IFriendsCount {
   count: number;
   onSetting: boolean;
-  isPermitted: number;
   deleteItem: number[];
   setOnSetting: Dispatch<SetStateAction<boolean>>;
+  setDeleteItem: Dispatch<SetStateAction<number[]>>;
 }
 
 /** 친구 목록 수 */
 const FriendsCount = ({
   count,
   onSetting,
-  isPermitted,
   deleteItem,
   setOnSetting,
+  setDeleteItem,
 }: IFriendsCount) => {
   const router = useRouter();
 
   const deleteHandler = () => {
     setOnSetting(false);
     deleteItem.map(id => API.delete(`/api/friend/${id}`));
+    setDeleteItem([]);
     router.push('/community/friends/search');
+    router.reload();
   };
 
   return (

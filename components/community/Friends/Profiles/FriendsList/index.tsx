@@ -69,8 +69,9 @@ export const DUMMY_DATA = [
 
 /** 친구 목록 */
 const FriendsList = () => {
-  /** 삭제, 취소 버튼 등장 */
+  // 삭제, 취소 버튼 등장
   const [onSetting, setOnSetting] = useState(false);
+  // 삭제할 친구 리스트
   const [deleteItem, setDeleteItem] = useState<number[]>([]);
   console.log('deleteItem', deleteItem);
 
@@ -83,6 +84,7 @@ const FriendsList = () => {
         onSetting={onSetting}
         deleteItem={deleteItem}
         setOnSetting={setOnSetting}
+        setDeleteItem={setDeleteItem}
       />
       <S.FriendList>
         {friendsList?.map(({ id, name, storeName, phoneNumber }) => (
