@@ -31,11 +31,11 @@ const FriendItem = ({
       <button>
         <Image
           src={
-            relationStatus === '친구 요청'
+            relationStatus === '요청'
               ? connectionStatusWaiting
-              : relationStatus === '친구 아님'
+              : relationStatus === '무관'
               ? connectionStatusAdd
-              : relationStatus === '친구 수락'
+              : relationStatus === '수락'
               ? connectionStatusFriend
               : null
           }

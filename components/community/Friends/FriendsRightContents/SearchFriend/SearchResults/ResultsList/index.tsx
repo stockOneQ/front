@@ -3,19 +3,13 @@ import * as S from './style';
 import { FriendsListType } from '@Types/community/friends/friendsList';
 
 interface IResultsListProps {
-  searchResultList: {
-    id: number;
-    name: string;
-    storeName: string;
-    phoneNumber: string;
-    friendStatus?: string;
-    relationStatus: string;
-    lastModifiedDate: string;
-  }[];
+  searchResultList: FriendsListType['friendsList'];
 }
 
 /** 검색 결과 목록 */
 const ResultsList = ({ searchResultList }: IResultsListProps) => {
+  console.log('here', searchResultList);
+
   return (
     <S.ResultListBox>
       <>

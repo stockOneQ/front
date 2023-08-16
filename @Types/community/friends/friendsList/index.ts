@@ -4,7 +4,7 @@ export type FriendsListType = {
     name: string;
     storeName: string;
     phoneNumber: string;
-    friendStatus: string;
+    relationStatus: string;
     lastModifiedDate: string;
   }[];
 };
