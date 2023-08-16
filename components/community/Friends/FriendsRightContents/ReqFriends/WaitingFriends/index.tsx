@@ -19,6 +19,7 @@ const WaitingFriends = () => {
           waitingFriendsList?.map(({ id, name, storeName, phoneNumber }) => (
             <EachWaitingFriend
               key={id}
+              id={id}
               name={name}
               storeName={storeName}
               phoneNumber={phoneNumber}
