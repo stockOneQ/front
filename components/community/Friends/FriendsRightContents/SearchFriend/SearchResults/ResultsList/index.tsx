@@ -24,6 +24,7 @@ const ResultsList = ({ searchResultList }: IResultsListProps) => {
                 return (
                   <FriendItem
                     key={id}
+                    id={id}
                     name={name}
                     storeName={storeName}
                     phoneNumber={phoneNumber}
