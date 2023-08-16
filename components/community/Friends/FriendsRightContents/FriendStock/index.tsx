@@ -79,9 +79,9 @@ const FriendStock = () => {
   console.log(activeNav);
 
   const selectLabelHandler = (idx: string) => {
-    if (idx === '냉동') setSelectState(['냉동', '냉장', '상온']);
-    else if (idx === '냉장') setSelectState(['냉장', '냉동', '상온']);
-    else setSelectState(['상온', '냉장', '냉동']);
+    if (idx === '냉동') return setSelectState(['냉동', '냉장', '상온']);
+    if (idx === '냉장') return setSelectState(['냉장', '냉동', '상온']);
+    if (idx === '상온') return setSelectState(['상온', '냉장', '냉동']);
   };
 
   const openSelectLabelHandler = () => {
