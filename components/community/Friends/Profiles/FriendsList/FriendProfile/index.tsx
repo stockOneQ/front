@@ -3,7 +3,7 @@ import checkedIcon from 'public/assets/icons/community/checked.svg';
 import friendStockIcon from 'public/assets/icons/community/friendStockIcon.svg';
 import friendStockIcGray from 'public/assets/icons/community/friendStockIcGray.svg';
 import * as S from './style';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import FriendInfo from './FriendInfo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -14,7 +14,6 @@ interface IFriendProfileProps {
   storeName: string;
   phoneNumber: string;
   onSetting: boolean;
-  setIsPermitted: Dispatch<SetStateAction<number>>;
   setDeleteItem: Dispatch<SetStateAction<number[]>>;
 }
 
@@ -25,10 +24,8 @@ const FriendProfile = ({
   storeName,
   phoneNumber,
   onSetting,
-  setIsPermitted,
   setDeleteItem,
 }: IFriendProfileProps) => {
-  const didMount = useRef(false); // 첫 렌더링 useEffect 실행 막기 위해
   const [isChecked, setIsChecked] = useState(false); // 각 개별 친구, 체크 여부
 
   const { query } = useRouter();
@@ -44,18 +41,6 @@ const FriendProfile = ({
       return setDeleteItem(prev => [...prev, id]);
     }
   };
-
-  useEffect(() => {
-    if (didMount.current) {
-      if (isChecked) {
-        setIsPermitted(prev => (prev += 1));
-      } else {
-        setIsPermitted(perv => (perv -= 1));
-      }
-    } else {
-      didMount.current = true;
-    }
-  }, [isChecked, setIsPermitted]);
 
   return (
     <S.FriendProfileBox className="friend-profile">

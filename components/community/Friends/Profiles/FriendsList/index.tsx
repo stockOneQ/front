@@ -71,8 +71,6 @@ export const DUMMY_DATA = [
 const FriendsList = () => {
   /** 삭제, 취소 버튼 등장 */
   const [onSetting, setOnSetting] = useState(false);
-  /** 삭제 버튼 허용 */
-  const [isPermitted, setIsPermitted] = useState(10); // 일단 9(친구 수)로 하드 코딩
   const [deleteItem, setDeleteItem] = useState<number[]>([]);
   console.log('deleteItem', deleteItem);
 
@@ -83,7 +81,6 @@ const FriendsList = () => {
       <FriendsCount
         count={friendsList?.length || 0}
         onSetting={onSetting}
-        isPermitted={isPermitted}
         deleteItem={deleteItem}
         setOnSetting={setOnSetting}
       />
@@ -96,7 +93,6 @@ const FriendsList = () => {
             storeName={storeName}
             phoneNumber={phoneNumber}
             onSetting={onSetting}
-            setIsPermitted={setIsPermitted}
             setDeleteItem={setDeleteItem}
           />
         ))}
