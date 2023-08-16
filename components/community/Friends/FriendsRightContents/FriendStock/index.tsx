@@ -70,8 +70,17 @@ const NAV_DATA = [
   },
 ];
 
+interface IFriendStockProps {
+  friendStockList: {
+    id: number;
+    name: string;
+    stockQuant: number;
+    image: null;
+  }[];
+}
+
 /** 친구 재고 페이지 */
-const FriendStock = () => {
+const FriendStock = ({ friendStockList }: IFriendStockProps) => {
   const [selectOption, setSelectOption] = useState(false); // 냉동 냉장 상온 선택창 열기
   const [selectState, setSelectState] = useState(SELECT_DATA); // 냉동 냉장 상온 중 하나 고르기
   const [isSelect, setIsSelect] = useState(false); // 선택된 항목 css 주기 위해
@@ -149,12 +158,12 @@ const FriendStock = () => {
         </nav>
         <S.StockDataBox hideScroll={hideScroll} onScroll={scrollHandler}>
           <S.StockDataList>
-            {DUMMY_DATA.map(({ stockName, amount, img }, idx) => (
+            {friendStockList.map(({ id, name, stockQuant, image }) => (
               <StockList
-                key={idx}
-                stockName={stockName}
-                amount={amount}
-                img={img}
+                key={id}
+                name={name}
+                stockQuant={stockQuant}
+                image={image}
               />
             ))}
           </S.StockDataList>

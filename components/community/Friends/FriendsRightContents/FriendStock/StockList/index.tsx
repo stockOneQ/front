@@ -2,20 +2,20 @@ import Image from 'next/image';
 import * as S from './style';
 
 interface IStockListProps {
-  stockName: string;
-  amount: number;
-  img: string;
+  name: string;
+  stockQuant: number;
+  image: null;
 }
 
 /** 재고 목록 */
-const StockList = ({ stockName, amount, img }: IStockListProps) => {
+const StockList = ({ name, stockQuant, image }: IStockListProps) => {
   return (
     <S.StockDataItem>
       <S.StockImgBox>
-        <Image src={img} alt="stock" width={162} height={176} />
-        <p>{amount}</p>
+        {/* <Image src={image} alt="stock" width={162} height={176} /> */}
+        <p>{stockQuant}</p>
       </S.StockImgBox>
-      <S.StockDataParagraph>{stockName}</S.StockDataParagraph>
+      <S.StockDataParagraph>{name}</S.StockDataParagraph>
     </S.StockDataItem>
   );
 };

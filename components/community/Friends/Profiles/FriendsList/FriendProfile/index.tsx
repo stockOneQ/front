@@ -79,7 +79,7 @@ const FriendProfile = ({
         imgMarginRight="1.2rem"
       />
       <S.FriendPageButton onClick={stockButtonHandler}>
-        <Link href="/community/friends/stock">
+        <Link href={`/community/friends/stock/${id}`}>
           <Image
             src={isStockSelected ? friendStockIcon : friendStockIcGray}
             alt="my_page_icon"
