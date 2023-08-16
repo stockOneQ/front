@@ -74,6 +74,7 @@ const FriendsList = () => {
   /** 삭제 버튼 허용 */
   const [isPermitted, setIsPermitted] = useState(10); // 일단 9(친구 수)로 하드 코딩
   const [deleteItem, setDeleteItem] = useState<number[]>([]);
+  console.log('deleteItem', deleteItem);
 
   const { friendsList } = useContext(FriendsListContext);
 
@@ -83,6 +84,7 @@ const FriendsList = () => {
         count={friendsList?.length || 0}
         onSetting={onSetting}
         isPermitted={isPermitted}
+        deleteItem={deleteItem}
         setOnSetting={setOnSetting}
       />
       <S.FriendList>

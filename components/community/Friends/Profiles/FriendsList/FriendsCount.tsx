@@ -4,11 +4,14 @@ import * as S from './style';
 import AcceptBtn from 'components/common/button/AcceptBtn';
 import RejectBtn from 'components/common/button/RejectBtn';
 import { Dispatch, SetStateAction } from 'react';
+import { API } from 'pages/api/api';
+import { useRouter } from 'next/router';
 
 interface IFriendsCount {
   count: number;
   onSetting: boolean;
   isPermitted: number;
+  deleteItem: number[];
   setOnSetting: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -17,8 +20,17 @@ const FriendsCount = ({
   count,
   onSetting,
   isPermitted,
+  deleteItem,
   setOnSetting,
 }: IFriendsCount) => {
+  const router = useRouter();
+
+  const deleteHandler = () => {
+    setOnSetting(false);
+    deleteItem.map(id => API.delete(`/api/friend/${id}`));
+    router.push('/community/friends/search');
+  };
+
   return (
     <S.FriendsCountBox onSetting={onSetting}>
       <p>친구 목록 &nbsp; {count}</p>
@@ -41,13 +53,18 @@ const FriendsCount = ({
 
       {/* 친구 삭제 버튼 */}
       {onSetting && (
-        <div
-          onClick={() => {
-            setOnSetting(false);
-          }}
-        >
-          <RejectBtn label="취소" />
-          <AcceptBtn label="삭제" disabled={isPermitted <= 0} />
+        <div>
+          <RejectBtn
+            label="취소"
+            onClick={() => {
+              setOnSetting(false);
+            }}
+          />
+          <AcceptBtn
+            label="삭제"
+            onClick={deleteHandler}
+            disabled={deleteItem.length === 0}
+          />
         </div>
       )}
     </S.FriendsCountBox>
