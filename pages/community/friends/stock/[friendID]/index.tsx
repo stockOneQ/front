@@ -29,7 +29,6 @@ const FriendStockPage = ({
     waitingFriendsList: [],
     reqFriendsList: [],
   };
-  console.log('friendStockList ', friendStockList);
 
   return (
     <FriendsListContext.Provider value={contextValue}>
