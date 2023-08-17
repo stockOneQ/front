@@ -2,10 +2,11 @@ import MainPage from 'components/main/index';
 import React, { useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, onMessage, getToken } from 'firebase/messaging';
-import Cookies from 'js-cookie';
 import { API } from './api/api';
+import { useCookies } from 'react-cookie';
 const Home = () => {
   // 브라우저에 알림 권한을 요청합니다.
+  const [, setCookie] = useCookies(['fcmToken']);
   const onMessageFCM = async () => {
     // 브라우저에 알림 권한을 요청합니다.
     const permission = await Notification.requestPermission();
@@ -31,7 +32,7 @@ const Home = () => {
         if (currentToken) {
           // 정상적으로 토큰이 발급되면 콘솔에 출력합니다.
           console.log(currentToken); //이것도 쿠키에 저장
-          Cookies.set('fcmToken', currentToken);
+          setCookie('fcmToken', currentToken);
 
           sendFCMTokenToServer(currentToken);
         } else {
@@ -50,7 +51,7 @@ const Home = () => {
     });
   };
 
-  const sendFCMTokenToServer = async fcmToken => {
+  const sendFCMTokenToServer = async (fcmToken: string) => {
     try {
       // API를 호출하여 FCM 토큰을 서버로 전송
       const response = await API.post('/api/auth/fcm', { fcmToken });
