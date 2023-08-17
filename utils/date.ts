@@ -24,4 +24,5 @@ export const formatDetailCreatedDateToString = (props: string) => {
       .slice(11)
       .slice(0, 2)}:${props.slice(14).slice(0, 2)}`;
   }
+  return '';
 };
