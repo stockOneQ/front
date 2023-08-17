@@ -12,7 +12,7 @@ import {
 } from 'recoil/states';
 import * as S from './style';
 import ControlBar from './ControlBar';
-import PostListBox from './PostListBox';
+import PostList from './PostList';
 import HeadingText from 'components/common/HeadingText';
 
 import RightArrowSVG from 'public/assets/icons/community/rightArrow.svg';
@@ -57,7 +57,7 @@ const Board = () => {
       });
   }, [sortType, searchType, searchInput]);
 
-  const handleMyPostsClick = () => {
+  const handleMyPostsButtonClick = () => {
     setIsCurrentPathMain(false);
 
     /** 내가 쓴 글 페이지로 이동 할 시, 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
@@ -72,18 +72,18 @@ const Board = () => {
     <S.Box>
       <S.HeaderSection>
         <HeadingText>전체글</HeadingText>
-        <S.MyPostButtonContainer onClick={handleMyPostsClick}>
+        <S.GoToMyPostButton onClick={handleMyPostsButtonClick}>
           <span>내가 쓴 글</span>
           <Image src={RightArrowSVG} alt="MyPosts" />
-        </S.MyPostButtonContainer>
+        </S.GoToMyPostButton>
         <ControlBar />
-        <S.WriteButtonContainer>
+        <S.PostUploadButtonContainer>
           <Link href="/community/board/new">
             <Image alt="게시글 등록" src={WriteSVG} />
           </Link>
-        </S.WriteButtonContainer>
+        </S.PostUploadButtonContainer>
       </S.HeaderSection>
-      <PostListBox list={postList} />
+      <PostList list={postList} />
     </S.Box>
   );
 };
