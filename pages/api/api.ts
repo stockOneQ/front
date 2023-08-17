@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { ProductItem, Product } from 'recoil/states';
+import { ProductItem, Product, ProductDetail } from 'recoil/states';
 import Cookies from 'js-cookie';
 
 //제품개수
@@ -230,7 +230,9 @@ export const addProduct = async (
   }
 };
 
-export const fetchProductDetails = async (id: number): Promise<ProductItem> => {
+export const fetchProductDetails = async (
+  id: number,
+): Promise<ProductDetail> => {
   try {
     const response = await API.get(`/api/product/${id}`);
     if (response.data) {

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { mainPostListState } from '../../../recoil/states';
 import { useSetRecoilState } from 'recoil';
+import useScroll from 'hooks/useScroll';
 import * as S from '../../../components/main/style';
 import {
   fetchProductDetails,
@@ -16,14 +17,16 @@ const ProductPage = () => {
 
   const { id } = router.query;
   const { pathname } = router;
+  const { hideScroll, scrollHandler } = useScroll();
 
   const [selectedStorageMethod, setSelectedStorageMethod] = useState('');
+  const [selectedImage, setSelectedImage] = useState<any>(null);
 
-  // Extract storageMethodFilter from query
-
-  const [selectedImage, setSelectedImage] = useState(null);
-  const handleImageChange = e => {
-    setSelectedImage(e.target.files[0]);
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setSelectedImage(selectedFile);
+    }
   };
 
   const [formData, setFormData] = useState({
@@ -33,8 +36,8 @@ const ProductPage = () => {
     receivingDate: '2000-10-02',
     expirationDate: '2000-10-02',
     location: '선반',
-    requireQuant: '3',
-    stockQuant: '4',
+    requireQuant: 3,
+    stockQuant: 4,
     siteToOrder: 'www',
     orderFreq: '80',
     image: 'sk',
@@ -73,10 +76,6 @@ const ProductPage = () => {
     }
   }, [id]);
 
-  /** API 호출------------------------------------------------- */
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
-
   // 수정 API
   const handleEditProduct = async () => {
     try {
@@ -97,13 +96,18 @@ const ProductPage = () => {
     }
   };
 
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
+  const handleDeleteClick = () => {
+    if (typeof id === 'string') {
+      const parsedId = parseInt(id, 10);
+      if (!isNaN(parsedId)) {
+        handleDeleteProduct(parsedId);
+      }
+    }
+  };
 
   const setPostListState = useSetRecoilState(mainPostListState);
 
-  const handleInputChange = e => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     console.log('Input Changed:', name, value);
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
@@ -112,19 +116,14 @@ const ProductPage = () => {
   const handleSubmit = () => {
     /** 수정 API  */
     handleEditProduct();
-
     router.push('/');
   };
 
-  const handleImageClick = () => {
-    console.log('Image clicked');
-  };
-
   return (
-    <S.Box>
+    <S.Box hideScroll={hideScroll} onScroll={scrollHandler}>
       <S.Title title="재료 등록">재료상세</S.Title>
       <S.TopSection>
-        <S.Button onClick={() => handleDeleteProduct(id)}>
+        <S.Button onClick={() => handleDeleteClick}>
           <Link href="/">삭제</Link>
         </S.Button>
         <S.Button type="submit" onClick={handleSubmit}>
@@ -327,7 +326,7 @@ const ProductPage = () => {
               <S.Slider
                 type="range"
                 name="orderingFrequency"
-                value={formData.orderingFrequency}
+                value={formData.orderFreq}
                 min="0"
                 max="100"
                 step="20"

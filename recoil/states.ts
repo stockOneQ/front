@@ -8,8 +8,35 @@ export type StorageMethod = '냉동' | '냉장' | '상온';
 export interface ProductItem {
   id: number;
   name: string;
-  image: string | null;
+  image: string[] | null;
   storageMethod: string;
+}
+
+export type ProductDetail = {
+  name: string;
+  price: number;
+  vendor: string;
+  receivingDate: string;
+  expirationDate: string;
+  location: string;
+  requireQuant: number;
+  stockQuant: number;
+  siteToOrder: string;
+  orderFreq: string;
+  image: string;
+};
+
+export interface Product {
+  id: number;
+  name: string;
+  image: string[];
+}
+
+export interface ApiResponse {
+  status: string;
+  errorCode: string;
+  message: string;
+  result: ProductItem[];
 }
 
 export const mainPostListState = atom<ProductItem[]>({
@@ -56,35 +83,35 @@ export const searchFilterState = atom({
   default: '',
 });
 
-export const searchResultsState = selector({
-  key: 'searchResultsState',
-  get: ({ get }) => {
-    const searchTerm = get(searchFilterState);
-    const newpostList = get(newpostListState);
+// export const searchResultsState = selector({
+//   key: 'searchResultsState',
+//   get: ({ get }) => {
+//     const searchTerm = get(searchFilterState);
+//     const newpostList = get(newpostListState);
 
-    if (searchTerm.trim() !== '') {
-      return newpostList.filter(item =>
-        item.productName.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
-    } else {
-      return newpostList;
-    }
-  },
-});
+//     if (searchTerm.trim() !== '') {
+//       return newpostList.filter(item =>
+//         item.productName.toLowerCase().includes(searchTerm.toLowerCase()),
+//       );
+//     } else {
+//       return newpostList;
+//     }
+//   },
+// });
 
-export const filteredItemsState = selector({
-  key: 'filteredItemsState',
-  get: ({ get }) => {
-    const searchTerm = get(searchFilterState);
-    const searchResults = get(searchResultsState);
+// export const filteredItemsState = selector({
+//   key: 'filteredItemsState',
+//   get: ({ get }) => {
+//     const searchTerm = get(searchFilterState);
+//     const searchResults = get(searchResultsState);
 
-    if (searchTerm.trim() !== '') {
-      return searchResults;
-    } else {
-      return searchResults;
-    }
-  },
-});
+//     if (searchTerm.trim() !== '') {
+//       return searchResults;
+//     } else {
+//       return searchResults;
+//     }
+//   },
+// });
 
 export type IngredientsListItem = {
   id: number;
