@@ -9,6 +9,8 @@ import {
   mainPostListState,
   StorageMethod,
   ProductItem,
+  ApiResponse,
+  Product,
 } from '../../../recoil/states';
 import axios from 'axios';
 import {
@@ -19,16 +21,10 @@ import {
 } from 'pages/api/api';
 
 const sortOptionList = ['가나다순', '빈도'];
+
 type IngredientsProps = {
-  productsToShow: ProductItem[];
   storageMethodFilter: StorageMethod;
 };
-
-interface productAll {
-  id: number;
-  name: string;
-  image: string;
-}
 
 const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
@@ -37,10 +33,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const [data, setData] = useState(null);
   const [storeId, setStoreId] = useState(1);
   const [userId, setUserId] = useState(1);
-  const [sortedProducts, setSortedProducts] = useState<ProductItem[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<productAll | null>(
-    null,
-  );
+  const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
 
   const [selectedSortOption, setSelectedSortOption] = useState('가나다순');
   const [activeLink, setActiveLink] = useState<string>('전체');
@@ -82,8 +75,8 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
         lastProductId,
         sortParameter,
       );
+
       const productAll = response.data.result;
-      setSelectedProduct(response.data.result);
 
       setSortedProducts(prevProducts =>
         lastProductId ? [...prevProducts, ...productAll] : productAll,
@@ -95,12 +88,16 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
 
   const handleLoadMore = async () => {
     if (sortedProducts.length > 0) {
-      //마지막 제품 아이디
+      // 마지막 제품 아이디
       const lastProductId = sortedProducts[sortedProducts.length - 1].id;
-      fetchSortedProducts(
-        selectedSortOption === '빈도' ? '빈도' : '가나다',
-        lastProductId,
-      );
+
+      if (lastProductId) {
+        // lastProductId가 정의되었을 때만 실행
+        fetchSortedProducts(
+          selectedSortOption === '빈도' ? '빈도' : '가나다',
+          lastProductId,
+        );
+      }
     }
   };
 
@@ -165,7 +162,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const [totalCount, setTotalCount] = useState<number>(0);
 
   useEffect(() => {
-    fetchProductCounts(storeId, storageMethodFilter)
+    fetchProductCounts(storeId.toString(), storageMethodFilter)
       .then(counts => {
         console.log('제품개수 api 성공', counts);
         setTotalCount(counts.totalCount);
