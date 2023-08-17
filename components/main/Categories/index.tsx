@@ -16,7 +16,7 @@ type ControlBarProps = {
   //정렬
   sortOptionList: string[];
   handleLinkClick: (link: string) => void;
-  handleSortChange: (selectedOption: string) => void;
+  handleSortChange: React.Dispatch<React.SetStateAction<string>>;
   handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchTerm: string;
   selectedSortOption: string;
@@ -46,7 +46,7 @@ const Categories: React.FC<ControlBarProps> = ({
     }
   };
 
-  const handleInputChange = event => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputHeight(event.target.scrollHeight);
     handleSearchChange(event);
   };

@@ -8,8 +8,6 @@ import Categories from '../Categories';
 import {
   mainPostListState,
   StorageMethod,
-  ProductItem,
-  ApiResponse,
   Product,
 } from '../../../recoil/states';
 import axios from 'axios';
@@ -35,7 +33,8 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const [userId, setUserId] = useState(1);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
 
-  const [selectedSortOption, setSelectedSortOption] = useState('가나다순');
+  const [selectedSortOption, setSelectedSortOption] =
+    useState<string>('가나다순');
   const [activeLink, setActiveLink] = useState<string>('전체');
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [searchTerm, setSearchTerm] = useState('');
@@ -197,7 +196,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       />
 
       {/* api 호출에 따른 MAIN SECTION */}
-      <S.MainSection>
+      <S.MainSection hideScroll={true}>
         {Array.isArray(sortedProducts) ? (
           sortedProducts.map(product => (
             <S.MainItem

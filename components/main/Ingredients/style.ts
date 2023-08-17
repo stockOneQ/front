@@ -33,7 +33,11 @@ export const LoadMoreButton = styled.button`
   }
 `;
 
-export const MainSection = styled.div`
+interface MainSectionProps {
+  hideScroll?: boolean;
+}
+
+export const MainSection = styled.div<MainSectionProps>`
   display: flex;
   flex-wrap: wrap;
   height: 90vh;
