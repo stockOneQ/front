@@ -8,7 +8,7 @@ type IPostInfoType = {
   createdDate: string;
 };
 
-const PostInfoBox = ({ writerName, createdDate }: IPostInfoType) => {
+const PostInfo = ({ writerName, createdDate }: IPostInfoType) => {
   return (
     <S.Box>
       <S.Container>
@@ -26,4 +26,4 @@ const PostInfoBox = ({ writerName, createdDate }: IPostInfoType) => {
     </S.Box>
   );
 };
-export default PostInfoBox;
+export default PostInfo;
