@@ -7,17 +7,21 @@ import { API } from 'pages/api/api';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-/** 로그인 초기 화면 */
-const SignIn = ({ onSignUpClick }) => {
+interface ISignInProps {
+  onSignUpClick: () => void;
+}
+const SignIn = ({ onSignUpClick }: ISignInProps) => {
   const [isTyped, setIsTyped] = useState(false);
   const [enteredID, setEnteredID] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
 
-  const idChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    setEnteredID(e.target.value);
+  const idChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target as HTMLInputElement;
+    setEnteredID(value);
   };
-  const passwordChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    setEnteredPassword(e.target.value);
+  const passwordChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target as HTMLInputElement;
+    setEnteredPassword(value);
   };
 
   useEffect(() => {
