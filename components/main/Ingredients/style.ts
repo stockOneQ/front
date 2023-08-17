@@ -36,7 +36,7 @@ export const LoadMoreButton = styled.button`
 export const MainSection = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 95vh;
+  height: 90vh;
   overflow-y: auto;
 
   &::-webkit-scrollbar {

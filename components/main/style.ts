@@ -190,7 +190,11 @@ export const ReceiptDateInputYearField = styled(ReceiptDateInputField)`
   width: 100px;
 `;
 
-export const Box = styled.div`
+interface BoxProps {
+  hideScroll: boolean;
+}
+
+export const Box = styled.div<BoxProps>`
   display: flex;
   background-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
