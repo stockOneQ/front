@@ -19,7 +19,10 @@ import { API } from 'pages/api/api';
 import { useState } from 'react';
 import axios from 'axios';
 
-const SignUp = ({ onSuccess }) => {
+interface ISignUpProps {
+  onSuccess: () => void;
+}
+const SignUp = ({ onSuccess }: ISignUpProps) => {
   const [name, setName] = useState('이가영');
   const [birthYear, setBirthYear] = useState('2001');
   const [birthMonth, setBirthMonth] = useState('01');
@@ -94,7 +97,9 @@ const SignUp = ({ onSuccess }) => {
                 width="18.3rem"
                 type="text"
                 id="name"
-                onChange={e => setName(e.target.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                  setName((e.target as HTMLInputElement).value)
+                }
               />
             </S.SignUpInputBox>
             <S.SignUpInputBox>
@@ -106,21 +111,27 @@ const SignUp = ({ onSuccess }) => {
                   id="birthYear"
                   placeholder="YYYY"
                   value={birthYear}
-                  onChange={e => setBirthYear(e.target.value)}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    setBirthYear((e.target as HTMLInputElement).value)
+                  }
                 />
                 <S.SignUpInput
                   width="7.1rem"
                   type="text"
                   placeholder="MM"
                   value={birthMonth}
-                  onChange={e => setBirthMonth(e.target.value)}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    setBirthMonth((e.target as HTMLInputElement).value)
+                  }
                 />
                 <S.SignUpInput
                   width="7.1rem"
                   type="text"
                   placeholder="DD"
                   value={birthDay}
-                  onChange={e => setBirthDay(e.target.value)}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    setBirthDay((e.target as HTMLInputElement).value)
+                  }
                 />
               </SS.BirthInputBox>
             </S.SignUpInputBox>
@@ -134,7 +145,9 @@ const SignUp = ({ onSuccess }) => {
                 type="text"
                 placeholder="example"
                 value={emailFirstPart}
-                onChange={e => setEmailFirstPart(e.target.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                  setEmailFirstPart((e.target as HTMLInputElement).value)
+                }
               />
               <p>@</p>
               <S.SignUpInput
@@ -142,14 +155,18 @@ const SignUp = ({ onSuccess }) => {
                 type="text"
                 placeholder="domain"
                 value={emailSecondPart}
-                onChange={e => setEmailSecondPart(e.target.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                  setEmailSecondPart((e.target as HTMLInputElement).value)
+                }
               />
               <S.SignUpInput
                 width="18.3rem"
                 type="text"
                 placeholder="com"
                 value={emailThirdPart}
-                onChange={e => setEmailThirdPart(e.target.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                  setEmailThirdPart((e.target as HTMLInputElement).value)
+                }
               />
             </SS.EmailInputBox>
           </S.InputRow2Box>
@@ -163,21 +180,27 @@ const SignUp = ({ onSuccess }) => {
                 id="digitPrefix"
                 placeholder="010"
                 value={phonePrefix}
-                onChange={e => setPhonePrefix(e.target.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                  setPhonePrefix((e.target as HTMLInputElement).value)
+                }
               />
               <S.SignUpInput
                 width="9.2rem"
                 type="text"
                 placeholder="0000"
                 value={phoneFirstPart}
-                onChange={e => setPhoneFirstPart(e.target.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                  setPhoneFirstPart((e.target as HTMLInputElement).value)
+                }
               />
               <S.SignUpInput
                 width="9.2rem"
                 type="text"
                 placeholder="0000"
                 value={phoneSecondPart}
-                onChange={e => setPhoneSecondPart(e.target.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                  setPhoneSecondPart((e.target as HTMLInputElement).value)
+                }
               />
             </SS.DigitInputBox>
           </S.InputRow2Box>
@@ -189,7 +212,9 @@ const SignUp = ({ onSuccess }) => {
               width="18.3rem"
               type="text"
               id="name"
-              onChange={e => setLoginId(e.target.value)}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                setLoginId((e.target as HTMLInputElement).value)
+              }
             />
           </S.SignUpInputBox>
           <S.SignUpInputBox>
@@ -199,7 +224,9 @@ const SignUp = ({ onSuccess }) => {
               width="18.3rem"
               type="text"
               id="name"
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                setPassword((e.target as HTMLInputElement).value)
+              }
             />
           </S.SignUpInputBox>
           {/* <S.InputRow2Box>
@@ -252,7 +279,9 @@ const SignUp = ({ onSuccess }) => {
               width="27.4rem"
               type="text"
               id="store"
-              onChange={e => setStoreName(e.target.value)}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                setStoreName((e.target as HTMLInputElement).value)
+              }
             />
           </S.InputRow2Box>
           <S.InputRow2Box>
@@ -262,7 +291,9 @@ const SignUp = ({ onSuccess }) => {
               width="27.4rem"
               type="text"
               id="store"
-              onChange={e => setStoreSector(e.target.value)}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                setStoreSector((e.target as HTMLInputElement).value)
+              }
             />
           </S.InputRow2Box>
           <S.InputRow2Box>
@@ -275,7 +306,9 @@ const SignUp = ({ onSuccess }) => {
                 type="text"
                 id="addr"
                 placeholder="우편번호"
-                onChange={e => setStoreAddress(e.target.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                  setStoreAddress((e.target as HTMLInputElement).value)
+                }
               />
               <button>주소검색</button>
             </SS.AddrInputBox>
@@ -300,7 +333,6 @@ const SignUp = ({ onSuccess }) => {
             font="2.4rem"
             label="회원가입"
             disabled={false}
-            type="button"
             onClick={handleSignUp}
           />
           <RejectBtn
