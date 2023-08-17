@@ -15,7 +15,7 @@ import * as S from './style';
 import { API } from 'pages/api/api';
 
 import ControlBar from '../ControlBar';
-import PostListBox from '../PostListBox';
+import PostListBox from '../PostList';
 import HeadingText from 'components/common/HeadingText';
 import RejectBtn from 'components/common/button/RejectBtn';
 import AcceptBtn from 'components/common/button/AcceptBtn';
