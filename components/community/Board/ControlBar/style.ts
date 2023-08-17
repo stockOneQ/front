@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const ControlBarBox = styled.div`
+export const ControlBar = styled.div`
   position: relative;
   display: flex;
   margin-left: 1rem;
@@ -19,7 +19,7 @@ export const SearchBar = styled.div`
 
 export const SearchButton = styled.button``;
 
-export const DropBoxContainer = styled.div`
+export const DropDownContainer = styled.div`
   position: absolute;
   top: 0%;
 `;

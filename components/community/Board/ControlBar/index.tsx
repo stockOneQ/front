@@ -30,8 +30,9 @@ const ControlBar = () => {
   };
 
   return (
-    <S.ControlBarBox>
-      <S.DropBoxContainer>
+    <S.ControlBar>
+      {/** 최신순, 조회순 */}
+      <S.DropDownContainer>
         <DropDown
           width={16.3}
           height={3.5}
@@ -42,9 +43,10 @@ const ControlBar = () => {
           onChange={setSortType}
           type={sortType}
         />
-      </S.DropBoxContainer>
+      </S.DropDownContainer>
       <S.SearchBar>
-        <S.DropBoxContainer>
+        {/** 글 제목, 글 내용, 작성자 */}
+        <S.DropDownContainer>
           <DropDown
             width={16.3}
             height={3.5}
@@ -55,13 +57,13 @@ const ControlBar = () => {
             onChange={setSearchType}
             type={searchType}
           />
-        </S.DropBoxContainer>
+        </S.DropDownContainer>
         <SearchInputBar value={input} onChange={setInput} />
         <S.SearchButton onClick={handleSearch}>
           <Image alt="search" src={SearchSVG} />
         </S.SearchButton>
       </S.SearchBar>
-    </S.ControlBarBox>
+    </S.ControlBar>
   );
 };
 
