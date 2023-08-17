@@ -260,6 +260,12 @@ export const searchInputState = atom<string>({
 //   },
 // });
 
+/** 게시글 좋아요 클릭 여부 */
+export const isLikeState = atom<boolean>({
+  key: 'isLikeState',
+  default: false,
+});
+
 /** 게시글 댓글 */
 
 export interface IPostCommentTypes {
@@ -276,6 +282,11 @@ export const postCommentInputState = atom<string>({
 
 export const commentsRenderTriggerState = atom<boolean>({
   key: 'commentsLengthState',
+  default: false,
+});
+
+export const recommentsRenderTriggerState = atom<boolean>({
+  key: 'recommentsRenderTriggerState',
   default: false,
 });
 
