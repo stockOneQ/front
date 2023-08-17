@@ -9,7 +9,7 @@ import {
 } from 'recoil/states';
 import ViewsSVG from 'public/assets/icons/community/views.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
-import LikesSVG from 'public/assets/icons/community/likes.svg';
+import LikedSVG from 'public/assets/icons/community/liked.svg';
 
 import * as S from './style';
 
@@ -40,11 +40,11 @@ const PostItem = ({
   return (
     <S.Box isDeleteMode={isDeleteMode}>
       <S.Container>
-        <S.PostContentSection>
+        <S.ContentSection>
           <S.Title>{title}</S.Title>
           <S.Content>{content.substring(0, 100)}</S.Content>
-        </S.PostContentSection>
-        <S.PostInteractionSection>
+        </S.ContentSection>
+        <S.InteractionSection>
           <S.Left>
             <S.Interaction type="views">
               <Image alt="views" src={ViewsSVG} />
@@ -57,10 +57,10 @@ const PostItem = ({
           </S.Left>
 
           <S.Interaction type="likes">
-            <Image alt="likes" src={LikesSVG} />
+            <Image alt="likes" src={LikedSVG} />
             <span>{likes}</span>
           </S.Interaction>
-        </S.PostInteractionSection>
+        </S.InteractionSection>
       </S.Container>
 
       {/** deleteMode인 경우 체크박스만 존재. 상세 페이지로 이동 못함. */}

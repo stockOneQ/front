@@ -66,7 +66,7 @@ export const Container = styled.div`
   justify-content: space-between;
 `;
 
-export const PostContentSection = styled.div`
+export const ContentSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -86,7 +86,7 @@ export const Content = styled.div`
   color: #979797;
 `;
 
-export const PostInteractionSection = styled.div`
+export const InteractionSection = styled.div`
   width: 23.5rem;
   display: flex;
   justify-content: space-between;
