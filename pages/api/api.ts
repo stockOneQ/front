@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { ProductItem } from 'recoil/states';
+import { ProductItem, Product } from 'recoil/states';
 import Cookies from 'js-cookie';
 
 //제품개수
@@ -92,24 +92,20 @@ API.interceptors.response.use(
   },
 );
 
-// export const API = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_API_URL,
-//   headers: {
-//     'Content-Type': 'application/json',
-//     Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
-//     'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_API_URL,
-//     'Access-Control-Allow-Credentials': true,
-//   },
-//   withCredentials: true,
-// });
+interface ApiResponse {
+  status: string;
+  errorCode: string;
+  message: string;
+  result: Product[];
+}
 
-//정렬 제품 api 호출
+// 정렬 제품 api 호출
 export const productList = (
   store: number,
   condition: string,
   last: number,
   sort: string,
-): Promise<AxiosResponse<ProductItem[]>> =>
+): Promise<AxiosResponse<ApiResponse>> =>
   API.get('/api/product/all', {
     params: {
       store,
@@ -208,7 +204,7 @@ export const getProductByCategory = async (
 };
 
 /** 제품 삭제  */
-export const handleDeleteProduct = async productId => {
+export const handleDeleteProduct = async (productId: number) => {
   try {
     await API.delete(`/api/product/delete/${productId}`);
   } catch (error) {
@@ -263,6 +259,6 @@ export const searchProducts = async (
     });
     return response.data;
   } catch (error) {
-    throw new Error('Error fetching search results: ' + error.message);
+    throw new Error('Error fetching search results: ' + error);
   }
 };
