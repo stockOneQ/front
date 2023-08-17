@@ -1,7 +1,7 @@
 //ingredients/index.tsx
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import * as S from './style';
 import Link from 'next/link';
 import Categories from '../Categories';
@@ -9,6 +9,7 @@ import {
   mainPostListState,
   StorageMethod,
   Product,
+  sortTypeStateProduct,
 } from '../../../recoil/states';
 import axios from 'axios';
 import {
@@ -58,12 +59,13 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   // api호출에서 받은 storeID 와 userId 로 전체 제품 조회 api 호출
   useEffect(() => {
     if (storeId && userId) {
-      fetchSortedProducts('가나다');
+      fetchSortedProducts(selectedCategory, '가나다');
     }
-  }, [storeId, userId]);
+  }, [storeId, userId, selectedCategory]);
 
   /** 제품조회 API 완 ------------------------------------------------------------------ */
   const fetchSortedProducts = async (
+    category: string,
     sortParameter: string,
     lastProductId?: number,
   ) => {
@@ -71,7 +73,8 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       const response = await productList(
         storeId,
         storageMethodFilter,
-        lastProductId,
+        category,
+        lastProductId !== undefined ? lastProductId : -1,
         sortParameter,
       );
 
@@ -93,6 +96,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       if (lastProductId) {
         // lastProductId가 정의되었을 때만 실행
         fetchSortedProducts(
+          selectedCategory,
           selectedSortOption === '빈도' ? '빈도' : '가나다',
           lastProductId,
         );
@@ -105,7 +109,10 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   /** 가나다순, 빈도순 옵션 변경----------------------------------------------------- */
   const handleSortChange = (selectedOption: string) => {
     setSelectedSortOption(selectedOption);
-    fetchSortedProducts(selectedOption === '빈도' ? '빈도' : '가나다');
+    fetchSortedProducts(
+      selectedCategory,
+      selectedOption === '빈도' ? '빈도' : '가나다',
+    );
   };
 
   /** 검색 API 완------------------------------------------------------------------ */
@@ -130,22 +137,15 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       console.error('Error fetching search results:', error);
     }
   };
-  /** condition별 api 호출 완------------------------------------------------------ */
+
   const handleLinkClick = async (category: string, lastProductId?: number) => {
     setSelectedSortOption('가나다순');
     setActiveLink(category);
     setSelectedCategory(category);
+    console.error(category);
 
     try {
-      const products = await getProductByCategory(
-        category,
-        storeId,
-        storageMethodFilter,
-        lastProductId,
-        '가나다',
-      );
-      console.log('컨디션 별 호출 성공', products);
-      setSortedProducts(products);
+      await fetchSortedProducts(category, '가나다', lastProductId);
     } catch (error) {
       console.error('Error fetching sorted products:', error);
     }

@@ -102,14 +102,16 @@ interface ApiResponse {
 // 정렬 제품 api 호출
 export const productList = (
   store: number,
-  condition: string,
+  condition: string, //냉장냉동
+  search: string, //유통기한 임박 ,부족
   last: number,
   sort: string,
 ): Promise<AxiosResponse<ApiResponse>> =>
-  API.get('/api/product/all', {
+  API.get('/api/product/page', {
     params: {
       store,
       condition,
+      search,
       last,
       sort,
     },
