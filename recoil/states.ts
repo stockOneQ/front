@@ -83,35 +83,10 @@ export const searchFilterState = atom({
   default: '',
 });
 
-// export const searchResultsState = selector({
-//   key: 'searchResultsState',
-//   get: ({ get }) => {
-//     const searchTerm = get(searchFilterState);
-//     const newpostList = get(newpostListState);
-
-//     if (searchTerm.trim() !== '') {
-//       return newpostList.filter(item =>
-//         item.productName.toLowerCase().includes(searchTerm.toLowerCase()),
-//       );
-//     } else {
-//       return newpostList;
-//     }
-//   },
-// });
-
-// export const filteredItemsState = selector({
-//   key: 'filteredItemsState',
-//   get: ({ get }) => {
-//     const searchTerm = get(searchFilterState);
-//     const searchResults = get(searchResultsState);
-
-//     if (searchTerm.trim() !== '') {
-//       return searchResults;
-//     } else {
-//       return searchResults;
-//     }
-//   },
-// });
+export const sortTypeStateProduct = atom<string>({
+  key: 'sortTypeStateProduct',
+  default: '가나다',
+});
 
 export type IngredientsListItem = {
   id: number;

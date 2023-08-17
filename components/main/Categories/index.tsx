@@ -5,6 +5,8 @@ import * as S from '../Ingredients/style';
 import searchIcon from 'public/assets/icons/community/search.svg';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRecoilState } from 'recoil';
+import { sortTypeStateProduct } from 'recoil/states';
 
 type ControlBarProps = {
   activeLink: string;
@@ -16,7 +18,7 @@ type ControlBarProps = {
   //정렬
   sortOptionList: string[];
   handleLinkClick: (link: string) => void;
-  handleSortChange: React.Dispatch<React.SetStateAction<string>>;
+  handleSortChange: (selectedOption: string) => void;
   handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchTerm: string;
   selectedSortOption: string;
@@ -69,22 +71,22 @@ const Categories: React.FC<ControlBarProps> = ({
             <S.CountValue>{totalCount}</S.CountValue>
           </S.StyledLink>
           <S.StyledLink
-            isactive={activeLink === 'afterDate'}
-            onClick={() => handleLinkClick('afterDate')}
+            isactive={activeLink === '유통기한 경과'}
+            onClick={() => handleLinkClick('유통기한 경과')}
           >
             유통기한 지난 재료
             <S.CountValue>{expiredIngredientsCount}</S.CountValue>
           </S.StyledLink>
           <S.StyledLink
-            isactive={activeLink === 'beforeDate'}
-            onClick={() => handleLinkClick('beforeDate')}
+            isactive={activeLink === '유통기한 임박'}
+            onClick={() => handleLinkClick('유통기한 임박')}
           >
             유통기한 임박 재료
             <S.CountValue>{approachingExpirationCount}</S.CountValue>
           </S.StyledLink>
           <S.StyledLink
-            isactive={activeLink === 'no'}
-            onClick={() => handleLinkClick('no')}
+            isactive={activeLink === '재고 부족'}
+            onClick={() => handleLinkClick('재고 부족')}
           >
             부족한 재료
             <S.CountValue>{insufficientIngredientsCount}</S.CountValue>
@@ -98,7 +100,7 @@ const Categories: React.FC<ControlBarProps> = ({
               toggleSize={10}
               toggleTopSize={48}
               list={sortOptionList}
-              onChange={handleSortChange}
+              onChangeValue={handleSortChange}
               type={selectedSortOption}
             />
           </S.DropBoxContainer>
