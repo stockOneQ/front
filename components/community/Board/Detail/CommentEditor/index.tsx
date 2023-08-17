@@ -1,46 +1,35 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import {
-  commentsRenderTriggerState,
-  postCommentInputState,
-} from 'recoil/states';
+import { useSetRecoilState } from 'recoil';
+import { commentsRenderTriggerState } from 'recoil/states';
 import * as S from './style';
 import { API } from 'pages/api/api';
 import PhotoUploadSVG from 'public/assets/icons/community/photoUpload.svg';
-import React from 'react';
 
-const PostCommentEditor = ({
+const CommentEditor = ({
+  isReply,
   commentId,
-  height,
-  isEdit,
   content,
   setIsEdit,
 }: {
-  commentId?: number;
-  height: number;
-  isEdit: boolean;
-  content?: string;
-  setIsEdit?: React.Dispatch<React.SetStateAction<boolean>>;
+  isReply: boolean;
+  commentId: number;
+  content: string;
+  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const router = useRouter();
   const { id } = router.query; /** 게시글 ID */
-  const [input, setInput] = useRecoilState(postCommentInputState);
+  const [input, setInput] = useState(content);
+
+  /** 댓글 수정 후 댓글 목록 리렌더링 위함 */
   const setCommentsRenderTrigger = useSetRecoilState(
     commentsRenderTriggerState,
   );
 
-  useEffect(() => {
-    if (isEdit && content) return setInput(content);
-    setInput('');
-  }, []);
-
-  console.log(isEdit, content, input);
-
   const [formData, setFormData] = useState({
     image: '',
-    content: '',
+    content: input,
   });
 
   useEffect(() => {
@@ -62,15 +51,15 @@ const PostCommentEditor = ({
       }),
     );
 
-    /** ----------------- 댓글 등록/수정 API ----------------- */
-    if (isEdit) {
+    /** ----------------- 댓글 수정 API ----------------- */
+    if (!isReply) {
       API.patch(`/api/comments/${commentId}`, formDatas, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       })
         .then(() => {
-          console.log(`${id}번 게시글에 댓글 수정 성공`);
+          console.log(`${id}번 댓글 수정 성공`);
           if (setIsEdit) setIsEdit(false); /** Edit Mode off */
           setCommentsRenderTrigger(prev => !prev);
           setInput('');
@@ -81,13 +70,15 @@ const PostCommentEditor = ({
           throw e;
         });
     } else {
-      API.post(`/api/comments/${id}`, formDatas, {
+      /** ----------------- 대댓글 수정 API ----------------- */
+      API.patch(`/api/replies/${commentId}`, formDatas, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       })
         .then(() => {
-          console.log(`${id}번 게시글에 댓글 등록 성공`);
+          console.log(`${commentId}번 대댓글 수정 성공`);
+          if (setIsEdit) setIsEdit(false); /** Edit Mode off */
           setCommentsRenderTrigger(prev => !prev);
           setInput('');
           setFormData({ image: '', content: input });
@@ -100,8 +91,8 @@ const PostCommentEditor = ({
   };
 
   return (
-    <S.Box>
-      <S.Editor height={height}>
+    <S.Editor>
+      <S.InputBox>
         <S.PhotoUploadButton>
           <Image src={PhotoUploadSVG} alt="upload" />
         </S.PhotoUploadButton>
@@ -112,12 +103,12 @@ const PostCommentEditor = ({
             setInput(e.target.value)
           }
         />
-      </S.Editor>
+      </S.InputBox>
       <S.SubmitButton onClick={handleSubmit}>
         <span>댓글 등록</span>
       </S.SubmitButton>
-    </S.Box>
+    </S.Editor>
   );
 };
 
-export default PostCommentEditor;
+export default CommentEditor;

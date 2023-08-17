@@ -1,18 +1,15 @@
 import { styled } from 'styled-components';
 
-interface ISizeType {
-  height: number;
-}
-
-export const Box = styled.div`
+export const Editor = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
   gap: 2rem;
 `;
 
-export const Editor = styled.div<ISizeType>`
+export const InputBox = styled.div`
   width: 100%;
+  height: 15.3rem;
   display: flex;
   gap: 4rem;
 
@@ -22,7 +19,6 @@ export const Editor = styled.div<ISizeType>`
   box-shadow: inset 0px 3px 4px rgba(0, 0, 0, 0.15);
   border-radius: 30px;
 
-  height: ${props => props.height}rem;
   padding: 2rem 2rem 2rem 3.5rem;
 `;
 
