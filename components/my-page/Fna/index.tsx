@@ -2,6 +2,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import * as S from './style';
+import React from 'react';
 
 interface Post {
   id: string;
