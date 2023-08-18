@@ -15,7 +15,7 @@ const FrozenPageComp = () => {
 
   return (
     <MainSection>
-      <Ingredients productsToShow={productsToShow} storageMethodFilter="냉동" />
+      <Ingredients storageMethodFilter="냉동" />
     </MainSection>
   );
 };

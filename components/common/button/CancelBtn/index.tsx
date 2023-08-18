@@ -6,21 +6,22 @@ interface ICancelBtnProps {
   width?: string;
   height?: string;
   font?: string;
+  onClick?: () => void;
 }
 
 const CnclBtn = styled.button<ICancelBtnProps>`
   position: relative;
-  width: ${({ width = '7.1rem'}) => width};
-  height: ${({ height = '4.6rem'}) => height};
-  border-radius: .4rem;
-  background-color: #ACACAC;
+  width: ${({ width = '7.1rem' }) => width};
+  height: ${({ height = '4.6rem' }) => height};
+  border-radius: 0.4rem;
+  background-color: #acacac;
   color: var(--color-white);
   text-align: center;
-  font-size: ${({ font = '1.3rem'}) => font};
+  font-size: ${({ font = '1.3rem' }) => font};
   font-weight: 600;
   line-height: normal;
-  transition: all .3s ease;
-  cursor: ${props => props.disabled ? 'default' : 'pointer'};
+  transition: all 0.3s ease;
+  cursor: ${props => (props.disabled ? 'default' : 'pointer')};
 
   &::after {
     position: absolute;
@@ -30,17 +31,17 @@ const CnclBtn = styled.button<ICancelBtnProps>`
     align-items: center;
     top: 0;
     left: 0;
-    width: ${({ width = '7.1rem'}) => width};
-    height: ${({ height = '4.6rem'}) => height};
-    border-radius: .4rem;
+    width: ${({ width = '7.1rem' }) => width};
+    height: ${({ height = '4.6rem' }) => height};
+    border-radius: 0.4rem;
     background-image: url('/assets/imgs/community/bg-img/acceptBtnBg.svg');
     background-size: cover;
     background-repeat: no-repeat;
     color: var(--color-white);
-    font-size: ${({ font = '1.3rem'}) => font};
+    font-size: ${({ font = '1.3rem' }) => font};
     font-weight: 600;
     line-height: normal;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
     opacity: 0;
   }
 
@@ -48,13 +49,30 @@ const CnclBtn = styled.button<ICancelBtnProps>`
   &:active::after {
     opacity: 1;
   }
-`
+`;
 
 /** 수락 버튼 */
-const CancelBtn = ({ label, disabled, width, height, font }: ICancelBtnProps) => {
+const CancelBtn = ({
+  label,
+  disabled,
+  width,
+  height,
+  font,
+  onClick,
+}: ICancelBtnProps) => {
   return (
     // linear-gradient transition 적용시키기 위해, children이 아닌, props로 값을 받음.
-    <CnclBtn label={label} disabled={disabled} width={width} height={height} font={font}>{label}</CnclBtn>
+    <CnclBtn
+      label={label}
+      disabled={disabled}
+      width={width}
+      height={height}
+      font={font}
+      type="button"
+      onClick={onClick}
+    >
+      {label}
+    </CnclBtn>
   );
 };
 
