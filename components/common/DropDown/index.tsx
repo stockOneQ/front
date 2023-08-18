@@ -11,6 +11,7 @@ interface IDropDownProps {
   toggleTopSize: number;
   list: string[];
   onChange?: React.Dispatch<React.SetStateAction<string>>;
+  onChangeValue?: (value: string) => void;
   type: string;
 }
 
@@ -23,6 +24,7 @@ const DropDown = ({
   toggleTopSize,
   list,
   onChange,
+  onChangeValue,
   type,
 }: IDropDownProps) => {
   const [searchBy, setSearchBy] = useState(type);
@@ -30,6 +32,12 @@ const DropDown = ({
 
   const changeValueHandler = (value: string) => {
     if (onChange) onChange(value);
+    setSearchBy(value);
+    setCategoryToggle(false);
+  };
+
+  const handleOnChangeValue = (value: string) => {
+    if (onChangeValue) onChangeValue(value);
     setSearchBy(value);
     setCategoryToggle(false);
   };
@@ -61,6 +69,7 @@ const DropDown = ({
               key={idx}
               onClick={() => {
                 changeValueHandler(label);
+                handleOnChangeValue(label);
               }}
             >
               {label}

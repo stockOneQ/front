@@ -4,6 +4,7 @@ import AppLayout from 'layouts/AppLayout';
 import Globals from 'styles/Globals';
 import Login from './login';
 import Head from 'next/head';
+import { CookiesProvider } from 'react-cookie';
 
 import { RecoilRoot } from 'recoil';
 
@@ -27,19 +28,21 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="/manifest" href="manifest.webmanifest" />
       </Head>
       <RecoilRoot>
-        {Component === Login ? (
-          <main className={roboto.className}>
-            <Component {...pageProps} />
-            <Globals />
-          </main>
-        ) : (
-          <main className={roboto.className}>
-            <Globals />
-            <AppLayout>
+        <CookiesProvider>
+          {Component === Login ? (
+            <main className={roboto.className}>
               <Component {...pageProps} />
-            </AppLayout>
-          </main>
-        )}
+              <Globals />
+            </main>
+          ) : (
+            <main className={roboto.className}>
+              <Globals />
+              <AppLayout>
+                <Component {...pageProps} />
+              </AppLayout>
+            </main>
+          )}
+        </CookiesProvider>
       </RecoilRoot>
     </>
   );
