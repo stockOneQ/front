@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import * as S from './style';
 import { useRouter } from 'next/router';
 import { API } from 'pages/api/api';
-import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { loginIdState } from 'recoil/states';
 
 interface ISignInProps {
   onSignUpClick: () => void;
@@ -14,6 +16,11 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
   const [isTyped, setIsTyped] = useState(false);
   const [enteredID, setEnteredID] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
+  const [, setRefCookie] = useCookies(['refreshToken']);
+  const [, setAccCookie] = useCookies(['accessToken']);
+
+  const setLoginId = useSetRecoilState(loginIdState);
+  const loginId = useRecoilValue(loginIdState);
 
   const idChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target as HTMLInputElement;
@@ -51,10 +58,6 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
       if (response.status === 204) {
         // 로그아웃 성공 시 다음 동작 수행
         console.log('로그아웃 성공');
-        Cookies.remove('accessToken');
-        Cookies.remove('refreshToken');
-        Cookies.remove('fcmToken');
-        // 여기에 추가적인 로직을 넣을 수 있습니다.
       }
     } catch (error) {
       console.error('로그아웃 에러', error);
@@ -77,16 +80,15 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
         const refreshToken = response.data.refreshToken;
         console.log('Login successful', response.data);
         alert('로그인 성공');
+        setAccCookie('accessToken', accessToken);
+        setRefCookie('refreshToken', refreshToken);
 
-        // localStorage.setItem('accessToken', accessToken);
-        // localStorage.setItem('refreshToken', refreshToken);
-
-        Cookies.set('accessToken', accessToken);
-        Cookies.set('refreshToken', refreshToken);
+        // Recoil 상태 업데이트
+        setLoginId(response.data.loginId);
+        console.log('현재 리코일 값', loginId);
 
         router.push('/home/frozen'); // '/' 페이지로 이동
       } catch (error) {
-        // 에러 처리 로직을 작성하면 됩니다.
         console.error('Login error', error);
       }
     }
