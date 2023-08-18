@@ -7,7 +7,7 @@ import { API } from 'pages/api/api';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { loginIdState } from 'recoil/states';
+import { loginIdState, nameState } from 'recoil/states';
 
 interface ISignInProps {
   onSignUpClick: () => void;
@@ -20,7 +20,7 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
   const [, setAccCookie] = useCookies(['accessToken']);
 
   const setLoginId = useSetRecoilState(loginIdState);
-  const loginId = useRecoilValue(loginIdState);
+  const setName = useSetRecoilState(nameState);
 
   const idChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target as HTMLInputElement;
@@ -85,7 +85,7 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
 
         // Recoil 상태 업데이트
         setLoginId(response.data.loginId);
-        console.log('현재 리코일 값', loginId);
+        setName(response.data.name);
 
         router.push('/home/frozen'); // '/' 페이지로 이동
       } catch (error) {
