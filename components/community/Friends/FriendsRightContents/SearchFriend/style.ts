@@ -39,9 +39,15 @@ const DropBoxContainer = styled.div`
   top: 0%;
 `;
 
+const LoadingBox = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
 export {
   SearchFriendText,
   SearchFriendBox,
   DropBoxContainer,
   SearchFriendsInput,
+  LoadingBox,
 };

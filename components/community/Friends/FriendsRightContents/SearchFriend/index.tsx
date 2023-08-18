@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import loadingIc from 'public/assets/icons/common/loadingIc.svg';
 import searchIcon from 'public/assets/icons/common/searchIcon.svg';
 import * as S from './style';
 import { KeyboardEvent, MouseEvent, useEffect, useRef, useState } from 'react';
@@ -89,7 +90,11 @@ const SearchFriend = () => {
         </button>
       </S.SearchFriendBox>
       {!enteredValue && searchBy !== '이름' && <SearchPlaceholder />}
-      {enteredValue && isLoading && <h1>Loading....</h1>}
+      {enteredValue && isLoading && (
+        <S.LoadingBox>
+          <Image src={loadingIc} alt="loading-icon" width={59} height={27} />
+        </S.LoadingBox>
+      )}
       {enteredValue && !isLoading && (
         <SearchResults searchResultList={searchResultList} />
       )}
