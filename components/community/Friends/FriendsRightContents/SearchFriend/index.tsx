@@ -88,7 +88,7 @@ const SearchFriend = () => {
           <Image src={searchIcon} alt="my_page_icon" width={17} height={17} />
         </button>
       </S.SearchFriendBox>
-      {!enteredValue && <SearchPlaceholder />}
+      {!enteredValue && searchBy !== '이름' && <SearchPlaceholder />}
       {enteredValue && isLoading && <h1>Loading....</h1>}
       {enteredValue && !isLoading && (
         <SearchResults searchResultList={searchResultList} />
