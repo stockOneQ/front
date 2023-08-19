@@ -5,20 +5,16 @@ import StockList from './StockList';
 import useScroll from 'hooks/useScroll';
 import * as S from './style';
 import { useState } from 'react';
+import {
+  FriendStockCountListType,
+  FriendStockListType,
+} from '@Types/community/friends/friendsList';
 
 const SELECT_DATA = ['냉동', '냉장', '상온'];
 
 interface IFriendStockProps {
-  friendStockList: {
-    id: number;
-    name: string;
-    stockQuant: number;
-    image: null;
-  }[];
-  friendStockCountList: {
-    name: string;
-    total: number;
-  }[];
+  friendStockList: FriendStockListType[];
+  friendStockCountList: FriendStockCountListType[];
 }
 
 /** 친구 재고 페이지 */

@@ -1,24 +1,16 @@
 // http://localhost:3000/community/friends/stock
 
-import { FriendsListType } from '@Types/community/friends/friendsList';
+import {
+  FriendStockCountListType,
+  FriendStockListType,
+  FriendsListType,
+} from '@Types/community/friends/friendsList';
 import Friends from 'components/community/Friends';
 import FriendStock from 'components/community/Friends/FriendsRightContents/FriendStock';
 import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 import { GetStaticPropsContext } from 'next';
 import { API } from 'pages/api/api';
 import { ParsedUrlQuery } from 'querystring';
-
-type FriendStockListType = {
-  id: number;
-  name: string;
-  stockQuant: number;
-  image: null;
-};
-
-type FriendStockCountListType = {
-  name: string;
-  total: number;
-};
 
 interface IFriendStockPageProps extends FriendsListType {
   friendStockList: FriendStockListType[];

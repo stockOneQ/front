@@ -8,3 +8,15 @@ export type FriendsListType = {
     lastModifiedDate: string;
   }[];
 };
+
+export type FriendStockListType = {
+  id: number;
+  name: string;
+  stockQuant: number;
+  image: null;
+};
+
+export type FriendStockCountListType = {
+  name: string;
+  total: number;
+};
