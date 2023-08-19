@@ -4,7 +4,7 @@ import * as S from './style';
 interface IStockListProps {
   name: string;
   stockQuant: number;
-  image: string;
+  image: Uint8Array;
 }
 
 /** 재고 목록 */

@@ -13,7 +13,7 @@ export type FriendStockListType = {
   id: number;
   name: string;
   stockQuant: number;
-  image: string;
+  image: Uint8Array;
 };
 
 export type FriendStockCountListType = {
