@@ -13,6 +13,7 @@ import { API } from 'pages/api/api';
 import { useRouter } from 'next/router';
 import useSearch from 'hooks/useSearch';
 import { AxiosError } from 'axios';
+import loadingIc from 'public/assets/icons/common/loadingIc.svg';
 
 const SELECT_DATA = ['냉동', '냉장', '상온'];
 
@@ -33,6 +34,7 @@ const FriendStock = ({
   const [activeNav, setActiveNav] = useState('Total'); // 재고 목록 nav바 선택
   const [stockList, setStockList] = useState(friendStockList); // 친구 재고 목록
   const [stockCount, setStockCount] = useState(friendStockCountList); // 친구 재고 수량
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const { friendID } = router.query;
@@ -52,6 +54,8 @@ const FriendStock = ({
 
   useEffect(() => {
     const getStockList = async () => {
+      setIsLoading(true);
+
       let stockList: FriendStockListType[] = [];
       let friendStock_offset = -1;
 
@@ -95,6 +99,7 @@ const FriendStock = ({
 
           if (friendStockDataLen < 9) {
             setStockList(stockList);
+            setIsLoading(false);
             break;
           }
         } catch (err) {
@@ -109,6 +114,8 @@ const FriendStock = ({
 
   useEffect(() => {
     const getSearchData = async () => {
+      setIsLoading(true);
+
       try {
         if (!enteredValue) return; // 입력값 없을 시 넘기기
 
@@ -118,10 +125,12 @@ const FriendStock = ({
 
         setActiveNav('Total');
         setStockList(searchRes.data.result);
+        setIsLoading(false);
       } catch (err) {
         if ((err as AxiosError).response?.status === 404) {
           setActiveNav('Total');
           setStockList([]);
+          setIsLoading(false);
         }
       }
     };
@@ -202,23 +211,30 @@ const FriendStock = ({
             ))}
           </S.FriendStockList>
         </nav>
-        <S.StockDataBox hideScroll={hideScroll} onScroll={scrollHandler}>
-          <S.StockDataList>
-            {stockList.map(({ id, name, stockQuant, image }) => (
-              <StockList
-                key={id}
-                name={name}
-                stockQuant={stockQuant}
-                image={image}
-              />
-            ))}
-          </S.StockDataList>
-          {stockList.length === 0 && (
-            <S.StockNoDataParagraph>
-              해당하는 제품이 존재하지 않습니다.
-            </S.StockNoDataParagraph>
-          )}
-        </S.StockDataBox>
+        {isLoading && (
+          <S.LoadingBox>
+            <Image src={loadingIc} alt="loading-icon" width={59} height={27} />
+          </S.LoadingBox>
+        )}
+        {!isLoading && (
+          <S.StockDataBox hideScroll={hideScroll} onScroll={scrollHandler}>
+            <S.StockDataList>
+              {stockList.map(({ id, name, stockQuant, image }) => (
+                <StockList
+                  key={id}
+                  name={name}
+                  stockQuant={stockQuant}
+                  image={image}
+                />
+              ))}
+            </S.StockDataList>
+            {stockList.length === 0 && (
+              <S.StockNoDataParagraph>
+                해당하는 제품이 존재하지 않습니다.
+              </S.StockNoDataParagraph>
+            )}
+          </S.StockDataBox>
+        )}
       </div>
     </S.FriendStockBox>
   );

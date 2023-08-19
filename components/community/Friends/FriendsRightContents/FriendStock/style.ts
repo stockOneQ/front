@@ -163,6 +163,16 @@ const FriendStockItem = styled.li`
     color: var(--color-white);
   }
 `;
+
+const LoadingBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 4.6rem;
+  margin-top: 2rem;
+`;
+
 interface IStockDataBoxProps {
   hideScroll: boolean;
 }
@@ -228,6 +238,7 @@ export {
   SearchStockBox,
   FriendStockList,
   FriendStockItem,
+  LoadingBox,
   StockDataBox,
   StockDataList,
   StockNoDataParagraph,
