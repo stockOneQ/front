@@ -2,22 +2,40 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   commentsRenderTriggerState,
+  currentPageNumberState,
   isCurrentPathMainState,
+  isLikeState,
+  recommentsRenderTriggerState,
+  startPageStates,
+  totalElementsState,
+  totalPagesState,
 } from 'recoil/states';
 import { API } from 'pages/api/api';
 
 import * as S from './style';
 
-import PostInfoBox from './PostInfoBox';
-import PostContentBox from './PostContentBox';
-import PostCommentListBox from './PostCommentListBox';
-import PostCommentInputBox from './PostCommentInputBox';
+import PostInfo from './PostInfo';
+import Content from './Content';
+import CommentList from './CommentList';
+import CommentInputSection from './CommentInputSection';
 
 import CloseSVG from 'public/assets/icons/community/close.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
+
+interface IRecommentTypes {
+  id: number;
+  content: string;
+  createdDate: string;
+  writerId: string;
+  writerName: string;
+}
+
+interface ICommentTypes extends IRecommentTypes {
+  replyList: IRecommentTypes[] | undefined;
+}
 
 interface IPostTypes {
   id: number;
@@ -28,15 +46,7 @@ interface IPostTypes {
   createdDate: string;
   writerId: string;
   writerName: string;
-}
-
-interface ICommentTypes {
-  id: number;
-  image: Array<string>;
-  content: string;
-  createdDate: string;
-  writerId: string;
-  writerName: string;
+  alreadyLike: boolean;
 }
 
 const Detail = ({ id }: { id: number }) => {
@@ -44,10 +54,36 @@ const Detail = ({ id }: { id: number }) => {
 
   const [post, setPost] = useState<IPostTypes>();
   const [commentList, setCommentList] = useState<ICommentTypes[]>();
-  const [totalElements, setTotalElements] = useState(0);
+  const [totalElements, setTotalElements] = useRecoilState(totalElementsState);
   const commentRenderTrigger = useRecoilValue(commentsRenderTriggerState);
+  const recommentRenderTrigger = useRecoilValue(recommentsRenderTriggerState);
+  const isLike = useRecoilValue(isLikeState);
+
+  const [currentPageNumber, setCurrentPageNumber] = useRecoilState(
+    currentPageNumberState,
+  );
+  const setTotalPages = useSetRecoilState(totalPagesState);
+  const [startPage, setStartPage] = useRecoilState(startPageStates);
 
   const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
+
+  useEffect(() => {
+    console.log('시작 페이지 번호, 현재 페이지 초기화');
+    setStartPage(1);
+    setCurrentPageNumber(1);
+  }, []);
+
+  /** ----------------- 게시글 조회수 증가 API ----------------- */
+  useEffect(() => {
+    API.put(`/api/boards/${id}/hit`)
+      .then(() => {
+        console.log(`${id}번의 게시글 조회수 증가 성공`);
+      })
+      .catch(e => {
+        console.error(e);
+        throw e;
+      });
+  }, []);
 
   /** ----------------- 게시글 상세 조회 API ----------------- */
   useEffect(() => {
@@ -61,27 +97,27 @@ const Detail = ({ id }: { id: number }) => {
         console.error(e);
         throw e;
       });
-  }, [id]);
+  }, [isLike]);
 
   /** ----------------- 댓글 목록 조회 API ----------------- */
   useEffect(() => {
-    console.log(commentRenderTrigger);
     API.get(`/api/comments/${id}`, {
       params: {
-        page: 0,
+        page: currentPageNumber - 1,
       },
     })
       .then(res => {
         console.log(`${id}번 게시글의 댓글 목록 불러오기 성공`);
-        console.log(res.data.CommentListResponse);
+        console.log(res.data);
         setCommentList(res.data.CommentListResponse);
         setTotalElements(res.data.pageInfo.totalElements);
+        setTotalPages(res.data.pageInfo.totalPages);
       })
       .catch(e => {
         console.error(e);
         throw e;
       });
-  }, [id, commentRenderTrigger]);
+  }, [currentPageNumber, commentRenderTrigger, recommentRenderTrigger]);
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
@@ -95,7 +131,7 @@ const Detail = ({ id }: { id: number }) => {
       {post && (
         <S.PostBox>
           <S.HeaderSection>
-            <PostInfoBox
+            <PostInfo
               writerName={post.writerName}
               createdDate={post.createdDate}
             />
@@ -111,23 +147,25 @@ const Detail = ({ id }: { id: number }) => {
               </S.CloseButton>
             </S.ButtonContainer>
           </S.HeaderSection>
-          <PostContentBox
+          <Content
+            id={post.id}
             title={post.title}
             content={post.content}
             hit={post.hit}
             likes={post.likes}
+            alreadyLike={post.alreadyLike}
           />
         </S.PostBox>
       )}
 
-      <PostCommentInputBox />
+      <CommentInputSection />
 
       <S.CommentList>
-        <S.CommentCount>
+        <S.CommentTotalCount>
           <Image src={CommentsSVG} alt="comment" />
           <span>댓글 {totalElements}</span>
-        </S.CommentCount>
-        <PostCommentListBox list={commentList} />
+        </S.CommentTotalCount>
+        <CommentList list={commentList} />
       </S.CommentList>
     </S.Box>
   );

@@ -60,12 +60,14 @@ export const HeaderSection = styled.div`
 
 export const CommentList = styled.div``;
 
-export const CommentCount = styled.div`
+export const CommentTotalCount = styled.div`
   display: flex;
   align-items: center;
   gap: 0.7rem;
 
-  padding: 9rem 0 2rem 0;
+  padding: 2.6rem 0 2rem 0;
+
+  margin-bottom: 4.5rem;
 
   border-bottom: 1px solid #e1e1e1;
 

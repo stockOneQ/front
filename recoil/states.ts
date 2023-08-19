@@ -281,3 +281,24 @@ export const isDeleteModeState = atom<boolean>({
   key: 'isDeleteModeState',
   default: false,
 });
+
+/** 페이지네이션 */
+export const currentPageNumState = atom<number>({
+  key: 'currentPageNumState',
+  default: 1,
+});
+
+export const totalPagesState = atom<number>({
+  key: 'totalPagesState',
+  default: 0,
+});
+
+export const totalElementsState = atom<number>({
+  key: 'totalElementsState',
+  default: 0,
+});
+
+export const startPageNumState = atom<number>({
+  key: 'startPageNumState',
+  default: 1,
+});

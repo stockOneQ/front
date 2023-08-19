@@ -4,7 +4,8 @@ export const Box = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: end;
+  align-items: center;
 
   height: 95%;
 `;

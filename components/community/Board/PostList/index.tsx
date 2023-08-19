@@ -1,6 +1,7 @@
 import { IPostPreviewTypes } from 'recoil/states';
 import * as S from './style';
 import PostItem from 'components/community/Board/PostList/PostItem';
+import Pagination from '../Pagination';
 
 const PostListBox = ({ list }: { list: IPostPreviewTypes[] }) => {
   return (
@@ -16,6 +17,8 @@ const PostListBox = ({ list }: { list: IPostPreviewTypes[] }) => {
             likes={value.likes}
           />
         ))}
+
+      <Pagination />
     </S.List>
   );
 };

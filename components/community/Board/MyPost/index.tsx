@@ -10,6 +10,9 @@ import {
   isDeleteModeState,
   myPostListState,
   isCurrentPathMainState,
+  currentPageNumState,
+  totalPagesState,
+  startPageNumState,
 } from 'recoil/states';
 import * as S from './style';
 import { API } from 'pages/api/api';
@@ -38,13 +41,18 @@ const MyPosts = () => {
   const [myPostList, setMyPostList] = useRecoilState(myPostListState);
   const [myPostListCount, setMyPostListCount] = useState(0);
 
+  const [currentPageNum, setCurrentPageNum] =
+    useRecoilState(currentPageNumState);
+  const setTotalPages = useSetRecoilState(totalPagesState);
+  const [startPageNum, setStartPageNum] = useRecoilState(startPageNumState);
+
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
   /** ----------------- 내가 쓴 글 목록 조회 API ----------------- */
   useEffect(() => {
     API.get('/api/boards/my', {
       params: {
-        page: '0',
+        page: currentPageNum - 1,
         sort: sortType,
         search: searchType === '글 제목' ? '제목' : '내용',
         word: searchInput,
@@ -54,13 +62,14 @@ const MyPosts = () => {
         console.log('내가 쓴 글 조회 성공');
         console.log(res.data);
         setMyPostList(res.data.boardList);
+        setTotalPages(res.data.pageInfo.totalPages);
         setMyPostListCount(() => myPostList.length);
       })
       .catch(e => {
         alert('내가 쓴 글 조회 실패');
         console.log(e);
       });
-  }, [myPostListCount, sortType, searchType, searchInput]);
+  }, [currentPageNum, myPostListCount, sortType, searchType, searchInput]);
 
   /** 환경설정 버튼 or 취소/삭제 버튼 토글 함수*/
   const handleToggle = () => {
@@ -78,6 +87,14 @@ const MyPosts = () => {
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
+
+    /** 왜 초기화가 안될까 */
+    setStartPageNum(1);
+    setCurrentPageNum(1);
+    console.log(
+      `시작번호 초기화 ${startPageNum} 현재 페이지 번호 초기화 ${currentPageNum}`,
+    );
+
     router.push('/community/board');
   };
 
