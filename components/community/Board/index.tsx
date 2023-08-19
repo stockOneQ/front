@@ -31,18 +31,27 @@ const Board = () => {
   const [searchInput, setSearchInput] = useRecoilState(searchInputState);
 
   const [postList, setPostList] = useRecoilState(postListState);
-  const [currentPageNumber, setCurrentPageNum] =
+  const [currentPageNum, setCurrentPageNum] =
     useRecoilState(currentPageNumState);
-  const [startPageNumber, setStartPageNum] = useRecoilState(startPageNumState);
+  const [startPageNum, setStartPageNum] = useRecoilState(startPageNumState);
   const setTotalPages = useSetRecoilState(totalPagesState);
 
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
+
+  useEffect(() => {
+    /** 왜 초기화가 안될까 */
+    setStartPageNum(1);
+    setCurrentPageNum(1);
+    console.log(
+      `시작번호 초기화 ${startPageNum} 현재 페이지 번호 초기화 ${currentPageNum}`,
+    );
+  }, []);
 
   /** ----------------- 전체 글 목록 조회 API ----------------- */
   useEffect(() => {
     API.get('/api/boards', {
       params: {
-        page: currentPageNumber - 1,
+        page: currentPageNum - 1,
         sort: sortType,
         search:
           searchType === '글 제목'
@@ -63,7 +72,7 @@ const Board = () => {
         console.error(e);
         throw e;
       });
-  }, [currentPageNumber, sortType, searchType, searchInput]);
+  }, [currentPageNum, sortType, searchType, searchInput]);
 
   const handleMyPostsButtonClick = () => {
     setIsCurrentPathMain(false);
@@ -77,7 +86,7 @@ const Board = () => {
     setStartPageNum(1);
     setCurrentPageNum(1);
     console.log(
-      `시작번호 초기화 ${startPageNumber} 현재 페이지 번호 초기화 ${currentPageNumber}`,
+      `시작번호 초기화 ${startPageNum} 현재 페이지 번호 초기화 ${currentPageNum}`,
     );
 
     router.push('/community/board/myPosts');
