@@ -1,27 +1,23 @@
 import { formatDetailCreatedDateToString } from 'utils/date';
-import PostCommentItemBox from './PostCommentItemBox';
+import PostReplyItem from './ReplyItem';
 
-interface ICommentTypes {
+interface IRecommentTypes {
   id: number;
-  image: Array<string>;
   content: string;
   createdDate: string;
   writerId: string;
   writerName: string;
 }
 
-const PostCommentListBox = ({
-  list,
-}: {
-  list: ICommentTypes[] | undefined;
-}) => {
+const PostReplyList = ({ list }: { list: IRecommentTypes[] | undefined }) => {
   return (
     <>
       {list &&
         list.map(value => (
-          <PostCommentItemBox
+          <PostReplyItem
             key={value.id}
             id={value.id}
+            writerId={value.writerId}
             writerName={value.writerName}
             content={value.content}
             createdDate={formatDetailCreatedDateToString(value.createdDate)}
@@ -30,5 +26,4 @@ const PostCommentListBox = ({
     </>
   );
 };
-
-export default PostCommentListBox;
+export default PostReplyList;
