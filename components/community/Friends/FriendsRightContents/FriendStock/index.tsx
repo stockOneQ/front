@@ -213,6 +213,11 @@ const FriendStock = ({
               />
             ))}
           </S.StockDataList>
+          {stockList.length === 0 && (
+            <S.StockNoDataParagraph>
+              해당하는 제품이 존재하지 않습니다.
+            </S.StockNoDataParagraph>
+          )}
         </S.StockDataBox>
       </div>
     </S.FriendStockBox>

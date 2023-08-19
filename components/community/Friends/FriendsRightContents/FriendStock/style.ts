@@ -206,6 +206,19 @@ const StockDataList = styled.ul`
   margin-right: 7.7rem;
 `;
 
+const StockNoDataParagraph = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 4.6rem;
+  color: #979797;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-top: 2rem;
+`;
+
 export {
   FriendStockBox,
   StockLabelBox,
@@ -217,4 +230,5 @@ export {
   FriendStockItem,
   StockDataBox,
   StockDataList,
+  StockNoDataParagraph,
 };
