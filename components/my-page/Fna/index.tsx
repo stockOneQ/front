@@ -1,8 +1,13 @@
+import DropDown from 'components/common/DropDown';
+import fileExist from 'public/assets/icons/connect/fileExists.svg';
+import supervisorCategoryOpen from 'public/assets/icons/connect/supervisorCategoryOpen.svg';
+import movePageL from 'public/assets/icons/connect/movePageL.svg';
+import movePageR from 'public/assets/icons/connect/movePageR.svg';
 import Image from 'next/image';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as S from './style';
-import React from 'react';
+import useScroll from 'hooks/useScroll';
+import { API } from 'pages/api/api';
 
 interface Post {
   id: string;
@@ -12,55 +17,130 @@ interface Post {
 }
 
 const MypageFnA = () => {
+  const [showAnswers, setShowAnswers] = useState<{ [postId: string]: boolean }>(
+    {},
+  );
+
+  /** FNA 조회 ---------------------------------------------------------- */
+  useEffect(() => {
+    API.get('/api/user/fa')
+      .then(response => {
+        console.log('RESPONES', response.data);
+      })
+      .catch(error => {
+        alert('요청실패');
+        console.log(error);
+      });
+  }, []);
+
   const [posts, setPosts] = useState<Post[]>([]);
 
-  useEffect(() => {
-    // 여기에서 실제 API를 호출하여 데이터를 가져와야 하지만, 현재는 임의의 데이터로 대체
-    const fakeData: Post[] = [
-      {
-        id: '03',
-        title: '알바생은 채팅기능 사용가능한가요?',
-        date: '2023.03.17',
-        author: '담당자',
-      },
-      {
-        id: '02',
-        title: '알바생 공지사항',
-        date: '2023.03.15',
-        author: '담당자',
-      },
-      {
-        id: '01',
-        title: '매장 점검 공지사항',
-        date: '2023.03.18',
-        author: '담당자',
-      },
-    ];
-    setPosts(fakeData);
-  }, []);
+  const [activeNum, setActiveNum] = useState(0); // navigation active 상태 주기 위함
+  const [temp, setTemp] = useState(true); // 상세 페이지 연결하려고 임시로 만듦. 삭제 예정
+  const [isSelectSupervisor, setIsSelectSupervisor] = useState(true); // 슈퍼바이저 고르기
+
+  const { hideScroll, scrollHandler } = useScroll();
 
   return (
     <>
-      <div>
-        <S.FnaTitle>F&A</S.FnaTitle>
-        <S.HorizontalRule />
-        <S.FnaBoard>
-          <S.PostId>번호</S.PostId>
-          <S.PostTitle>제목</S.PostTitle>
-          <S.PostDate>작성 일자</S.PostDate>
-          <S.PostAuthor>작성자</S.PostAuthor>
-        </S.FnaBoard>
-        <S.HorizontalRule />
-        {posts.map(post => (
-          <S.PostContainer key={post.id}>
-            <p> {post.id}</p>
-            <S.PostTitle>{post.title}</S.PostTitle>
-            <S.PostDate> {post.date}</S.PostDate>
-            <S.PostAuthor> {post.author}</S.PostAuthor>
-            <hr />
-          </S.PostContainer>
-        ))}
-      </div>
+      {temp && (
+        <S.DataBox>
+          <S.DataNavBox>
+            <S.DataNav activeNum={activeNum}>
+              <ul>
+                <li
+                  className={activeNum === 0 ? 'active' : ''}
+                  onClick={() => {
+                    setActiveNum(0);
+                  }}
+                >
+                  F&A
+                </li>
+              </ul>
+            </S.DataNav>
+          </S.DataNavBox>
+          <S.LabelBox>
+            <p className="label__1">번호</p>
+            <p className="label__2">제목</p>
+            <p className="label__3">작성일자</p>
+            <p className="label__4">작성자</p>
+          </S.LabelBox>
+          <div>
+            <S.DataListBox>
+              <p className="label__1">06</p>
+              <div className="label__2">
+                <p>알바생 교육관련 6월 공지사항</p>
+                <Image src={fileExist} alt="file-icon" width={15} height={12} />
+              </div>
+              <p className="label__3">2023.06.13</p>
+              <p className="label__4">담당자</p>
+            </S.DataListBox>
+            <S.DataListBox
+              onClick={() => {
+                setTemp(false);
+              }}
+            >
+              <p className="label__1">05</p>
+              <div className="label__2">
+                <p>알바생 교육관련 5월 공지사항</p>
+              </div>
+              <p className="label__3">2023.05.13</p>
+              <p className="label__4">담당자</p>
+            </S.DataListBox>
+            <S.DataListBox>
+              <p className="label__1">04</p>
+              <div className="label__2">
+                <p>알바생 교육관련 4월 공지사항</p>
+              </div>
+              <p className="label__3">2023.04.13</p>
+              <p className="label__4">담당자</p>
+            </S.DataListBox>
+            <S.DataListBox>
+              <p className="label__1">03</p>
+              <div className="label__2">
+                <p>알바생 교육관련 3월 공지사항</p>
+              </div>
+              <p className="label__3">2023.03.13</p>
+              <p className="label__4">담당자</p>
+            </S.DataListBox>
+            <S.DataListBox>
+              <p className="label__1">02</p>
+              <div className="label__2">
+                <p>알바생 교육관련 2월 공지사항</p>
+              </div>
+              <p className="label__3">2023.02.13</p>
+              <p className="label__4">담당자</p>
+            </S.DataListBox>
+            <S.DataListBox>
+              <p className="label__1">01</p>
+              <div className="label__2">
+                <p>알바생 교육관련 1월 공지사항</p>
+              </div>
+              <p className="label__3">2023.01.13</p>
+              <p className="label__4">담당자</p>
+            </S.DataListBox>
+          </div>
+          <S.PaginationBox>
+            <Image
+              src={movePageL}
+              alt="pagination-move-left"
+              width={16}
+              height={9}
+            />
+            <p className="pagination__active">1</p>
+            <p>2</p>
+            <p>3</p>
+            <p>4</p>
+            <p>5</p>
+            <Image
+              src={movePageR}
+              alt="pagination-move-right"
+              width={16}
+              height={9}
+            />
+          </S.PaginationBox>
+        </S.DataBox>
+      )}
     </>
   );
 };
