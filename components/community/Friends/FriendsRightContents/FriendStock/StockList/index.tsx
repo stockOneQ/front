@@ -20,7 +20,11 @@ const StockList = ({ name, stockQuant, image }: IStockListProps) => {
   return (
     <S.StockDataItem>
       <S.StockImgBox>
-        {image && <Image src={imageUrl} alt="stock" width={162} height={176} />}
+        {image && (
+          <div>
+            <Image src={imageUrl} alt="stock" width={144} height={144} />
+          </div>
+        )}
         <p>{stockQuant}</p>
       </S.StockImgBox>
       <S.StockDataParagraph>{name}</S.StockDataParagraph>
