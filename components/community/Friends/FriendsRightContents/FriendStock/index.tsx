@@ -133,11 +133,11 @@ const FriendStock = ({
         </S.StockLabelSelectBox>
       </S.StockLabelBox>
       <S.SearchStockBox>
-        <input type="text" />
+        <input id="friend-stock-search" type="text" />
         <button>
           <Image src={searchIcon} alt="my_page_icon" width={16} height={16} />
         </button>
-        <div>제품명</div>
+        <label htmlFor="friend-stock-search">제품명</label>
       </S.SearchStockBox>
       <div>
         <nav>

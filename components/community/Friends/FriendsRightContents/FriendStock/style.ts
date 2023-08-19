@@ -116,7 +116,7 @@ const SearchStockBox = styled.div`
     margin-left: 6.6rem;
   }
 
-  div {
+  label {
     position: absolute;
     top: 0;
     left: 0;
