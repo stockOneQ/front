@@ -28,7 +28,8 @@ const FriendStock = ({
   const [selectState, setSelectState] = useState(SELECT_DATA); // 냉동 냉장 상온 중 하나 고르기
   const [isSelect, setIsSelect] = useState(false); // 선택된 항목 css 주기 위해
   const [activeNav, setActiveNav] = useState('Total'); // 재고 목록 nav바 선택
-  const [stockList, setStockList] = useState(friendStockList);
+  const [stockList, setStockList] = useState(friendStockList); // 친구 재고 목록
+  const [stockCount, setStockCount] = useState(friendStockCountList); // 친구 재고 수량
 
   const router = useRouter();
   const { friendID } = router.query;
@@ -61,6 +62,7 @@ const FriendStock = ({
           ? '재고 부족'
           : '';
 
+      // 친구 재고 목록
       while (true) {
         try {
           const friendStockRes = await API.get(
@@ -81,6 +83,17 @@ const FriendStock = ({
           console.error(err);
           throw err;
         }
+      }
+
+      // 친구 재고 수량
+      try {
+        const friendStockCount = await API.get(
+          `/api/friend/product/count?friend=${friendID}&condition=${selectState[0]}`,
+        );
+        setStockCount(friendStockCount.data.result);
+      } catch (err) {
+        console.error(err);
+        throw err;
       }
     };
 
@@ -130,7 +143,7 @@ const FriendStock = ({
       <div>
         <nav>
           <S.FriendStockList>
-            {friendStockCountList.map(({ name, total }) => (
+            {stockCount.map(({ name, total }) => (
               <S.FriendStockItem
                 key={`${name}-${total}`}
                 className={`${activeNav === name ? 'active-nav' : ''}`}
