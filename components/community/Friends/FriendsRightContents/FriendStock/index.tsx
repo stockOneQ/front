@@ -67,6 +67,7 @@ const FriendStock = ({
       }
 
       if (!activeNav) return; // 검색 시 active 상태 없애기
+      if (enteredValue) return;
 
       const search =
         activeNav === 'Total'
@@ -115,11 +116,11 @@ const FriendStock = ({
           `/api/friend/product/search?friend=${friendID}&condition=${selectState[0]}&name=${enteredValue}`,
         );
 
-        setActiveNav('');
+        setActiveNav('Total');
         setStockList(searchRes.data.result);
       } catch (err) {
         if ((err as AxiosError).response?.status === 404) {
-          setActiveNav('');
+          setActiveNav('Total');
           setStockList([]);
         }
       }
@@ -167,6 +168,7 @@ const FriendStock = ({
           ref={enteredValueRef}
           id="friend-stock-search"
           type="text"
+          autoComplete="off"
           onKeyDown={onKeyDownHandler}
         />
         <button onClick={onSearchHandler}>
