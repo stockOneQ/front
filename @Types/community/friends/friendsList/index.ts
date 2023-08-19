@@ -13,7 +13,7 @@ export type FriendStockListType = {
   id: number;
   name: string;
   stockQuant: number;
-  image: null;
+  image: string;
 };
 
 export type FriendStockCountListType = {
