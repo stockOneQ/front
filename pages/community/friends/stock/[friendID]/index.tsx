@@ -134,7 +134,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
 
   try {
     const friendStockRes = await API.get(
-      `/api/friend/product/all?friend=${friendID}&condition=냉동`,
+      `/api/friend/product/page?friend=${friendID}&condition=냉동&search=전체&last=-1`,
     );
     friendStockList = friendStockRes.data.result;
   } catch (err) {
