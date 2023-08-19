@@ -8,6 +8,7 @@ import DropDown from 'components/common/DropDown';
 import { FriendsListType } from '@Types/community/friends/friendsList';
 import { API } from 'pages/api/api';
 import SearchPlaceholder from './SearchPlaceholder';
+import useSearch from 'hooks/useSearch';
 
 const DROP_DOWN_LIST = ['이름', '상호명', '지역명'];
 
@@ -16,31 +17,12 @@ const SearchFriend = () => {
   const enteredValueRef = useRef(null); // 입력된 검색 값
 
   const [searchBy, setSearchBy] = useState('이름'); // 카테고리 선택
-  const [enteredValue, setEnteredValue] = useState(''); // 재렌더링하기 위함
   const [searchResultList, setSearchResultList] = useState<
     FriendsListType['friendsList']
   >([]);
   const [isLoading, setIsLoading] = useState(true); // 로딩 중
 
-  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    // enter 입력 시 검색
-    if (e.key === 'Enter') {
-      e.preventDefault();
-
-      return setEnteredValue((e.target as HTMLInputElement).value);
-    }
-  };
-
-  const onSearchHandler = (e: MouseEvent<HTMLButtonElement>) => {
-    // 검색 버튼 클릭 시 검색
-    e.preventDefault();
-
-    if (enteredValueRef.current) {
-      return setEnteredValue(
-        (enteredValueRef.current as HTMLInputElement).value,
-      );
-    }
-  };
+  const { enteredValue, onKeyDownHandler, onSearchHandler } = useSearch();
 
   useEffect(() => {
     setIsLoading(true);
