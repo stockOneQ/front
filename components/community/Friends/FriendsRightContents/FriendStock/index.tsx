@@ -4,13 +4,15 @@ import rightArrow from 'public/assets/icons/community/rightArrowIc.svg';
 import StockList from './StockList';
 import useScroll from 'hooks/useScroll';
 import * as S from './style';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   FriendStockCountListType,
   FriendStockListType,
 } from '@Types/community/friends/friendsList';
 import { API } from 'pages/api/api';
 import { useRouter } from 'next/router';
+import useSearch from 'hooks/useSearch';
+import { AxiosError } from 'axios';
 
 const SELECT_DATA = ['냉동', '냉장', '상온'];
 
@@ -24,6 +26,8 @@ const FriendStock = ({
   friendStockList,
   friendStockCountList,
 }: IFriendStockProps) => {
+  const enteredValueRef = useRef(null);
+
   const [isSelect, setIsSelect] = useState(false); // 냉동 냉장 상온 토글 열기
   const [selectState, setSelectState] = useState(SELECT_DATA); // 냉동 냉장 상온 중 하나 고르기
   const [activeNav, setActiveNav] = useState('Total'); // 재고 목록 nav바 선택
@@ -32,6 +36,9 @@ const FriendStock = ({
 
   const router = useRouter();
   const { friendID } = router.query;
+  const { hideScroll, scrollHandler } = useScroll();
+  const { enteredValue, setEnteredValue, onKeyDownHandler, onSearchHandler } =
+    useSearch();
 
   const selectLabelHandler = (idx: string) => {
     if (idx === '냉동') return setSelectState(['냉동', '냉장', '상온']);
@@ -43,12 +50,24 @@ const FriendStock = ({
     setIsSelect(prev => !prev);
   };
 
-  const { hideScroll, scrollHandler } = useScroll();
-
   useEffect(() => {
     const getStockList = async () => {
       let stockList: FriendStockListType[] = [];
       let friendStock_offset = -1;
+
+      // 친구 재고 수량
+      try {
+        const friendStockCount = await API.get(
+          `/api/friend/product/count?friend=${friendID}&condition=${selectState[0]}`,
+        );
+        setStockCount(friendStockCount.data.result);
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+
+      if (!activeNav) return; // 검색 시 active 상태 없애기
+
       const search =
         activeNav === 'Total'
           ? '전체'
@@ -82,21 +101,32 @@ const FriendStock = ({
           throw err;
         }
       }
-
-      // 친구 재고 수량
-      try {
-        const friendStockCount = await API.get(
-          `/api/friend/product/count?friend=${friendID}&condition=${selectState[0]}`,
-        );
-        setStockCount(friendStockCount.data.result);
-      } catch (err) {
-        console.error(err);
-        throw err;
-      }
     };
 
     getStockList();
   }, [activeNav, selectState]);
+
+  useEffect(() => {
+    const getSearchData = async () => {
+      try {
+        if (!enteredValue) return; // 입력값 없을 시 넘기기
+
+        const searchRes = await API.get(
+          `/api/friend/product/search?friend=${friendID}&condition=${selectState[0]}&name=${enteredValue}`,
+        );
+
+        setActiveNav('');
+        setStockList(searchRes.data.result);
+      } catch (err) {
+        if ((err as AxiosError).response?.status === 404) {
+          setActiveNav('');
+          setStockList([]);
+        }
+      }
+    };
+
+    getSearchData();
+  }, [enteredValue, selectState]);
 
   return (
     <S.FriendStockBox>
@@ -133,8 +163,13 @@ const FriendStock = ({
         </S.StockLabelSelectBox>
       </S.StockLabelBox>
       <S.SearchStockBox>
-        <input id="friend-stock-search" type="text" />
-        <button>
+        <input
+          ref={enteredValueRef}
+          id="friend-stock-search"
+          type="text"
+          onKeyDown={onKeyDownHandler}
+        />
+        <button onClick={onSearchHandler}>
           <Image src={searchIcon} alt="my_page_icon" width={16} height={16} />
         </button>
         <label htmlFor="friend-stock-search">제품명</label>
@@ -148,6 +183,7 @@ const FriendStock = ({
                 className={`${activeNav === name ? 'active-nav' : ''}`}
                 onClick={() => {
                   setActiveNav(name);
+                  setEnteredValue('');
                 }}
               >
                 {name === 'Total'
