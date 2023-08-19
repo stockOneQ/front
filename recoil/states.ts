@@ -1,33 +1,52 @@
 import { atom, selector, useSetRecoilState } from 'recoil';
 import { useCallback } from 'react';
 
+export const loginIdState = atom<string | null>({
+  key: 'loginIdState',
+  default: null,
+});
+
+export const nameState = atom<string | null>({
+  key: 'nameState',
+  default: null,
+});
+
 /** ----------------메인 페이지------------- */
 
-// export interface ProductItem {
-//   id: number;
-//   category: string;
-//   productName: string;
-//   price:  number;
-//   seller: string;
-//   receiptYear: string;
-//   receiptMonth: string;
-//   receiptDay: string;
-//   expirationYear: string;
-//   expirationMonth: string;
-//   expirationDay: string;
-//   ingredientLocation: string;
-//   requiredQuantity: string;
-//   quantity: string;
-//   orderingSite: string;
-//   orderingFrequency: string;
-//   imageInfo: string;
-//   storageMethod: string;
-// };
+export type StorageMethod = '냉동' | '냉장' | '상온';
 
 export interface ProductItem {
   id: number;
   name: string;
-  image: string | null;
+  image: string[] | null;
+  storageMethod: string;
+}
+
+export type ProductDetail = {
+  name: string;
+  price: number;
+  vendor: string;
+  receivingDate: string;
+  expirationDate: string;
+  location: string;
+  requireQuant: number;
+  stockQuant: number;
+  siteToOrder: string;
+  orderFreq: string;
+  image: string;
+};
+
+export interface Product {
+  id: number;
+  name: string;
+  image: string[];
+}
+
+export interface ApiResponse {
+  status: string;
+  errorCode: string;
+  message: string;
+  result: ProductItem[];
 }
 
 export const mainPostListState = atom<ProductItem[]>({
@@ -35,15 +54,6 @@ export const mainPostListState = atom<ProductItem[]>({
   default: [],
 });
 
-export const handleProductClick = () => {
-  const setSelectedProductState = useSetRecoilState(selectedProductState);
-  return useCallback(
-    (item: GradientsListItem) => {
-      setSelectedProductState(item);
-    },
-    [setSelectedProductState],
-  );
-};
 //유통기한 임박재료
 export const approachingExpirationState = atom<string[]>({
   key: 'approachingExpirationState',
@@ -83,34 +93,9 @@ export const searchFilterState = atom({
   default: '',
 });
 
-export const searchResultsState = selector({
-  key: 'searchResultsState',
-  get: ({ get }) => {
-    const searchTerm = get(searchFilterState);
-    const newpostList = get(newpostListState);
-
-    if (searchTerm.trim() !== '') {
-      return newpostList.filter(item =>
-        item.productName.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
-    } else {
-      return newpostList;
-    }
-  },
-});
-
-export const filteredItemsState = selector({
-  key: 'filteredItemsState',
-  get: ({ get }) => {
-    const searchTerm = get(searchFilterState);
-    const searchResults = get(searchResultsState);
-
-    if (searchTerm.trim() !== '') {
-      return searchResults;
-    } else {
-      return searchResults;
-    }
-  },
+export const sortTypeStateProduct = atom<string>({
+  key: 'sortTypeStateProduct',
+  default: '가나다',
 });
 
 export type IngredientsListItem = {

@@ -2,29 +2,28 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import axios from 'axios';
 import ImgIcon from '../../../public/assets/icons/main/imgUpload.svg';
 import * as S from '../../../components/main/style';
-import { useState, useEffect } from 'react';
+import { useState, SetStateAction, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import useScroll from 'hooks/useScroll';
 import { useSetRecoilState, RecoilRoot, useRecoilState } from 'recoil';
 import {
+  approachingExpirationState,
   postMainTitleState,
   mainPostListState,
-  ProductItem,
+  storageMethodState,
   StorageMethod,
 } from '../../../recoil/states';
 import { API } from '../../api/api';
 
-// const sortOptionList = ['냉동', '냉장', '상온'];
-// type IngredientsProps = {
-//   productsToShow: ProductItem[];
-//   storageMethodFilter: StorageMethod;
-// };
+const sortOptionList = ['냉동', '냉장', '상온'];
 
 /** 제품 추가 페이지 */
 
 const New = () => {
+  const router = useRouter();
   const [productName, setProductName] = useRecoilState(postMainTitleState);
   const { hideScroll, scrollHandler } = useScroll();
   const setPostListState = useSetRecoilState(mainPostListState);
@@ -39,31 +38,6 @@ const New = () => {
   };
 
   /** 필수 필드 ------------------------------------------------------------ */
-  const validateRequiredFields = () => {
-    const requiredFields = [
-      'productName',
-      'price',
-      'seller',
-      'receiptYear',
-      'receiptMonth',
-      'receiptDay',
-      'expirationYear',
-      'expirationMonth',
-      'expirationDay',
-      'requiredQuantity',
-      'quantity',
-      'orderingFrequency',
-    ];
-
-    for (const field of requiredFields) {
-      if (!formData[field]) {
-        alert(`${field}을(를) 채워주세요.`);
-        return false;
-      }
-    }
-
-    return true;
-  };
 
   const [formData, setFormData] = useState({
     productName: '가나',
@@ -84,12 +58,37 @@ const New = () => {
     storageMethod: '',
   });
 
-  // 이미지 input 값 받기
-  const [selectedImage, setSelectedImage] = useState(null);
-  const handleImageChange = e => {
-    setSelectedImage(e.target.files[0]);
+  const validateRequiredFields = () => {
+    if (
+      !formData.productName ||
+      !formData.price ||
+      !formData.seller ||
+      !formData.receiptYear ||
+      !formData.receiptMonth ||
+      !formData.receiptDay ||
+      !formData.expirationYear ||
+      !formData.expirationMonth ||
+      !formData.expirationDay ||
+      !formData.requiredQuantity ||
+      !formData.quantity ||
+      !formData.orderingFrequency
+    ) {
+      alert('모든 필수 항목을 채워주세요.');
+      return false;
+    }
+
+    return true;
   };
-  const handleInputChange = e => {
+
+  // 이미지 input 값 받기
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0]; // Get the selected file from the input
+    setSelectedImage(selectedFile || null);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     console.log('Input Changed:', name, value);
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
@@ -138,12 +137,15 @@ const New = () => {
     const formDatas = new FormData();
     const jsonFormData = convertFormDataToJson();
     const condition = selectedStorageMethod; // 선택한 저장 방법으로 condition 값 설정
+    if (selectedImage) {
+      formDatas.append('image', selectedImage);
+    }
 
-    formDatas.append('image', selectedImage);
     formDatas.append(
       'editProductRequest',
       new Blob([JSON.stringify(jsonFormData)], { type: 'application/json' }),
     );
+
     try {
       await API.post(
         `/api/product/add?store=${storeId}&condition=${condition}`,
@@ -159,7 +161,7 @@ const New = () => {
       // 초기화
       setFormData({
         productName: '',
-        price: '',
+        price: 0,
         seller: '',
         receiptYear: '',
         receiptMonth: '',
@@ -168,15 +170,15 @@ const New = () => {
         expirationMonth: '',
         expirationDay: '',
         ingredientLocation: '',
-        requiredQuantity: '',
-        quantity: '',
+        requiredQuantity: 0,
+        quantity: 0,
         orderingSite: '',
         orderingFrequency: '',
         imageInfo: '',
         storageMethod: '',
       });
       setProductName('');
-      // router.push("/");
+      router.push('/');
     } catch (error) {
       console.error('Error adding product:', error);
     }
@@ -270,7 +272,7 @@ const New = () => {
                   value={formData.productName}
                   maxLength={11}
                   onChange={handleInputChange}
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -280,7 +282,7 @@ const New = () => {
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -291,7 +293,7 @@ const New = () => {
                   value={formData.seller}
                   maxLength={29}
                   onChange={handleInputChange}
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               </S.StyledInput>
 
@@ -304,7 +306,7 @@ const New = () => {
                     value={formData.receiptYear}
                     onChange={handleInputChange}
                     placeholder="년도"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                   <p>년</p>
                   <S.ReceiptDateInputField
@@ -313,7 +315,7 @@ const New = () => {
                     value={formData.receiptMonth}
                     onChange={handleInputChange}
                     placeholder="월"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                   <p>월</p>
                   <S.ReceiptDateInputField
@@ -322,7 +324,7 @@ const New = () => {
                     value={formData.receiptDay}
                     onChange={handleInputChange}
                     placeholder="일"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                 </S.ReceiptDateInput>
               </S.StyledInput>
@@ -335,7 +337,7 @@ const New = () => {
                     value={formData.expirationYear}
                     onChange={handleInputChange}
                     placeholder="년도"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                   <p>년</p>
                   <S.ReceiptDateInputField
@@ -344,7 +346,7 @@ const New = () => {
                     value={formData.expirationMonth}
                     onChange={handleInputChange}
                     placeholder="월"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                   <p>월</p>
                   <S.ReceiptDateInputField
@@ -353,7 +355,7 @@ const New = () => {
                     value={formData.expirationDay}
                     onChange={handleInputChange}
                     placeholder="일"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                 </S.ReceiptDateInput>
               </S.StyledInput>
@@ -365,7 +367,7 @@ const New = () => {
                   value={formData.ingredientLocation}
                   maxLength={29}
                   onChange={handleInputChange}
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               </S.StyledInput>
               <S.QuantitySection>
@@ -376,7 +378,7 @@ const New = () => {
                     name="requiredQuantity"
                     value={formData.requiredQuantity}
                     onChange={handleInputChange}
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                 </S.QuantityInput>
                 <S.QuantityInput>
@@ -386,7 +388,7 @@ const New = () => {
                     name="quantity"
                     value={formData.quantity}
                     onChange={handleInputChange}
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                 </S.QuantityInput>
               </S.QuantitySection>
@@ -398,7 +400,7 @@ const New = () => {
                   value={formData.orderingSite}
                   maxLength={200}
                   onChange={handleInputChange}
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               </S.StyledInput>
 

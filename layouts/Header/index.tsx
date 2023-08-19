@@ -5,6 +5,9 @@ import headerNavArrow from 'public/assets/icons/header/headerNavArrow.svg';
 import * as H from './style';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
+import { useCookies } from 'react-cookie';
+
+import { API } from 'pages/api/api';
 
 interface IHeaderProps {
   setSideBarIdx: Dispatch<SetStateAction<number>>;
@@ -13,6 +16,36 @@ interface IHeaderProps {
 const Header = ({ setSideBarIdx }: IHeaderProps) => {
   const router = useRouter();
   const currentPath = router.pathname;
+  const [, , removeRefCookie] = useCookies(['refreshToken']);
+  const [accCookies, , removeAccCookie] = useCookies(['accessToken']);
+  const [, , removeFcmCookie] = useCookies(['fcmToken']);
+
+  const handleLogin = () => {
+    router.push('/login');
+  };
+
+  const handleLogout = async () => {
+    try {
+      const res = await API.post('/api/auth/logout');
+      if (res.status === 204) {
+        // 로그아웃 성공 시 다음 동작 수행
+        console.log('로그아웃 성공');
+        // Cookies.remove('accessToken');
+        // Cookies.remove('refreshToken');
+        // Cookies.remove('fcmToken');
+        // 여기에 추가적인 로직을 넣을 수 있습니다.
+
+        removeAccCookie('accessToken');
+        removeRefCookie('refreshToken');
+        removeFcmCookie('fcmToken');
+
+        // 여기에 추가적인 로직을 넣을 수 있습니다.
+        router.push('/login');
+      }
+    } catch (error) {
+      console.error('로그아웃 에러', error);
+    }
+  };
 
   return (
     <H.Header>
@@ -116,14 +149,9 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
         </H.NavList>
 
         <H.Login className={currentPath.startsWith('/login') ? 'active' : ''}>
-          <Link
-            href="/login"
-            onClick={() => {
-              setSideBarIdx(0);
-            }}
-          >
-            <p>로그아웃</p>
-          </Link>
+          <button onClick={accCookies ? handleLogout : handleLogin}>
+            {accCookies !== undefined ? '로그아웃' : '로그인'}
+          </button>
         </H.Login>
       </H.NavBar>
     </H.Header>

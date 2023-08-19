@@ -4,7 +4,7 @@ const SignUpBox = styled.div`
   width: 93.2rem;
   padding: 6.5rem 2rem;
   margin: 0 auto;
-`
+`;
 const SignUpHeaderBox = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -26,11 +26,11 @@ const SignUpHeaderBox = styled.div`
     font-weight: 600;
     line-height: normal;
   }
-`
+`;
 
 const SignUpForm = styled.form`
   padding: 0 12.7rem;
-`
+`;
 
 const PwInputBox = styled.div`
   display: flex;
@@ -43,13 +43,13 @@ const PwInputBox = styled.div`
     font-weight: 500;
     line-height: normal;
   }
-`
+`;
 
 const AuthBox = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
-`
+`;
 
 const AuthImgBox = styled.div`
   width: 16.3rem;
@@ -59,7 +59,7 @@ const AuthImgBox = styled.div`
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
-  gap: .9rem;
+  gap: 0.9rem;
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -71,7 +71,7 @@ const AuthImgBox = styled.div`
     font-weight: 500;
     line-height: normal;
   }
-`
+`;
 
 const AddrInputBox = styled.div`
   display: flex;
@@ -82,14 +82,14 @@ const AddrInputBox = styled.div`
     width: 7.2rem;
     height: 4.5rem;
     background-color: var(--color-black);
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     color: var(--color-white);
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
     line-height: normal;
   }
-`
+`;
 
 const SignUpBtnBox = styled.div`
   margin: 9.2rem auto 6.3rem;
@@ -97,7 +97,37 @@ const SignUpBtnBox = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
-`
+`;
+
+const DigitInputBox = styled.div`
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+
+  p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: normal;
+  }
+`;
+
+const BirthInputBox = styled.div`
+  display: flex;
+  gap: 2rem;
+`;
+
+const EmailInputBox = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  p {
+    padding: 0 2.8rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: normal;
+  }
+`;
 
 export {
   SignUpBox,
@@ -107,5 +137,8 @@ export {
   AuthBox,
   AuthImgBox,
   AddrInputBox,
-  SignUpBtnBox
-}
+  SignUpBtnBox,
+  DigitInputBox,
+  BirthInputBox,
+  EmailInputBox,
+};
