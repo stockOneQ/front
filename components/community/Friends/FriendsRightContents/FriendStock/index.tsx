@@ -4,11 +4,13 @@ import rightArrow from 'public/assets/icons/community/rightArrowIc.svg';
 import StockList from './StockList';
 import useScroll from 'hooks/useScroll';
 import * as S from './style';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FriendStockCountListType,
   FriendStockListType,
 } from '@Types/community/friends/friendsList';
+import { API } from 'pages/api/api';
+import { useRouter } from 'next/router';
 
 const SELECT_DATA = ['냉동', '냉장', '상온'];
 
@@ -25,8 +27,12 @@ const FriendStock = ({
   const [selectOption, setSelectOption] = useState(false); // 냉동 냉장 상온 선택창 열기
   const [selectState, setSelectState] = useState(SELECT_DATA); // 냉동 냉장 상온 중 하나 고르기
   const [isSelect, setIsSelect] = useState(false); // 선택된 항목 css 주기 위해
-  const [activeNav, setActiveNav] = useState(0);
-  console.log(activeNav);
+  const [activeNav, setActiveNav] = useState('Total'); // 재고 목록 nav바 선택
+  const [stockList, setStockList] = useState(friendStockList);
+  console.log('is : ', activeNav);
+
+  const router = useRouter();
+  const { friendID } = router.query;
 
   const selectLabelHandler = (idx: string) => {
     if (idx === '냉동') return setSelectState(['냉동', '냉장', '상온']);
@@ -40,6 +46,34 @@ const FriendStock = ({
   };
 
   const { hideScroll, scrollHandler } = useScroll();
+
+  useEffect(() => {
+    const getStockList = async () => {
+      try {
+        const search =
+          activeNav === 'Total'
+            ? '전체'
+            : activeNav === 'Pass'
+            ? '유통기한 경과'
+            : activeNav === 'Close'
+            ? '유통기한 임박'
+            : activeNav === 'Lack'
+            ? '재고 부족'
+            : '';
+
+        const friendStockRes = await API.get(
+          `/api/friend/product/page?friend=${friendID}&condition=${selectState[0]}&search=${search}&last=-1`,
+        );
+
+        setStockList(friendStockRes.data.result);
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    };
+
+    getStockList();
+  }, [activeNav, selectState]);
 
   return (
     <S.FriendStockBox>
@@ -84,12 +118,12 @@ const FriendStock = ({
       <div>
         <nav>
           <S.FriendStockList>
-            {friendStockCountList.map(({ name, total }, idx) => (
+            {friendStockCountList.map(({ name, total }) => (
               <S.FriendStockItem
                 key={`${name}-${total}`}
-                className={`${activeNav === idx ? 'active-nav' : ''}`}
+                className={`${activeNav === name ? 'active-nav' : ''}`}
                 onClick={() => {
-                  setActiveNav(idx);
+                  setActiveNav(name);
                 }}
               >
                 {name === 'Total'
@@ -108,7 +142,7 @@ const FriendStock = ({
         </nav>
         <S.StockDataBox hideScroll={hideScroll} onScroll={scrollHandler}>
           <S.StockDataList>
-            {friendStockList.map(({ id, name, stockQuant, image }) => (
+            {stockList.map(({ id, name, stockQuant, image }) => (
               <StockList
                 key={id}
                 name={name}
