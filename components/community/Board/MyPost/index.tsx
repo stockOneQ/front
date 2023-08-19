@@ -12,13 +12,12 @@ import {
   isCurrentPathMainState,
   currentPageNumState,
   totalPagesState,
-  startPageNumState,
 } from 'recoil/states';
 import * as S from './style';
 import { API } from 'pages/api/api';
 
 import ControlBar from '../ControlBar';
-import PostListBox from '../PostList';
+import PostList from '../PostList';
 import HeadingText from 'components/common/HeadingText';
 import RejectBtn from 'components/common/button/RejectBtn';
 import AcceptBtn from 'components/common/button/AcceptBtn';
@@ -44,7 +43,6 @@ const MyPosts = () => {
   const [currentPageNum, setCurrentPageNum] =
     useRecoilState(currentPageNumState);
   const setTotalPages = useSetRecoilState(totalPagesState);
-  const [startPageNum, setStartPageNum] = useRecoilState(startPageNumState);
 
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
@@ -87,13 +85,6 @@ const MyPosts = () => {
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
-
-    /** 왜 초기화가 안될까 */
-    setStartPageNum(1);
-    setCurrentPageNum(1);
-    console.log(
-      `시작번호 초기화 ${startPageNum} 현재 페이지 번호 초기화 ${currentPageNum}`,
-    );
 
     router.push('/community/board');
   };
@@ -172,7 +163,7 @@ const MyPosts = () => {
         )}
       </S.HeaderSection>
 
-      <PostListBox list={myPostList} />
+      <PostList list={myPostList} />
     </S.Box>
   );
 };
