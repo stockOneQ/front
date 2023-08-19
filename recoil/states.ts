@@ -1,6 +1,16 @@
 import { atom, selector, useSetRecoilState } from 'recoil';
 import { useCallback } from 'react';
 
+export const loginIdState = atom<string | null>({
+  key: 'loginIdState',
+  default: null,
+});
+
+export const nameState = atom<string | null>({
+  key: 'nameState',
+  default: null,
+});
+
 /** ----------------메인 페이지------------- */
 
 export type StorageMethod = '냉동' | '냉장' | '상온';
