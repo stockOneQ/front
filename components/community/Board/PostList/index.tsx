@@ -3,7 +3,7 @@ import * as S from './style';
 import PostItem from 'components/community/Board/PostList/PostItem';
 import Pagination from '../Pagination';
 
-const PostListBox = ({ list }: { list: IPostPreviewTypes[] }) => {
+const PostList = ({ list }: { list: IPostPreviewTypes[] }) => {
   return (
     <S.List>
       {list &&
@@ -23,4 +23,4 @@ const PostListBox = ({ list }: { list: IPostPreviewTypes[] }) => {
   );
 };
 
-export default PostListBox;
+export default PostList;

@@ -5,11 +5,10 @@ import Link from 'next/link';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   commentsRenderTriggerState,
-  currentPageNumberState,
+  currentPageNumState,
   isCurrentPathMainState,
   isLikeState,
   recommentsRenderTriggerState,
-  startPageStates,
   totalElementsState,
   totalPagesState,
 } from 'recoil/states';
@@ -59,19 +58,10 @@ const Detail = ({ id }: { id: number }) => {
   const recommentRenderTrigger = useRecoilValue(recommentsRenderTriggerState);
   const isLike = useRecoilValue(isLikeState);
 
-  const [currentPageNumber, setCurrentPageNumber] = useRecoilState(
-    currentPageNumberState,
-  );
+  const currentPageNum = useRecoilValue(currentPageNumState);
   const setTotalPages = useSetRecoilState(totalPagesState);
-  const [startPage, setStartPage] = useRecoilState(startPageStates);
 
   const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
-
-  useEffect(() => {
-    console.log('시작 페이지 번호, 현재 페이지 초기화');
-    setStartPage(1);
-    setCurrentPageNumber(1);
-  }, []);
 
   /** ----------------- 게시글 조회수 증가 API ----------------- */
   useEffect(() => {
@@ -103,7 +93,7 @@ const Detail = ({ id }: { id: number }) => {
   useEffect(() => {
     API.get(`/api/comments/${id}`, {
       params: {
-        page: currentPageNumber - 1,
+        page: currentPageNum - 1,
       },
     })
       .then(res => {
@@ -117,7 +107,7 @@ const Detail = ({ id }: { id: number }) => {
         console.error(e);
         throw e;
       });
-  }, [currentPageNumber, commentRenderTrigger, recommentRenderTrigger]);
+  }, [currentPageNum, commentRenderTrigger, recommentRenderTrigger]);
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
