@@ -6,69 +6,7 @@ import useScroll from 'hooks/useScroll';
 import * as S from './style';
 import { useState } from 'react';
 
-const DUMMY_DATA = [
-  {
-    stockName: '냉동 딸기',
-    amount: 3,
-    img: '/assets/imgs/community/myProfile.png',
-  },
-  {
-    stockName: '바닐라 아이스크림',
-    amount: 5,
-    img: '/assets/imgs/community/myProfile.png',
-  },
-  {
-    stockName: '원두',
-    amount: 6,
-    img: '/assets/imgs/community/myProfile.png',
-  },
-  {
-    stockName: '딸기 시럽',
-    amount: 1,
-    img: '/assets/imgs/community/myProfile.png',
-  },
-  {
-    stockName: '망고 시럽',
-    amount: 1,
-    img: '/assets/imgs/community/myProfile.png',
-  },
-  {
-    stockName: '우유',
-    amount: 1,
-    img: '/assets/imgs/community/myProfile.png',
-  },
-  {
-    stockName: '냉동 딸기',
-    amount: 3,
-    img: '/assets/imgs/community/myProfile.png',
-  },
-  {
-    stockName: '냉동 딸기',
-    amount: 3,
-    img: '/assets/imgs/community/myProfile.png',
-  },
-];
-
 const SELECT_DATA = ['냉동', '냉장', '상온'];
-
-const NAV_DATA = [
-  {
-    label: '전체',
-    amount: 9,
-  },
-  {
-    label: '유통기한 지난 재료',
-    amount: 3,
-  },
-  {
-    label: '유통기한 임박 재료',
-    amount: 2,
-  },
-  {
-    label: '부족한 재료',
-    amount: 1,
-  },
-];
 
 interface IFriendStockProps {
   friendStockList: {
@@ -77,10 +15,17 @@ interface IFriendStockProps {
     stockQuant: number;
     image: null;
   }[];
+  friendStockCountList: {
+    name: string;
+    total: number;
+  }[];
 }
 
 /** 친구 재고 페이지 */
-const FriendStock = ({ friendStockList }: IFriendStockProps) => {
+const FriendStock = ({
+  friendStockList,
+  friendStockCountList,
+}: IFriendStockProps) => {
   const [selectOption, setSelectOption] = useState(false); // 냉동 냉장 상온 선택창 열기
   const [selectState, setSelectState] = useState(SELECT_DATA); // 냉동 냉장 상온 중 하나 고르기
   const [isSelect, setIsSelect] = useState(false); // 선택된 항목 css 주기 위해
@@ -143,15 +88,24 @@ const FriendStock = ({ friendStockList }: IFriendStockProps) => {
       <div>
         <nav>
           <S.FriendStockList>
-            {NAV_DATA.map(({ label, amount }, idx) => (
+            {friendStockCountList.map(({ name, total }, idx) => (
               <S.FriendStockItem
-                key={idx}
+                key={`${name}-${total}`}
                 className={`${activeNav === idx ? 'active-nav' : ''}`}
                 onClick={() => {
                   setActiveNav(idx);
                 }}
               >
-                {label} {amount}
+                {name === 'Total'
+                  ? '전체'
+                  : name === 'Pass'
+                  ? '유통기한 지난 재료'
+                  : name === 'Close'
+                  ? '유통기한 임박 재료'
+                  : name === 'Lack'
+                  ? '부족한 재료'
+                  : ''}{' '}
+                {total}
               </S.FriendStockItem>
             ))}
           </S.FriendStockList>

@@ -15,14 +15,21 @@ type FriendStockListType = {
   image: null;
 };
 
+type FriendStockCountListType = {
+  name: string;
+  total: number;
+};
+
 interface IFriendStockPageProps extends FriendsListType {
   friendStockList: FriendStockListType[];
+  friendStockCountList: FriendStockCountListType[];
 }
 
 /** community - 친구 재고 페이지 */
 const FriendStockPage = ({
   friendsList,
   friendStockList,
+  friendStockCountList,
 }: IFriendStockPageProps) => {
   const contextValue = {
     friendsList,
@@ -33,7 +40,10 @@ const FriendStockPage = ({
   return (
     <FriendsListContext.Provider value={contextValue}>
       <Friends>
-        <FriendStock friendStockList={friendStockList} />
+        <FriendStock
+          friendStockList={friendStockList}
+          friendStockCountList={friendStockCountList}
+        />
       </Friends>
     </FriendsListContext.Provider>
   );
@@ -110,6 +120,7 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   let friendsList: FriendsListType['friendsList'] = [];
   let friendStockList: FriendStockListType[] = [];
+  let friendStockCountList: FriendStockCountListType[] = [];
   let friends_offset = 0;
   const { friendID } = params as IParams;
 
@@ -142,10 +153,21 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
     throw err;
   }
 
+  try {
+    const friendStockCount = await API.get(
+      `/api/friend/product/count?friend=${friendID}&condition=냉동`,
+    );
+    friendStockCountList = friendStockCount.data.result;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+
   return {
     props: {
       friendsList,
       friendStockList,
+      friendStockCountList,
     },
     revalidate: 10,
   };
