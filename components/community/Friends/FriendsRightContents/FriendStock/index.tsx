@@ -29,7 +29,6 @@ const FriendStock = ({
   const [isSelect, setIsSelect] = useState(false); // 선택된 항목 css 주기 위해
   const [activeNav, setActiveNav] = useState('Total'); // 재고 목록 nav바 선택
   const [stockList, setStockList] = useState(friendStockList);
-  console.log('is : ', activeNav);
 
   const router = useRouter();
   const { friendID } = router.query;
@@ -49,26 +48,39 @@ const FriendStock = ({
 
   useEffect(() => {
     const getStockList = async () => {
-      try {
-        const search =
-          activeNav === 'Total'
-            ? '전체'
-            : activeNav === 'Pass'
-            ? '유통기한 경과'
-            : activeNav === 'Close'
-            ? '유통기한 임박'
-            : activeNav === 'Lack'
-            ? '재고 부족'
-            : '';
+      let stockList: FriendStockListType[] = [];
+      let friendStock_offset = -1;
+      const search =
+        activeNav === 'Total'
+          ? '전체'
+          : activeNav === 'Pass'
+          ? '유통기한 경과'
+          : activeNav === 'Close'
+          ? '유통기한 임박'
+          : activeNav === 'Lack'
+          ? '재고 부족'
+          : '';
 
-        const friendStockRes = await API.get(
-          `/api/friend/product/page?friend=${friendID}&condition=${selectState[0]}&search=${search}&last=-1`,
-        );
+      while (true) {
+        try {
+          const friendStockRes = await API.get(
+            `/api/friend/product/page?friend=${friendID}&condition=${selectState[0]}&search=${search}&last=${friendStock_offset}`,
+          );
+          const friendStockData = friendStockRes.data.result;
+          const friendStockDataLen = friendStockData.length;
 
-        setStockList(friendStockRes.data.result);
-      } catch (err) {
-        console.error(err);
-        throw err;
+          stockList = [...stockList, ...friendStockData];
+          friendStock_offset =
+            friendStockData[friendStockDataLen - 1]?.id || -1;
+
+          if (friendStockDataLen < 9) {
+            setStockList(stockList);
+            break;
+          }
+        } catch (err) {
+          console.error(err);
+          throw err;
+        }
       }
     };
 

@@ -113,9 +113,11 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   let friendsList: FriendsListType['friendsList'] = [];
   let friendStockList: FriendStockListType[] = [];
   let friendStockCountList: FriendStockCountListType[] = [];
-  let friends_offset = 0;
+  let friends_offset = -1;
+  let friendStock_offset = -1;
   const { friendID } = params as IParams;
 
+  // 친구 목록
   while (true) {
     // TODO: Promise.allSettled 적용 해보기
     try {
@@ -135,16 +137,29 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
     }
   }
 
-  try {
-    const friendStockRes = await API.get(
-      `/api/friend/product/page?friend=${friendID}&condition=냉동&search=전체&last=-1`,
-    );
-    friendStockList = friendStockRes.data.result;
-  } catch (err) {
-    console.error(err);
-    throw err;
+  // FIXME: 처음 렌더링 될 때, 한 번 더 api 불러오는 에러? 수정
+  // 친구 재고 목록
+  while (true) {
+    try {
+      const friendStockRes = await API.get(
+        `/api/friend/product/page?friend=${friendID}&condition=냉동&search=전체&last=${friendStock_offset}`,
+      );
+      const friendStockData = friendStockRes.data.result;
+      console.log('friendStockData', friendStockData);
+
+      const friendStockDataLen = friendStockData.length;
+
+      friendStockList = [...friendStockList, ...friendStockData];
+      friendStock_offset = friendStockData[friendStockDataLen - 1]?.id || -1;
+
+      if (friendStockDataLen < 9) break;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   }
 
+  // 친구 재고 수량
   try {
     const friendStockCount = await API.get(
       `/api/friend/product/count?friend=${friendID}&condition=냉동`,
