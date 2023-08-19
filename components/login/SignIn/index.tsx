@@ -115,13 +115,6 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
         >
           로그인
         </S.SignInButton>
-        <S.SignInButton
-          isTyped={isTyped}
-          disabled={!isTyped}
-          onClick={handleLogout}
-        >
-          로그아웃
-        </S.SignInButton>
       </S.SignInBodyBox>
       <S.SignInFooterBox>
         <button>아이디 찾기</button>
