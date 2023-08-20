@@ -4,7 +4,7 @@ export const Box = styled.div`
   position: relative;
   height: 95%;
   overflow-y: auto;
-  padding: 0 3.3rem 0 1.6rem;
+  padding: 0 6rem 0 1.6rem;
 
   &::-webkit-scrollbar {
     width: 0.9rem;
@@ -17,12 +17,12 @@ export const Box = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  position: absolute;
-  top: 1.4%;
-  right: 4%;
-
   display: flex;
+  justify-content: center;
+  align-items: start;
   gap: 3rem;
+
+  margin-right: 1.5rem;
 `;
 
 export const EditButton = styled.button`
@@ -47,18 +47,27 @@ export const EditButton = styled.button`
   }
 `;
 
-export const CloseButton = styled.button``;
+export const CloseButton = styled.button`
+  margin-top: 0.7rem;
+`;
 
 export const PostBox = styled.div``;
 
+export const HeaderSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const CommentList = styled.div``;
 
-export const CommentCount = styled.div`
+export const CommentTotalCount = styled.div`
   display: flex;
   align-items: center;
   gap: 0.7rem;
 
-  padding: 9rem 0 2rem 0;
+  padding: 2.6rem 0 2rem 0;
+
+  margin-bottom: 4.5rem;
 
   border-bottom: 1px solid #e1e1e1;
 

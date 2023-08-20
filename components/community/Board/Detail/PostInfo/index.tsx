@@ -1,14 +1,14 @@
 import Image from 'next/image';
 import * as S from './style';
-import ProfileImg from 'public/assets/imgs/community/profileImage.png';
 import { formatCreatedDateToString } from 'utils/date';
+import ProfileImg from 'public/assets/imgs/community/profileImage.png';
 
 type IPostInfoType = {
   writerName: string;
   createdDate: string;
 };
 
-const PostInfoBox = ({ writerName, createdDate }: IPostInfoType) => {
+const PostInfo = ({ writerName, createdDate }: IPostInfoType) => {
   return (
     <S.Box>
       <S.Container>
@@ -26,4 +26,4 @@ const PostInfoBox = ({ writerName, createdDate }: IPostInfoType) => {
     </S.Box>
   );
 };
-export default PostInfoBox;
+export default PostInfo;

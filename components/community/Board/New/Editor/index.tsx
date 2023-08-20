@@ -41,29 +41,28 @@ const Editor = ({
       ? router.push(`/community/board/${id}`)
       : router.push('/community/board');
 
+    /** 초기화 */
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
   };
 
   const handleSubmit = () => {
+    /** ----------------- 게시글 수정 API ----------------- */
     if (isEdit) {
-      /** 게시글 수정 */
       API.patch(`/api/boards/${id}`, {
         title: titleInput,
         content: contentInput,
       })
         .then(() => {
-          console.log('게시글 수정 성공');
+          console.log(`${id}번 게시글 수정 성공`);
         })
         .catch(e => {
-          alert('게시글 수정 실패');
-          console.log(`수정할 제목 ${titleInput} 수정할 내용 ${contentInput}`);
-          console.log(e);
+          console.error(e);
           throw e;
         });
     } else {
-      /** 게시글 등록 */
+      /** ----------------- 게시글 등록 API ----------------- */
       API.post('/api/boards', {
         title: titleInput,
         content: contentInput,
@@ -72,9 +71,7 @@ const Editor = ({
           console.log('게시글 등록 성공');
         })
         .catch(e => {
-          alert('게시글 등록 실패');
-          console.log(`등록할 제목 ${titleInput} 등록할 내용 ${contentInput}`);
-          console.log(e);
+          console.error(e);
           throw e;
         });
     }

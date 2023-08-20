@@ -2,20 +2,39 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRecoilValue } from 'recoil';
-import { isCurrentPathMainState, postCommentListState } from 'recoil/states';
-
-import PostInfoBox from './PostInfoBox';
-import PostContentBox from './PostContentBox';
-import PostCommentListBox from './PostCommentListBox';
-import PostCommentInputBox from './PostCommentInputBox';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  commentsRenderTriggerState,
+  currentPageNumState,
+  isCurrentPathMainState,
+  isLikeState,
+  recommentsRenderTriggerState,
+  totalElementsState,
+  totalPagesState,
+} from 'recoil/states';
+import { API } from 'pages/api/api';
 
 import * as S from './style';
+
+import PostInfo from './PostInfo';
+import Content from './Content';
+import CommentList from './CommentList';
+import CommentInputSection from './CommentInputSection';
 
 import CloseSVG from 'public/assets/icons/community/close.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
 
-import { API } from 'pages/api/api';
+interface IRecommentTypes {
+  id: number;
+  content: string;
+  createdDate: string;
+  writerId: string;
+  writerName: string;
+}
+
+interface ICommentTypes extends IRecommentTypes {
+  replyList: IRecommentTypes[] | undefined;
+}
 
 interface IPostTypes {
   id: number;
@@ -26,29 +45,69 @@ interface IPostTypes {
   createdDate: string;
   writerId: string;
   writerName: string;
+  alreadyLike: boolean;
 }
 
 const Detail = ({ id }: { id: number }) => {
   const router = useRouter();
-  const postCommentList =
-    useRecoilValue(postCommentListState); /** 더미 데이터 */
 
   const [post, setPost] = useState<IPostTypes>();
+  const [commentList, setCommentList] = useState<ICommentTypes[]>();
+  const [totalElements, setTotalElements] = useRecoilState(totalElementsState);
+  const commentRenderTrigger = useRecoilValue(commentsRenderTriggerState);
+  const recommentRenderTrigger = useRecoilValue(recommentsRenderTriggerState);
+  const isLike = useRecoilValue(isLikeState);
+
+  const currentPageNum = useRecoilValue(currentPageNumState);
+  const setTotalPages = useSetRecoilState(totalPagesState);
 
   const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
 
+  /** ----------------- 게시글 조회수 증가 API ----------------- */
   useEffect(() => {
-    API.get(`/api/boards/${id}`)
-      .then(response => {
-        console.log(`${id}번의 게시글 상세 불러오기 성공`);
-        console.log(response.data);
-        setPost(response.data);
+    API.put(`/api/boards/${id}/hit`)
+      .then(() => {
+        console.log(`${id}번의 게시글 조회수 증가 성공`);
       })
       .catch(e => {
-        console.log(e);
+        console.error(e);
         throw e;
       });
   }, []);
+
+  /** ----------------- 게시글 상세 조회 API ----------------- */
+  useEffect(() => {
+    API.get(`/api/boards/${id}`)
+      .then(res => {
+        console.log(`${id}번의 게시글 상세 불러오기 성공`);
+        console.log(res.data);
+        setPost(res.data);
+      })
+      .catch(e => {
+        console.error(e);
+        throw e;
+      });
+  }, [isLike]);
+
+  /** ----------------- 댓글 목록 조회 API ----------------- */
+  useEffect(() => {
+    API.get(`/api/comments/${id}`, {
+      params: {
+        page: currentPageNum - 1,
+      },
+    })
+      .then(res => {
+        console.log(`${id}번 게시글의 댓글 목록 불러오기 성공`);
+        console.log(res.data);
+        setCommentList(res.data.CommentListResponse);
+        setTotalElements(res.data.pageInfo.totalElements);
+        setTotalPages(res.data.pageInfo.totalPages);
+      })
+      .catch(e => {
+        console.error(e);
+        throw e;
+      });
+  }, [currentPageNum, commentRenderTrigger, recommentRenderTrigger]);
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
@@ -59,40 +118,44 @@ const Detail = ({ id }: { id: number }) => {
 
   return (
     <S.Box>
-      <S.ButtonContainer>
-        {/** 현재 임시 토큰은 사용자 2번임 */}
-        {post?.writerId === 'manager2id' && (
-          <Link href={`/community/board/edit/${id}`}>
-            <S.EditButton>수정</S.EditButton>
-          </Link>
-        )}
-        <S.CloseButton onClick={handleClose}>
-          <Image src={CloseSVG} alt="close" />
-        </S.CloseButton>
-      </S.ButtonContainer>
       {post && (
         <S.PostBox>
-          <PostInfoBox
-            writerName={post.writerName}
-            createdDate={post.createdDate}
-          />
-          <PostContentBox
+          <S.HeaderSection>
+            <PostInfo
+              writerName={post.writerName}
+              createdDate={post.createdDate}
+            />
+            <S.ButtonContainer>
+              {/** 현재 임시 토큰은 사용자 2번임 */}
+              {post?.writerId === 'manager2id' && (
+                <Link href={`/community/board/edit/${id}`}>
+                  <S.EditButton>수정</S.EditButton>
+                </Link>
+              )}
+              <S.CloseButton onClick={handleClose}>
+                <Image src={CloseSVG} alt="close" />
+              </S.CloseButton>
+            </S.ButtonContainer>
+          </S.HeaderSection>
+          <Content
+            id={post.id}
             title={post.title}
             content={post.content}
             hit={post.hit}
             likes={post.likes}
+            alreadyLike={post.alreadyLike}
           />
         </S.PostBox>
       )}
 
-      <PostCommentInputBox />
+      <CommentInputSection />
 
       <S.CommentList>
-        <S.CommentCount>
+        <S.CommentTotalCount>
           <Image src={CommentsSVG} alt="comment" />
-          <span>댓글 {postCommentList.length}</span>
-        </S.CommentCount>
-        <PostCommentListBox />
+          <span>댓글 {totalElements}</span>
+        </S.CommentTotalCount>
+        <CommentList list={commentList} />
       </S.CommentList>
     </S.Box>
   );
