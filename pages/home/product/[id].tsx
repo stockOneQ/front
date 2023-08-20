@@ -186,7 +186,7 @@ const ProductPage = () => {
                 <S.ImgInput>
                   <img
                     src={
-                      selectedImage instanceof File
+                      selectedImage
                         ? URL.createObjectURL(selectedImage)
                         : `data:image/jpeg;base64,${selectedImage}`
                     }
