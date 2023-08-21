@@ -4,15 +4,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
+  currentPageNumState,
   isCurrentPathMainState,
   postListState,
   searchInputState,
   searchTypeState,
   sortTypeState,
+  startPageNumState,
+  totalPagesState,
 } from 'recoil/states';
 import * as S from './style';
 import ControlBar from './ControlBar';
-import PostListBox from './PostListBox';
+import PostList from './PostList';
 import HeadingText from 'components/common/HeadingText';
 
 import RightArrowSVG from 'public/assets/icons/community/rightArrow.svg';
@@ -28,14 +31,27 @@ const Board = () => {
   const [searchInput, setSearchInput] = useRecoilState(searchInputState);
 
   const [postList, setPostList] = useRecoilState(postListState);
+  const [currentPageNum, setCurrentPageNum] =
+    useRecoilState(currentPageNumState);
+  const [startPageNum, setStartPageNum] = useRecoilState(startPageNumState);
+  const setTotalPages = useSetRecoilState(totalPagesState);
 
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
-  /** 전체 글 목록 조회 */
+  useEffect(() => {
+    /** 왜 초기화가 안될까 */
+    setStartPageNum(1);
+    setCurrentPageNum(1);
+    console.log(
+      `시작번호 초기화 ${startPageNum} 현재 페이지 번호 초기화 ${currentPageNum}`,
+    );
+  }, []);
+
+  /** ----------------- 전체 글 목록 조회 API ----------------- */
   useEffect(() => {
     API.get('/api/boards', {
       params: {
-        page: '0',
+        page: currentPageNum - 1,
         sort: sortType,
         search:
           searchType === '글 제목'
@@ -47,22 +63,31 @@ const Board = () => {
       },
     })
       .then(res => {
-        console.log('전체 글 목록 불러오기 성공');
+        console.log('전체 글 목록 조회 성공');
         console.log(res.data);
         setPostList(res.data.boardList);
+        setTotalPages(res.data.pageInfo.totalPages);
       })
       .catch(e => {
-        console.log(e);
+        console.error(e);
         throw e;
       });
-  }, [sortType, searchType, searchInput]);
+  }, [currentPageNum, sortType, searchType, searchInput]);
 
-  const handleMyPostsClick = () => {
+  const handleMyPostsButtonClick = () => {
     setIsCurrentPathMain(false);
-    /** 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
+
+    /** 내가 쓴 글 페이지로 이동 할 시, 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
+
+    /** 왜 초기화가 안될까 */
+    setStartPageNum(1);
+    setCurrentPageNum(1);
+    console.log(
+      `시작번호 초기화 ${startPageNum} 현재 페이지 번호 초기화 ${currentPageNum}`,
+    );
 
     router.push('/community/board/myPosts');
   };
@@ -71,18 +96,18 @@ const Board = () => {
     <S.Box>
       <S.HeaderSection>
         <HeadingText>전체글</HeadingText>
-        <S.MyPostButtonContainer onClick={handleMyPostsClick}>
+        <S.GoToMyPostButton onClick={handleMyPostsButtonClick}>
           <span>내가 쓴 글</span>
           <Image src={RightArrowSVG} alt="MyPosts" />
-        </S.MyPostButtonContainer>
+        </S.GoToMyPostButton>
         <ControlBar />
-        <S.WriteButtonContainer>
+        <S.PostUploadButtonContainer>
           <Link href="/community/board/new">
             <Image alt="게시글 등록" src={WriteSVG} />
           </Link>
-        </S.WriteButtonContainer>
+        </S.PostUploadButtonContainer>
       </S.HeaderSection>
-      <PostListBox list={postList} />
+      <PostList list={postList} />
     </S.Box>
   );
 };

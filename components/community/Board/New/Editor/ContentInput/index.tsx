@@ -12,12 +12,13 @@ const EditorContentInput = () => {
 
   return (
     <S.Box>
-      <S.Text>내용</S.Text>
-      <S.Input
-        value={contentInput}
-        onChange={handleInput}
-        maxLength={5000}
-      ></S.Input>
+      <S.TextContainer>
+        <S.Text>내용</S.Text>
+      </S.TextContainer>
+
+      <S.Container>
+        <S.Input value={contentInput} onChange={handleInput} maxLength={5000} />
+      </S.Container>
     </S.Box>
   );
 };

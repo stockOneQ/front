@@ -18,19 +18,21 @@ const searchOptionList = ['글 제목', '글 내용', '작성자'];
 const ControlBar = () => {
   const [sortType, setSortType] = useRecoilState(sortTypeState);
   const [searchType, setSearchType] = useRecoilState(searchTypeState);
-
-  /* 실시간 검색이 아닌 검색 아이콘을 통해 한번만 검색 필터를 거치므로 저장해둠 */
-
   const [searchInput, setSearchInput] = useRecoilState(searchInputState);
-  const [input, setInput] = useState(searchInput);
+
+  const [input, setInput] =
+    useState(
+      searchInput,
+    ); /* 실시간 검색이 아닌 검색 아이콘을 통해 한번만 검색 필터를 거치므로 저장해둠 */
 
   const handleSearch = () => {
     setSearchInput(input);
   };
 
   return (
-    <S.ControlBarBox>
-      <S.DropBoxContainer>
+    <S.ControlBar>
+      {/** 최신순, 조회순 */}
+      <S.DropDownContainer>
         <DropDown
           width={16.3}
           height={3.5}
@@ -41,10 +43,10 @@ const ControlBar = () => {
           onChange={setSortType}
           type={sortType}
         />
-      </S.DropBoxContainer>
-
+      </S.DropDownContainer>
       <S.SearchBar>
-        <S.DropBoxContainer>
+        {/** 글 제목, 글 내용, 작성자 */}
+        <S.DropDownContainer>
           <DropDown
             width={16.3}
             height={3.5}
@@ -55,13 +57,13 @@ const ControlBar = () => {
             onChange={setSearchType}
             type={searchType}
           />
-        </S.DropBoxContainer>
+        </S.DropDownContainer>
         <SearchInputBar value={input} onChange={setInput} />
         <S.SearchButton onClick={handleSearch}>
           <Image alt="search" src={SearchSVG} />
         </S.SearchButton>
       </S.SearchBar>
-    </S.ControlBarBox>
+    </S.ControlBar>
   );
 };
 

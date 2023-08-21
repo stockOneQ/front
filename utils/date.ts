@@ -15,3 +15,14 @@ export const formatCreatedDateToString = (props: string) => {
     return `${date[0]}년 ${date[1]}월 ${date[2]}일`;
   }
 };
+
+/** props : "2023-07-22T01:01:00" */
+export const formatDetailCreatedDateToString = (props: string) => {
+  if (props) {
+    const date = props.slice(0, 10).split('-');
+    return `${date[0]}년 ${date[1]}월 ${date[2]}일 ${props
+      .slice(11)
+      .slice(0, 2)}:${props.slice(14).slice(0, 2)}`;
+  }
+  return '';
+};

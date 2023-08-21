@@ -66,7 +66,7 @@ export const Container = styled.div`
   justify-content: space-between;
 `;
 
-export const PostContentSection = styled.div`
+export const ContentSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -86,17 +86,31 @@ export const Content = styled.div`
   color: #979797;
 `;
 
-export const PostInteractionSection = styled.div`
+export const InteractionSection = styled.div`
+  width: 23.5rem;
   display: flex;
-  gap: 3.6rem;
+  justify-content: space-between;
 `;
 
-export const Interaction = styled.div`
+export const Left = styled.div`
+  width: 14rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Interaction = styled.div<{ type: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.6rem;
+  gap: ${props =>
+    props.type === 'views'
+      ? 1.5
+      : props.type === 'comments'
+      ? '1.2'
+      : '1.4'}rem;
 
+  font-family: 'Roboto';
+  font-style: normal;
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 1.8rem;
