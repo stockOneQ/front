@@ -9,7 +9,6 @@ import {
   mainPostListState,
   StorageMethod,
   Product,
-  sortTypeStateProduct,
 } from '../../../recoil/states';
 import axios from 'axios';
 import {
@@ -19,7 +18,7 @@ import {
   getProductByCategory,
 } from 'pages/api/api';
 
-const sortOptionList = ['가나다순', '빈도'];
+const sortOptionList = ['가나다순', '빈도순'];
 
 type IngredientsProps = {
   storageMethodFilter: StorageMethod;
@@ -97,7 +96,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
         // lastProductId가 정의되었을 때만 실행
         fetchSortedProducts(
           selectedCategory,
-          selectedSortOption === '빈도' ? '빈도' : '가나다',
+          selectedSortOption === '빈도순' ? '빈도' : '가나다',
           lastProductId,
         );
       }
@@ -111,7 +110,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
     setSelectedSortOption(selectedOption);
     fetchSortedProducts(
       selectedCategory,
-      selectedOption === '빈도' ? '빈도' : '가나다',
+      selectedOption === '빈도순' ? '빈도' : '가나다',
     );
   };
 
@@ -209,8 +208,8 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
                     <img
                       src={`data:image/jpeg;base64,${product.image}`}
                       alt={product.name}
-                      width={140}
-                      height={140}
+                      width={158}
+                      height={158}
                     />
                   )}
                 </S.MainItemImg>

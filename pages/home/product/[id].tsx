@@ -121,7 +121,7 @@ const ProductPage = () => {
 
   return (
     <S.Box hideScroll={hideScroll} onScroll={scrollHandler}>
-      <S.Title title="재료 등록">재료상세</S.Title>
+      {/* <S.Title title="재료 등록">재료상세</S.Title> */}
       <S.TopSection>
         <S.Button onClick={() => handleDeleteClick}>
           <Link href="/">삭제</Link>

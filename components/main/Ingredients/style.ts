@@ -67,18 +67,23 @@ export const MainSection = styled.div<MainSectionProps>`
 `;
 
 export const DropBoxContainer = styled.div`
-  margin-left: 3%;
+  margin-left: 2%;
+  margin-right: 2%;
 `;
 
 export const Input = styled.input`
-  background: none;
   color: inherit;
   border: none;
-  font-size: 13px;
-  padding: 0 0 0 15%;
+  padding: 0px 0 0 27%;
   font: inherit;
+  width: 181px;
   cursor: pointer;
   outline: inherit;
+  height: 35px;
+  background: white;
+  border-radius: 43px;
+  position: absolute;
+  right: 90%;
 `;
 
 export const MainItem = styled.div`
@@ -86,7 +91,7 @@ export const MainItem = styled.div`
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   height: 180px;
-  margin: 1% 3% 3% 3%;
+  margin: 1% 3% 5% 3%;
   flex-wrap: wrap;
   display: flex;
   justify-content: center;
@@ -94,23 +99,96 @@ export const MainItem = styled.div`
 `;
 
 export const ProductName = styled.h3`
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
-  margin-top: 45px;
+  margin-top: 40px;
   text-align: center;
+  color: #979797;
 `;
 
 export const MainItemImg = styled.div`
-  margin-top: 20px;
+  margin-top: 11px;
+
+  img {
+    border-radius: 16px;
+  }
 `;
-export const StyledLink = styled.button<{ isactive: boolean }>`
+
+export const SeachBox = styled.div`
   display: flex;
-  width: 190px;
+`;
+
+export const SearchPro = styled.div`
+  font-size: 18px;
+  background-color: black;
+  font-weight: 600;
+  line-height: 35px;
+  text-align: center;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  border-radius: 43px;
+  width: 92px;
+  height: 35px;
+  right: 188%;
+  position: absolute;
+  color: white;
+`;
+
+export const StyledLinkLack = styled.button<{ isactive: boolean }>`
+  display: flex;
+  width: 184px;
   height: 35px;
   margin: 0 0 0 2%;
   border-radius: 100px;
   color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
-  font-size: 13px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 35px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: ${props => (props.isactive ? '#000000' : '')};
+  border: none;
+  transition: background-color 0.3s ease-in-out; /* 배경색 변경 트랜지션 */
+
+  &:hover {
+    background-color: ${props => (props.isactive ? '#000000' : '#f0f0f0')};
+  }
+`;
+
+export const StyledLinkTotal = styled.button<{ isactive: boolean }>`
+  display: flex;
+  width: 112px;
+  height: 35px;
+  margin: 0 0 0 2%;
+  border-radius: 100px;
+  color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 35px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: ${props => (props.isactive ? '#000000' : '')};
+  border: none;
+  transition: background-color 0.3s ease-in-out; /* 배경색 변경 트랜지션 */
+
+  &:hover {
+    background-color: ${props => (props.isactive ? '#000000' : '#f0f0f0')};
+  }
+`;
+
+export const StyledLink = styled.button<{ isactive: boolean }>`
+  display: flex;
+  width: 234px;
+  height: 35px;
+  margin: 0 0 0 2%;
+  border-radius: 100px;
+  color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
+  font-size: 18px;
   font-weight: 600;
   line-height: 35px;
   text-align: center;
@@ -133,7 +211,7 @@ export const ActionButtonBox = styled.div`
   position: absolute;
   gap: 8px;
   color: white;
-  left: 91%;
+  left: 84%;
   font-size: 18px;
   font-weight: 600;
   padding-bottom: 30px;
@@ -159,7 +237,6 @@ export const NavBar = styled.div`
 `;
 
 export const ControlBar = styled.div`
-  width: 107%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
@@ -180,8 +257,8 @@ export const SerchSection = styled.div`
 
   img {
     top: 26%;
+    left: 24%;
     position: relative;
-    left: 10%;
   }
 `;
 

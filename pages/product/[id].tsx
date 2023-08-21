@@ -11,7 +11,6 @@ import {
   mainPostListState,
 } from '../../recoil/states';
 import useScroll from 'hooks/useScroll';
-import { Title } from 'components/community/Board/PostListBox/PostItemBox/style';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import * as S from '../../components/main/style';
 import {
@@ -129,7 +128,7 @@ const ProductPage = () => {
 
   return (
     <S.Box hideScroll={hideScroll} onScroll={scrollHandler}>
-      <S.Title title="재료 등록">재료상세</S.Title>
+      {/* <S.Title title="재료 등록">재료상세</S.Title> */}
       <S.TopSection>
         <S.Button onClick={() => handleDeleteClick}>
           <Link href="/">삭제</Link>
@@ -194,6 +193,7 @@ const ProductPage = () => {
                 <S.ImgInput>
                   <img
                     src={
+                      typeof window !== 'undefined' &&
                       selectedImage instanceof File
                         ? URL.createObjectURL(selectedImage)
                         : `data:image/jpeg;base64,${selectedImage}`

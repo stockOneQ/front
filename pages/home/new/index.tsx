@@ -2,20 +2,13 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import axios from 'axios';
 import ImgIcon from '../../../public/assets/icons/main/imgUpload.svg';
 import * as S from '../../../components/main/style';
-import { useState, SetStateAction, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import useScroll from 'hooks/useScroll';
 import { useSetRecoilState, RecoilRoot, useRecoilState } from 'recoil';
-import {
-  approachingExpirationState,
-  postMainTitleState,
-  mainPostListState,
-  storageMethodState,
-  StorageMethod,
-} from '../../../recoil/states';
+import { postMainTitleState, mainPostListState } from '../../../recoil/states';
 import { API } from '../../api/api';
 
 const sortOptionList = ['냉동', '냉장', '상온'];
@@ -40,20 +33,20 @@ const New = () => {
   /** 필수 필드 ------------------------------------------------------------ */
 
   const [formData, setFormData] = useState({
-    productName: '가나',
+    productName: '',
     price: 100,
-    seller: '아',
-    receiptYear: '2023',
-    receiptMonth: '05',
-    receiptDay: '05',
-    expirationYear: '2024',
-    expirationMonth: '09',
-    expirationDay: '08',
-    ingredientLocation: '선반',
+    seller: '',
+    receiptYear: '',
+    receiptMonth: '',
+    receiptDay: '',
+    expirationYear: '',
+    expirationMonth: '',
+    expirationDay: '',
+    ingredientLocation: '',
     requiredQuantity: 6,
     quantity: 8,
-    orderingSite: 'www',
-    orderingFrequency: '80',
+    orderingSite: '',
+    orderingFrequency: 0,
     imageInfo: '',
     storageMethod: '',
   });
@@ -173,7 +166,7 @@ const New = () => {
         requiredQuantity: 0,
         quantity: 0,
         orderingSite: '',
-        orderingFrequency: '',
+        orderingFrequency: 60,
         imageInfo: '',
         storageMethod: '',
       });
