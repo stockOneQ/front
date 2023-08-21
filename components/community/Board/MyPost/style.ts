@@ -43,7 +43,7 @@ export const NavButton = styled.button`
 
 export const DeleteOptionBox = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 3.6rem;
 
   position: absolute;
   top: 65%;

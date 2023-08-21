@@ -1,13 +1,14 @@
-import * as S from './style';
-import PostItemBox from 'components/community/Board/PostListBox/PostItemBox';
 import { IPostPreviewTypes } from 'recoil/states';
+import * as S from './style';
+import PostItem from 'components/community/Board/PostList/PostItem';
+import Pagination from '../Pagination';
 
-const PostListBox = ({ list }: { list: IPostPreviewTypes[] }) => {
+const PostList = ({ list }: { list: IPostPreviewTypes[] }) => {
   return (
     <S.List>
       {list &&
         list.map(value => (
-          <PostItemBox
+          <PostItem
             id={value.id}
             title={value.title}
             content={value.content}
@@ -16,8 +17,10 @@ const PostListBox = ({ list }: { list: IPostPreviewTypes[] }) => {
             likes={value.likes}
           />
         ))}
+
+      <Pagination />
     </S.List>
   );
 };
 
-export default PostListBox;
+export default PostList;

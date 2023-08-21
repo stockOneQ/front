@@ -1,18 +1,14 @@
 import { styled } from 'styled-components';
 
-export const ControlBarBox = styled.div`
-  width: 93.4%;
-  display: flex;
-  gap: 11rem;
-
+export const ControlBar = styled.div`
   position: relative;
-
+  display: flex;
   margin-left: 1rem;
 `;
 
 export const SearchBar = styled.div`
   position: relative;
-  left: 25%;
+  left: 16.4%;
 
   img {
     position: absolute;
@@ -23,7 +19,7 @@ export const SearchBar = styled.div`
 
 export const SearchButton = styled.button``;
 
-export const DropBoxContainer = styled.div`
+export const DropDownContainer = styled.div`
   position: absolute;
   top: 0%;
 `;

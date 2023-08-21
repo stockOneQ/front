@@ -245,12 +245,18 @@ export const searchInputState = atom<string>({
 //   },
 // });
 
+/** 게시글 좋아요 클릭 여부 */
+export const isLikeState = atom<boolean>({
+  key: 'isLikeState',
+  default: false,
+});
+
 /** 게시글 댓글 */
 
 export interface IPostCommentTypes {
   id: number;
-  writer: string;
-  uploadTime: string;
+  writerName: string;
+  createdDate: string;
   content: string;
 }
 
@@ -259,23 +265,14 @@ export const postCommentInputState = atom<string>({
   default: '',
 });
 
-/** 게시글 댓글 더미 데이터 */
-export const postCommentListState = atom<IPostCommentTypes[]>({
-  key: 'postCommentListState',
-  default: [
-    {
-      id: 1,
-      writer: '전언석',
-      uploadTime: '2023년 07월 21일 01:25',
-      content: '알아봐드리겠습니다',
-    },
-    {
-      id: 2,
-      writer: '김아리',
-      uploadTime: '2023년 07월 22일 12:23',
-      content: '안녕하세요. 저 하고 있습니다. 마진 괜찮습니다.',
-    },
-  ],
+export const commentsRenderTriggerState = atom<boolean>({
+  key: 'commentsLengthState',
+  default: false,
+});
+
+export const recommentsRenderTriggerState = atom<boolean>({
+  key: 'recommentsRenderTriggerState',
+  default: false,
 });
 
 export const isCurrentPathMainState = atom<boolean>({
@@ -293,4 +290,25 @@ export const deleteCheckedItemsState = atom<number[]>({
 export const isDeleteModeState = atom<boolean>({
   key: 'isDeleteModeState',
   default: false,
+});
+
+/** 페이지네이션 */
+export const currentPageNumState = atom<number>({
+  key: 'currentPageNumState',
+  default: 1,
+});
+
+export const totalPagesState = atom<number>({
+  key: 'totalPagesState',
+  default: 0,
+});
+
+export const totalElementsState = atom<number>({
+  key: 'totalElementsState',
+  default: 0,
+});
+
+export const startPageNumState = atom<number>({
+  key: 'startPageNumState',
+  default: 1,
 });

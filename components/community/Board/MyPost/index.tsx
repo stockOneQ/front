@@ -10,17 +10,20 @@ import {
   isDeleteModeState,
   myPostListState,
   isCurrentPathMainState,
+  currentPageNumState,
+  totalPagesState,
 } from 'recoil/states';
 import * as S from './style';
+import { API } from 'pages/api/api';
 
 import ControlBar from '../ControlBar';
-import PostListBox from '../PostListBox';
+import PostList from '../PostList';
 import HeadingText from 'components/common/HeadingText';
 import RejectBtn from 'components/common/button/RejectBtn';
 import AcceptBtn from 'components/common/button/AcceptBtn';
+
 import SettingSVG from 'public/assets/icons/community/settingsIcon.svg';
 import LeftArrowSVG from 'public/assets/icons/community/leftArrow.svg';
-import { API } from 'pages/api/api';
 
 const MyPosts = () => {
   const router = useRouter();
@@ -37,13 +40,17 @@ const MyPosts = () => {
   const [myPostList, setMyPostList] = useRecoilState(myPostListState);
   const [myPostListCount, setMyPostListCount] = useState(0);
 
+  const [currentPageNum, setCurrentPageNum] =
+    useRecoilState(currentPageNumState);
+  const setTotalPages = useSetRecoilState(totalPagesState);
+
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
-  /** 내가 쓴 글 목록 조회 */
+  /** ----------------- 내가 쓴 글 목록 조회 API ----------------- */
   useEffect(() => {
     API.get('/api/boards/my', {
       params: {
-        page: '0',
+        page: currentPageNum - 1,
         sort: sortType,
         search: searchType === '글 제목' ? '제목' : '내용',
         word: searchInput,
@@ -53,13 +60,14 @@ const MyPosts = () => {
         console.log('내가 쓴 글 조회 성공');
         console.log(res.data);
         setMyPostList(res.data.boardList);
+        setTotalPages(res.data.pageInfo.totalPages);
         setMyPostListCount(() => myPostList.length);
       })
       .catch(e => {
         alert('내가 쓴 글 조회 실패');
         console.log(e);
       });
-  }, [myPostListCount, sortType, searchType, searchInput]);
+  }, [currentPageNum, myPostListCount, sortType, searchType, searchInput]);
 
   /** 환경설정 버튼 or 취소/삭제 버튼 토글 함수*/
   const handleToggle = () => {
@@ -77,6 +85,7 @@ const MyPosts = () => {
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
+
     router.push('/community/board');
   };
 
@@ -86,6 +95,7 @@ const MyPosts = () => {
   };
 
   /** 삭제 버튼 클릭 시 처리 함수 */
+  /** ----------------- 내가 쓴 글 삭제 API ----------------- */
   const handleDelete = async () => {
     try {
       await Promise.allSettled(
@@ -99,9 +109,8 @@ const MyPosts = () => {
       );
       setMyPostListCount(prev => prev - deleteCheckedItems.length);
       handleToggle();
-    } catch (error) {
-      alert('게시글 삭제 실패');
-      console.error(error);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -154,7 +163,7 @@ const MyPosts = () => {
         )}
       </S.HeaderSection>
 
-      <PostListBox list={myPostList} />
+      <PostList list={myPostList} />
     </S.Box>
   );
 };
