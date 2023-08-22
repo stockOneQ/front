@@ -2,9 +2,11 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 import { mainPostListState } from '../../../recoil/states';
 import { useSetRecoilState } from 'recoil';
 import useScroll from 'hooks/useScroll';
+import cancleIcon from 'public/assets/icons/main/detailCancle.svg';
 import * as S from '../../../components/main/style';
 import {
   fetchProductDetails,
@@ -118,18 +120,25 @@ const ProductPage = () => {
     router.push('/');
   };
 
+  const handleCancle = () => {
+    router.push('/');
+  };
+
   return (
     <S.Box>
-      <S.Title title="재료 등록">재료등록</S.Title>
-      <S.TopSection>
+      <S.Title title="재료 상세">재료 상세</S.Title>
+      <S.TopSectionDetail>
         <S.Button onClick={handleDeleteClick}>
           <Link href="/">삭제</Link>
         </S.Button>
-        <S.Button type="submit" onClick={handleSubmit}>
+        <S.ButtonEdit type="submit" onClick={handleSubmit}>
           <Link href="/">수정</Link>
-        </S.Button>
-        <Link href="/">X</Link>
-      </S.TopSection>
+        </S.ButtonEdit>
+
+        <S.CCL>
+          <Image src={cancleIcon} alt="취소" onClick={handleCancle} />
+        </S.CCL>
+      </S.TopSectionDetail>
 
       <S.Form hideScroll={hideScroll} onScroll={scrollHandler}>
         <S.InforSection>
