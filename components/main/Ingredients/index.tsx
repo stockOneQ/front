@@ -29,12 +29,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
   const [data, setData] = useState({});
   const router = useRouter();
-  const [userId, setUserId] = useRecoilState(userIdState);
-
-  const [storeId, setStoreId] = useRecoilState(storeIdState);
-
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
-
   const [selectedSortOption, setSelectedSortOption] =
     useState<string>('가나다순');
   const [activeLink, setActiveLink] = useState<string>('전체');
@@ -42,31 +37,36 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [linksVisible, setLinksVisible] = useState(false);
 
+  /** storId 저장 */
+  const [userId, setUserId] = useRecoilState(userIdState);
+  const [storeId, setStoreId] = useRecoilState(storeIdState);
+  // const userId = useRecoilValue(userIdState);
+  // const storeId = useRecoilValue(storeIdState);
+  console.log('storeid', storeId); //여기에는 업데이트된 값이 찍히는데
+
   /** 가게 아이디 user id 조회 ---------------------------------------------------------- */
+
+  /** 원래는 이렇게 로그인되면 메인 넘어와서 storeId 업데이트 후 stroeId 를
+   * 보내려했는데, 초기화 하면서 storeId 디폴트 값 1이 넘어감 ------------- */
   useEffect(() => {
     API.get('/api/product')
       .then(response => {
-        const { userId: fetchedUserId, storeId: fetchedStoreId } =
+        const { storeId: fetchedStoreId, userId: fetchedUserId } =
           response.data.result;
         setUserId(fetchedUserId);
-        setStoreId(fetchedStoreId);
+        setStoreId(fetchedStoreId); // storeId 업데이트
+        console.log(fetchedStoreId); // 업데이트된 값 출력
       })
       .catch(error => {
         console.log(error);
       });
-  }, [storeId, userId]);
+  }, [userId]); // storeId 제거
 
-  // api호출에서 받은 storeID 와 userId 로 전체 제품 조회 api 호출
-  // useEffect(() => {
-  //   if (storeId && userId) {
-  //     fetchSortedProducts(selectedCategory, '가나다');
-  //   }
-  // }, [storeId, userId, selectedCategory]);
   useEffect(() => {
     if (selectedCategory) {
       fetchSortedProducts(selectedCategory, '가나다');
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, storeId]); // storeId 추가
 
   /** 제품조회 API 완 ------------------------------------------------------------------ */
   const fetchSortedProducts = async (

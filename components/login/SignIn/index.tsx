@@ -6,8 +6,13 @@ import { useRouter } from 'next/router';
 import { API } from 'pages/api/api';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { loginIdState, nameState } from 'recoil/states';
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
+import {
+  loginIdState,
+  nameState,
+  storeIdState,
+  userIdState,
+} from 'recoil/states';
 
 interface ISignInProps {
   onSignUpClick: () => void;
@@ -18,6 +23,8 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
   const [enteredPassword, setEnteredPassword] = useState('');
   const [, setRefCookie] = useCookies(['refreshToken']);
   const [, setAccCookie] = useCookies(['accessToken']);
+  const [storeId, setStoreId] = useRecoilState(storeIdState);
+  const [userId, setUserId] = useRecoilState(userIdState);
 
   const setLoginId = useSetRecoilState(loginIdState);
   const setName = useSetRecoilState(nameState);
@@ -64,6 +71,16 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
     }
   };
 
+  const handleSetStore = async () => {
+    API.get('/api/product')
+      .then(response => {
+        setUserId(response.data.userId);
+        setStoreId(response.data.storeId);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   const handleLogin = async () => {
     if (enteredID && enteredPassword) {
       try {
@@ -81,10 +98,6 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
         console.log('Login successful', response.data);
         setAccCookie('accessToken', accessToken);
         setRefCookie('refreshToken', refreshToken);
-
-        // Recoil 상태 업데이트
-        setLoginId(response.data.loginId);
-        setName(response.data.name);
 
         router.push('/home/frozen'); // '/' 페이지로 이동
       } catch (error) {
