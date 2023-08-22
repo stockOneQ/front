@@ -238,10 +238,11 @@ const Label = styled.div`
   line-height: normal;
 `;
 
-const LabelBox = styled(Label)`
-  border-bottom: 1px solid var(--color-gray);
-  margin-bottom: 0.1rem;
-`;
+//  .label__answer
+// const LabelBox = styled(Label)`
+//   border-bottom: 1px solid var(--color-gray);
+//   margin-bottom: 0.1rem;
+// `;
 
 const DataListBox = styled(Label)`
   padding: 3.3rem 0;
@@ -320,7 +321,6 @@ export {
   DataNav,
   DataNavInputBox,
   DataDropDownBox,
-  LabelBox,
   DataListBox,
   PaginationBox,
 };
