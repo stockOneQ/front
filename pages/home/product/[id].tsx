@@ -120,10 +120,10 @@ const ProductPage = () => {
   };
 
   return (
-    <S.Box hideScroll={hideScroll} onScroll={scrollHandler}>
-      {/* <S.Title title="재료 등록">재료상세</S.Title> */}
+    <S.Box>
+      <S.Title title="재료 등록">재료등록</S.Title>
       <S.TopSection>
-        <S.Button onClick={() => handleDeleteClick}>
+        <S.Button onClick={handleDeleteClick}>
           <Link href="/">삭제</Link>
         </S.Button>
         <S.Button type="submit" onClick={handleSubmit}>
@@ -132,7 +132,7 @@ const ProductPage = () => {
         <Link href="/">X</Link>
       </S.TopSection>
 
-      <S.Form>
+      <S.Form hideScroll={hideScroll} onScroll={scrollHandler}>
         <S.InforSection>
           <S.LeftSection>
             <S.StyledInput>
@@ -186,6 +186,7 @@ const ProductPage = () => {
                 <S.ImgInput>
                   <img
                     src={
+                      typeof window !== 'undefined' &&
                       selectedImage instanceof File
                         ? URL.createObjectURL(selectedImage)
                         : `data:image/jpeg;base64,${selectedImage}`

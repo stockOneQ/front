@@ -242,7 +242,6 @@ export const addProduct = async (
         'Content-Type': 'multipart/form-data',
       },
     });
-    alert('제품 수정 성공');
   } catch (error) {
     console.error('Error adding product:', error);
     throw new Error('Error adding product: ');
