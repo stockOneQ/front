@@ -25,8 +25,10 @@ export const LoadMoreButton = styled.button`
   cursor: pointer;
   margin: 20px auto;
   font-size: 1.5rem;
+  position: relative;
   font-weight: bold;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  left: -12%;
 
   span {
     margin-left: 8px;

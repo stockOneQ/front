@@ -168,7 +168,7 @@ const New = () => {
         storageMethod: '',
       });
       setProductName('');
-      // router.push('/');
+      router.push('/');
     } catch (error) {
       console.error('Error adding product:', error);
     }
@@ -183,7 +183,7 @@ const New = () => {
             <Link href="/">취소</Link>
           </S.Button>
           <S.Button type="submit" onClick={handleSubmit}>
-            <Link href="/">저장</Link>
+            저장
           </S.Button>
         </S.TopSection>
 

@@ -6,6 +6,23 @@ export const DropBoxContainer = styled.div`
   top: 0%;
 `;
 
+export const TopSectionDetail = styled.div`
+  top: 33%;
+  display: flex;
+  font-size: 16px;
+  line-height: 35px;
+  right: 13%;
+  z-index: 99999;
+  font-weight: bold;
+  position: absolute;
+`;
+
+export const CCL = styled.div`
+  margin-top: 2%;
+  position: relative;
+  margin-left: 15px;
+`;
+
 export const TopSection = styled.div`
   top: 33%;
   display: flex;
@@ -92,7 +109,7 @@ export const RightSection = styled.div`
 `;
 
 export const StorageMethodRadioGroup = styled.div`
-  left: -4%;
+  left: -3%;
   position: relative;
   width: 100%;
   font-size: 18px;
@@ -110,6 +127,10 @@ export const ImgInput = styled.div`
   height: 230px;
   align-items: center;
   justify-content: center;
+
+  img {
+    border-radius: 20px;
+  }
 `;
 
 export const LabelQuant = styled.label`
@@ -217,7 +238,7 @@ export const QuantityInput = styled.div`
 `;
 export const StyledInput = styled.div`
   display: flex;
-  margin: 3% 3% 4%;
+  margin: 3% 3% 2%;
   input[name='productName'] {
     width: 436px;
   }
@@ -293,6 +314,28 @@ export const Input = styled.input`
   border: none;
   border-radius: 40px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+`;
+
+export const ButtonEdit = styled.button`
+  width: 7.1rem;
+  height: 3.5rem;
+  color: white;
+  padding-top: 0.2rem;
+  display: flex;
+  align-items: center;
+  margin-right: 5%;
+  justify-content: center;
+  background: ${props =>
+    props.children === '취소'
+      ? 'linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)'
+      : '#000000'};
+  border-radius: 2.3rem;
+  &:hover {
+    background: ${props =>
+      props.children === '취소'
+        ? 'linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)'
+        : 'linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)'};
+  }
 `;
 
 export const Button = styled.button`

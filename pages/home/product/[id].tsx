@@ -45,7 +45,6 @@ const ProductPage = () => {
 
   const convertFormDataToJson = () => {
     const jsonFormData = {
-      // id: getId(),
       name: formData.name,
       price: formData.price,
       vendor: formData.vendor,
