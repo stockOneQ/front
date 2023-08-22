@@ -59,12 +59,12 @@ const MypageFnA = () => {
               </ul>
             </S.DataNav>
           </S.DataNavBox>
-          <S.LabelBox>
+          {/* <S.LabelBox>
             <p className="label__1">번호</p>
             <p className="label__2">제목</p>
             <p className="label__3">작성일자</p>
             <p className="label__4">작성자</p>
-          </S.LabelBox>
+          </S.LabelBox> */}
           <div>
             <S.DataListBox>
               <p className="label__1">06</p>
