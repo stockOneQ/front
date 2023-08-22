@@ -50,17 +50,21 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
         setStoreId(response.data?.result?.storeId ?? null);
       })
       .catch(error => {
-        alert('요청실패');
         console.log(error);
       });
   }, [storeId, userId]);
 
   // api호출에서 받은 storeID 와 userId 로 전체 제품 조회 api 호출
+  // useEffect(() => {
+  //   if (storeId && userId) {
+  //     fetchSortedProducts(selectedCategory, '가나다');
+  //   }
+  // }, [storeId, userId, selectedCategory]);
   useEffect(() => {
-    if (storeId && userId) {
+    if (selectedCategory) {
       fetchSortedProducts(selectedCategory, '가나다');
     }
-  }, [storeId, userId, selectedCategory]);
+  }, [selectedCategory]);
 
   /** 제품조회 API 완 ------------------------------------------------------------------ */
   const fetchSortedProducts = async (
@@ -174,7 +178,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   }, [sortedProducts]);
 
   const handleItemClick = (productId: number) => {
-    router.push(`/product/${productId}`);
+    router.push(`/home/product/${productId}`);
   };
 
   return (
