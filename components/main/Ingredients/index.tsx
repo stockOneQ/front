@@ -9,8 +9,9 @@ import {
   mainPostListState,
   StorageMethod,
   Product,
+  userIdState,
+  storeIdState,
 } from '../../../recoil/states';
-import axios from 'axios';
 import {
   API,
   productList,
@@ -26,11 +27,12 @@ type IngredientsProps = {
 
 const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
-
+  const [data, setData] = useState({});
   const router = useRouter();
-  const [data, setData] = useState(null);
-  const [storeId, setStoreId] = useState(1);
-  const [userId, setUserId] = useState(1);
+  const [userId, setUserId] = useRecoilState(userIdState);
+
+  const [storeId, setStoreId] = useRecoilState(storeIdState);
+
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
 
   const [selectedSortOption, setSelectedSortOption] =
@@ -44,10 +46,10 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   useEffect(() => {
     API.get('/api/product')
       .then(response => {
-        // 업데이트
-        setData(response.data);
-        setUserId(response.data?.result?.userId ?? null);
-        setStoreId(response.data?.result?.storeId ?? null);
+        const { userId: fetchedUserId, storeId: fetchedStoreId } =
+          response.data.result;
+        setUserId(fetchedUserId);
+        setStoreId(fetchedStoreId);
       })
       .catch(error => {
         console.log(error);
@@ -164,7 +166,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const [totalCount, setTotalCount] = useState<number>(0);
 
   useEffect(() => {
-    fetchProductCounts(storeId.toString(), storageMethodFilter)
+    fetchProductCounts(storeId, storageMethodFilter)
       .then(counts => {
         console.log('제품개수 api 성공', counts);
         setTotalCount(counts.totalCount);
@@ -226,9 +228,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
         )}
       </S.MainSection>
 
-      <S.LoadMoreButton onClick={handleLoadMore}>
-        <span>&gt;</span>
-      </S.LoadMoreButton>
+      <S.LoadMoreButton onClick={handleLoadMore}>+</S.LoadMoreButton>
     </>
   );
 };

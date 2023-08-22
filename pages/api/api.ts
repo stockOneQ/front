@@ -136,7 +136,7 @@ export const productList = (
 
 //제품개수
 export const fetchProductCounts = async (
-  store: string,
+  store: number,
   condition: string,
 ): Promise<ProductCounts> => {
   try {

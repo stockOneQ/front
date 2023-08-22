@@ -79,7 +79,6 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
         const accessToken = response.data.accessToken;
         const refreshToken = response.data.refreshToken;
         console.log('Login successful', response.data);
-        alert('로그인 성공');
         setAccCookie('accessToken', accessToken);
         setRefCookie('refreshToken', refreshToken);
 
