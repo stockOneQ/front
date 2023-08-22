@@ -7,17 +7,16 @@ export const DropBoxContainer = styled.div`
 `;
 
 export const TopSection = styled.div`
-  top: 30%;
+  top: 33%;
   display: flex;
   font-size: 16px;
   line-height: 35px;
   right: 9%;
+  z-index: 99999;
   font-weight: bold;
   position: absolute;
 `;
-export const InforSection = styled.div`
-  display: flex;
-`;
+
 export const HiddenComponent = styled.div`
   display: none;
 `;
@@ -27,9 +26,8 @@ export const RangeValues = styled.div`
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 7px;
   position: relative;
-  width: 394px;
-  left: -25%;
-  /* margin-right: -22%; */
+  width: 689px;
+  left: -36%;
   margin-top: 40px;
 `;
 
@@ -44,12 +42,11 @@ export const FileInput = styled.input.attrs({ type: 'file' })`
 export const StyledRadioInput = styled.label`
   font-family: sans-serif;
   display: flex;
+  flex-direction: column-reverse; /* Reverse the flex direction */
   align-items: center;
   padding: 10px 16px;
-  border-right: 1px solid #ccc;
   position: relative;
   cursor: pointer;
-  transition: all 0.3s;
 
   &:last-of-type {
     border-right: 0;
@@ -73,17 +70,13 @@ export const StyledRadioInput = styled.label`
     &::before {
       content: '';
       position: absolute;
-      bottom: -3px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background-color: #000;
-      transition: width 0.3s ease-in-out;
-    }
-  }
+      top: -3px;
 
-  input[type='radio']:checked:hover + span::before {
-    width: 100%;
+      left: 11px;
+      width: 69%;
+      height: 2px;
+      background-image: linear-gradient(to right, #b1b0d7, #f2b2cf, #f9e499);
+    }
   }
 `;
 
@@ -128,9 +121,9 @@ export const LabelQuant = styled.label`
 
 export const Slider = styled.input`
   -webkit-appearance: none;
-  width: 69%;
-  height: 5px;
-  left: 87px;
+  width: 78%;
+  height: 2px;
+  left: 70px;
   top: 19px;
   border-radius: 5px;
   background: #eeeeee;
@@ -138,12 +131,13 @@ export const Slider = styled.input`
   position: relative;
 
   &::-webkit-slider-thumb {
-    -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
-    appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+    -webkit-appearance: none;
+    appearance: none;
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    background: #ffc9ff;
+    background: linear-gradient(130deg, #f9e499, #f2b2cf, #b1b0d7);
+
     cursor: pointer;
   }
 
@@ -161,7 +155,11 @@ export const ReceiptDateInput = styled.div`
   gap: 5px;
   font-size: 18px;
   font-weight: bold;
-  line-height: 45px;
+  line-height: 57px;
+
+  p {
+    margin: 0 3%;
+  }
 `;
 
 export const QuantitySection = styled.div`
@@ -171,35 +169,81 @@ export const QuantitySection = styled.div`
 export const QuantityInputField = styled.input`
   width: 100px;
   height: 45px;
-  padding: 6px 10px;
+  padding: 10%;
+  font-size: 15px;
   border: none;
   border-radius: 25px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 `;
 
 export const ReceiptDateInputField = styled.input`
-  width: 75px;
-  height: 45px;
-  padding: 6px 10px;
+  width: 100px;
+  height: 55px;
+  text-align: center;
   border: none;
-  border-radius: 25px;
+  border-radius: 30px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 `;
 
 export const ReceiptDateInputYearField = styled(ReceiptDateInputField)`
-  width: 100px;
+  width: 183px;
+  height: 55px;
+  border-radius: 30px;
 `;
 
 interface BoxProps {
   hideScroll: boolean;
 }
 
-export const Box = styled.div<BoxProps>`
+export const InforSection = styled.div`
+  display: flex;
+`;
+
+export const Box = styled.div`
   display: flex;
   background-color: rgba(255, 255, 255, 0.5);
+  width: 1113px;
+  height: 822px;
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
-  height: 100vh;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+export const QuantityInput = styled.div`
+  display: flex;
+  margin-left: 3%;
+`;
+export const StyledInput = styled.div`
+  display: flex;
+  margin: 3% 3% 4%;
+  input[name='productName'] {
+    width: 436px;
+  }
+
+  input[name='price'] {
+    width: 294px;
+  }
+  input[name='seller'] {
+    width: 456px;
+  }
+  input[name='ingredientLocation'] {
+    width: 436px;
+  }
+`;
+
+export const Range = styled.div`
+  display: block;
+`;
+export const Form = styled.div<BoxProps>`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 4%;
+  margin-left: 5%;
+  width: 1000px;
+  overflow-x: hidden;
   overflow-y: auto;
   padding-right: ${props => (props.hideScroll ? '7.1rem' : '5.6rem')};
 
@@ -224,33 +268,12 @@ export const Box = styled.div<BoxProps>`
     border-radius: 0.8rem;
     background-color: #eee;
   }
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-export const QuantityInput = styled.div`
-  display: flex;
-  margin-left: 3%;
-`;
-export const StyledInput = styled.div`
-  display: flex;
-  margin: 3% 3% 6%;
-`;
-
-export const Range = styled.div`
-  display: block;
-`;
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 4%;
 `;
 
 export const Label = styled.label`
   font-size: 18px;
   font-weight: bold;
-  width: 152px;
+  width: 141px;
   line-height: 49px;
 `;
 
@@ -259,13 +282,13 @@ export const Title = styled.h1`
   font-size: 2.5rem;
   line-height: 2.9rem;
   position: relative;
-  margin-top: 18%;
+  margin-top: 5%;
 `;
 
 export const Input = styled.input`
   width: 350px;
   height: 55px;
-  padding: 6px 10px;
+  padding: 2% 5% 2% 4%;
   font-size: 15px;
   border: none;
   border-radius: 40px;
@@ -286,7 +309,6 @@ export const Button = styled.button`
       ? 'linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)'
       : '#979797'};
   border-radius: 2.3rem;
-  transition: background 0.3s ease-in-out; /* Add transition for smooth hover effect */
   &:hover {
     background: ${props =>
       props.children === '취소'

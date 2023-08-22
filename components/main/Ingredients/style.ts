@@ -91,7 +91,7 @@ export const MainItem = styled.div`
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   height: 180px;
-  margin: 1% 3% 5% 3%;
+  margin: 1% 5% 5% 0%;
   flex-wrap: wrap;
   display: flex;
   justify-content: center;
@@ -162,7 +162,7 @@ export const StyledLinkTotal = styled.button<{ isactive: boolean }>`
   display: flex;
   width: 112px;
   height: 35px;
-  margin: 0 0 0 2%;
+  margin: 0 2% 0 0%;
   border-radius: 100px;
   color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
   font-size: 18px;
@@ -185,7 +185,7 @@ export const StyledLink = styled.button<{ isactive: boolean }>`
   display: flex;
   width: 234px;
   height: 35px;
-  margin: 0 0 0 2%;
+  margin: 0 2% 0 0%;
   border-radius: 100px;
   color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
   font-size: 18px;

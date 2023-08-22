@@ -34,7 +34,7 @@ const New = () => {
 
   const [formData, setFormData] = useState({
     productName: '',
-    price: 100,
+    price: '',
     seller: '',
     receiptYear: '',
     receiptMonth: '',
@@ -43,10 +43,10 @@ const New = () => {
     expirationMonth: '',
     expirationDay: '',
     ingredientLocation: '',
-    requiredQuantity: 6,
-    quantity: 8,
+    requiredQuantity: '',
+    quantity: '',
     orderingSite: '',
-    orderingFrequency: 0,
+    orderingFrequency: '',
     imageInfo: '',
     storageMethod: '',
   });
@@ -92,13 +92,10 @@ const New = () => {
   useEffect(() => {
     API.get('/api/product')
       .then(response => {
-        console.log('-------------------------');
-        console.log('첫 storeId api 호출: ', response);
         // 업데이트
         setStoreId(response.data?.result?.storeId ?? null);
       })
       .catch(error => {
-        alert('요청실패');
         console.log(error);
       });
   }, []);
@@ -154,7 +151,7 @@ const New = () => {
       // 초기화
       setFormData({
         productName: '',
-        price: 0,
+        price: '',
         seller: '',
         receiptYear: '',
         receiptMonth: '',
@@ -163,22 +160,22 @@ const New = () => {
         expirationMonth: '',
         expirationDay: '',
         ingredientLocation: '',
-        requiredQuantity: 0,
-        quantity: 0,
+        requiredQuantity: '',
+        quantity: '',
         orderingSite: '',
-        orderingFrequency: 60,
+        orderingFrequency: '',
         imageInfo: '',
         storageMethod: '',
       });
       setProductName('');
-      router.push('/');
+      // router.push('/');
     } catch (error) {
       console.error('Error adding product:', error);
     }
   };
 
   return (
-    <S.Box hideScroll={hideScroll} onScroll={scrollHandler}>
+    <S.Box>
       <RecoilRoot>
         <S.Title title="재료 등록">재료등록</S.Title>
         <S.TopSection>
@@ -190,7 +187,7 @@ const New = () => {
           </S.Button>
         </S.TopSection>
 
-        <S.Form>
+        <S.Form hideScroll={hideScroll} onScroll={scrollHandler}>
           <S.InforSection>
             <S.LeftSection>
               <S.StyledInput>
@@ -266,6 +263,7 @@ const New = () => {
                   maxLength={11}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="춘천 냉동딸기 150G"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -276,6 +274,7 @@ const New = () => {
                   value={formData.price}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="15000"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -287,6 +286,7 @@ const New = () => {
                   maxLength={29}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="춘천 딸기하우스"
                 />
               </S.StyledInput>
 
@@ -298,7 +298,7 @@ const New = () => {
                     name="receiptYear"
                     value={formData.receiptYear}
                     onChange={handleInputChange}
-                    placeholder="년도"
+                    placeholder="YYYY"
                     autoComplete="off"
                   />
                   <p>년</p>
@@ -307,7 +307,7 @@ const New = () => {
                     name="receiptMonth"
                     value={formData.receiptMonth}
                     onChange={handleInputChange}
-                    placeholder="월"
+                    placeholder="MM"
                     autoComplete="off"
                   />
                   <p>월</p>
@@ -316,7 +316,7 @@ const New = () => {
                     name="receiptDay"
                     value={formData.receiptDay}
                     onChange={handleInputChange}
-                    placeholder="일"
+                    placeholder="DD"
                     autoComplete="off"
                   />
                 </S.ReceiptDateInput>
@@ -329,7 +329,7 @@ const New = () => {
                     name="expirationYear"
                     value={formData.expirationYear}
                     onChange={handleInputChange}
-                    placeholder="년도"
+                    placeholder="YYYY"
                     autoComplete="off"
                   />
                   <p>년</p>
@@ -338,7 +338,7 @@ const New = () => {
                     name="expirationMonth"
                     value={formData.expirationMonth}
                     onChange={handleInputChange}
-                    placeholder="월"
+                    placeholder="MM"
                     autoComplete="off"
                   />
                   <p>월</p>
@@ -347,7 +347,7 @@ const New = () => {
                     name="expirationDay"
                     value={formData.expirationDay}
                     onChange={handleInputChange}
-                    placeholder="일"
+                    placeholder="DD"
                     autoComplete="off"
                   />
                 </S.ReceiptDateInput>
@@ -361,6 +361,7 @@ const New = () => {
                   maxLength={29}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="1번 냉동실 1층"
                 />
               </S.StyledInput>
               <S.QuantitySection>
@@ -394,6 +395,7 @@ const New = () => {
                   maxLength={200}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="http://www.stockOneQ.com"
                 />
               </S.StyledInput>
 
