@@ -15,7 +15,6 @@ const DROP_DOWN_LIST = ['이름', '상호명', '지역명'];
 /** 친구 찾기 */
 const SearchFriend = () => {
   const enteredValueRef = useRef(null); // 입력된 검색 값
-  const firstMountRef = useRef(2);
 
   const [searchBy, setSearchBy] = useState('이름'); // 카테고리 선택
   const [searchResultList, setSearchResultList] = useState<
@@ -29,8 +28,6 @@ const SearchFriend = () => {
     setIsLoading(true);
 
     const getSearchedUserData = async () => {
-      if (firstMountRef.current > 0) return (firstMountRef.current -= 1);
-
       try {
         const searchedUserRes = await API.get(
           `/api/user/friend?search=${searchBy}&word=${enteredValue}&last=-1`,

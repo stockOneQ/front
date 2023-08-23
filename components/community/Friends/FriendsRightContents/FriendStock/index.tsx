@@ -20,7 +20,6 @@ const SELECT_DATA = ['냉동', '냉장', '상온'];
 /** 친구 재고 페이지 */
 const FriendStock = () => {
   const enteredValueRef = useRef(null);
-  const firstMountRef = useRef(true);
 
   const [isSelect, setIsSelect] = useState(false); // 냉동 냉장 상온 토글 열기
   const [selectState, setSelectState] = useState(SELECT_DATA); // 냉동 냉장 상온 중 하나 고르기
@@ -47,8 +46,6 @@ const FriendStock = () => {
 
   useEffect(() => {
     const getStockList = async () => {
-      if (firstMountRef.current) return (firstMountRef.current = false);
-
       setIsLoading(true);
 
       let stockList: FriendStockListType[] = [];

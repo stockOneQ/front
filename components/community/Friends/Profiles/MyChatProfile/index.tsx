@@ -14,7 +14,6 @@ type userInfoType = {
 
 /** 나의 채팅 프로필 */
 const MyChatProfile = () => {
-  const firstMountRef = useRef(true);
   // FIXME: 페이지 이동 시 상태 날아가는 오류
   const [reqFriendsListLen, setReqFriendsListLen] = useState(0);
   const [userInfo, setUserInfo] = useState<userInfoType>({
@@ -26,7 +25,6 @@ const MyChatProfile = () => {
 
   useEffect(() => {
     const getData = async () => {
-      if (firstMountRef.current) return (firstMountRef.current = false);
       let wanting_offset = -1;
 
       while (true) {

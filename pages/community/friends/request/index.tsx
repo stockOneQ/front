@@ -9,8 +9,6 @@ import { useEffect, useRef, useState } from 'react';
 
 /** community - 친구 요청 페이지 */
 const ReqFriendsPage = () => {
-  const firstMountRef = useRef(true);
-
   const [waitingFriendsList, setWaitingFriendsList] = useState<
     FriendsListType['friendsList']
   >([]);
@@ -19,7 +17,6 @@ const ReqFriendsPage = () => {
   >([]);
   useEffect(() => {
     const getData = async () => {
-      if (firstMountRef.current) return (firstMountRef.current = false);
       let waiting_offset = -1;
       let wanting_offset = -1;
 
