@@ -90,7 +90,7 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
             className={currentPath.startsWith('/community') ? 'active' : ''}
           >
             <Link
-              href="/community/friends"
+              href="/community/friends/search"
               onClick={() => {
                 setSideBarIdx(0);
               }}

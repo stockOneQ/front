@@ -68,7 +68,6 @@ const CancelBtn = ({
       width={width}
       height={height}
       font={font}
-      type="button"
       onClick={onClick}
     >
       {label}
