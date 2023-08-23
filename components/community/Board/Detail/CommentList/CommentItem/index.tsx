@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   commentsRenderTriggerState,
+  loginIdState,
   recommentsRenderTriggerState,
 } from 'recoil/states';
 import * as S from './style';
@@ -29,11 +30,13 @@ interface ICommentTypes extends IRecommentTypes {
 
 const CommentItem = ({
   id,
-  writerName,
   content,
   createdDate,
+  writerName,
+  writerId,
   replyList,
 }: ICommentTypes) => {
+  const loginId = useRecoilValue(loginIdState);
   const [isModal, setIsModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isReply, setIsReply] = useState(false);
@@ -173,8 +176,7 @@ const CommentItem = ({
       </S.Comment>
       <ReplyList list={replyList} />
 
-      {/** 추후 loginId랑 비교하여 더보기 버튼 띄우기 */}
-      {writerName === '새우' && !isEdit && (
+      {writerId === loginId && !isEdit && (
         <S.OptionButton onClick={handleMore}>
           <Image src={CommentMoreSVG} alt="commentMore" />
         </S.OptionButton>
