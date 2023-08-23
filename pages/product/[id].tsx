@@ -11,7 +11,6 @@ import {
   mainPostListState,
 } from '../../recoil/states';
 import useScroll from 'hooks/useScroll';
-import { Title } from 'components/community/Board/PostListBox/PostItemBox/style';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import * as S from '../../components/main/style';
 import {
