@@ -7,14 +7,14 @@ export const DropBoxContainer = styled.div`
 `;
 
 export const TopSectionDetail = styled.div`
-  top: 33%;
+  top: -41px;
   display: flex;
   font-size: 16px;
   line-height: 35px;
-  right: 13%;
+  left: 443px;
+  position: relative;
   z-index: 99999;
   font-weight: bold;
-  position: absolute;
 `;
 
 export const CCL = styled.div`
@@ -24,14 +24,14 @@ export const CCL = styled.div`
 `;
 
 export const TopSection = styled.div`
-  top: 33%;
+  top: -41px;
   display: flex;
   font-size: 16px;
   line-height: 35px;
-  right: 9%;
+  left: 474px;
+  position: relative;
   z-index: 99999;
   font-weight: bold;
-  position: absolute;
 `;
 
 export const HiddenComponent = styled.div`
@@ -98,13 +98,12 @@ export const StyledRadioInput = styled.label`
 `;
 
 export const LeftSection = styled.div`
-  width: 40%;
-  position: absolute;
-  left: 26%;
+  position: relative;
+  left: 3%;
 `;
 
 export const RightSection = styled.div`
-  margin-left: 30%;
+  margin-left: 7%;
   z-index: 999;
 `;
 
@@ -239,6 +238,7 @@ export const QuantityInput = styled.div`
 export const StyledInput = styled.div`
   display: flex;
   margin: 3% 3% 2%;
+  width: 100%;
   input[name='productName'] {
     width: 436px;
   }
