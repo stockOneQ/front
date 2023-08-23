@@ -237,8 +237,9 @@ export const QuantityInput = styled.div`
 `;
 export const StyledInput = styled.div`
   display: flex;
-  margin: 3% 3% 2%;
+  margin: 3% 3% 2% 5%;
   width: 100%;
+
   input[name='productName'] {
     width: 436px;
   }
