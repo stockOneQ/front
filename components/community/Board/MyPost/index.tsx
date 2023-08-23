@@ -42,7 +42,7 @@ const MyPosts = () => {
 
   const [currentPageNum, setCurrentPageNum] =
     useRecoilState(currentPageNumState);
-  const setTotalPages = useSetRecoilState(totalPagesState);
+  const [totalPages, setTotalPages] = useRecoilState(totalPagesState);
 
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
@@ -163,7 +163,7 @@ const MyPosts = () => {
         )}
       </S.HeaderSection>
 
-      <PostList list={myPostList} />
+      <PostList list={myPostList} totalPages={totalPages}/>
     </S.Box>
   );
 };

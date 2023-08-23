@@ -15,7 +15,13 @@ interface ICommentTypes extends IRecommentTypes {
   replyList: IRecommentTypes[] | undefined;
 }
 
-const CommentList = ({ list }: { list: ICommentTypes[] | undefined }) => {
+const CommentList = ({
+  list,
+  totalPages,
+}: {
+  list: ICommentTypes[] | undefined;
+  totalPages: number;
+}) => {
   return (
     <S.List>
       {list &&
@@ -30,7 +36,7 @@ const CommentList = ({ list }: { list: ICommentTypes[] | undefined }) => {
             replyList={value.replyList}
           />
         ))}
-      <Pagination />
+      {totalPages > 1 && <Pagination />}
     </S.List>
   );
 };
