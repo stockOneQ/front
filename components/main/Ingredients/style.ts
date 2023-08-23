@@ -12,6 +12,27 @@ const slideDown = keyframes`
   }
 `;
 
+export const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+`;
+
+export const LoadingContainer = styled.div`
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease-in-out; /* Add a transition effect */
+
+  &.active {
+    opacity: 1; /* Visible when active */
+  }
+`;
+
 export const LoadMoreButton = styled.button`
   display: flex;
   align-items: center;
@@ -69,7 +90,8 @@ export const MainSection = styled.div<MainSectionProps>`
 `;
 
 export const DropBoxContainer = styled.div`
-  margin-left: 2%;
+  margin-left: 53%;
+  position: absolute;
   margin-right: 2%;
 `;
 

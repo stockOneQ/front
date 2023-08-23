@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import * as S from './style';
 import Link from 'next/link';
+import Image from 'next/image';
 import Categories from '../Categories';
 import {
   mainPostListState,
@@ -19,6 +20,7 @@ import {
   fetchProductCounts,
   getProductByCategory,
 } from 'pages/api/api';
+import loading from 'public/assets/icons/main/spinnerT.gif';
 
 const sortOptionList = ['가나다순', '빈도순'];
 
@@ -43,13 +45,13 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   /** storId 저장 */
   const [userId, setUserId] = useRecoilState(userIdState);
   const [storeId, setStoreId] = useRecoilState(storeIdState);
-  // const userId = useRecoilValue(userIdState);
-  // const storeId = useRecoilValue(storeIdState);
-  console.log('storeid', storeId); //여기에는 업데이트된 값이 찍히는데
+  const [isLoading, setIsLoading] = useState(false);
+
   const [hasReloaded, setHasReloaded] = useState(false);
 
   useEffect(() => {
     if (authStatus && !hasReloaded) {
+      setIsLoading(true); // Show loading indicator
       router.reload();
       setHasReloaded(true);
     }
@@ -96,7 +98,12 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       setSortedProducts(prevProducts =>
         lastProductId ? [...prevProducts, ...productAll] : productAll,
       );
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response && error.response.status === 500) {
+        router.push('/login'); // Redirect to login page if token is missing
+        return; // Return early to prevent further processing
+      }
+
       console.error('Error fetching sorted products:', error);
     }
   };
@@ -209,32 +216,38 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       />
 
       {/* api 호출에 따른 MAIN SECTION */}
-      <S.MainSection hideScroll={true}>
-        {Array.isArray(sortedProducts) ? (
-          sortedProducts.map(product => (
-            <S.MainItem
-              key={product.id}
-              onClick={() => handleItemClick(product.id)}
-            >
-              <Link href={`/home/product/${product.id}`} passHref>
-                <S.MainItemImg>
-                  {product.image && (
-                    <img
-                      src={`data:image/jpeg;base64,${product.image}`}
-                      alt={product.name}
-                      width={158}
-                      height={158}
-                    />
-                  )}
-                </S.MainItemImg>
-                <S.ProductName>{product.name}</S.ProductName>
-              </Link>
-            </S.MainItem>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </S.MainSection>
+      {isLoading ? (
+        <S.Loading>
+          <Image src={loading} alt="loading" width={100} height={100} />
+        </S.Loading>
+      ) : (
+        <S.MainSection hideScroll={true}>
+          {Array.isArray(sortedProducts) ? (
+            sortedProducts.map(product => (
+              <S.MainItem
+                key={product.id}
+                onClick={() => handleItemClick(product.id)}
+              >
+                <Link href={`/home/product/${product.id}`} passHref>
+                  <S.MainItemImg>
+                    {product.image && (
+                      <img
+                        src={`data:image/jpeg;base64,${product.image}`}
+                        alt={product.name}
+                        width={158}
+                        height={158}
+                      />
+                    )}
+                  </S.MainItemImg>
+                  <S.ProductName>{product.name}</S.ProductName>
+                </Link>
+              </S.MainItem>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </S.MainSection>
+      )}
 
       <S.LoadMoreButton onClick={handleLoadMore}>+</S.LoadMoreButton>
     </>
