@@ -1,8 +1,8 @@
 import FriendProfile from './FriendProfile';
 import FriendsCount from './FriendsCount';
 import * as S from './style';
-import { useEffect, useState } from 'react';
-import { API } from 'pages/api/api';
+import { useContext, useState } from 'react';
+import FriendsListContext from 'contexts/community/friends/FriendsListProvider.ts';
 
 export const DUMMY_DATA = [
   {
@@ -67,50 +67,34 @@ export const DUMMY_DATA = [
   },
 ];
 
-const getData = async () => {
-  try {
-    const friendsList = await API.get('/api/friends?last=5');
-    console.log('success', friendsList.data);
-  } catch (err) {
-    console.log('err', err);
-  }
-};
-
 /** 친구 목록 */
 const FriendsList = () => {
-  /** 삭제, 취소 버튼 등장 */
+  // 삭제, 취소 버튼 등장
   const [onSetting, setOnSetting] = useState(false);
-  /** 삭제 버튼 허용 */
-  const [isPermitted, setIsPermitted] = useState(10); // 일단 9(친구 수)로 하드 코딩
-  const [isStock, setIsStock] = useState(false);
+  // 삭제할 친구 리스트
   const [deleteItem, setDeleteItem] = useState<number[]>([]);
+  console.log('deleteItem', deleteItem);
 
-  console.log('delete', deleteItem);
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const { friendsList } = useContext(FriendsListContext);
 
   return (
     <>
       <FriendsCount
-        count={DUMMY_DATA.length}
+        count={friendsList?.length || 0}
         onSetting={onSetting}
-        isPermitted={isPermitted}
+        deleteItem={deleteItem}
         setOnSetting={setOnSetting}
+        setDeleteItem={setDeleteItem}
       />
       <S.FriendList>
-        {DUMMY_DATA.map(({ id, name, location, phone }) => (
+        {friendsList?.map(({ id, name, storeName, phoneNumber }) => (
           <FriendProfile
             key={id}
             id={id}
             name={name}
-            location={location}
-            phone={phone}
+            storeName={storeName}
+            phoneNumber={phoneNumber}
             onSetting={onSetting}
-            isStock={isStock}
-            setIsStock={setIsStock}
-            setIsPermitted={setIsPermitted}
             setDeleteItem={setDeleteItem}
           />
         ))}

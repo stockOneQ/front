@@ -4,23 +4,35 @@ import * as S from './style';
 
 interface IFriendInfoProps {
   name: string;
-  location: string;
-  phone: string;
+  storeName: string;
+  phoneNumber: string;
   width: number;
   imgMarginRight: string;
 }
 
 /** 친구 프로필 */
-const FriendInfo = ({ name, location, phone, width, imgMarginRight }: IFriendInfoProps) => {
+const FriendInfo = ({
+  name,
+  storeName,
+  phoneNumber,
+  width,
+  imgMarginRight,
+}: IFriendInfoProps) => {
   return (
     <S.FriendInfoBox imgMarginRight={imgMarginRight}>
-      <Image src={friendProfile} alt="my_profile" width={width} height={width} placeholder="blur" />
+      <Image
+        src={friendProfile}
+        alt="my_profile"
+        width={width}
+        height={width}
+        placeholder="blur"
+      />
       <div>
         <S.FriendInfoTextBox>
           <p>{name}</p>
-          <p>{location}</p>
+          <p>{storeName}</p>
         </S.FriendInfoTextBox>
-        <S.FriendPhoneText>{phone}</S.FriendPhoneText>
+        <S.FriendPhoneText>{phoneNumber}</S.FriendPhoneText>
       </div>
     </S.FriendInfoBox>
   );
