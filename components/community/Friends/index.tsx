@@ -11,16 +11,12 @@ interface IFriendsProps {
 
 /** community - 친구 */
 const Friends = ({ children }: IFriendsProps) => {
-  const firstMountRef = useRef(true);
-
   const [friendsList, setFriendsList] = useState<
     FriendsListType['friendsList']
   >([]);
 
   useEffect(() => {
     const getData = async () => {
-      if (firstMountRef.current) return (firstMountRef.current = false);
-
       let friends_offset = -1;
 
       while (true) {
