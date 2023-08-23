@@ -1,22 +1,20 @@
-import styled from 'styled-components';
 import Profiles from './Profiles';
-import SearchFriend from './SearchFriend';
-import { useState } from 'react';
+import Card from 'components/common/Card';
+import * as S from './style';
 
-const CommunitySection = styled.section`
-  display: flex;
-  gap: 7.1rem;
-`
+interface IFriendsProps {
+  children?: React.ReactNode;
+}
 
 /** community - 친구 */
-const Friends = () => {
-  const [reqFriends, setReqFriends] = useState(false);
-
+const Friends = ({ children }: IFriendsProps) => {
   return (
-    <CommunitySection>
-      <Profiles setReqFriends={setReqFriends} />
-      <SearchFriend reqFriends={reqFriends} setReqFriends={setReqFriends} />
-    </CommunitySection>
+    <S.CommunitySection>
+      <Profiles />
+      <Card width="65.9rem" height="73.8rem">
+        {children}
+      </Card>
+    </S.CommunitySection>
   );
 };
 
