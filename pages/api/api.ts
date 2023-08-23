@@ -30,8 +30,8 @@ export const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
-    'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_API_URL,
+    Authorization: `Bearer ${accessToken}`,
+    'Access-Control-Allow-Origin': '*', // Allow requests from any origin during development
     'Access-Control-Allow-Credentials': true,
   },
   withCredentials: true,

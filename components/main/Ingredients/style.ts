@@ -90,7 +90,7 @@ export const MainSection = styled.div<MainSectionProps>`
 `;
 
 export const DropBoxContainer = styled.div`
-  margin-left: 53%;
+  margin-left: 75%;
   position: absolute;
   margin-right: 2%;
 `;
@@ -238,7 +238,7 @@ export const ActionButtonBox = styled.div`
   left: 84%;
   font-size: 18px;
   font-weight: 600;
-  padding-bottom: 30px;
+  right: 6rem;
 `;
 
 export const Add = styled.div`
@@ -258,6 +258,7 @@ export const Add = styled.div`
 export const NavBar = styled.div`
   display: flex;
   width: 90%;
+  position: relative;
 `;
 
 export const ControlBar = styled.div`
