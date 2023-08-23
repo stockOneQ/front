@@ -6,8 +6,14 @@ import { useRouter } from 'next/router';
 import { API } from 'pages/api/api';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { loginIdState, nameState } from 'recoil/states';
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
+import {
+  loginIdState,
+  nameState,
+  storeIdState,
+  userIdState,
+  authState,
+} from 'recoil/states';
 
 interface ISignInProps {
   onSignUpClick: () => void;
@@ -18,6 +24,9 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
   const [enteredPassword, setEnteredPassword] = useState('');
   const [, setRefCookie] = useCookies(['refreshToken']);
   const [, setAccCookie] = useCookies(['accessToken']);
+  const [storeId, setStoreId] = useRecoilState(storeIdState);
+  const [userId, setUserId] = useRecoilState(userIdState);
+  const [auth, setAuthStatus] = useRecoilState(authState);
 
   const setLoginId = useSetRecoilState(loginIdState);
   const setName = useSetRecoilState(nameState);
@@ -44,26 +53,23 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
   const router = useRouter();
 
   const apiInstance = axios.create({
-    baseURL: 'http://43.200.211.214:80', // 8080 포트의 주소로 설정
+    baseURL: process.env.NEXT_PUBLIC_API_URL, // 8080 포트의 주소로 설정
     headers: {
       'Content-Type': 'application/json',
       // 다른 헤더 설정
     },
   });
 
-  const handleLogout = async () => {
-    try {
-      // 로그아웃 API 호출
-      const response = await API.post('/api/auth/logout');
-      if (response.status === 204) {
-        // 로그아웃 성공 시 다음 동작 수행
-        console.log('로그아웃 성공');
-      }
-    } catch (error) {
-      console.error('로그아웃 에러', error);
-    }
+  const handleSetStore = async () => {
+    API.get('/api/product')
+      .then(response => {
+        setUserId(response.data.userId);
+        setStoreId(response.data.storeId);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
-
   const handleLogin = async () => {
     if (enteredID && enteredPassword) {
       try {
@@ -76,16 +82,12 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
           '/api/auth/login',
           JSON.stringify(loginData),
         );
+        setAuthStatus(true);
         const accessToken = response.data.accessToken;
         const refreshToken = response.data.refreshToken;
         console.log('Login successful', response.data);
-        alert('로그인 성공');
         setAccCookie('accessToken', accessToken);
         setRefCookie('refreshToken', refreshToken);
-
-        // Recoil 상태 업데이트
-        setLoginId(response.data.loginId);
-        setName(response.data.name);
 
         router.push('/home/frozen'); // '/' 페이지로 이동
       } catch (error) {
@@ -114,13 +116,6 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
           onClick={handleLogin}
         >
           로그인
-        </S.SignInButton>
-        <S.SignInButton
-          isTyped={isTyped}
-          disabled={!isTyped}
-          onClick={handleLogout}
-        >
-          로그아웃
         </S.SignInButton>
       </S.SignInBodyBox>
       <S.SignInFooterBox>

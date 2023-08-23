@@ -4,22 +4,25 @@ import { useRouter } from 'next/router';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import * as S from './style';
 import Link from 'next/link';
+import Image from 'next/image';
 import Categories from '../Categories';
 import {
   mainPostListState,
   StorageMethod,
   Product,
-  sortTypeStateProduct,
+  userIdState,
+  storeIdState,
+  authState,
 } from '../../../recoil/states';
-import axios from 'axios';
 import {
   API,
   productList,
   fetchProductCounts,
   getProductByCategory,
 } from 'pages/api/api';
+import loading from 'public/assets/icons/main/spinnerT.gif';
 
-const sortOptionList = ['가나다순', '빈도'];
+const sortOptionList = ['가나다순', '빈도순'];
 
 type IngredientsProps = {
   storageMethodFilter: StorageMethod;
@@ -27,13 +30,11 @@ type IngredientsProps = {
 
 const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
+  const [data, setData] = useState({});
+  const [authStatus] = useRecoilState(authState);
 
   const router = useRouter();
-  const [data, setData] = useState(null);
-  const [storeId, setStoreId] = useState(1);
-  const [userId, setUserId] = useState(1);
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
-
   const [selectedSortOption, setSelectedSortOption] =
     useState<string>('가나다순');
   const [activeLink, setActiveLink] = useState<string>('전체');
@@ -41,27 +42,41 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [linksVisible, setLinksVisible] = useState(false);
 
+  /** storId 저장 */
+  const [userId, setUserId] = useRecoilState(userIdState);
+  const [storeId, setStoreId] = useRecoilState(storeIdState);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [hasReloaded, setHasReloaded] = useState(false);
+
+  useEffect(() => {
+    if (authStatus && !hasReloaded) {
+      setIsLoading(true); // Show loading indicator
+      router.reload();
+      setHasReloaded(true);
+    }
+  }, [authStatus, hasReloaded]);
+
   /** 가게 아이디 user id 조회 ---------------------------------------------------------- */
   useEffect(() => {
     API.get('/api/product')
       .then(response => {
-        // 업데이트
-        setData(response.data);
-        setUserId(response.data?.result?.userId ?? null);
-        setStoreId(response.data?.result?.storeId ?? null);
+        const { storeId: fetchedStoreId, userId: fetchedUserId } =
+          response.data.result;
+        setUserId(fetchedUserId);
+        setStoreId(fetchedStoreId); // storeId 업데이트
+        console.log(fetchedStoreId); // 업데이트된 값 출력
       })
       .catch(error => {
-        alert('요청실패');
         console.log(error);
       });
-  }, [storeId, userId]);
+  }, [userId]); // storeId 제거
 
-  // api호출에서 받은 storeID 와 userId 로 전체 제품 조회 api 호출
   useEffect(() => {
-    if (storeId && userId) {
+    if (selectedCategory) {
       fetchSortedProducts(selectedCategory, '가나다');
     }
-  }, [storeId, userId, selectedCategory]);
+  }, [selectedCategory, storeId]); // storeId 추가
 
   /** 제품조회 API 완 ------------------------------------------------------------------ */
   const fetchSortedProducts = async (
@@ -83,7 +98,12 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       setSortedProducts(prevProducts =>
         lastProductId ? [...prevProducts, ...productAll] : productAll,
       );
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response && error.response.status === 500) {
+        router.push('/login'); // Redirect to login page if token is missing
+        return; // Return early to prevent further processing
+      }
+
       console.error('Error fetching sorted products:', error);
     }
   };
@@ -97,7 +117,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
         // lastProductId가 정의되었을 때만 실행
         fetchSortedProducts(
           selectedCategory,
-          selectedSortOption === '빈도' ? '빈도' : '가나다',
+          selectedSortOption === '빈도순' ? '빈도' : '가나다',
           lastProductId,
         );
       }
@@ -111,7 +131,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
     setSelectedSortOption(selectedOption);
     fetchSortedProducts(
       selectedCategory,
-      selectedOption === '빈도' ? '빈도' : '가나다',
+      selectedOption === '빈도순' ? '빈도' : '가나다',
     );
   };
 
@@ -161,7 +181,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const [totalCount, setTotalCount] = useState<number>(0);
 
   useEffect(() => {
-    fetchProductCounts(storeId.toString(), storageMethodFilter)
+    fetchProductCounts(storeId, storageMethodFilter)
       .then(counts => {
         console.log('제품개수 api 성공', counts);
         setTotalCount(counts.totalCount);
@@ -175,7 +195,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   }, [sortedProducts]);
 
   const handleItemClick = (productId: number) => {
-    router.push(`/product/${productId}`);
+    router.push(`/home/product/${productId}`);
   };
 
   return (
@@ -196,36 +216,40 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       />
 
       {/* api 호출에 따른 MAIN SECTION */}
-      <S.MainSection hideScroll={true}>
-        {Array.isArray(sortedProducts) ? (
-          sortedProducts.map(product => (
-            <S.MainItem
-              key={product.id}
-              onClick={() => handleItemClick(product.id)}
-            >
-              <Link href={`/home/product/${product.id}`} passHref>
-                <S.MainItemImg>
-                  {product.image && (
-                    <img
-                      src={`data:image/jpeg;base64,${product.image}`}
-                      alt={product.name}
-                      width={140}
-                      height={140}
-                    />
-                  )}
-                </S.MainItemImg>
-                <S.ProductName>{product.name}</S.ProductName>
-              </Link>
-            </S.MainItem>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </S.MainSection>
+      {isLoading ? (
+        <S.Loading>
+          <Image src={loading} alt="loading" width={100} height={100} />
+        </S.Loading>
+      ) : (
+        <S.MainSection hideScroll={true}>
+          {Array.isArray(sortedProducts) ? (
+            sortedProducts.map(product => (
+              <S.MainItem
+                key={product.id}
+                onClick={() => handleItemClick(product.id)}
+              >
+                <Link href={`/home/product/${product.id}`} passHref>
+                  <S.MainItemImg>
+                    {product.image && (
+                      <img
+                        src={`data:image/jpeg;base64,${product.image}`}
+                        alt={product.name}
+                        width={158}
+                        height={158}
+                      />
+                    )}
+                  </S.MainItemImg>
+                  <S.ProductName>{product.name}</S.ProductName>
+                </Link>
+              </S.MainItem>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </S.MainSection>
+      )}
 
-      <S.LoadMoreButton onClick={handleLoadMore}>
-        <span>&gt;</span>
-      </S.LoadMoreButton>
+      <S.LoadMoreButton onClick={handleLoadMore}>+</S.LoadMoreButton>
     </>
   );
 };

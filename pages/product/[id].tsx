@@ -10,6 +10,7 @@ import {
   insufficientIngredientsState,
   mainPostListState,
 } from '../../recoil/states';
+import cancleIcon from 'public/assets/icons/main/detailCancle.svg';
 import useScroll from 'hooks/useScroll';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import * as S from '../../components/main/style';
@@ -52,7 +53,6 @@ const ProductPage = () => {
 
   const convertFormDataToJson = () => {
     const jsonFormData = {
-      // id: getId(),
       name: formData.name,
       price: formData.price,
       vendor: formData.vendor,
@@ -126,20 +126,27 @@ const ProductPage = () => {
     router.push('/');
   };
 
+  const handleCancle = () => {
+    router.push('/');
+  };
+
   return (
-    <S.Box hideScroll={hideScroll} onScroll={scrollHandler}>
-      <S.Title title="재료 등록">재료상세</S.Title>
-      <S.TopSection>
-        <S.Button onClick={() => handleDeleteClick}>
+    <S.Box>
+      <S.Title title="재료 상세">재료 상세</S.Title>
+      <S.TopSectionDetail>
+        <S.Button onClick={handleDeleteClick}>
           <Link href="/">삭제</Link>
         </S.Button>
-        <S.Button type="submit" onClick={handleSubmit}>
+        <S.ButtonEdit type="submit" onClick={handleSubmit}>
           <Link href="/">수정</Link>
-        </S.Button>
-        <Link href="/">X</Link>
-      </S.TopSection>
+        </S.ButtonEdit>
 
-      <S.Form>
+        <S.CCL>
+          <Image src={cancleIcon} alt="취소" onClick={handleCancle} />
+        </S.CCL>
+      </S.TopSectionDetail>
+
+      <S.Form hideScroll={hideScroll} onScroll={scrollHandler}>
         <S.InforSection>
           <S.LeftSection>
             <S.StyledInput>
@@ -192,11 +199,7 @@ const ProductPage = () => {
               <label htmlFor="imageInput">
                 <S.ImgInput>
                   <img
-                    src={
-                      selectedImage
-                        ? URL.createObjectURL(selectedImage)
-                        : `data:image/jpeg;base64,${selectedImage}`
-                    }
+                    src={`data:image/jpeg;base64,${selectedImage}`}
                     alt="Selected Image"
                     style={{
                       maxWidth: '100%',
