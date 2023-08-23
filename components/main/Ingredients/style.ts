@@ -12,6 +12,9 @@ const slideDown = keyframes`
   }
 `;
 
+export const SearchBox = styled.image`
+  margin-left: 200px;
+`;
 export const Loading = styled.div`
   display: flex;
   justify-content: center;
@@ -90,7 +93,7 @@ export const MainSection = styled.div<MainSectionProps>`
 `;
 
 export const DropBoxContainer = styled.div`
-  margin-left: 75%;
+  margin-left: 73%;
   position: absolute;
   margin-right: 2%;
 `;
@@ -235,7 +238,7 @@ export const ActionButtonBox = styled.div`
   position: absolute;
   gap: 8px;
   color: white;
-  left: 84%;
+  left: 97%;
   font-size: 18px;
   font-weight: 600;
   right: 6rem;

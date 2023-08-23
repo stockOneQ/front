@@ -100,13 +100,16 @@ const Categories: React.FC<ControlBarProps> = ({
               type={selectedSortOption}
             />
           </S.DropBoxContainer>
-          <Image
-            alt="search"
-            src={searchIcon}
-            onClick={toggleLinksVisibility}
-            width={27}
-            height={35}
-          />
+          <S.SearchBox>
+            <Image
+              alt="search"
+              src={searchIcon}
+              onClick={toggleLinksVisibility}
+              width={27}
+              height={35}
+            />
+          </S.SearchBox>
+
           <S.ActionButtonBox>
             <Link href="/home/new">
               <Image alt="add" src={addIcon} />
