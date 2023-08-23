@@ -8,7 +8,9 @@ import {
   currentPageNumState,
   isCurrentPathMainState,
   isLikeState,
+  loginIdState,
   recommentsRenderTriggerState,
+  startPageNumState,
   totalElementsState,
   totalPagesState,
 } from 'recoil/states';
@@ -51,29 +53,19 @@ interface IPostTypes {
 const Detail = ({ id }: { id: number }) => {
   const router = useRouter();
 
+  const loginId = useRecoilValue(loginIdState);
   const [post, setPost] = useState<IPostTypes>();
   const [commentList, setCommentList] = useState<ICommentTypes[]>();
-  const [totalElements, setTotalElements] = useRecoilState(totalElementsState);
   const commentRenderTrigger = useRecoilValue(commentsRenderTriggerState);
   const recommentRenderTrigger = useRecoilValue(recommentsRenderTriggerState);
   const isLike = useRecoilValue(isLikeState);
 
+  const startPageNum = useRecoilValue(startPageNumState);
   const currentPageNum = useRecoilValue(currentPageNumState);
-  const setTotalPages = useSetRecoilState(totalPagesState);
+  const [totalPages, setTotalPages] = useRecoilState(totalPagesState);
+  const [totalElements, setTotalElements] = useRecoilState(totalElementsState);
 
   const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
-
-  /** ----------------- 게시글 조회수 증가 API ----------------- */
-  useEffect(() => {
-    API.put(`/api/boards/${id}/hit`)
-      .then(() => {
-        console.log(`${id}번의 게시글 조회수 증가 성공`);
-      })
-      .catch(e => {
-        console.error(e);
-        throw e;
-      });
-  }, []);
 
   /** ----------------- 게시글 상세 조회 API ----------------- */
   useEffect(() => {
@@ -99,15 +91,21 @@ const Detail = ({ id }: { id: number }) => {
       .then(res => {
         console.log(`${id}번 게시글의 댓글 목록 불러오기 성공`);
         console.log(res.data);
-        setCommentList(res.data.CommentListResponse);
-        setTotalElements(res.data.pageInfo.totalElements);
         setTotalPages(res.data.pageInfo.totalPages);
+        setTotalElements(res.data.pageInfo.totalElements);
+        setCommentList(res.data.CommentListResponse);
       })
       .catch(e => {
         console.error(e);
         throw e;
       });
-  }, [currentPageNum, commentRenderTrigger, recommentRenderTrigger]);
+  }, [
+    startPageNum,
+    currentPageNum,
+    totalPages,
+    commentRenderTrigger,
+    recommentRenderTrigger,
+  ]);
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
@@ -126,8 +124,7 @@ const Detail = ({ id }: { id: number }) => {
               createdDate={post.createdDate}
             />
             <S.ButtonContainer>
-              {/** 현재 임시 토큰은 사용자 2번임 */}
-              {post?.writerId === 'manager2id' && (
+              {post?.writerId === loginId && (
                 <Link href={`/community/board/edit/${id}`}>
                   <S.EditButton>수정</S.EditButton>
                 </Link>
@@ -155,7 +152,7 @@ const Detail = ({ id }: { id: number }) => {
           <Image src={CommentsSVG} alt="comment" />
           <span>댓글 {totalElements}</span>
         </S.CommentTotalCount>
-        <CommentList list={commentList} />
+        <CommentList list={commentList} totalPages={totalPages} />
       </S.CommentList>
     </S.Box>
   );

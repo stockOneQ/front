@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   deleteCheckedItemsState,
   isDeleteModeState,
   IPostPreviewTypes,
+  startPageNumState,
+  totalPagesState,
+  currentPageNumState,
 } from 'recoil/states';
 import ViewsSVG from 'public/assets/icons/community/views.svg';
 import CommentsSVG from 'public/assets/icons/community/comments.svg';
 import LikedSVG from 'public/assets/icons/community/liked.svg';
 
 import * as S from './style';
+import { API } from 'pages/api/api';
 
 const PostItem = ({
   id,
@@ -26,6 +30,10 @@ const PostItem = ({
     deleteCheckedItemsState,
   );
   const isDeleteMode = useRecoilValue(isDeleteModeState);
+  const [startPageNum, setStartPageNum] = useRecoilState(startPageNumState);
+  const setTotalPages = useSetRecoilState(totalPagesState);
+  const [currentPageNum, setCurrentPageNum] =
+    useRecoilState(currentPageNumState);
 
   const handleChecked = () => {
     setIsChecked(prev => !prev);
@@ -35,6 +43,23 @@ const PostItem = ({
       : setDeleteCheckedItems(
           deleteCheckedItems.filter(checkedItem => checkedItem !== id),
         );
+  };
+
+  const handleDetail = () => {
+    /** ----------------- 게시글 조회수 증가 API ----------------- */
+    API.put(`/api/boards/${id}/hit`)
+      .then(() => {
+        console.log(`${id}번의 게시글 조회수 증가 성공`);
+      })
+      .catch(e => {
+        console.error(e);
+        throw e;
+      });
+
+    /** 페이지네이션 초기화 */
+    setTotalPages(0);
+    setStartPageNum(1);
+    setCurrentPageNum(1);
   };
 
   return (
@@ -71,7 +96,7 @@ const PostItem = ({
           onChange={handleChecked}
         />
       ) : (
-        <Link href={`/community/board/${id}`}>
+        <Link href={`/community/board/${id}`} onClick={handleDetail}>
           <S.StyledLink />
         </Link>
       )}

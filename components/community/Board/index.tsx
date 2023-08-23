@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   currentPageNumState,
   isCurrentPathMainState,
+  loginIdState,
+  nameState,
   postListState,
   searchInputState,
   searchTypeState,
@@ -34,17 +36,20 @@ const Board = () => {
   const [currentPageNum, setCurrentPageNum] =
     useRecoilState(currentPageNumState);
   const [startPageNum, setStartPageNum] = useRecoilState(startPageNumState);
-  const setTotalPages = useSetRecoilState(totalPagesState);
+  const [totalPages, setTotalPages] = useRecoilState(totalPagesState);
 
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
+  const loginId = useRecoilValue(loginIdState);
+  const name = useRecoilState(nameState);
+
+  console.log(`loginId ${loginId}, name ${name}`);
+
+  /** 페이지네이션 초기화 */
   useEffect(() => {
-    /** 왜 초기화가 안될까 */
     setStartPageNum(1);
     setCurrentPageNum(1);
-    console.log(
-      `시작번호 초기화 ${startPageNum} 현재 페이지 번호 초기화 ${currentPageNum}`,
-    );
+    setTotalPages(0);
   }, []);
 
   /** ----------------- 전체 글 목록 조회 API ----------------- */
@@ -63,8 +68,7 @@ const Board = () => {
       },
     })
       .then(res => {
-        console.log('전체 글 목록 조회 성공');
-        console.log(res.data);
+        console.log(`전체 글 중 ${currentPageNum}페이지 목록 조회 성공`);
         setPostList(res.data.boardList);
         setTotalPages(res.data.pageInfo.totalPages);
       })
@@ -72,8 +76,16 @@ const Board = () => {
         console.error(e);
         throw e;
       });
-  }, [currentPageNum, sortType, searchType, searchInput]);
+  }, [
+    startPageNum,
+    currentPageNum,
+    totalPages,
+    sortType,
+    searchType,
+    searchInput,
+  ]);
 
+  /** 내가 쓴 글 버튼 클릭 시 처리 함수 */
   const handleMyPostsButtonClick = () => {
     setIsCurrentPathMain(false);
 
@@ -82,12 +94,10 @@ const Board = () => {
     setSearchType('글 제목');
     setSearchInput('');
 
-    /** 왜 초기화가 안될까 */
+    /** 페이지네이션 초기화 */
     setStartPageNum(1);
     setCurrentPageNum(1);
-    console.log(
-      `시작번호 초기화 ${startPageNum} 현재 페이지 번호 초기화 ${currentPageNum}`,
-    );
+    setTotalPages(0);
 
     router.push('/community/board/myPosts');
   };
@@ -107,7 +117,7 @@ const Board = () => {
           </Link>
         </S.PostUploadButtonContainer>
       </S.HeaderSection>
-      <PostList list={postList} />
+      <PostList list={postList} totalPages={totalPages} />
     </S.Box>
   );
 };

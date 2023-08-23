@@ -3,7 +3,13 @@ import * as S from './style';
 import PostItem from 'components/community/Board/PostList/PostItem';
 import Pagination from '../Pagination';
 
-const PostList = ({ list }: { list: IPostPreviewTypes[] }) => {
+const PostList = ({
+  list,
+  totalPages,
+}: {
+  list: IPostPreviewTypes[];
+  totalPages: number;
+}) => {
   return (
     <S.List>
       {list &&
@@ -17,8 +23,7 @@ const PostList = ({ list }: { list: IPostPreviewTypes[] }) => {
             likes={value.likes}
           />
         ))}
-
-      <Pagination />
+      {totalPages > 1 && <Pagination />}
     </S.List>
   );
 };
