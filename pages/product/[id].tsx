@@ -199,12 +199,7 @@ const ProductPage = () => {
               <label htmlFor="imageInput">
                 <S.ImgInput>
                   <img
-                    src={
-                      typeof window !== 'undefined' &&
-                      selectedImage instanceof File
-                        ? URL.createObjectURL(selectedImage)
-                        : `data:image/jpeg;base64,${selectedImage}`
-                    }
+                    src={`data:image/jpeg;base64,${selectedImage}`}
                     alt="Selected Image"
                     style={{
                       maxWidth: '100%',

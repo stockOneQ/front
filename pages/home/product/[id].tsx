@@ -193,6 +193,14 @@ const ProductPage = () => {
               <label htmlFor="imageInput">
                 <S.ImgInput>
                   <img
+                    src={`data:image/jpeg;base64,${selectedImage}`}
+                    alt="Selected Image"
+                    style={{
+                      maxWidth: '100%',
+                      cursor: 'pointer',
+                    }}
+                  />
+                  {/* <img
                     src={
                       typeof window !== 'undefined' &&
                       selectedImage instanceof File
@@ -204,7 +212,7 @@ const ProductPage = () => {
                       maxWidth: '100%',
                       cursor: 'pointer',
                     }}
-                  />
+                  /> */}
                 </S.ImgInput>
               </label>
             </S.ImgInput>
