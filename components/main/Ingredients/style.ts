@@ -12,8 +12,10 @@ const slideDown = keyframes`
   }
 `;
 
-export const SearchBox = styled.image`
-  margin-left: 200px;
+export const SearchBox = styled.div`
+  img {
+    margin-left: 200px;
+  }
 `;
 export const Loading = styled.div`
   display: flex;
