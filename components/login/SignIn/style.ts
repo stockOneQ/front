@@ -5,7 +5,7 @@ const SignInSection = styled.section`
   padding: 2rem;
   margin: 0 auto;
   transform: translateY(calc(50vh - 50%));
-`
+`;
 
 const SignInHeaderBox = styled.div`
   margin: 0 auto;
@@ -22,14 +22,15 @@ const SignInHeaderBox = styled.div`
     font-size: 2.2rem;
     font-weight: 600;
     line-height: normal;
+    white-space: nowrap;
   }
-`
+`;
 
 const SignInBodyBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4.4rem;
-`
+`;
 
 const SignInInputBox = styled.div`
   display: flex;
@@ -39,7 +40,7 @@ const SignInInputBox = styled.div`
   font-weight: 500;
   line-height: normal;
   color: var(--color-black);
-  
+
   input {
     width: 34.5rem;
     height: 6.6rem;
@@ -51,7 +52,7 @@ const SignInInputBox = styled.div`
   input::placeholder {
     color: var(--color-gray);
   }
-`
+`;
 
 interface ISignInButtonProps {
   isTyped: boolean;
@@ -65,14 +66,15 @@ const SignInButton = styled.button<ISignInButtonProps>`
   padding: 2.4rem 3.5rem;
   background-color: var(--color-gray);
   margin-bottom: 2rem;
-  background-image: ${({ isTyped }) => isTyped ? `url('/assets/imgs/login/bg-img/signInBtnBg.svg')` : ''};
-  cursor: ${({ isTyped }) => isTyped ? 'pointer' : 'default'};
+  background-image: ${({ isTyped }) =>
+    isTyped ? `url('/assets/imgs/login/bg-img/signInBtnBg.svg')` : ''};
+  cursor: ${({ isTyped }) => (isTyped ? 'pointer' : 'default')};
 
   font-size: 1.8rem;
   font-weight: 700;
   line-height: normal;
   color: var(--color-white);
-`
+`;
 
 const SignInFooterBox = styled.div`
   display: flex;
@@ -89,7 +91,7 @@ const SignInFooterBox = styled.div`
   div {
     border-right: 1px solid var(--color-black);
   }
-`
+`;
 
 export {
   SignInSection,
@@ -97,5 +99,5 @@ export {
   SignInBodyBox,
   SignInInputBox,
   SignInButton,
-  SignInFooterBox
-}
+  SignInFooterBox,
+};

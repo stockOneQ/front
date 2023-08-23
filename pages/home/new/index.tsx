@@ -2,20 +2,13 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import axios from 'axios';
 import ImgIcon from '../../../public/assets/icons/main/imgUpload.svg';
 import * as S from '../../../components/main/style';
-import { useState, SetStateAction, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import useScroll from 'hooks/useScroll';
 import { useSetRecoilState, RecoilRoot, useRecoilState } from 'recoil';
-import {
-  approachingExpirationState,
-  postMainTitleState,
-  mainPostListState,
-  storageMethodState,
-  StorageMethod,
-} from '../../../recoil/states';
+import { postMainTitleState, mainPostListState } from '../../../recoil/states';
 import { API } from '../../api/api';
 
 const sortOptionList = ['냉동', '냉장', '상온'];
@@ -40,20 +33,20 @@ const New = () => {
   /** 필수 필드 ------------------------------------------------------------ */
 
   const [formData, setFormData] = useState({
-    productName: '가나',
-    price: 100,
-    seller: '아',
-    receiptYear: '2023',
-    receiptMonth: '05',
-    receiptDay: '05',
-    expirationYear: '2024',
-    expirationMonth: '09',
-    expirationDay: '08',
-    ingredientLocation: '선반',
-    requiredQuantity: 6,
-    quantity: 8,
-    orderingSite: 'www',
-    orderingFrequency: '80',
+    productName: '',
+    price: '',
+    seller: '',
+    receiptYear: '',
+    receiptMonth: '',
+    receiptDay: '',
+    expirationYear: '',
+    expirationMonth: '',
+    expirationDay: '',
+    ingredientLocation: '',
+    requiredQuantity: '',
+    quantity: '',
+    orderingSite: '',
+    orderingFrequency: '',
     imageInfo: '',
     storageMethod: '',
   });
@@ -99,13 +92,10 @@ const New = () => {
   useEffect(() => {
     API.get('/api/product')
       .then(response => {
-        console.log('-------------------------');
-        console.log('첫 storeId api 호출: ', response);
         // 업데이트
         setStoreId(response.data?.result?.storeId ?? null);
       })
       .catch(error => {
-        alert('요청실패');
         console.log(error);
       });
   }, []);
@@ -161,7 +151,7 @@ const New = () => {
       // 초기화
       setFormData({
         productName: '',
-        price: 0,
+        price: '',
         seller: '',
         receiptYear: '',
         receiptMonth: '',
@@ -170,8 +160,8 @@ const New = () => {
         expirationMonth: '',
         expirationDay: '',
         ingredientLocation: '',
-        requiredQuantity: 0,
-        quantity: 0,
+        requiredQuantity: '',
+        quantity: '',
         orderingSite: '',
         orderingFrequency: '',
         imageInfo: '',
@@ -185,7 +175,7 @@ const New = () => {
   };
 
   return (
-    <S.Box hideScroll={hideScroll} onScroll={scrollHandler}>
+    <S.Box>
       <RecoilRoot>
         <S.Title title="재료 등록">재료등록</S.Title>
         <S.TopSection>
@@ -193,11 +183,11 @@ const New = () => {
             <Link href="/">취소</Link>
           </S.Button>
           <S.Button type="submit" onClick={handleSubmit}>
-            <Link href="/">저장</Link>
+            저장
           </S.Button>
         </S.TopSection>
 
-        <S.Form>
+        <S.Form hideScroll={hideScroll} onScroll={scrollHandler}>
           <S.InforSection>
             <S.LeftSection>
               <S.StyledInput>
@@ -273,6 +263,7 @@ const New = () => {
                   maxLength={11}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="춘천 냉동딸기 150G"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -283,6 +274,7 @@ const New = () => {
                   value={formData.price}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="15000"
                 />
               </S.StyledInput>
               <S.StyledInput>
@@ -294,6 +286,7 @@ const New = () => {
                   maxLength={29}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="춘천 딸기하우스"
                 />
               </S.StyledInput>
 
@@ -305,7 +298,7 @@ const New = () => {
                     name="receiptYear"
                     value={formData.receiptYear}
                     onChange={handleInputChange}
-                    placeholder="년도"
+                    placeholder="YYYY"
                     autoComplete="off"
                   />
                   <p>년</p>
@@ -314,7 +307,7 @@ const New = () => {
                     name="receiptMonth"
                     value={formData.receiptMonth}
                     onChange={handleInputChange}
-                    placeholder="월"
+                    placeholder="MM"
                     autoComplete="off"
                   />
                   <p>월</p>
@@ -323,7 +316,7 @@ const New = () => {
                     name="receiptDay"
                     value={formData.receiptDay}
                     onChange={handleInputChange}
-                    placeholder="일"
+                    placeholder="DD"
                     autoComplete="off"
                   />
                 </S.ReceiptDateInput>
@@ -336,7 +329,7 @@ const New = () => {
                     name="expirationYear"
                     value={formData.expirationYear}
                     onChange={handleInputChange}
-                    placeholder="년도"
+                    placeholder="YYYY"
                     autoComplete="off"
                   />
                   <p>년</p>
@@ -345,7 +338,7 @@ const New = () => {
                     name="expirationMonth"
                     value={formData.expirationMonth}
                     onChange={handleInputChange}
-                    placeholder="월"
+                    placeholder="MM"
                     autoComplete="off"
                   />
                   <p>월</p>
@@ -354,7 +347,7 @@ const New = () => {
                     name="expirationDay"
                     value={formData.expirationDay}
                     onChange={handleInputChange}
-                    placeholder="일"
+                    placeholder="DD"
                     autoComplete="off"
                   />
                 </S.ReceiptDateInput>
@@ -368,6 +361,7 @@ const New = () => {
                   maxLength={29}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="1번 냉동실 1층"
                 />
               </S.StyledInput>
               <S.QuantitySection>
@@ -401,6 +395,7 @@ const New = () => {
                   maxLength={200}
                   onChange={handleInputChange}
                   autoComplete="off"
+                  placeholder="http://www.stockOneQ.com"
                 />
               </S.StyledInput>
 

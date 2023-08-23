@@ -43,7 +43,7 @@ const SignUp = ({ onSuccess }: ISignUpProps) => {
   const [storeAddress, setStoreAddress] = useState('서울시중구');
 
   const apiInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 8080 포트의 주소로 설정
+    baseURL: process.env.NEXT_PUBLIC_API_URL, // 8080 포트의 주소로 설정
     headers: {
       'Content-Type': 'application/json',
       // 다른 헤더 설정

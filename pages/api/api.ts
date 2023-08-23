@@ -30,8 +30,8 @@ export const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
-    'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_API_URL,
+    Authorization: `Bearer ${accessToken}`,
+    'Access-Control-Allow-Origin': '*', // Allow requests from any origin during development
     'Access-Control-Allow-Credentials': true,
   },
   withCredentials: true,
@@ -53,8 +53,8 @@ const updateTokensInCookies = (
   newRefreshToken: string,
 ) => {
   // accessToken과 refreshToken을 쿠키에 업데이트
-  Cookies.set('accessToken', newAccessToken, { expires: 7 }); // 예: 7일 유효
-  Cookies.set('refreshToken', newRefreshToken, { expires: 30 }); // 예: 30일 유효
+  Cookies.set('accessToken', newAccessToken);
+  Cookies.set('refreshToken', newRefreshToken);
 };
 
 API.interceptors.response.use(
@@ -134,7 +134,7 @@ export const productList = (
 
 //제품개수
 export const fetchProductCounts = async (
-  store: string,
+  store: number,
   condition: string,
 ): Promise<ProductCounts> => {
   try {
@@ -240,7 +240,6 @@ export const addProduct = async (
         'Content-Type': 'multipart/form-data',
       },
     });
-    alert('제품 수정 성공');
   } catch (error) {
     console.error('Error adding product:', error);
     throw new Error('Error adding product: ');

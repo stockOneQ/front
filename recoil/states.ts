@@ -11,6 +11,20 @@ export const nameState = atom<string | null>({
   default: null,
 });
 
+export const userIdState = atom<number>({
+  key: 'userIdState',
+  default: 1,
+});
+
+export const storeIdState = atom<number>({
+  key: 'storeIdState',
+  default: 1,
+});
+
+export const authState = atom({
+  key: 'authState',
+  default: false,
+});
 /** ----------------메인 페이지------------- */
 
 export type StorageMethod = '냉동' | '냉장' | '상온';
