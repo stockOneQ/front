@@ -129,8 +129,10 @@ const DataNavBox = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 2rem;
-  border-bottom: 1px solid var(--color-gray);
   position: relative;
+`;
+const HorizontalRule = styled.hr`
+  margin: 20px 0;
 `;
 
 interface IDataNavProps {
@@ -169,7 +171,7 @@ const DataNav = styled.nav<IDataNavProps>`
     width: 0;
     height: 0.3rem;
     left: 0;
-    bottom: -2.9rem;
+    bottom: -2.3em;
     background-color: var(--color-black);
     transition: all 0.3s ease-out;
   }
@@ -213,14 +215,17 @@ const Label = styled.div`
   padding: 1rem 0;
   display: flex;
   align-items: center;
-  text-align: center;
 
   .label__1 {
     width: 9.2rem;
+    margin-left: 4%;
   }
 
   .label__2 {
-    padding-left: 1.7rem;
+    /* padding-left: 1.7rem; */
+    /* margin-left: -19px; */
+    /* width: 100%; */
+    position: absolute;
   }
 
   .label__3 {
@@ -237,15 +242,50 @@ const Label = styled.div`
   font-weight: 500;
   line-height: normal;
 `;
+const LabelBox = styled.div`
+  border-bottom: 1px solid var(--color-gray);
+  margin-bottom: 0.1rem;
+`;
 
-//  .label__answer
-// const LabelBox = styled(Label)`
-//   border-bottom: 1px solid var(--color-gray);
-//   margin-bottom: 0.1rem;
-// `;
+const PostTitle = styled.p`
+  margin-left: 4%;
+`;
+
+const Fna = styled.div`
+  display: flex;
+  /* align-items: center; */
+  /* gap: 7rem; */
+  justify-content: flex-start;
+`;
+
+const PostId = styled.p`
+  margin-left: 3%;
+`;
+
+const PostDate = styled.p`
+  margin-left: 64%;
+  color: gray;
+  position: relative;
+`;
+
+const PostAuthor = styled.p`
+  margin-left: 9%;
+  position: relative;
+`;
+
+const Answer = styled.div`
+  display: none;
+  margin-top: 70px;
+  position: absolute;
+  width: 46%;
+
+  &.show {
+    display: block;
+  }
+`;
 
 const DataListBox = styled(Label)`
-  padding: 3.3rem 0;
+  padding: 5.3rem 0;
   cursor: pointer;
 
   &:hover {
@@ -263,10 +303,19 @@ const DataListBox = styled(Label)`
   }
 
   .label__2 {
+    position: absolute;
   }
 
   .label__3 {
     color: #979797;
+  }
+`;
+
+const FnaBoard = styled.div`
+  display: flex;
+
+  p {
+    font-size: 15px;
   }
 `;
 
@@ -280,6 +329,7 @@ const PaginationBox = styled.div`
   color: var(--color-black);
   text-align: center;
   font-size: 2.2rem;
+
   font-weight: 500;
   line-height: normal;
 
@@ -292,8 +342,8 @@ const PaginationBox = styled.div`
     width: 5rem;
     height: 3.2rem;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
   }
 
   img:first-child {
@@ -306,6 +356,8 @@ const PaginationBox = styled.div`
 
   .pagination__active {
     color: var(--color-white);
+    align-items: center;
+    justify-content: center;
     font-size: 2.2rem;
     background-color: var(--color-black);
     border-radius: 10rem;
@@ -323,4 +375,13 @@ export {
   DataDropDownBox,
   DataListBox,
   PaginationBox,
+  LabelBox,
+  HorizontalRule,
+  FnaBoard,
+  PostAuthor,
+  PostDate,
+  PostId,
+  PostTitle,
+  Answer,
+  Fna,
 };

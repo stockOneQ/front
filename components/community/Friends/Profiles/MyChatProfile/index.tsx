@@ -8,8 +8,8 @@ import { API } from 'pages/api/api';
 
 type userInfoType = {
   name: string;
-  storeName: string;
   phoneNumber: string;
+  storeName: string;
 };
 
 /** 나의 채팅 프로필 */
@@ -17,7 +17,11 @@ const MyChatProfile = () => {
   const firstMountRef = useRef(true);
   // FIXME: 페이지 이동 시 상태 날아가는 오류
   const [reqFriendsListLen, setReqFriendsListLen] = useState(0);
-  const [userInfo, setUserInfo] = useState<userInfoType>({});
+  const [userInfo, setUserInfo] = useState<userInfoType>({
+    name: '',
+    phoneNumber: '',
+    storeName: '',
+  });
   const { name, storeName, phoneNumber } = userInfo;
 
   useEffect(() => {
