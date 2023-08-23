@@ -25,24 +25,24 @@ interface UserInfo {
 }
 
 const MyInforPage = () => {
-  const [name, setName] = useState('이가영');
-  const [birthYear, setBirthYear] = useState('2001');
-  const [birthMonth, setBirthMonth] = useState('01');
-  const [birthDay, setBirthDay] = useState('01');
+  const [name, setName] = useState('');
+  const [birthYear, setBirthYear] = useState('');
+  const [birthMonth, setBirthMonth] = useState('');
+  const [birthDay, setBirthDay] = useState('');
 
-  const [phonePrefix, setPhonePrefix] = useState('010');
-  const [phoneFirstPart, setPhoneFirstPart] = useState('4708');
-  const [phoneSecondPart, setPhoneSecondPart] = useState('7703');
+  const [phonePrefix, setPhonePrefix] = useState('');
+  const [phoneFirstPart, setPhoneFirstPart] = useState('');
+  const [phoneSecondPart, setPhoneSecondPart] = useState('');
 
-  const [emailFirstPart, setEmailFirstPart] = useState('LKY062');
-  const [emailSecondPart, setEmailSecondPart] = useState('naver');
-  const [emailThirdPart, setEmailThirdPart] = useState('com');
+  const [emailFirstPart, setEmailFirstPart] = useState('');
+  const [emailSecondPart, setEmailSecondPart] = useState('');
+  const [emailThirdPart, setEmailThirdPart] = useState('');
 
-  const [loginId, setLoginId] = useState('lky062');
-  const [password, setPassword] = useState('abc123!');
-  const [storeName, setStoreName] = useState('스타벅스광화문');
-  const [storeSector, setStoreSector] = useState('카페');
-  const [storeAddress, setStoreAddress] = useState('서울시중구');
+  const [loginId, setLoginId] = useState('');
+  const [password, setPassword] = useState('');
+  const [storeName, setStoreName] = useState('');
+  const [storeSector, setStoreSector] = useState('');
+  const [storeAddress, setStoreAddress] = useState('');
 
   const [fetchedUserInfo, setFetchedUserInfo] = useState<UserInfo | null>(null);
 
