@@ -55,6 +55,7 @@ const InputRow1Box = styled(InputRowBox)`
 const InputRow2Box = styled(InputRowBox)`
   flex-direction: column;
   margin-top: 37px;
+  display: flex;
   gap: 2rem;
 `;
 

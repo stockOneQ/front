@@ -242,8 +242,7 @@ const MyInforPage = () => {
                 setStoreName((e.target as HTMLInputElement).value)
               }
             />
-          </S.InputRow2Box>
-          <S.InputRow2Box>
+
             <S.SignUpLabel>매장 분류</S.SignUpLabel>
             <S.SignUpInput
               value={fetchedUserInfo?.storeCode || ''}
@@ -259,9 +258,9 @@ const MyInforPage = () => {
             <S.SignUpLabel>주소</S.SignUpLabel>
             <SS.AddrInputBox>
               <S.SignUpInput
-                width="16.2rem"
+                width="27.4rem"
                 placeholderLocation="left"
-                value={storeAddress}
+                value={fetchedUserInfo?.storeAddress || ''}
                 type="text"
                 id="addr"
                 placeholder="우편번호"
