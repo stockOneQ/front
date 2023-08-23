@@ -1,6 +1,5 @@
-import DropDown from 'components/common/DropDown';
-import fileExist from 'public/assets/icons/connect/fileExists.svg';
-import supervisorCategoryOpen from 'public/assets/icons/connect/supervisorCategoryOpen.svg';
+//com/my-page/Fna/index.tsx
+
 import movePageL from 'public/assets/icons/connect/movePageL.svg';
 import movePageR from 'public/assets/icons/connect/movePageR.svg';
 import Image from 'next/image';
@@ -16,16 +15,22 @@ interface Post {
   author: string;
 }
 
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 const MypageFnA = () => {
-  const [showAnswers, setShowAnswers] = useState<{ [postId: string]: boolean }>(
-    {},
-  );
+  const [showAnswers, setShowAnswers] = useState<boolean[]>([]);
+  const [faqData, setFaqData] = useState<FaqItem[]>([]);
 
   /** FNA 조회 ---------------------------------------------------------- */
   useEffect(() => {
     API.get('/api/user/fa')
       .then(response => {
-        console.log('RESPONES', response.data);
+        console.log('RESPONSE', response.data);
+        setFaqData(response.data.result);
+        setShowAnswers(new Array(response.data.result.length).fill(false));
       })
       .catch(error => {
         alert('요청실패');
@@ -59,66 +64,44 @@ const MypageFnA = () => {
               </ul>
             </S.DataNav>
           </S.DataNavBox>
-          {/* <S.LabelBox>
-            <p className="label__1">번호</p>
-            <p className="label__2">제목</p>
-            <p className="label__3">작성일자</p>
-            <p className="label__4">작성자</p>
-          </S.LabelBox> */}
+          <S.HorizontalRule />
+          <S.FnaBoard>
+            <S.PostId>번호</S.PostId>
+            <S.PostTitle>제목</S.PostTitle>
+            <S.PostDate>작성 일자</S.PostDate>
+            <S.PostAuthor>작성자</S.PostAuthor>
+          </S.FnaBoard>
+          <S.HorizontalRule />
           <div>
-            <S.DataListBox>
-              <p className="label__1">06</p>
-              <div className="label__2">
-                <p>알바생 교육관련 6월 공지사항</p>
-                <Image src={fileExist} alt="file-icon" width={15} height={12} />
-              </div>
-              <p className="label__3">2023.06.13</p>
-              <p className="label__4">담당자</p>
-            </S.DataListBox>
-            <S.DataListBox
-              onClick={() => {
-                setTemp(false);
-              }}
-            >
-              <p className="label__1">05</p>
-              <div className="label__2">
-                <p>알바생 교육관련 5월 공지사항</p>
-              </div>
-              <p className="label__3">2023.05.13</p>
-              <p className="label__4">담당자</p>
-            </S.DataListBox>
-            <S.DataListBox>
-              <p className="label__1">04</p>
-              <div className="label__2">
-                <p>알바생 교육관련 4월 공지사항</p>
-              </div>
-              <p className="label__3">2023.04.13</p>
-              <p className="label__4">담당자</p>
-            </S.DataListBox>
-            <S.DataListBox>
-              <p className="label__1">03</p>
-              <div className="label__2">
-                <p>알바생 교육관련 3월 공지사항</p>
-              </div>
-              <p className="label__3">2023.03.13</p>
-              <p className="label__4">담당자</p>
-            </S.DataListBox>
-            <S.DataListBox>
-              <p className="label__1">02</p>
-              <div className="label__2">
-                <p>알바생 교육관련 2월 공지사항</p>
-              </div>
-              <p className="label__3">2023.02.13</p>
-              <p className="label__4">담당자</p>
-            </S.DataListBox>
-            <S.DataListBox>
-              <p className="label__1">01</p>
-              <div className="label__2">
-                <p>알바생 교육관련 1월 공지사항</p>
-              </div>
-              <p className="label__3">2023.01.13</p>
-              <p className="label__4">담당자</p>
-            </S.DataListBox>
+            {faqData.map((faqItem, index) => (
+              <S.DataListBox key={index}>
+                <p className="label__1">
+                  {(index + 1).toString().padStart(2, '0')}
+                </p>
+                <S.Fna>
+                  <button
+                    className="label__2"
+                    onClick={() =>
+                      setShowAnswers(prevState => {
+                        const newShowAnswers = [...prevState];
+                        newShowAnswers[index] = !newShowAnswers[index]; // Toggle the answer for the specific question
+                        return newShowAnswers;
+                      })
+                    }
+                  >
+                    {faqItem.question}
+                  </button>
+                  {showAnswers[index] && ( // Render answer if showAnswers for this question is true
+                    <S.Answer className="answer show">
+                      <p>{faqItem.answer}</p>
+                    </S.Answer>
+                  )}
+                </S.Fna>
+
+                <p className="label__3">2023.08.24</p>
+                <p className="label__4">스톡원큐</p>
+              </S.DataListBox>
+            ))}
           </div>
           <S.PaginationBox>
             <Image
@@ -128,10 +111,7 @@ const MypageFnA = () => {
               height={9}
             />
             <p className="pagination__active">1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
-            <p>5</p>
+
             <Image
               src={movePageR}
               alt="pagination-move-right"
