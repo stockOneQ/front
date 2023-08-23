@@ -18,8 +18,8 @@ const MyChatProfile = () => {
   const [reqFriendsListLen, setReqFriendsListLen] = useState(0);
   const [userInfo, setUserInfo] = useState<userInfoType>({
     name: '',
-    phoneNumber: '',
     storeName: '',
+    phoneNumber: '',
   });
   const { name, storeName, phoneNumber } = userInfo;
 
