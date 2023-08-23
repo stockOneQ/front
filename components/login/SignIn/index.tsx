@@ -124,7 +124,7 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
         <div>&nbsp;</div>
         <button>비밀번호 찾기</button>
         <div>&nbsp;</div>
-        <Link href="/login/agreement" onClick={onSignUpClick} type="button">
+        <Link href="/login/agreement" type="button">
           회원가입
         </Link>
       </S.SignInFooterBox>

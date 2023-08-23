@@ -80,7 +80,8 @@ const SignInFooterBox = styled.div`
   display: flex;
   justify-content: space-evenly;
 
-  button {
+  button,
+  a {
     color: var(--color-black);
     text-align: center;
     font-size: 1.4rem;

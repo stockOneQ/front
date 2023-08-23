@@ -17,7 +17,11 @@ const MyChatProfile = () => {
   const firstMountRef = useRef(true);
   // FIXME: 페이지 이동 시 상태 날아가는 오류
   const [reqFriendsListLen, setReqFriendsListLen] = useState(0);
-  const [userInfo, setUserInfo] = useState<userInfoType>({});
+  const [userInfo, setUserInfo] = useState<userInfoType>({
+    name: '',
+    storeName: '',
+    phoneNumber: '',
+  });
   const { name, storeName, phoneNumber } = userInfo;
 
   useEffect(() => {
