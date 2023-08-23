@@ -44,7 +44,7 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
   const router = useRouter();
 
   const apiInstance = axios.create({
-    baseURL: 'http://localhost:8080', // 8080 포트의 주소로 설정
+    baseURL: 'http://43.200.211.214:80', // 8080 포트의 주소로 설정
     headers: {
       'Content-Type': 'application/json',
       // 다른 헤더 설정
