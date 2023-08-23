@@ -16,8 +16,9 @@ const Pagination = () => {
   }; /** [1, 2, 3, 4, 5] */
 
   const [startPageNum, setStartPageNum] = useRecoilState(startPageNumState);
-  const totalPages = useRecoilValue(totalPagesState);
-  const setCurrentPageNum = useSetRecoilState(currentPageNumState);
+  const [totalPages, setTotalPages] = useRecoilState(totalPagesState);
+  const [currentPageNum, setCurrentPageNum] =
+    useRecoilState(currentPageNumState);
 
   const [isMove, setIsMove] = useState(false);
 
@@ -27,7 +28,6 @@ const Pagination = () => {
 
   const handlePage = (e: React.MouseEvent<HTMLElement>) => {
     const { id } = e.target as HTMLElement;
-    console.log(`${id}페이지 클릭`);
     setCurrentPageNum(Number(id));
   };
 
@@ -45,7 +45,7 @@ const Pagination = () => {
 
   return (
     <S.Box>
-      <S.PageMoveButton onClick={handlePrevPage}>
+      <S.PageMoveButton onClick={handlePrevPage} disabled={startPageNum === 1}>
         <Image src={MovePageL} alt={'prev'} />
       </S.PageMoveButton>
       {range(startPageNum).map(pageNum => (
@@ -53,6 +53,7 @@ const Pagination = () => {
           id={String(pageNum)}
           onClick={handlePage}
           disabled={pageNum > totalPages}
+          active={currentPageNum === pageNum}
         >
           {pageNum}
         </S.PageNum>
