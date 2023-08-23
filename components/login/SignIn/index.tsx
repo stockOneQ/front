@@ -12,6 +12,7 @@ import {
   nameState,
   storeIdState,
   userIdState,
+  authState,
 } from 'recoil/states';
 
 interface ISignInProps {
@@ -25,6 +26,7 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
   const [, setAccCookie] = useCookies(['accessToken']);
   const [storeId, setStoreId] = useRecoilState(storeIdState);
   const [userId, setUserId] = useRecoilState(userIdState);
+  const [auth, setAuthStatus] = useRecoilState(authState);
 
   const setLoginId = useSetRecoilState(loginIdState);
   const setName = useSetRecoilState(nameState);
@@ -63,6 +65,7 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
       // 로그아웃 API 호출
       const response = await API.post('/api/auth/logout');
       if (response.status === 204) {
+        setAuthStatus(false);
         // 로그아웃 성공 시 다음 동작 수행
         console.log('로그아웃 성공');
       }
@@ -93,6 +96,7 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
           '/api/auth/login',
           JSON.stringify(loginData),
         );
+        setAuthStatus(true);
         const accessToken = response.data.accessToken;
         const refreshToken = response.data.refreshToken;
         console.log('Login successful', response.data);

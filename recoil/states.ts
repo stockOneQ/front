@@ -13,14 +13,18 @@ export const nameState = atom<string | null>({
 
 export const userIdState = atom<number>({
   key: 'userIdState',
-  default: 1, // Default value if not available from API
+  default: 1,
 });
 
 export const storeIdState = atom<number>({
   key: 'storeIdState',
-  default: 1, // Default value if not available from API
+  default: 1,
 });
 
+export const authState = atom({
+  key: 'authState',
+  default: false,
+});
 /** ----------------메인 페이지------------- */
 
 export type StorageMethod = '냉동' | '냉장' | '상온';

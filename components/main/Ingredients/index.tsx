@@ -11,6 +11,7 @@ import {
   Product,
   userIdState,
   storeIdState,
+  authState,
 } from '../../../recoil/states';
 import {
   API,
@@ -28,6 +29,8 @@ type IngredientsProps = {
 const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
   const [data, setData] = useState({});
+  const [authStatus] = useRecoilState(authState);
+
   const router = useRouter();
   const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
   const [selectedSortOption, setSelectedSortOption] =
@@ -43,11 +46,16 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   // const userId = useRecoilValue(userIdState);
   // const storeId = useRecoilValue(storeIdState);
   console.log('storeid', storeId); //여기에는 업데이트된 값이 찍히는데
+  const [hasReloaded, setHasReloaded] = useState(false);
+
+  useEffect(() => {
+    if (authStatus && !hasReloaded) {
+      router.reload();
+      setHasReloaded(true);
+    }
+  }, [authStatus, hasReloaded]);
 
   /** 가게 아이디 user id 조회 ---------------------------------------------------------- */
-
-  /** 원래는 이렇게 로그인되면 메인 넘어와서 storeId 업데이트 후 stroeId 를
-   * 보내려했는데, 초기화 하면서 storeId 디폴트 값 1이 넘어감 ------------- */
   useEffect(() => {
     API.get('/api/product')
       .then(response => {
