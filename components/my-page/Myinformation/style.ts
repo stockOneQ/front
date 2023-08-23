@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const SignUpBox = styled.div`
   width: 93.2rem;
-  padding: 6.5rem 2rem;
+  /* padding: 6.5rem 2rem; */
   margin: 0 auto;
 `;
 const SignUpHeaderBox = styled.div`
@@ -30,7 +30,7 @@ const SignUpHeaderBox = styled.div`
 `;
 
 const SignUpForm = styled.form`
-  padding: 0 12.7rem;
+  padding: 0 12.7rem 4rem 12.7rem;
 `;
 
 const PwInputBox = styled.div`
