@@ -55,8 +55,8 @@ const updateTokensInCookies = (
   newRefreshToken: string,
 ) => {
   // accessToken과 refreshToken을 쿠키에 업데이트
-  Cookies.set('accessToken', newAccessToken, { expires: 7 }); // 예: 7일 유효
-  Cookies.set('refreshToken', newRefreshToken, { expires: 30 }); // 예: 30일 유효
+  Cookies.set('accessToken', newAccessToken);
+  Cookies.set('refreshToken', newRefreshToken);
 };
 
 API.interceptors.response.use(

@@ -6,6 +6,7 @@ import * as H from './style';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { useCookies } from 'react-cookie';
+import Cookies from 'js-cookie';
 
 import { API } from 'pages/api/api';
 
@@ -30,16 +31,19 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
       if (res.status === 204) {
         // 로그아웃 성공 시 다음 동작 수행
         console.log('로그아웃 성공');
-        // Cookies.remove('accessToken');
-        // Cookies.remove('refreshToken');
-        // Cookies.remove('fcmToken');
-        // 여기에 추가적인 로직을 넣을 수 있습니다.
+
+        let accessToken = Cookies.get('accessToken');
+        let refreshToken = Cookies.get('refreshToken');
+        let fcmToken = Cookies.get('fcmToken');
+
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
+        Cookies.remove('fcmToken');
 
         removeAccCookie('accessToken');
         removeRefCookie('refreshToken');
         removeFcmCookie('fcmToken');
 
-        // 여기에 추가적인 로직을 넣을 수 있습니다.
         router.push('/login');
       }
     } catch (error) {

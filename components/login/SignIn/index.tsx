@@ -60,20 +60,6 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
     },
   });
 
-  const handleLogout = async () => {
-    try {
-      // 로그아웃 API 호출
-      const response = await API.post('/api/auth/logout');
-      if (response.status === 204) {
-        setAuthStatus(false);
-        // 로그아웃 성공 시 다음 동작 수행
-        console.log('로그아웃 성공');
-      }
-    } catch (error) {
-      console.error('로그아웃 에러', error);
-    }
-  };
-
   const handleSetStore = async () => {
     API.get('/api/product')
       .then(response => {
