@@ -14,6 +14,7 @@ import {
   userIdState,
   authState,
 } from 'recoil/states';
+import Link from 'next/link';
 
 interface ISignInProps {
   onSignUpClick: () => void;
@@ -123,9 +124,9 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
         <div>&nbsp;</div>
         <button>비밀번호 찾기</button>
         <div>&nbsp;</div>
-        <button onClick={onSignUpClick} type="button">
+        <Link href="/login/agreement" onClick={onSignUpClick} type="button">
           회원가입
-        </button>
+        </Link>
       </S.SignInFooterBox>
     </S.SignInSection>
   );
