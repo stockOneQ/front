@@ -74,23 +74,21 @@ const MypageFnA = () => {
           <S.HorizontalRule />
           <div>
             {faqData.map((faqItem, index) => (
-              <S.DataListBox key={index}>
+              <S.DataListBox
+                key={index}
+                onClick={() =>
+                  setShowAnswers(prevState => {
+                    const newShowAnswers = [...prevState];
+                    newShowAnswers[index] = !newShowAnswers[index]; // Toggle the answer for the specific question
+                    return newShowAnswers;
+                  })
+                }
+              >
                 <p className="label__1">
                   {(index + 1).toString().padStart(2, '0')}
                 </p>
                 <S.Fna>
-                  <button
-                    className="label__2"
-                    onClick={() =>
-                      setShowAnswers(prevState => {
-                        const newShowAnswers = [...prevState];
-                        newShowAnswers[index] = !newShowAnswers[index]; // Toggle the answer for the specific question
-                        return newShowAnswers;
-                      })
-                    }
-                  >
-                    {faqItem.question}
-                  </button>
+                  <button className="label__2">{faqItem.question}</button>
                   {showAnswers[index] && ( // Render answer if showAnswers for this question is true
                     <S.Answer className="answer show">
                       <p>{faqItem.answer}</p>
