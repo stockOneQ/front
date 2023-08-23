@@ -1,6 +1,6 @@
 //com/my-page/MyinforMmation/index
 import mainLogo from 'public/assets/icons/login/mainLogo.svg';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import CancelBtn from 'components/common/button/CancelBtn';
 import RejectBtn from 'components/common/button/RejectBtn';
@@ -9,6 +9,20 @@ import * as SS from './style';
 import { API } from 'pages/api/api';
 import { useState } from 'react';
 import axios from 'axios';
+
+interface UserInfo {
+  id: number;
+  email: string;
+  loginId: string;
+  name: string;
+  birth: string;
+  phoneNumber: string;
+  role: string;
+  storeName: string;
+  storeCode: string;
+  storeAddress: string;
+  companyName: string | null;
+}
 
 const MyInforPage = () => {
   const [name, setName] = useState('이가영');
@@ -30,49 +44,25 @@ const MyInforPage = () => {
   const [storeSector, setStoreSector] = useState('카페');
   const [storeAddress, setStoreAddress] = useState('서울시중구');
 
-  const apiInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL, // 8080 포트의 주소로 설정
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const [fetchedUserInfo, setFetchedUserInfo] = useState<UserInfo | null>(null);
 
-  const handleSignUp = async () => {
-    const userData = {
-      name: name,
-      birth: `${birthYear}-${birthMonth}-${birthDay}`,
-      email: `${emailFirstPart}@${emailSecondPart}.${emailThirdPart}`,
-      loginId: loginId,
-      password: password,
-      phoneNumber: `${phonePrefix}${phoneFirstPart}${phoneSecondPart}`,
-      storeName: storeName,
-      storeSector: storeSector,
-      storeAddress: storeAddress,
-    };
-    try {
-      const response = await apiInstance.post(
-        '/api/user/sign-up/manager',
-        JSON.stringify(userData),
-      );
-      if (response.status === 200) {
-        // 성공적으로 회원 가입을 처리한 경우에 대한 로직을 여기에 작성합니다.
-        alert('회원가입성공');
-
-        console.log('회원 가입 성공');
-      } else {
-        // 실패한 경우에 대한 로직을 여기에 작성합니다.
-        console.error('회원 가입 실패');
-      }
-    } catch (error) {
-      console.error('API 요청 중 오류 발생:', error);
-    }
-  };
+  useEffect(() => {
+    API.get('/api/user/information')
+      .then(response => {
+        console.log(response);
+        const userInfoFromAPI: UserInfo = response.data;
+        setFetchedUserInfo(userInfoFromAPI);
+      })
+      .catch(error => {
+        console.error('Error fetching user information:', error);
+      });
+  }, []);
 
   return (
     <SS.SignUpBox>
       <SS.SignUpHeaderBox>
         <Image src={mainLogo} alt="main-logo" width={67.5} height={65} />
-        <p>스톡원큐 회원가입</p>
+        <p>스톡원큐 회원정보</p>
       </SS.SignUpHeaderBox>
       <SS.SignUpForm>
         <div>
@@ -80,7 +70,7 @@ const MyInforPage = () => {
             <S.SignUpInputBox>
               <S.SignUpLabel>이름</S.SignUpLabel>
               <S.SignUpInput
-                value={name}
+                value={fetchedUserInfo?.name || name}
                 width="18.3rem"
                 type="text"
                 id="name"
@@ -93,11 +83,15 @@ const MyInforPage = () => {
               <S.SignUpLabel>생년월일</S.SignUpLabel>
               <SS.BirthInputBox>
                 <S.SignUpInput
+                  value={
+                    fetchedUserInfo?.birth
+                      ? fetchedUserInfo.birth.split('-')[0] // Extract year from birth
+                      : birthYear
+                  }
                   width="9.1rem"
                   type="text"
                   id="birthYear"
                   placeholder="YYYY"
-                  value={birthYear}
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     setBirthYear((e.target as HTMLInputElement).value)
                   }
@@ -106,7 +100,11 @@ const MyInforPage = () => {
                   width="7.1rem"
                   type="text"
                   placeholder="MM"
-                  value={birthMonth}
+                  value={
+                    fetchedUserInfo?.birth
+                      ? fetchedUserInfo.birth.split('-')[1] // Extract month from birth
+                      : birthMonth
+                  }
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     setBirthMonth((e.target as HTMLInputElement).value)
                   }
@@ -115,7 +113,11 @@ const MyInforPage = () => {
                   width="7.1rem"
                   type="text"
                   placeholder="DD"
-                  value={birthDay}
+                  value={
+                    fetchedUserInfo?.birth
+                      ? fetchedUserInfo.birth.split('-')[2] // Extract day from birth
+                      : birthDay
+                  }
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     setBirthDay((e.target as HTMLInputElement).value)
                   }
@@ -131,7 +133,11 @@ const MyInforPage = () => {
                 width="18.3rem"
                 type="text"
                 placeholder="example"
-                value={emailFirstPart}
+                value={
+                  fetchedUserInfo?.email
+                    ? fetchedUserInfo.email.split('@')[0]
+                    : ''
+                }
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   setEmailFirstPart((e.target as HTMLInputElement).value)
                 }
@@ -141,7 +147,11 @@ const MyInforPage = () => {
                 width="18.3rem"
                 type="text"
                 placeholder="domain"
-                value={emailSecondPart}
+                value={
+                  fetchedUserInfo?.email
+                    ? fetchedUserInfo.email.split('@')[1].split('.')[0]
+                    : emailSecondPart
+                }
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   setEmailSecondPart((e.target as HTMLInputElement).value)
                 }
@@ -150,7 +160,11 @@ const MyInforPage = () => {
                 width="18.3rem"
                 type="text"
                 placeholder="com"
-                value={emailThirdPart}
+                value={
+                  fetchedUserInfo?.email
+                    ? fetchedUserInfo.email.split('@')[1].split('.')[1]
+                    : emailThirdPart
+                }
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   setEmailThirdPart((e.target as HTMLInputElement).value)
                 }
@@ -166,7 +180,11 @@ const MyInforPage = () => {
                 type="text"
                 id="digitPrefix"
                 placeholder="010"
-                value={phonePrefix}
+                value={
+                  fetchedUserInfo?.phoneNumber
+                    ? fetchedUserInfo.phoneNumber.split('-')[0]
+                    : ''
+                }
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   setPhonePrefix((e.target as HTMLInputElement).value)
                 }
@@ -175,7 +193,11 @@ const MyInforPage = () => {
                 width="9.2rem"
                 type="text"
                 placeholder="0000"
-                value={phoneFirstPart}
+                value={
+                  fetchedUserInfo?.phoneNumber
+                    ? fetchedUserInfo.phoneNumber.split('-')[1]
+                    : phoneFirstPart
+                }
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   setPhoneFirstPart((e.target as HTMLInputElement).value)
                 }
@@ -184,7 +206,11 @@ const MyInforPage = () => {
                 width="9.2rem"
                 type="text"
                 placeholder="0000"
-                value={phoneSecondPart}
+                value={
+                  fetchedUserInfo?.phoneNumber
+                    ? fetchedUserInfo.phoneNumber.split('-')[2]
+                    : phoneSecondPart
+                }
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   setPhoneSecondPart((e.target as HTMLInputElement).value)
                 }
@@ -195,7 +221,7 @@ const MyInforPage = () => {
           <S.SignUpInputBox>
             <S.SignUpLabel>아이디</S.SignUpLabel>
             <S.SignUpInput
-              value={loginId}
+              value={fetchedUserInfo?.loginId || ''}
               width="18.3rem"
               type="text"
               id="name"
@@ -204,65 +230,11 @@ const MyInforPage = () => {
               }
             />
           </S.SignUpInputBox>
-          <S.SignUpInputBox>
-            <S.SignUpLabel>비밀번호</S.SignUpLabel>
-            <S.SignUpInput
-              value={password}
-              width="18.3rem"
-              type="text"
-              id="name"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                setPassword((e.target as HTMLInputElement).value)
-              }
-            />
-          </S.SignUpInputBox>
-          {/* <S.InputRow2Box>
-            <SS.PwInputBox>
-              <S.SignUpLabel htmlFor="password">비밀번호</S.SignUpLabel>
-              <p>6-20자 영문, 숫자, 특수문자 사용</p>
-            </SS.PwInputBox>
-            <S.SignUpInput width="27.4rem" type="password" id="password" />
-          </S.InputRow2Box> */}
-          {/* <S.InputRow2Box>
-            <S.SignUpLabel htmlFor="passwordCheck">비밀번호 확인</S.SignUpLabel>
-            <S.SignUpInput width="27.4rem" type="password" id="passwordCheck" />
-          </S.InputRow2Box> */}
-          {/* <S.InputRow3Box>
-            <S.SignUpLabel>사용자 권한</S.SignUpLabel>
-            <SS.AuthBox>
-              <SS.AuthImgBox>
-                <Image
-                  src={presidentActive}
-                  alt="select_user_type_icon"
-                  width={29}
-                  height={40}
-                />
-                <p>사장님</p>
-              </SS.AuthImgBox>
-              <SS.AuthImgBox>
-                <Image
-                  src={employeeActive}
-                  alt="select_user_type_icon"
-                  width={29}
-                  height={40}
-                />
-                <p>아르바이트 생</p>
-              </SS.AuthImgBox>
-              <SS.AuthImgBox>
-                <Image
-                  src={supervisorActive}
-                  alt="select_user_type_icon"
-                  width={29}
-                  height={40}
-                />
-                <p>슈퍼바이저</p>
-              </SS.AuthImgBox>
-            </SS.AuthBox>
-          </S.InputRow3Box> */}
+
           <S.InputRow2Box>
             <S.SignUpLabel>매장 정보</S.SignUpLabel>
             <S.SignUpInput
-              value={storeName}
+              value={fetchedUserInfo?.storeName || ''}
               width="27.4rem"
               type="text"
               id="store"
@@ -274,7 +246,7 @@ const MyInforPage = () => {
           <S.InputRow2Box>
             <S.SignUpLabel>매장 분류</S.SignUpLabel>
             <S.SignUpInput
-              value={storeSector}
+              value={fetchedUserInfo?.storeCode || ''}
               width="27.4rem"
               type="text"
               id="store"
@@ -299,36 +271,8 @@ const MyInforPage = () => {
               />
               <button>주소검색</button>
             </SS.AddrInputBox>
-            {/* <S.SignUpInput
-              width="34.5rem"
-              placeholderLocation="left"
-              type="text"
-              placeholder="기본주소"
-            />
-            <S.SignUpInput
-              width="34.5rem"
-              placeholderLocation="left"
-              type="text"
-              placeholder="상세주소"
-            /> */}
           </S.InputRow2Box>
         </div>
-        <SS.SignUpBtnBox>
-          <CancelBtn
-            width="20.2rem"
-            height="11rem"
-            font="2.4rem"
-            label="회원가입"
-            disabled={false}
-            onClick={handleSignUp}
-          />
-          <RejectBtn
-            width="20.2rem"
-            height="11rem"
-            font="2.4rem"
-            label="취소"
-          />
-        </SS.SignUpBtnBox>
       </SS.SignUpForm>
     </SS.SignUpBox>
   );

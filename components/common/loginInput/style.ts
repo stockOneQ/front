@@ -24,6 +24,7 @@ const SignUpInput = styled.input<ISignUpInput>`
   border: 1px solid var(--color-gray);
   border-radius: 5px;
   color: var(--color-black);
+  margin-right: 10px;
   font-size: 1.5rem;
   font-weight: 400;
   line-height: normal;
@@ -53,6 +54,7 @@ const InputRow1Box = styled(InputRowBox)`
 
 const InputRow2Box = styled(InputRowBox)`
   flex-direction: column;
+  margin-top: 37px;
   gap: 2rem;
 `;
 

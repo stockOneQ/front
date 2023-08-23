@@ -233,7 +233,7 @@ export const Box = styled.div`
 `;
 export const QuantityInput = styled.div`
   display: flex;
-  margin-left: 3%;
+  margin-left: 5%;
 `;
 export const StyledInput = styled.div`
   display: flex;
