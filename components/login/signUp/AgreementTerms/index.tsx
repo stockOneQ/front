@@ -37,7 +37,7 @@ const AgreementTerms = () => {
         />
       </S.AgreementTermsBox>
       <S.AgreeFooterButton disabled={!agree1 || !agree2}>
-        <Link href={!agree1 || !agree2 ? '#' : '/login'}>다음</Link>
+        <Link href={!agree1 || !agree2 ? '#' : '/login/sign-up'}>다음</Link>
       </S.AgreeFooterButton>
     </S.WholePageBox>
   );

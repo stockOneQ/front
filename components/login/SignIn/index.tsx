@@ -14,10 +14,7 @@ import mainLogo from 'public/assets/icons/login/mainLogo.svg';
 
 import Link from 'next/link';
 
-interface ISignInProps {
-  onSignUpClick: () => void;
-}
-const SignIn = ({ onSignUpClick }: ISignInProps) => {
+const SignIn = () => {
   const [isTyped, setIsTyped] = useState(false);
   const [enteredID, setEnteredID] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');

@@ -18,11 +18,9 @@ import * as SS from './style';
 import { API } from 'pages/api/api';
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
-interface ISignUpProps {
-  onSuccess: () => void;
-}
-const SignUp = ({ onSuccess }: ISignUpProps) => {
+const SignUp = () => {
   const [name, setName] = useState('이가영');
   const [birthYear, setBirthYear] = useState('2001');
   const [birthMonth, setBirthMonth] = useState('01');
@@ -42,6 +40,8 @@ const SignUp = ({ onSuccess }: ISignUpProps) => {
   const [storeSector, setStoreSector] = useState('카페');
   const [storeAddress, setStoreAddress] = useState('서울시중구');
 
+  const router = useRouter();
+
   const apiInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL, // 8080 포트의 주소로 설정
     headers: {
@@ -50,7 +50,9 @@ const SignUp = ({ onSuccess }: ISignUpProps) => {
     },
   });
 
-  const handleSignUp = async () => {
+  const handleSignUp = async e => {
+    e.preventDefault();
+
     const userData = {
       name: name,
       birth: `${birthYear}-${birthMonth}-${birthDay}`,
@@ -70,8 +72,9 @@ const SignUp = ({ onSuccess }: ISignUpProps) => {
       if (response.status === 200) {
         // 성공적으로 회원 가입을 처리한 경우에 대한 로직을 여기에 작성합니다.
         alert('회원가입성공');
-        onSuccess();
         console.log('회원 가입 성공');
+
+        router.push('/login');
       } else {
         // 실패한 경우에 대한 로직을 여기에 작성합니다.
         console.error('회원 가입 실패');
