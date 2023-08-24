@@ -21,6 +21,8 @@ export const CCL = styled.div`
   margin-top: 2%;
   position: relative;
   margin-left: 15px;
+
+  cursor: pointer;
 `;
 
 export const TopSection = styled.div`
@@ -41,10 +43,10 @@ export const HiddenComponent = styled.div`
 export const RangeValues = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-gap: 7px;
+  gap: 7px;
   position: relative;
-  width: 689px;
-  left: -36%;
+  width: 697px;
+  left: -37%;
   margin-top: 40px;
 `;
 
@@ -141,7 +143,7 @@ export const LabelQuant = styled.label`
 
 export const Slider = styled.input`
   -webkit-appearance: none;
-  width: 78%;
+  width: 73%;
   height: 2px;
   left: 70px;
   top: 19px;
