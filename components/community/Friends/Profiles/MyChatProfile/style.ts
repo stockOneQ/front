@@ -62,7 +62,9 @@ const MyPageButton = styled.button`
     border-radius: 0.8rem;
     background-image: url('/assets/imgs/community/bg-img/reqFriendBg.svg');
     color: var(--color-white);
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 0.9rem;
     font-weight: 600;
     line-height: normal;

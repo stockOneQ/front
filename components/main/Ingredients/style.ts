@@ -120,7 +120,7 @@ export const MainItem = styled.div`
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   height: 180px;
-  margin: 1% 5% 5% 0%;
+  margin: 1% 6% 5% 0%;
   flex-wrap: wrap;
   display: flex;
   justify-content: center;

@@ -13,7 +13,7 @@ import useScroll from 'hooks/useScroll';
 const Data = () => {
   const [activeNum, setActiveNum] = useState(0); // navigation active 상태 주기 위함
   const [temp, setTemp] = useState(true); // 상세 페이지 연결하려고 임시로 만듦. 삭제 예정
-  const [isSelectSupervisor, setIsSelectSupervisor] = useState(true); // 슈퍼바이저 고르기
+  const [isSelectSupervisor, setIsSelectSupervisor] = useState(false); // 슈퍼바이저 고르기
 
   const { hideScroll, scrollHandler } = useScroll();
 

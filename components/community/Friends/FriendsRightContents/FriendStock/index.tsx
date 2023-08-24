@@ -17,23 +17,15 @@ import loadingIc from 'public/assets/icons/common/loadingIc.svg';
 
 const SELECT_DATA = ['냉동', '냉장', '상온'];
 
-interface IFriendStockProps {
-  friendStockList: FriendStockListType[];
-  friendStockCountList: FriendStockCountListType[];
-}
-
 /** 친구 재고 페이지 */
-const FriendStock = ({
-  friendStockList,
-  friendStockCountList,
-}: IFriendStockProps) => {
+const FriendStock = () => {
   const enteredValueRef = useRef(null);
 
   const [isSelect, setIsSelect] = useState(false); // 냉동 냉장 상온 토글 열기
   const [selectState, setSelectState] = useState(SELECT_DATA); // 냉동 냉장 상온 중 하나 고르기
   const [activeNav, setActiveNav] = useState('Total'); // 재고 목록 nav바 선택
-  const [stockList, setStockList] = useState(friendStockList); // 친구 재고 목록
-  const [stockCount, setStockCount] = useState(friendStockCountList); // 친구 재고 수량
+  const [stockList, setStockList] = useState<FriendStockListType[]>([]); // 친구 재고 목록
+  const [stockCount, setStockCount] = useState<FriendStockCountListType[]>([]); // 친구 재고 수량
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -110,7 +102,7 @@ const FriendStock = ({
     };
 
     getStockList();
-  }, [activeNav, selectState]);
+  }, [friendID, activeNav, selectState]);
 
   useEffect(() => {
     const getSearchData = async () => {
