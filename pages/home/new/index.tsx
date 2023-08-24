@@ -146,7 +146,7 @@ const New = () => {
           },
         },
       );
-      alert('제품 추가 성공');
+      // alert('제품 추가 성공');
 
       // 초기화
       setFormData({
