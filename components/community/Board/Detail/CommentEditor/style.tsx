@@ -52,7 +52,7 @@ export const CommentInput = styled.textarea`
   }
 `;
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button<{ disabled: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,18 +61,16 @@ export const SubmitButton = styled.button`
   height: 4.7rem;
 
   padding: 1.8rem 2.5rem;
-  background: #000000;
+  background: ${props => (props.disabled ? '#e1e1e1' : '#000000')};
+  cursor: ${props => (props.disabled ? 'default' : 'pointer')};
 
   border-radius: 30px;
 
   &:hover {
-    background: linear-gradient(
-      146.58deg,
-      #f9e499 -81.58%,
-      #f2b2cf 77.01%,
-      #b1b0d7 248.81%,
-      #55abd7 425.9%
-    );
+    background: ${props =>
+      props.disabled
+        ? ''
+        : 'linear-gradient(137.84deg, #F9E499 -4.47%, #F2B2CF 94.43%)'};
   }
 
   span {

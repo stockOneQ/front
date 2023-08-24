@@ -104,7 +104,7 @@ const CommentEditor = ({
           }
         />
       </S.InputBox>
-      <S.SubmitButton onClick={handleSubmit}>
+      <S.SubmitButton onClick={handleSubmit} disabled={input.length === 0}>
         <span>댓글 등록</span>
       </S.SubmitButton>
     </S.Editor>
