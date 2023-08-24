@@ -16,9 +16,10 @@ import IDInput from 'components/common/loginInput/IDInput';
 import * as S from 'components/common/loginInput/style';
 import * as SS from './style';
 import { API } from 'pages/api/api';
-import { useState } from 'react';
+import { FormEvent, MouseEvent, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const SignUp = () => {
   const [name, setName] = useState('이가영');
@@ -50,9 +51,7 @@ const SignUp = () => {
     },
   });
 
-  const handleSignUp = async e => {
-    e.preventDefault();
-
+  const handleSignUp = async () => {
     const userData = {
       name: name,
       birth: `${birthYear}-${birthMonth}-${birthDay}`,
@@ -336,14 +335,20 @@ const SignUp = () => {
             font="2.4rem"
             label="회원가입"
             disabled={false}
-            onClick={handleSignUp}
+            type="submit"
+            onClick={(event: any) => {
+              event.preventDefault();
+              handleSignUp();
+            }}
           />
-          <RejectBtn
-            width="20.2rem"
-            height="11rem"
-            font="2.4rem"
-            label="취소"
-          />
+          <Link href="/login">
+            <RejectBtn
+              width="20.2rem"
+              height="11rem"
+              font="2.4rem"
+              label="취소"
+            />
+          </Link>
         </SS.SignUpBtnBox>
       </SS.SignUpForm>
     </SS.SignUpBox>

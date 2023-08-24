@@ -6,7 +6,8 @@ interface ICancelBtnProps {
   width?: string;
   height?: string;
   font?: string;
-  onClick?: () => void;
+  type?: string;
+  onClick?: (e: any) => void;
 }
 
 const CnclBtn = styled.button<ICancelBtnProps>`
@@ -58,6 +59,7 @@ const CancelBtn = ({
   width,
   height,
   font,
+  type,
   onClick,
 }: ICancelBtnProps) => {
   return (
@@ -68,6 +70,7 @@ const CancelBtn = ({
       width={width}
       height={height}
       font={font}
+      type={type}
       onClick={onClick}
     >
       {label}
