@@ -21,6 +21,8 @@ export const CCL = styled.div`
   margin-top: 2%;
   position: relative;
   margin-left: 15px;
+
+  cursor: pointer;
 `;
 
 export const TopSection = styled.div`
