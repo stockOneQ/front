@@ -13,6 +13,7 @@ const slideDown = keyframes`
 `;
 
 export const SearchBox = styled.div`
+  cursor: pointer;
   img {
     margin-left: 200px;
   }
@@ -289,6 +290,7 @@ export const SerchSection = styled.div`
     top: 26%;
     left: 24%;
     position: relative;
+    cursor: pointer;
   }
 `;
 
