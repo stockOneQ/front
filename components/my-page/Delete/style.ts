@@ -58,16 +58,22 @@ export const DeleteReasonForm = styled.div`
 
 export const SubmitButton = styled.button`
   box-sizing: border-box;
-
+  margin: 0 auto;
   width: 202px;
   height: 110px;
+  margin-left: 200px;
+  color: black;
   background: #ffffff;
   border: 1px solid #e1e1e1;
   border-radius: 7px;
-
+  font-size: 20px;
+  font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition:
+    background-color 0.3s,
+    color 0.3s; /* Add transition for smooth effect */
 
   p {
     font-family: 'Roboto';
@@ -81,6 +87,12 @@ export const SubmitButton = styled.button`
 
     color: #e1e1e1;
   }
+
+  &:hover {
+    background-color: #55abd7;
+    color: white;
+    cursor: pointer;
+  }
 `;
 
 export const DeleteAgreement = styled.div`
@@ -89,7 +101,7 @@ export const DeleteAgreement = styled.div`
   border: 1px solid #979797;
   box-shadow: inset 4px 4px 11px rgba(0, 0, 0, 0.15);
   border-radius: 13px;
-
+  overflow: auto;
   flex-direction: column;
   height: 32.6rem;
   width: 56.7rem;

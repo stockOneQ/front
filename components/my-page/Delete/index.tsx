@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import * as S from './style';
 import logoIcon from '../../../public/assets/icons/login/mainLogo.svg';
+import { API } from 'pages/api/api';
+import router from 'next/router';
 
 interface Delete {
   id: string;
@@ -21,6 +23,24 @@ const MypageDelete = () => {
   const handleSubmit = () => {
     // 선택한 이유(selectedReason)를 서버에 전송
     console.log(selectedReason);
+  };
+
+  const handleWithdrawal = () => {
+    if (window.confirm('정말로 탈퇴하시겠습니까?')) {
+      // If the user confirms the withdrawal
+      API.delete('/api/user/withdraw')
+        .then(response => {
+          // Handle success
+          console.log('Withdrawal successful:', response);
+          router.push('/login');
+          // Perform any additional actions after withdrawal, such as redirecting or showing a confirmation message
+        })
+        .catch(error => {
+          // Handle error
+          console.error('Error withdrawing:', error);
+          // Display an error message or take other appropriate actions
+        });
+    }
   };
 
   return (
@@ -73,22 +93,40 @@ const MypageDelete = () => {
               - 1년 이내로 동일한 아이디로 가입이 불가합니다. <br />
               탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니
               신중하게 선택하시길 바랍니다.
-              <br />
+            </p>
+            <br />
+            <p>
+              {' '}
               - 아래와 같은 회원정보는 스톡원큐 서비스 개선을 위해 탈퇴 시점
               이후로 최대 1년 동안 보관됩니다. 서비스 개선 이외의 목적으로는
               사용되지 않습니다.
-              <br />
+            </p>
+            <br />
+            <p>
+              {' '}
               - 사장님 : 이름, 생년월일, 이메일, 전화번호, 아이디, 매장
               정보(이름)
-              <br />
+            </p>
+            <br />
+            <p>
+              {' '}
               - 알바생 : 이름, 생년월일, 이메일, 전화번호, 아이디, 매장
               정보(이름)
+            </p>
+            <p>
+              {' '}
               <br />
               - 슈퍼바이저 : 이름, 생년월일, 이메일, 전화번호, 아이디, 기업명
               <br />
+            </p>
+            <p>
+              {' '}
               - 탈퇴 후, 위와 같은 정보 외에는 모두 삭제되어 복구가
               불가능합니다.
               <br />
+            </p>
+            <p>
+              {' '}
               - 게시글, 댓글, 친구 정보
               <br />
             </p>
@@ -102,9 +140,7 @@ const MypageDelete = () => {
           <p>탈퇴를 진행하시겠습니까?</p>
         </S.Text>
 
-        <S.SubmitButton onClick={handleSubmit}>
-          <p>회원탈퇴</p>
-        </S.SubmitButton>
+        <S.SubmitButton onClick={handleWithdrawal}>탈퇴</S.SubmitButton>
       </S.DeletContents>
     </S.DeleteSection>
   );
