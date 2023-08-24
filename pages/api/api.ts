@@ -1,12 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
-<<<<<<< HEAD
 import { ProductItem, Product, ProductDetail } from 'recoil/states';
 import Cookies from 'js-cookie';
 
 //제품개수
-=======
-import { ProductItem } from 'recoil/states';
->>>>>>> ff4bb25 (Merge branch develop into main)
 
 //제품개수
 interface CountItem {
@@ -21,7 +17,6 @@ interface ProductCounts {
   totalCount: number;
 }
 
-<<<<<<< HEAD
 // let accessToken = localStorage.getItem('accessToken');
 // const refreshToken = localStorage.getItem('refreshToken');
 
@@ -31,24 +26,17 @@ let fcmToken = Cookies.get('fcmToken');
 
 console.log('accesstoken은 : ', accessToken);
 
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
 export const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
-<<<<<<< HEAD
     Authorization: `Bearer ${accessToken}`,
-=======
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
->>>>>>> ff4bb25 (Merge branch develop into main)
     'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_API_URL,
     'Access-Control-Allow-Credentials': true,
   },
   withCredentials: true,
 });
 
-<<<<<<< HEAD
 export const APIRE = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
@@ -139,19 +127,6 @@ export const productList = (
       store,
       condition,
       search,
-=======
-//정렬 제품 api 호출
-export const productList = (
-  store: number,
-  condition: string,
-  last: number,
-  sort: string,
-): Promise<AxiosResponse<ProductItem[]>> =>
-  API.get('/api/product/all', {
-    params: {
-      store,
-      condition,
->>>>>>> ff4bb25 (Merge branch develop into main)
       last,
       sort,
     },
@@ -159,11 +134,7 @@ export const productList = (
 
 //제품개수
 export const fetchProductCounts = async (
-<<<<<<< HEAD
   store: number,
-=======
-  store: string,
->>>>>>> ff4bb25 (Merge branch develop into main)
   condition: string,
 ): Promise<ProductCounts> => {
   try {
@@ -250,11 +221,7 @@ export const getProductByCategory = async (
 };
 
 /** 제품 삭제  */
-<<<<<<< HEAD
 export const handleDeleteProduct = async (productId: number) => {
-=======
-export const handleDeleteProduct = async productId => {
->>>>>>> ff4bb25 (Merge branch develop into main)
   try {
     await API.delete(`/api/product/delete/${productId}`);
   } catch (error) {
@@ -273,23 +240,15 @@ export const addProduct = async (
         'Content-Type': 'multipart/form-data',
       },
     });
-<<<<<<< HEAD
-=======
-    alert('제품 수정 성공');
->>>>>>> ff4bb25 (Merge branch develop into main)
   } catch (error) {
     console.error('Error adding product:', error);
     throw new Error('Error adding product: ');
   }
 };
 
-<<<<<<< HEAD
 export const fetchProductDetails = async (
   id: number,
 ): Promise<ProductDetail> => {
-=======
-export const fetchProductDetails = async (id: number): Promise<ProductItem> => {
->>>>>>> ff4bb25 (Merge branch develop into main)
   try {
     const response = await API.get(`/api/product/${id}`);
     if (response.data) {
@@ -318,10 +277,6 @@ export const searchProducts = async (
     });
     return response.data;
   } catch (error) {
-<<<<<<< HEAD
     throw new Error('Error fetching search results: ' + error);
-=======
-    throw new Error('Error fetching search results: ' + error.message);
->>>>>>> ff4bb25 (Merge branch develop into main)
   }
 };

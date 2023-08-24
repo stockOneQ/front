@@ -43,11 +43,7 @@ export const NavButton = styled.button`
 
 export const DeleteOptionBox = styled.div`
   display: flex;
-<<<<<<< HEAD
   gap: 3.6rem;
-=======
-  gap: 1rem;
->>>>>>> ff4bb25 (Merge branch develop into main)
 
   position: absolute;
   top: 65%;

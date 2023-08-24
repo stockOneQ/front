@@ -2,7 +2,6 @@ import Image from 'next/image';
 import myProfile from 'public/assets/imgs/community/myProfile.png';
 import myPageIcon from 'public/assets/icons/community/myPageIcon.svg';
 import * as S from './style';
-<<<<<<< HEAD
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { API } from 'pages/api/api';
@@ -60,17 +59,10 @@ const MyChatProfile = () => {
     getData();
   }, []);
 
-=======
-import { IProfilesProps } from '..';
-
-/** 나의 채팅 프로필 */
-const MyChatProfile = ({ setReqFriends }: IProfilesProps) => {
->>>>>>> ff4bb25 (Merge branch develop into main)
   return (
     <div>
       <S.MyProfileText>나</S.MyProfileText>
       <S.MyProfileBox>
-<<<<<<< HEAD
         <Image
           src={myProfile}
           alt="my_profile"
@@ -95,29 +87,10 @@ const MyChatProfile = ({ setReqFriends }: IProfilesProps) => {
               height={26.84}
             />
           </Link>
-=======
-        <Image src={myProfile} alt="my_profile" width={75} height={75} placeholder="blur" />
-        <div>
-          <S.MyInfoBox>
-            <p>이나영</p>
-            <p>이디아 상앙점</p>
-          </S.MyInfoBox>
-          <S.MyPhoneText>010-0000-0000</S.MyPhoneText>
-        </div>
-        <S.MyPageButton>
-        <div onClick={() => setReqFriends(prev => !prev)}>
-          <button>6</button>
-          <Image src={myPageIcon} alt="my_page_icon" width={19.64} height={26.84} />
-        </div>
->>>>>>> ff4bb25 (Merge branch develop into main)
         </S.MyPageButton>
       </S.MyProfileBox>
     </div>
   );
 };
 
-<<<<<<< HEAD
 export default MyChatProfile;
-=======
-export default MyChatProfile;
->>>>>>> ff4bb25 (Merge branch develop into main)

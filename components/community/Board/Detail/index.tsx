@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -38,25 +37,6 @@ interface IRecommentTypes {
 interface ICommentTypes extends IRecommentTypes {
   replyList: IRecommentTypes[] | undefined;
 }
-=======
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRecoilValue } from 'recoil';
-import { isCurrentPathMainState, postCommentListState } from 'recoil/states';
-
-import PostInfoBox from './PostInfoBox';
-import PostContentBox from './PostContentBox';
-import PostCommentListBox from './PostCommentListBox';
-import PostCommentInputBox from './PostCommentInputBox';
-
-import * as S from './style';
-
-import CloseSVG from 'public/assets/icons/community/close.svg';
-import CommentsSVG from 'public/assets/icons/community/comments.svg';
-
-import { API } from 'pages/api/api';
->>>>>>> ff4bb25 (Merge branch develop into main)
 
 interface IPostTypes {
   id: number;
@@ -67,15 +47,11 @@ interface IPostTypes {
   createdDate: string;
   writerId: string;
   writerName: string;
-<<<<<<< HEAD
   alreadyLike: boolean;
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
 }
 
 const Detail = ({ id }: { id: number }) => {
   const router = useRouter();
-<<<<<<< HEAD
   const [cookies, ,] = useCookies(['logInUserId']);
 
   const [post, setPost] = useState<IPostTypes>();
@@ -130,27 +106,6 @@ const Detail = ({ id }: { id: number }) => {
     commentRenderTrigger,
     recommentRenderTrigger,
   ]);
-=======
-  const postCommentList =
-    useRecoilValue(postCommentListState); /** 더미 데이터 */
-
-  const [post, setPost] = useState<IPostTypes>();
-
-  const isCurrentPathMain = useRecoilValue(isCurrentPathMainState);
-
-  useEffect(() => {
-    API.get(`/api/boards/${id}`)
-      .then(response => {
-        console.log(`${id}번의 게시글 상세 불러오기 성공`);
-        console.log(response.data);
-        setPost(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-        throw e;
-      });
-  }, []);
->>>>>>> ff4bb25 (Merge branch develop into main)
 
   /** 게시글 상세 페이지 창 닫기 */
   const handleClose = () => {
@@ -161,7 +116,6 @@ const Detail = ({ id }: { id: number }) => {
 
   return (
     <S.Box>
-<<<<<<< HEAD
       {post && (
         <S.PostBox>
           <S.HeaderSection>
@@ -183,39 +137,15 @@ const Detail = ({ id }: { id: number }) => {
           </S.HeaderSection>
           <Content
             id={post.id}
-=======
-      <S.ButtonContainer>
-        {/** 현재 임시 토큰은 사용자 2번임 */}
-        {post?.writerId === 'manager2id' && (
-          <Link href={`/community/board/edit/${id}`}>
-            <S.EditButton>수정</S.EditButton>
-          </Link>
-        )}
-        <S.CloseButton onClick={handleClose}>
-          <Image src={CloseSVG} alt="close" />
-        </S.CloseButton>
-      </S.ButtonContainer>
-      {post && (
-        <S.PostBox>
-          <PostInfoBox
-            writerName={post.writerName}
-            createdDate={post.createdDate}
-          />
-          <PostContentBox
->>>>>>> ff4bb25 (Merge branch develop into main)
             title={post.title}
             content={post.content}
             hit={post.hit}
             likes={post.likes}
-<<<<<<< HEAD
             alreadyLike={post.alreadyLike}
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
           />
         </S.PostBox>
       )}
 
-<<<<<<< HEAD
       <CommentInputSection />
 
       <S.CommentList>
@@ -224,16 +154,6 @@ const Detail = ({ id }: { id: number }) => {
           <span>댓글 {totalElements}</span>
         </S.CommentTotalCount>
         <CommentList list={commentList} totalPages={totalPages} />
-=======
-      <PostCommentInputBox />
-
-      <S.CommentList>
-        <S.CommentCount>
-          <Image src={CommentsSVG} alt="comment" />
-          <span>댓글 {postCommentList.length}</span>
-        </S.CommentCount>
-        <PostCommentListBox />
->>>>>>> ff4bb25 (Merge branch develop into main)
       </S.CommentList>
     </S.Box>
   );

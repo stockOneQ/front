@@ -12,7 +12,6 @@ const slideDown = keyframes`
   }
 `;
 
-<<<<<<< HEAD
 export const SearchBox = styled.div`
   cursor: pointer;
   img {
@@ -40,8 +39,6 @@ export const LoadingContainer = styled.div`
   }
 `;
 
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
 export const LoadMoreButton = styled.button`
   display: flex;
   align-items: center;
@@ -55,22 +52,16 @@ export const LoadMoreButton = styled.button`
   cursor: pointer;
   margin: 20px auto;
   font-size: 1.5rem;
-<<<<<<< HEAD
   position: relative;
   font-weight: bold;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   left: -12%;
-=======
-  font-weight: bold;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
->>>>>>> ff4bb25 (Merge branch develop into main)
 
   span {
     margin-left: 8px;
   }
 `;
 
-<<<<<<< HEAD
 interface MainSectionProps {
   hideScroll?: boolean;
 }
@@ -79,12 +70,6 @@ export const MainSection = styled.div<MainSectionProps>`
   display: flex;
   flex-wrap: wrap;
   height: 90vh;
-=======
-export const MainSection = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  height: 95vh;
->>>>>>> ff4bb25 (Merge branch develop into main)
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -111,7 +96,6 @@ export const MainSection = styled.div`
 `;
 
 export const DropBoxContainer = styled.div`
-<<<<<<< HEAD
   margin-left: 73%;
   position: absolute;
   margin-right: 2%;
@@ -130,20 +114,6 @@ export const Input = styled.input`
   border-radius: 43px;
   position: absolute;
   right: 90%;
-=======
-  margin-left: 3%;
-`;
-
-export const Input = styled.input`
-  background: none;
-  color: inherit;
-  border: none;
-  font-size: 13px;
-  padding: 0 0 0 15%;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
->>>>>>> ff4bb25 (Merge branch develop into main)
 `;
 
 export const MainItem = styled.div`
@@ -151,11 +121,7 @@ export const MainItem = styled.div`
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   height: 180px;
-<<<<<<< HEAD
   margin: 1% 6% 5% 0%;
-=======
-  margin: 1% 3% 3% 3%;
->>>>>>> ff4bb25 (Merge branch develop into main)
   flex-wrap: wrap;
   display: flex;
   justify-content: center;
@@ -163,7 +129,6 @@ export const MainItem = styled.div`
 `;
 
 export const ProductName = styled.h3`
-<<<<<<< HEAD
   font-size: 15px;
   font-weight: bold;
   margin-top: 40px;
@@ -203,25 +168,10 @@ export const SearchPro = styled.div`
 export const StyledLinkLack = styled.button<{ isactive: boolean }>`
   display: flex;
   width: 184px;
-=======
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 45px;
-  text-align: center;
-`;
-
-export const MainItemImg = styled.div`
-  margin-top: 20px;
-`;
-export const StyledLink = styled.button<{ isactive: boolean }>`
-  display: flex;
-  width: 190px;
->>>>>>> ff4bb25 (Merge branch develop into main)
   height: 35px;
   margin: 0 0 0 2%;
   border-radius: 100px;
   color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
-<<<<<<< HEAD
   font-size: 18px;
   font-weight: 600;
   line-height: 35px;
@@ -269,9 +219,6 @@ export const StyledLink = styled.button<{ isactive: boolean }>`
   border-radius: 100px;
   color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
   font-size: 18px;
-=======
-  font-size: 13px;
->>>>>>> ff4bb25 (Merge branch develop into main)
   font-weight: 600;
   line-height: 35px;
   text-align: center;
@@ -294,17 +241,10 @@ export const ActionButtonBox = styled.div`
   position: absolute;
   gap: 8px;
   color: white;
-<<<<<<< HEAD
   left: 97%;
   font-size: 18px;
   font-weight: 600;
   right: 6rem;
-=======
-  left: 91%;
-  font-size: 18px;
-  font-weight: 600;
-  padding-bottom: 30px;
->>>>>>> ff4bb25 (Merge branch develop into main)
 `;
 
 export const Add = styled.div`
@@ -324,17 +264,10 @@ export const Add = styled.div`
 export const NavBar = styled.div`
   display: flex;
   width: 90%;
-<<<<<<< HEAD
   position: relative;
 `;
 
 export const ControlBar = styled.div`
-=======
-`;
-
-export const ControlBar = styled.div`
-  width: 107%;
->>>>>>> ff4bb25 (Merge branch develop into main)
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
@@ -355,14 +288,9 @@ export const SerchSection = styled.div`
 
   img {
     top: 26%;
-<<<<<<< HEAD
     left: 24%;
     position: relative;
     cursor: pointer;
-=======
-    position: relative;
-    left: 10%;
->>>>>>> ff4bb25 (Merge branch develop into main)
   }
 `;
 

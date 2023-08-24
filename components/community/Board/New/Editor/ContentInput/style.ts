@@ -2,7 +2,6 @@ import { styled } from 'styled-components';
 
 export const Box = styled.div``;
 
-<<<<<<< HEAD
 export const TextContainer = styled.div`
   padding: 1.2rem 2rem;
   background: #f7f7f9;
@@ -10,17 +9,10 @@ export const TextContainer = styled.div`
 
 export const Text = styled.span`
   color: black;
-=======
-export const Text = styled.span`
-  padding-left: 1.2rem;
-  background: #f7f7f9;
-  color: #000000;
->>>>>>> ff4bb25 (Merge branch develop into main)
 
   font-weight: 600;
   font-size: 1.8rem;
   line-height: 2.1rem;
-<<<<<<< HEAD
 `;
 
 export const Container = styled.div`
@@ -52,35 +44,12 @@ export const Input = styled.textarea`
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 2.1rem;
-=======
-
-  display: flex;
-  align-items: center;
-
-  height: 4.5rem;
-`;
-
-export const Input = styled.textarea`
-  resize: none;
-  border: none;
-
-  width: 107.5rem;
-  height: 47.7rem;
-  border-radius: 0rem 0rem 3rem 3rem;
-  padding: 1.5rem 2.7rem;
-
-  font-family: 'Roboto';
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 1.8rem;
->>>>>>> ff4bb25 (Merge branch develop into main)
 
   color: #000000;
 
   &:focus {
     outline: none;
   }
-<<<<<<< HEAD
 
   &::-webkit-scrollbar {
     width: 0.9rem;
@@ -90,6 +59,4 @@ export const Input = styled.textarea`
     background: #090000;
     border-radius: 1rem;
   }
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
 `;

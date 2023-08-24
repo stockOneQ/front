@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import Image from 'next/image';
@@ -15,20 +14,11 @@ import mainLogo from 'public/assets/icons/login/mainLogo.svg';
 
 import Link from 'next/link';
 
-=======
-import Image from 'next/image';
-import mainLogo from 'public/assets/icons/login/mainLogo.svg';
-import { useEffect, useState } from 'react';
-import * as S from './style';
-
-/** 로그인 초기 화면 */
->>>>>>> ff4bb25 (Merge branch develop into main)
 const SignIn = () => {
   const [isTyped, setIsTyped] = useState(false);
   const [enteredID, setEnteredID] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
 
-<<<<<<< HEAD
   /** 쿠키 */
   const [, setRefCookie] = useCookies(['refreshToken']);
   const [, setAccCookie] = useCookies(['accessToken']);
@@ -47,14 +37,6 @@ const SignIn = () => {
     const { value } = e.target as HTMLInputElement;
     setEnteredPassword(value);
   };
-=======
-  const idChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    setEnteredID(e.target.value);
-  }
-  const passwordChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    setEnteredPassword(e.target.value);
-  }
->>>>>>> ff4bb25 (Merge branch develop into main)
 
   useEffect(() => {
     if (enteredID !== '' && enteredPassword !== '') {
@@ -62,7 +44,6 @@ const SignIn = () => {
     } else {
       setIsTyped(false);
     }
-<<<<<<< HEAD
 
     console.log(isTyped);
   }, [enteredID, enteredPassword]);
@@ -116,13 +97,6 @@ const SignIn = () => {
       }
     }
   };
-=======
-    
-    console.log(isTyped);
-    
-  }, [enteredID, enteredPassword])
-
->>>>>>> ff4bb25 (Merge branch develop into main)
   return (
     <S.SignInSection>
       <S.SignInHeaderBox>
@@ -131,7 +105,6 @@ const SignIn = () => {
       </S.SignInHeaderBox>
       <S.SignInBodyBox>
         <S.SignInInputBox>
-<<<<<<< HEAD
           <input type="text" placeholder="아이디" onChange={idChangeHandler} />
           <input
             type="password"
@@ -146,33 +119,18 @@ const SignIn = () => {
         >
           로그인
         </S.SignInButton>
-=======
-          <input type="text" placeholder="아이디"  onChange={idChangeHandler} />
-          <input type="password" placeholder="비밀번호" onChange={passwordChangeHandler} />
-        </S.SignInInputBox>
-        <S.SignInButton isTyped={isTyped} disabled={!isTyped} onClick={() => {console.log(123123);
-        }}>로그인</S.SignInButton>
->>>>>>> ff4bb25 (Merge branch develop into main)
       </S.SignInBodyBox>
       <S.SignInFooterBox>
         <button>아이디 찾기</button>
         <div>&nbsp;</div>
         <button>비밀번호 찾기</button>
         <div>&nbsp;</div>
-<<<<<<< HEAD
         <Link href="/login/agreement" type="button">
           회원가입
         </Link>
-=======
-        <button>회원가입</button>
->>>>>>> ff4bb25 (Merge branch develop into main)
       </S.SignInFooterBox>
     </S.SignInSection>
   );
 };
 
-<<<<<<< HEAD
 export default SignIn;
-=======
-export default SignIn;
->>>>>>> ff4bb25 (Merge branch develop into main)

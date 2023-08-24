@@ -18,34 +18,21 @@ const searchOptionList = ['글 제목', '글 내용', '작성자'];
 const ControlBar = () => {
   const [sortType, setSortType] = useRecoilState(sortTypeState);
   const [searchType, setSearchType] = useRecoilState(searchTypeState);
-<<<<<<< HEAD
   const [searchInput, setSearchInput] = useRecoilState(searchInputState);
 
   const [input, setInput] =
     useState(
       searchInput,
     ); /* 실시간 검색이 아닌 검색 아이콘을 통해 한번만 검색 필터를 거치므로 저장해둠 */
-=======
-
-  /* 실시간 검색이 아닌 검색 아이콘을 통해 한번만 검색 필터를 거치므로 저장해둠 */
-
-  const [searchInput, setSearchInput] = useRecoilState(searchInputState);
-  const [input, setInput] = useState(searchInput);
->>>>>>> ff4bb25 (Merge branch develop into main)
 
   const handleSearch = () => {
     setSearchInput(input);
   };
 
   return (
-<<<<<<< HEAD
     <S.ControlBar>
       {/** 최신순, 조회순 */}
       <S.DropDownContainer>
-=======
-    <S.ControlBarBox>
-      <S.DropBoxContainer>
->>>>>>> ff4bb25 (Merge branch develop into main)
         <DropDown
           width={16.3}
           height={3.5}
@@ -56,17 +43,10 @@ const ControlBar = () => {
           onChange={setSortType}
           type={sortType}
         />
-<<<<<<< HEAD
       </S.DropDownContainer>
       <S.SearchBar>
         {/** 글 제목, 글 내용, 작성자 */}
         <S.DropDownContainer>
-=======
-      </S.DropBoxContainer>
-
-      <S.SearchBar>
-        <S.DropBoxContainer>
->>>>>>> ff4bb25 (Merge branch develop into main)
           <DropDown
             width={16.3}
             height={3.5}
@@ -77,21 +57,13 @@ const ControlBar = () => {
             onChange={setSearchType}
             type={searchType}
           />
-<<<<<<< HEAD
         </S.DropDownContainer>
-=======
-        </S.DropBoxContainer>
->>>>>>> ff4bb25 (Merge branch develop into main)
         <SearchInputBar value={input} onChange={setInput} />
         <S.SearchButton onClick={handleSearch}>
           <Image alt="search" src={SearchSVG} />
         </S.SearchButton>
       </S.SearchBar>
-<<<<<<< HEAD
     </S.ControlBar>
-=======
-    </S.ControlBarBox>
->>>>>>> ff4bb25 (Merge branch develop into main)
   );
 };
 

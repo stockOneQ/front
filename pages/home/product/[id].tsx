@@ -2,22 +2,16 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-<<<<<<< HEAD
 import Image from 'next/image';
 import { mainPostListState } from '../../../recoil/states';
 import { useSetRecoilState } from 'recoil';
 import useScroll from 'hooks/useScroll';
 import cancleIcon from 'public/assets/icons/main/detailCancle.svg';
-=======
-import { mainPostListState } from '../../../recoil/states';
-import { useSetRecoilState } from 'recoil';
->>>>>>> ff4bb25 (Merge branch develop into main)
 import * as S from '../../../components/main/style';
 import {
   fetchProductDetails,
   addProduct,
   handleDeleteProduct,
-<<<<<<< HEAD
 } from '../../api/api';
 
 const ProductPage = () => {
@@ -35,17 +29,6 @@ const ProductPage = () => {
     if (selectedFile) {
       setSelectedImage(selectedFile);
     }
-=======
-} from '../../../pages/api/api';
-
-const ProductPage = () => {
-  const router = useRouter();
-  const { id } = router.query;
-
-  const [selectedImage, setSelectedImage] = useState(null);
-  const handleImageChange = e => {
-    setSelectedImage(e.target.files[0]);
->>>>>>> ff4bb25 (Merge branch develop into main)
   };
 
   const [formData, setFormData] = useState({
@@ -55,13 +38,8 @@ const ProductPage = () => {
     receivingDate: '2000-10-02',
     expirationDate: '2000-10-02',
     location: '선반',
-<<<<<<< HEAD
     requireQuant: 3,
     stockQuant: 4,
-=======
-    requireQuant: '3',
-    stockQuant: '4',
->>>>>>> ff4bb25 (Merge branch develop into main)
     siteToOrder: 'www',
     orderFreq: '80',
     image: 'sk',
@@ -69,10 +47,6 @@ const ProductPage = () => {
 
   const convertFormDataToJson = () => {
     const jsonFormData = {
-<<<<<<< HEAD
-=======
-      // id: getId(),
->>>>>>> ff4bb25 (Merge branch develop into main)
       name: formData.name,
       price: formData.price,
       vendor: formData.vendor,
@@ -93,10 +67,6 @@ const ProductPage = () => {
         const response = await fetchProductDetails(Number(id));
         setFormData(response);
         setSelectedImage(response.image || '');
-<<<<<<< HEAD
-=======
-        console.log('받아온 값: ', response);
->>>>>>> ff4bb25 (Merge branch develop into main)
       } catch (error) {
         console.error('Error fetching product details:', error);
       }
@@ -107,13 +77,6 @@ const ProductPage = () => {
     }
   }, [id]);
 
-<<<<<<< HEAD
-=======
-  /** API 호출------------------------------------------------- */
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
-
->>>>>>> ff4bb25 (Merge branch develop into main)
   // 수정 API
   const handleEditProduct = async () => {
     try {
@@ -134,7 +97,6 @@ const ProductPage = () => {
     }
   };
 
-<<<<<<< HEAD
   const handleDeleteClick = () => {
     if (typeof id === 'string') {
       const parsedId = parseInt(id, 10);
@@ -147,15 +109,6 @@ const ProductPage = () => {
   const setPostListState = useSetRecoilState(mainPostListState);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-=======
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
-
-  const setPostListState = useSetRecoilState(mainPostListState);
-
-  const handleInputChange = e => {
->>>>>>> ff4bb25 (Merge branch develop into main)
     const { name, value } = e.target;
     console.log('Input Changed:', name, value);
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
@@ -164,38 +117,15 @@ const ProductPage = () => {
   const handleSubmit = () => {
     /** 수정 API  */
     handleEditProduct();
-<<<<<<< HEAD
     router.push('/');
   };
 
   const handleCancle = () => {
     router.push('/');
-=======
-
-    router.push('/');
-  };
-
-  const [selectedStorageMethod, setSelectedStorageMethod] = useState(
-    formData.storageMethod || '냉동',
-  );
-
-  const handleStorageMethodChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedStorageMethod(e.target.value);
-    // 업데이트 formData
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      storageMethod: e.target.value,
-    }));
-  };
-
-  const handleImageClick = () => {
-    console.log('Image clicked');
->>>>>>> ff4bb25 (Merge branch develop into main)
   };
 
   return (
     <S.Box>
-<<<<<<< HEAD
       <S.Title title="재료 상세">재료 상세</S.Title>
       <S.TopSectionDetail>
         <S.Button onClick={handleDeleteClick}>
@@ -211,20 +141,6 @@ const ProductPage = () => {
       </S.TopSectionDetail>
 
       <S.Form hideScroll={hideScroll} onScroll={scrollHandler}>
-=======
-      <S.Title title="재료 등록">재료상세</S.Title>
-      <S.TopSection>
-        <S.Button onClick={() => handleDeleteProduct(id)}>
-          <Link href="/">삭제</Link>
-        </S.Button>
-        <S.Button type="submit" onClick={handleSubmit}>
-          <Link href="/">수정</Link>
-        </S.Button>
-        <Link href="/">X</Link>
-      </S.TopSection>
-
-      <S.Form>
->>>>>>> ff4bb25 (Merge branch develop into main)
         <S.InforSection>
           <S.LeftSection>
             <S.StyledInput>
@@ -238,11 +154,7 @@ const ProductPage = () => {
                           name="storageMethod"
                           value="냉동"
                           checked={selectedStorageMethod === '냉동'}
-<<<<<<< HEAD
                           onChange={() => setSelectedStorageMethod('냉동')}
-=======
-                          onChange={handleStorageMethodChange}
->>>>>>> ff4bb25 (Merge branch develop into main)
                         />
                         <span>냉동</span>
                       </S.StyledRadioInput>
@@ -252,11 +164,7 @@ const ProductPage = () => {
                           name="storageMethod"
                           value="냉장"
                           checked={selectedStorageMethod === '냉장'}
-<<<<<<< HEAD
                           onChange={() => setSelectedStorageMethod('냉장')}
-=======
-                          onChange={handleStorageMethodChange}
->>>>>>> ff4bb25 (Merge branch develop into main)
                         />
                         <span>냉장</span>
                       </S.StyledRadioInput>
@@ -266,11 +174,7 @@ const ProductPage = () => {
                           name="storageMethod"
                           value="상온"
                           checked={selectedStorageMethod === '상온'}
-<<<<<<< HEAD
                           onChange={() => setSelectedStorageMethod('상온')}
-=======
-                          onChange={handleStorageMethodChange}
->>>>>>> ff4bb25 (Merge branch develop into main)
                         />
                         <span>상온</span>
                       </S.StyledRadioInput>
@@ -289,7 +193,6 @@ const ProductPage = () => {
               <label htmlFor="imageInput">
                 <S.ImgInput>
                   <img
-<<<<<<< HEAD
                     src={`data:image/jpeg;base64,${selectedImage}`}
                     alt="Selected Image"
                     style={{
@@ -300,10 +203,6 @@ const ProductPage = () => {
                   {/* <img
                     src={
                       selectedImage
-=======
-                    src={
-                      selectedImage instanceof File
->>>>>>> ff4bb25 (Merge branch develop into main)
                         ? URL.createObjectURL(selectedImage)
                         : `data:image/jpeg;base64,${selectedImage}`
                     }
@@ -312,11 +211,7 @@ const ProductPage = () => {
                       maxWidth: '100%',
                       cursor: 'pointer',
                     }}
-<<<<<<< HEAD
                   /> */}
-=======
-                  />
->>>>>>> ff4bb25 (Merge branch develop into main)
                 </S.ImgInput>
               </label>
             </S.ImgInput>
@@ -447,11 +342,7 @@ const ProductPage = () => {
               <S.Slider
                 type="range"
                 name="orderingFrequency"
-<<<<<<< HEAD
                 value={formData.orderFreq}
-=======
-                value={formData.orderingFrequency}
->>>>>>> ff4bb25 (Merge branch develop into main)
                 min="0"
                 max="100"
                 step="20"

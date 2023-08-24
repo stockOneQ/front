@@ -12,7 +12,6 @@ const EditorContentInput = () => {
 
   return (
     <S.Box>
-<<<<<<< HEAD
       <S.TextContainer>
         <S.Text>내용</S.Text>
       </S.TextContainer>
@@ -20,14 +19,6 @@ const EditorContentInput = () => {
       <S.Container>
         <S.Input value={contentInput} onChange={handleInput} maxLength={5000} />
       </S.Container>
-=======
-      <S.Text>내용</S.Text>
-      <S.Input
-        value={contentInput}
-        onChange={handleInput}
-        maxLength={5000}
-      ></S.Input>
->>>>>>> ff4bb25 (Merge branch develop into main)
     </S.Box>
   );
 };

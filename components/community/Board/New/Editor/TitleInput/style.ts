@@ -7,20 +7,11 @@ export const Box = styled.div`
 
   padding-bottom: 4.5rem;
 
-<<<<<<< HEAD
   gap: 3.8rem;
 `;
 
 export const TextContainer = styled.div`
   margin-left: 2rem;
-=======
-  gap: 2.6rem;
-`;
-
-export const TextContainer = styled.div`
-  padding: 1.3rem;
-
->>>>>>> ff4bb25 (Merge branch develop into main)
   display: flex;
   justify-content: center;
   align-items: center;

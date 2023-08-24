@@ -1,5 +1,4 @@
 import Image from 'next/image';
-<<<<<<< HEAD
 import nonCheckedBtn from 'public/assets/icons/login/nonCheckedBtn.svg';
 import checkedBtn from 'public/assets/icons/login/checkedBtn.svg';
 import * as S from './style';
@@ -11,13 +10,6 @@ interface ITermContentProps {
 
 /** 약관 */
 const TermContent = ({ agree1, setAgree1 }: ITermContentProps) => {
-=======
-import checkIc from 'public/assets/icons/login/checkIc.svg';
-import * as S from './style';
-
-/** 약관 */
-const TermContent = () => {
->>>>>>> ff4bb25 (Merge branch develop into main)
   return (
     <div>
       <S.TermsHeaderBox>
@@ -25,7 +17,6 @@ const TermContent = () => {
         <p>약관 1</p>
       </S.TermsHeaderBox>
       <S.TermsBodyBox>
-<<<<<<< HEAD
         <h3>제 1 장 총칙</h3>
         <h3>제 1 조 (목적)</h3>본 약관은 스톡원큐가 운영하는 웹 사이트
         (http://xxx.xxx.xxx)의 제반 서비스의 이용조건 및 절차에 관한 사항 및
@@ -199,19 +190,6 @@ const TermContent = () => {
                 height={35}
               />
             )}
-=======
-        <h3>* 약관 어쩌구 입니다. 제 1항 어쩌구</h3>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure ab omnis consequuntur quasi neque iusto? Nobis illum, accusantium incidunt quia culpa explicabo autem quidem blanditiis laboriosam officia adipisci dolore quibusdam!</p>
-      </S.TermsBodyBox>
-      <S.TermsFooterBox>
-        <S.TermsFooterAgreeBox>
-          <button>&nbsp;</button>
-          <div>동의함</div>
-        </S.TermsFooterAgreeBox>
-        <S.TermsFooterDisagreeBox>
-          <button>
-            <Image src={checkIc} alt="checked-icon" width={21} height={13.5} />
->>>>>>> ff4bb25 (Merge branch develop into main)
           </button>
           <div>동의하지 않음</div>
         </S.TermsFooterDisagreeBox>
@@ -220,8 +198,4 @@ const TermContent = () => {
   );
 };
 
-<<<<<<< HEAD
 export default TermContent;
-=======
-export default TermContent;
->>>>>>> ff4bb25 (Merge branch develop into main)

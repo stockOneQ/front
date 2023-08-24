@@ -11,10 +11,7 @@ interface IDropDownProps {
   toggleTopSize: number;
   list: string[];
   onChange?: React.Dispatch<React.SetStateAction<string>>;
-<<<<<<< HEAD
   onChangeValue?: (value: string) => void;
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
   type: string;
 }
 
@@ -27,10 +24,7 @@ const DropDown = ({
   toggleTopSize,
   list,
   onChange,
-<<<<<<< HEAD
   onChangeValue,
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
   type,
 }: IDropDownProps) => {
   const [searchBy, setSearchBy] = useState(type);
@@ -42,15 +36,12 @@ const DropDown = ({
     setCategoryToggle(false);
   };
 
-<<<<<<< HEAD
   const handleOnChangeValue = (value: string) => {
     if (onChangeValue) onChangeValue(value);
     setSearchBy(value);
     setCategoryToggle(false);
   };
 
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
   return (
     <>
       <S.SelectedValueButton
@@ -78,10 +69,7 @@ const DropDown = ({
               key={idx}
               onClick={() => {
                 changeValueHandler(label);
-<<<<<<< HEAD
                 handleOnChangeValue(label);
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
               }}
             >
               {label}

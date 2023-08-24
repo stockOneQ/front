@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState } from 'react';
 import TermContent from './TermContent';
 import TermContent2 from './TermContent2';
@@ -40,27 +39,8 @@ const AgreementTerms = () => {
       <S.AgreeFooterButton disabled={!agree1 || !agree2}>
         <Link href={!agree1 || !agree2 ? '#' : '/login/sign-up'}>다음</Link>
       </S.AgreeFooterButton>
-=======
-import TermContent from './TermContent';
-import * as S from './style';
-
-/** 약관 동의 */
-const AgreementTerms = () => {
-  return (
-    <S.WholePageBox>
-      <S.AgreementTermsBox>
-        <S.AgreeHeaderButton>모두 동의합니다.</S.AgreeHeaderButton>
-        <TermContent />
-        <TermContent />
-      </S.AgreementTermsBox>
-      <S.AgreeFooterButton>다음</S.AgreeFooterButton>
->>>>>>> ff4bb25 (Merge branch develop into main)
     </S.WholePageBox>
   );
 };
 
-<<<<<<< HEAD
 export default AgreementTerms;
-=======
-export default AgreementTerms;
->>>>>>> ff4bb25 (Merge branch develop into main)

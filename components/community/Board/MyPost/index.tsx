@@ -10,7 +10,6 @@ import {
   isDeleteModeState,
   myPostListState,
   isCurrentPathMainState,
-<<<<<<< HEAD
   currentPageNumState,
   totalPagesState,
 } from 'recoil/states';
@@ -25,19 +24,6 @@ import AcceptBtn from 'components/common/button/AcceptBtn';
 
 import SettingSVG from 'public/assets/icons/community/settingsIcon.svg';
 import LeftArrowSVG from 'public/assets/icons/community/leftArrow.svg';
-=======
-} from 'recoil/states';
-import * as S from './style';
-
-import ControlBar from '../ControlBar';
-import PostListBox from '../PostListBox';
-import HeadingText from 'components/common/HeadingText';
-import RejectBtn from 'components/common/button/RejectBtn';
-import AcceptBtn from 'components/common/button/AcceptBtn';
-import SettingSVG from 'public/assets/icons/community/settingsIcon.svg';
-import LeftArrowSVG from 'public/assets/icons/community/leftArrow.svg';
-import { API } from 'pages/api/api';
->>>>>>> ff4bb25 (Merge branch develop into main)
 
 const MyPosts = () => {
   const router = useRouter();
@@ -54,7 +40,6 @@ const MyPosts = () => {
   const [myPostList, setMyPostList] = useRecoilState(myPostListState);
   const [myPostListCount, setMyPostListCount] = useState(0);
 
-<<<<<<< HEAD
   const [currentPageNum, setCurrentPageNum] =
     useRecoilState(currentPageNumState);
   const [totalPages, setTotalPages] = useRecoilState(totalPagesState);
@@ -66,15 +51,6 @@ const MyPosts = () => {
     API.get('/api/boards/my', {
       params: {
         page: currentPageNum - 1,
-=======
-  const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
-
-  /** 내가 쓴 글 목록 조회 */
-  useEffect(() => {
-    API.get('/api/boards/my', {
-      params: {
-        page: '0',
->>>>>>> ff4bb25 (Merge branch develop into main)
         sort: sortType,
         search: searchType === '글 제목' ? '제목' : '내용',
         word: searchInput,
@@ -84,21 +60,14 @@ const MyPosts = () => {
         console.log('내가 쓴 글 조회 성공');
         console.log(res.data);
         setMyPostList(res.data.boardList);
-<<<<<<< HEAD
         setTotalPages(res.data.pageInfo.totalPages);
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
         setMyPostListCount(() => myPostList.length);
       })
       .catch(e => {
         alert('내가 쓴 글 조회 실패');
         console.log(e);
       });
-<<<<<<< HEAD
   }, [currentPageNum, myPostListCount, sortType, searchType, searchInput]);
-=======
-  }, [myPostListCount, sortType, searchType, searchInput]);
->>>>>>> ff4bb25 (Merge branch develop into main)
 
   /** 환경설정 버튼 or 취소/삭제 버튼 토글 함수*/
   const handleToggle = () => {
@@ -116,10 +85,6 @@ const MyPosts = () => {
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
-<<<<<<< HEAD
-
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
     router.push('/community/board');
   };
 
@@ -129,10 +94,7 @@ const MyPosts = () => {
   };
 
   /** 삭제 버튼 클릭 시 처리 함수 */
-<<<<<<< HEAD
   /** ----------------- 내가 쓴 글 삭제 API ----------------- */
-=======
->>>>>>> ff4bb25 (Merge branch develop into main)
   const handleDelete = async () => {
     try {
       await Promise.allSettled(
@@ -146,14 +108,8 @@ const MyPosts = () => {
       );
       setMyPostListCount(prev => prev - deleteCheckedItems.length);
       handleToggle();
-<<<<<<< HEAD
     } catch (e) {
       console.error(e);
-=======
-    } catch (error) {
-      alert('게시글 삭제 실패');
-      console.error(error);
->>>>>>> ff4bb25 (Merge branch develop into main)
     }
   };
 
@@ -206,11 +162,7 @@ const MyPosts = () => {
         )}
       </S.HeaderSection>
 
-<<<<<<< HEAD
       <PostList list={myPostList} totalPages={totalPages}/>
-=======
-      <PostListBox list={myPostList} />
->>>>>>> ff4bb25 (Merge branch develop into main)
     </S.Box>
   );
 };
