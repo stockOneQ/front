@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import logo from 'public/favicon/favicon-192.png';
-import headerNavArrow from 'public/assets/icons/header/headerNavArrow.svg';
-import * as H from './style';
-import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { useCookies } from 'react-cookie';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
+import logo from 'public/favicon/favicon-192.png';
+import headerNavArrow from 'public/assets/icons/header/headerNavArrow.svg';
+import * as H from './style';
 import { API } from 'pages/api/api';
 
 interface IHeaderProps {
@@ -17,25 +17,21 @@ interface IHeaderProps {
 const Header = ({ setSideBarIdx }: IHeaderProps) => {
   const router = useRouter();
   const currentPath = router.pathname;
+
   const [, , removeRefCookie] = useCookies(['refreshToken']);
-  const [accCookies, , removeAccCookie] = useCookies(['accessToken']);
+  const [, , removeAccCookie] = useCookies(['accessToken']);
   const [, , removeFcmCookie] = useCookies(['fcmToken']);
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
+  const [, , removeLogInUserIdCookie] = useCookies(['logInUserId']);
+  const [, , removeLogInUserNameCookie] = useCookies(['logInUserName']);
 
   const handleLogout = async () => {
     try {
       const res = await API.post('/api/auth/logout');
       if (res.status === 204) {
-        // 로그아웃 성공 시 다음 동작 수행
         console.log('로그아웃 성공');
 
-        let accessToken = Cookies.get('accessToken');
-        let refreshToken = Cookies.get('refreshToken');
-        let fcmToken = Cookies.get('fcmToken');
-
+        /** 토큰 삭제 */
         Cookies.remove('accessToken');
         Cookies.remove('refreshToken');
         Cookies.remove('fcmToken');
@@ -43,6 +39,10 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
         removeAccCookie('accessToken');
         removeRefCookie('refreshToken');
         removeFcmCookie('fcmToken');
+
+        /** 로그인 사용자 정보 삭제 */
+        removeLogInUserIdCookie('logInUserId');
+        removeLogInUserNameCookie('logInUserName');
 
         router.push('/login');
       }
@@ -153,9 +153,7 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
         </H.NavList>
 
         <H.Login className={currentPath.startsWith('/login') ? 'active' : ''}>
-          <button onClick={accCookies ? handleLogout : handleLogin}>
-            {accCookies !== undefined ? '로그아웃' : '로그인'}
-          </button>
+          <button onClick={handleLogout}>로그아웃</button>
         </H.Login>
       </H.NavBar>
     </H.Header>
