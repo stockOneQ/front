@@ -89,10 +89,10 @@ const TermContent = ({ agree2, setAgree2 }: ITermContentProps) => {
         <S.TermsFooterAgreeBox>
           <button
             onClick={() => {
-              setAgree2(false);
+              setAgree2(true);
             }}
           >
-            {agree2 && (
+            {!agree2 && (
               <Image
                 src={nonCheckedBtn}
                 alt="checked-icon"
@@ -100,7 +100,7 @@ const TermContent = ({ agree2, setAgree2 }: ITermContentProps) => {
                 height={35}
               />
             )}
-            {!agree2 && (
+            {agree2 && (
               <Image
                 src={checkedBtn}
                 alt="checked-icon"
@@ -114,10 +114,10 @@ const TermContent = ({ agree2, setAgree2 }: ITermContentProps) => {
         <S.TermsFooterDisagreeBox>
           <button
             onClick={() => {
-              setAgree2(true);
+              setAgree2(false);
             }}
           >
-            {!agree2 && (
+            {agree2 && (
               <Image
                 src={nonCheckedBtn}
                 alt="checked-icon"
@@ -125,7 +125,7 @@ const TermContent = ({ agree2, setAgree2 }: ITermContentProps) => {
                 height={35}
               />
             )}
-            {agree2 && (
+            {!agree2 && (
               <Image
                 src={checkedBtn}
                 alt="checked-icon"

@@ -6,23 +6,23 @@ import Link from 'next/link';
 
 /** 약관 동의 */
 const AgreementTerms = () => {
-  const [agree1, setAgree1] = useState(true);
-  const [agree2, setAgree2] = useState(true);
+  const [agree1, setAgree1] = useState(false);
+  const [agree2, setAgree2] = useState(false);
 
   const allAgreeHandler = () => {
-    setAgree1(false);
-    setAgree2(false);
+    setAgree1(true);
+    setAgree2(true);
   };
 
   return (
     <S.WholePageBox>
       <S.AgreementTermsBox>
-        {/* <S.AgreeHeaderButton
-          disabled={agree1 || agree2}
+        <S.AgreeHeaderButton
+          notAllSelected={!agree1 || !agree2}
           onClick={allAgreeHandler}
         >
           모두 동의합니다.
-        </S.AgreeHeaderButton> */}
+        </S.AgreeHeaderButton>
         <TermContent
           agree1={agree1}
           setAgree1={(bool: boolean) => {
@@ -36,8 +36,8 @@ const AgreementTerms = () => {
           }}
         />
       </S.AgreementTermsBox>
-      <S.AgreeFooterButton disabled={agree1 || agree2}>
-        <Link href="/login">다음</Link>
+      <S.AgreeFooterButton disabled={!agree1 || !agree2}>
+        <Link href={!agree1 || !agree2 ? '#' : '/login'}>다음</Link>
       </S.AgreeFooterButton>
     </S.WholePageBox>
   );

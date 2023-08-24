@@ -8,6 +8,7 @@ const WholePageBox = styled.div`
   width: 100%;
   height: 100vh;
   overflow: auto;
+  position: relative;
 
   &::-webkit-scrollbar {
     display: none;
@@ -21,20 +22,22 @@ const AgreementTermsBox = styled.div`
 `;
 
 interface IAgreeHeaderButtonProps {
-  disabled: boolean;
+  notAllSelected: boolean;
 }
 
 const AgreeHeaderButton = styled.button<IAgreeHeaderButtonProps>`
   width: 93.2rem;
   height: 6.5rem;
   border-radius: 5rem;
-  background-color: ${({ disabled }) => (disabled ? '#F7F7F9' : '')};
-  background-image: ${({ disabled }) =>
-    disabled
+  background-color: ${({ notAllSelected }) =>
+    notAllSelected ? '#F7F7F9' : ''};
+  background-image: ${({ notAllSelected }) =>
+    notAllSelected
       ? ''
       : 'linear-gradient(174deg, #f9e499 0%, #f2b2cf 33.33%, #b1b0d7 67.19%, #55abd7 100%)'};
   margin-bottom: 2.9rem;
-  color: ${({ disabled }) => (disabled ? '#979797' : 'var(--color-white)')};
+  color: ${({ notAllSelected }) =>
+    notAllSelected ? '#979797' : 'var(--color-white)'};
   text-align: center;
   font-size: 2.2rem;
   font-weight: 600;
@@ -44,20 +47,24 @@ const AgreeHeaderButton = styled.button<IAgreeHeaderButtonProps>`
 const AgreeFooterButton = styled.button`
   position: fixed;
   bottom: 0;
-  left: 18.4rem;
-  width: 100vw;
+  left: 0;
+  width: 100%;
   height: 8.7rem;
-  text-align: center;
   text-align: center;
   font-size: 2.4rem;
   font-weight: 600;
   line-height: normal;
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
   background-color: ${({ disabled }) => (disabled ? '#F7F7F9' : '')};
   background-image: ${({ disabled }) =>
     disabled
       ? ''
       : 'linear-gradient(174deg, #f9e499 0%, #f2b2cf 33.33%, #b1b0d7 67.19%, #55abd7 100%);'};
   color: ${({ disabled }) => (disabled ? '#979797' : 'var(--color-white)')};
+
+  a {
+    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+  }
 `;
 
 /********************/

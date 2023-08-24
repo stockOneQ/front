@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { CookiesProvider } from 'react-cookie';
 
 import { RecoilRoot } from 'recoil';
+import AgreementPage from './login/agreement';
 
 const roboto = Roboto({
   weight: '400',
@@ -29,7 +30,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <RecoilRoot>
         <CookiesProvider>
-          {Component === Login ? (
+          {Component === Login || Component === AgreementPage ? (
             <main className={roboto.className}>
               <Component {...pageProps} />
               <Globals />

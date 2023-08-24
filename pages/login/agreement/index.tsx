@@ -1,4 +1,4 @@
-// http://serverURL/api/login/agreement
+// http://serverURL/login/agreement
 
 import AgreementTerms from 'components/login/signUp/AgreementTerms';
 
