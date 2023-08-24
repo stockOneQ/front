@@ -1,15 +1,4 @@
-import { atom, selector, useSetRecoilState } from 'recoil';
-import { useCallback } from 'react';
-
-export const loginIdState = atom<string | null>({
-  key: 'loginIdState',
-  default: null,
-});
-
-export const nameState = atom<string | null>({
-  key: 'nameState',
-  default: null,
-});
+import { atom, selector } from 'recoil';
 
 export const userIdState = atom<number>({
   key: 'userIdState',
@@ -193,27 +182,6 @@ export const sortTypeState = atom<string>({
   default: '최신순',
 });
 
-// export const sortedPostsState = selector({
-//   key: 'sortedPostsState',
-//   get: ({ get }) => {
-//     const sortType = get(sortTypeState);
-//     const posts = get(postListState);
-
-//     switch (sortType) {
-//       case '최신순':
-//         return [...posts].sort((a, b) => {
-//           return Number(b.uploadTime) - Number(a.uploadTime);
-//         });
-
-//       /** 조회순 */
-//       default:
-//         return [...posts].sort((a, b) => {
-//           return Number(b.views) - Number(a.views);
-//         });
-//     }
-//   },
-// });
-
 /* 게시글 검색 */
 export const searchTypeState = atom<string>({
   key: 'searchTypeState',
@@ -224,40 +192,6 @@ export const searchInputState = atom<string>({
   key: 'searchInputState',
   default: '',
 });
-
-// export const searchedPostsState = selector({
-//   key: 'searchedPostsState',
-//   get: ({ get }) => {
-//     const searchType = get(searchTypeState);
-//     const searchInput = get(searchInputState);
-//     const posts = get(postListState);
-
-//     switch (searchType) {
-//       case '글 제목':
-//         return posts.filter(post => post.title.includes(searchInput));
-//       case '글 내용':
-//         return posts.filter(post => post.content.includes(searchInput));
-//       case '작성자':
-//         return posts.filter(
-//           post =>
-//             post.writer.includes(searchInput) || post.writer === searchInput,
-//         );
-//     }
-//   },
-// });
-
-// /** 정렬 & 검색 필터링 공통 뽑아내기 */
-// export const filteredPostListState = selector({
-//   key: 'filteredPostListState',
-//   get: ({ get }) => {
-//     const sortedPosts = get(sortedPostsState);
-//     const searchedPosts = get(searchedPostsState);
-
-//     return (
-//       searchedPosts && sortedPosts.filter(post => searchedPosts.includes(post))
-//     );
-//   },
-// });
 
 /** 게시글 좋아요 클릭 여부 */
 export const isLikeState = atom<boolean>({

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,7 +9,6 @@ import {
   currentPageNumState,
   isCurrentPathMainState,
   isLikeState,
-  loginIdState,
   recommentsRenderTriggerState,
   startPageNumState,
   totalElementsState,
@@ -52,8 +52,8 @@ interface IPostTypes {
 
 const Detail = ({ id }: { id: number }) => {
   const router = useRouter();
+  const [cookies, ,] = useCookies(['logInUserId']);
 
-  const loginId = useRecoilValue(loginIdState);
   const [post, setPost] = useState<IPostTypes>();
   const [commentList, setCommentList] = useState<ICommentTypes[]>();
   const commentRenderTrigger = useRecoilValue(commentsRenderTriggerState);
@@ -124,11 +124,12 @@ const Detail = ({ id }: { id: number }) => {
               createdDate={post.createdDate}
             />
             <S.ButtonContainer>
-              {post?.writerId === loginId && (
-                <Link href={`/community/board/edit/${id}`}>
-                  <S.EditButton>수정</S.EditButton>
-                </Link>
-              )}
+              {cookies.logInUserId &&
+                post?.writerId === cookies.logInUserId && (
+                  <Link href={`/community/board/edit/${id}`}>
+                    <S.EditButton>수정</S.EditButton>
+                  </Link>
+                )}
               <S.CloseButton onClick={handleClose}>
                 <Image src={CloseSVG} alt="close" />
               </S.CloseButton>

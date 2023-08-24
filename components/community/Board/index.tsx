@@ -6,8 +6,6 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   currentPageNumState,
   isCurrentPathMainState,
-  loginIdState,
-  nameState,
   postListState,
   searchInputState,
   searchTypeState,
@@ -39,11 +37,6 @@ const Board = () => {
   const [totalPages, setTotalPages] = useRecoilState(totalPagesState);
 
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
-
-  const loginId = useRecoilValue(loginIdState);
-  const name = useRecoilState(nameState);
-
-  console.log(`loginId ${loginId}, name ${name}`);
 
   /** 페이지네이션 초기화 */
   useEffect(() => {

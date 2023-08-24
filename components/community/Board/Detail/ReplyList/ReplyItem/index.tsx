@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import Image from 'next/image';
 import { useSetRecoilState } from 'recoil';
 import { recommentsRenderTriggerState } from 'recoil/states';
@@ -21,8 +22,11 @@ const PostReplyItem = ({
   id,
   content,
   createdDate,
+  writerId,
   writerName,
 }: IRecommentTypes) => {
+  const [cookies, ,] = useCookies(['logInUserId']);
+
   const [isMore, setIsMore] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -83,8 +87,7 @@ const PostReplyItem = ({
           )}
         </S.Container>
       </S.Comment>
-      {/** 추후 loginId랑 비교하여 더보기 버튼 띄우기 */}
-      {writerName === '새우' && !isEdit && (
+      {cookies.logInUserId && writerId === cookies.logInUserId && !isEdit && (
         <S.OptionButton onClick={handleMore}>
           <Image src={CommentMoreSVG} alt="commentMore" />
         </S.OptionButton>

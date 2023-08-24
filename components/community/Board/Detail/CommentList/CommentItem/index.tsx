@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import Image from 'next/image';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import {
   commentsRenderTriggerState,
-  loginIdState,
   recommentsRenderTriggerState,
 } from 'recoil/states';
 import * as S from './style';
@@ -36,7 +36,8 @@ const CommentItem = ({
   writerId,
   replyList,
 }: ICommentTypes) => {
-  const loginId = useRecoilValue(loginIdState);
+  const [cookies, ,] = useCookies(['logInUserId']);
+
   const [isModal, setIsModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isReply, setIsReply] = useState(false);
@@ -176,7 +177,7 @@ const CommentItem = ({
       </S.Comment>
       <ReplyList list={replyList} />
 
-      {writerId === loginId && !isEdit && (
+      {cookies.logInUserId && writerId === cookies.logInUserId && !isEdit && (
         <S.OptionButton onClick={handleMore}>
           <Image src={CommentMoreSVG} alt="commentMore" />
         </S.OptionButton>

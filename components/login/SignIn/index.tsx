@@ -1,19 +1,17 @@
-import Image from 'next/image';
-import mainLogo from 'public/assets/icons/login/mainLogo.svg';
 import { useEffect, useState } from 'react';
-import * as S from './style';
+import { useCookies } from 'react-cookie';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { storeIdState, userIdState, authState } from 'recoil/states';
+
+import * as S from './style';
+
 import { API } from 'pages/api/api';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
-import {
-  loginIdState,
-  nameState,
-  storeIdState,
-  userIdState,
-  authState,
-} from 'recoil/states';
+
+import mainLogo from 'public/assets/icons/login/mainLogo.svg';
+
 import Link from 'next/link';
 
 interface ISignInProps {
@@ -23,14 +21,16 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
   const [isTyped, setIsTyped] = useState(false);
   const [enteredID, setEnteredID] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
+
+  /** 쿠키 */
   const [, setRefCookie] = useCookies(['refreshToken']);
   const [, setAccCookie] = useCookies(['accessToken']);
+  const [, setLogInUserId] = useCookies(['logInUserId']);
+  const [, setLogInUserName] = useCookies(['logInUserName']);
+
   const [storeId, setStoreId] = useRecoilState(storeIdState);
   const [userId, setUserId] = useRecoilState(userIdState);
   const [auth, setAuthStatus] = useRecoilState(authState);
-
-  const setLoginId = useSetRecoilState(loginIdState);
-  const setName = useSetRecoilState(nameState);
 
   const idChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target as HTMLInputElement;
@@ -84,11 +84,15 @@ const SignIn = ({ onSignUpClick }: ISignInProps) => {
           JSON.stringify(loginData),
         );
         setAuthStatus(true);
+
         const accessToken = response.data.accessToken;
         const refreshToken = response.data.refreshToken;
-        console.log('Login successful', response.data);
+
+        /** 쿠키 저장 */
         setAccCookie('accessToken', accessToken);
         setRefCookie('refreshToken', refreshToken);
+        setLogInUserId('logInUserId', response.data.loginId);
+        setLogInUserName('logInUserName', response.data.name);
 
         router.push('/home/frozen'); // '/' 페이지로 이동
       } catch (error) {
