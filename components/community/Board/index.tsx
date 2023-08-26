@@ -2,17 +2,20 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
+  currentPageNumState,
   isCurrentPathMainState,
   postListState,
   searchInputState,
   searchTypeState,
   sortTypeState,
+  startPageNumState,
+  totalPagesState,
 } from 'recoil/states';
 import * as S from './style';
 import ControlBar from './ControlBar';
-import PostListBox from './PostListBox';
+import PostList from './PostList';
 import HeadingText from 'components/common/HeadingText';
 
 import RightArrowSVG from 'public/assets/icons/community/rightArrow.svg';
@@ -28,14 +31,25 @@ const Board = () => {
   const [searchInput, setSearchInput] = useRecoilState(searchInputState);
 
   const [postList, setPostList] = useRecoilState(postListState);
+  const [currentPageNum, setCurrentPageNum] =
+    useRecoilState(currentPageNumState);
+  const [startPageNum, setStartPageNum] = useRecoilState(startPageNumState);
+  const [totalPages, setTotalPages] = useRecoilState(totalPagesState);
 
   const setIsCurrentPathMain = useSetRecoilState(isCurrentPathMainState);
 
-  /** 전체 글 목록 조회 */
+  /** 페이지네이션 초기화 */
+  useEffect(() => {
+    setStartPageNum(1);
+    setCurrentPageNum(1);
+    setTotalPages(0);
+  }, []);
+
+  /** ----------------- 전체 글 목록 조회 API ----------------- */
   useEffect(() => {
     API.get('/api/boards', {
       params: {
-        page: '0',
+        page: currentPageNum - 1,
         sort: sortType,
         search:
           searchType === '글 제목'
@@ -47,22 +61,36 @@ const Board = () => {
       },
     })
       .then(res => {
-        console.log('전체 글 목록 불러오기 성공');
-        console.log(res.data);
+        console.log(`전체 글 중 ${currentPageNum}페이지 목록 조회 성공`);
         setPostList(res.data.boardList);
+        setTotalPages(res.data.pageInfo.totalPages);
       })
       .catch(e => {
-        console.log(e);
+        console.error(e);
         throw e;
       });
-  }, [sortType, searchType, searchInput]);
+  }, [
+    startPageNum,
+    currentPageNum,
+    totalPages,
+    sortType,
+    searchType,
+    searchInput,
+  ]);
 
-  const handleMyPostsClick = () => {
+  /** 내가 쓴 글 버튼 클릭 시 처리 함수 */
+  const handleMyPostsButtonClick = () => {
     setIsCurrentPathMain(false);
-    /** 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
+
+    /** 내가 쓴 글 페이지로 이동 할 시, 전체 글 페이지에서 적용됐던 정렬/검색 조건 초기화 */
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
+
+    /** 페이지네이션 초기화 */
+    setStartPageNum(1);
+    setCurrentPageNum(1);
+    setTotalPages(0);
 
     router.push('/community/board/myPosts');
   };
@@ -71,18 +99,18 @@ const Board = () => {
     <S.Box>
       <S.HeaderSection>
         <HeadingText>전체글</HeadingText>
-        <S.MyPostButtonContainer onClick={handleMyPostsClick}>
+        <S.GoToMyPostButton onClick={handleMyPostsButtonClick}>
           <span>내가 쓴 글</span>
           <Image src={RightArrowSVG} alt="MyPosts" />
-        </S.MyPostButtonContainer>
+        </S.GoToMyPostButton>
         <ControlBar />
-        <S.WriteButtonContainer>
+        <S.PostUploadButtonContainer>
           <Link href="/community/board/new">
             <Image alt="게시글 등록" src={WriteSVG} />
           </Link>
-        </S.WriteButtonContainer>
+        </S.PostUploadButtonContainer>
       </S.HeaderSection>
-      <PostListBox list={postList} />
+      <PostList list={postList} totalPages={totalPages} />
     </S.Box>
   );
 };

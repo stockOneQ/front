@@ -1,3 +1,5 @@
+// http://serverURL/login/sign-up
+
 import SignUp from 'components/login/signUp/SignUp';
 
 /** 회원가입 페이지 */

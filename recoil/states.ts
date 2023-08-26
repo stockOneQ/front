@@ -1,33 +1,55 @@
-import { atom, selector, useSetRecoilState } from 'recoil';
-import { useCallback } from 'react';
+import { atom, selector } from 'recoil';
 
+export const userIdState = atom<number>({
+  key: 'userIdState',
+  default: 1,
+});
+
+export const storeIdState = atom<number>({
+  key: 'storeIdState',
+  default: 1,
+});
+
+export const authState = atom({
+  key: 'authState',
+  default: false,
+});
 /** ----------------메인 페이지------------- */
 
-// export interface ProductItem {
-//   id: number;
-//   category: string;
-//   productName: string;
-//   price:  number;
-//   seller: string;
-//   receiptYear: string;
-//   receiptMonth: string;
-//   receiptDay: string;
-//   expirationYear: string;
-//   expirationMonth: string;
-//   expirationDay: string;
-//   ingredientLocation: string;
-//   requiredQuantity: string;
-//   quantity: string;
-//   orderingSite: string;
-//   orderingFrequency: string;
-//   imageInfo: string;
-//   storageMethod: string;
-// };
+export type StorageMethod = '냉동' | '냉장' | '상온';
 
 export interface ProductItem {
   id: number;
   name: string;
-  image: string | null;
+  image: string[] | null;
+  storageMethod: string;
+}
+
+export type ProductDetail = {
+  name: string;
+  price: number;
+  vendor: string;
+  receivingDate: string;
+  expirationDate: string;
+  location: string;
+  requireQuant: number;
+  stockQuant: number;
+  siteToOrder: string;
+  orderFreq: string;
+  image: string;
+};
+
+export interface Product {
+  id: number;
+  name: string;
+  image: string[];
+}
+
+export interface ApiResponse {
+  status: string;
+  errorCode: string;
+  message: string;
+  result: ProductItem[];
 }
 
 export const mainPostListState = atom<ProductItem[]>({
@@ -35,15 +57,6 @@ export const mainPostListState = atom<ProductItem[]>({
   default: [],
 });
 
-export const handleProductClick = () => {
-  const setSelectedProductState = useSetRecoilState(selectedProductState);
-  return useCallback(
-    (item: GradientsListItem) => {
-      setSelectedProductState(item);
-    },
-    [setSelectedProductState],
-  );
-};
 //유통기한 임박재료
 export const approachingExpirationState = atom<string[]>({
   key: 'approachingExpirationState',
@@ -83,34 +96,9 @@ export const searchFilterState = atom({
   default: '',
 });
 
-export const searchResultsState = selector({
-  key: 'searchResultsState',
-  get: ({ get }) => {
-    const searchTerm = get(searchFilterState);
-    const newpostList = get(newpostListState);
-
-    if (searchTerm.trim() !== '') {
-      return newpostList.filter(item =>
-        item.productName.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
-    } else {
-      return newpostList;
-    }
-  },
-});
-
-export const filteredItemsState = selector({
-  key: 'filteredItemsState',
-  get: ({ get }) => {
-    const searchTerm = get(searchFilterState);
-    const searchResults = get(searchResultsState);
-
-    if (searchTerm.trim() !== '') {
-      return searchResults;
-    } else {
-      return searchResults;
-    }
-  },
+export const sortTypeStateProduct = atom<string>({
+  key: 'sortTypeStateProduct',
+  default: '가나다',
 });
 
 export type IngredientsListItem = {
@@ -194,27 +182,6 @@ export const sortTypeState = atom<string>({
   default: '최신순',
 });
 
-// export const sortedPostsState = selector({
-//   key: 'sortedPostsState',
-//   get: ({ get }) => {
-//     const sortType = get(sortTypeState);
-//     const posts = get(postListState);
-
-//     switch (sortType) {
-//       case '최신순':
-//         return [...posts].sort((a, b) => {
-//           return Number(b.uploadTime) - Number(a.uploadTime);
-//         });
-
-//       /** 조회순 */
-//       default:
-//         return [...posts].sort((a, b) => {
-//           return Number(b.views) - Number(a.views);
-//         });
-//     }
-//   },
-// });
-
 /* 게시글 검색 */
 export const searchTypeState = atom<string>({
   key: 'searchTypeState',
@@ -226,46 +193,18 @@ export const searchInputState = atom<string>({
   default: '',
 });
 
-// export const searchedPostsState = selector({
-//   key: 'searchedPostsState',
-//   get: ({ get }) => {
-//     const searchType = get(searchTypeState);
-//     const searchInput = get(searchInputState);
-//     const posts = get(postListState);
-
-//     switch (searchType) {
-//       case '글 제목':
-//         return posts.filter(post => post.title.includes(searchInput));
-//       case '글 내용':
-//         return posts.filter(post => post.content.includes(searchInput));
-//       case '작성자':
-//         return posts.filter(
-//           post =>
-//             post.writer.includes(searchInput) || post.writer === searchInput,
-//         );
-//     }
-//   },
-// });
-
-// /** 정렬 & 검색 필터링 공통 뽑아내기 */
-// export const filteredPostListState = selector({
-//   key: 'filteredPostListState',
-//   get: ({ get }) => {
-//     const sortedPosts = get(sortedPostsState);
-//     const searchedPosts = get(searchedPostsState);
-
-//     return (
-//       searchedPosts && sortedPosts.filter(post => searchedPosts.includes(post))
-//     );
-//   },
-// });
+/** 게시글 좋아요 클릭 여부 */
+export const isLikeState = atom<boolean>({
+  key: 'isLikeState',
+  default: false,
+});
 
 /** 게시글 댓글 */
 
 export interface IPostCommentTypes {
   id: number;
-  writer: string;
-  uploadTime: string;
+  writerName: string;
+  createdDate: string;
   content: string;
 }
 
@@ -274,23 +213,14 @@ export const postCommentInputState = atom<string>({
   default: '',
 });
 
-/** 게시글 댓글 더미 데이터 */
-export const postCommentListState = atom<IPostCommentTypes[]>({
-  key: 'postCommentListState',
-  default: [
-    {
-      id: 1,
-      writer: '전언석',
-      uploadTime: '2023년 07월 21일 01:25',
-      content: '알아봐드리겠습니다',
-    },
-    {
-      id: 2,
-      writer: '김아리',
-      uploadTime: '2023년 07월 22일 12:23',
-      content: '안녕하세요. 저 하고 있습니다. 마진 괜찮습니다.',
-    },
-  ],
+export const commentsRenderTriggerState = atom<boolean>({
+  key: 'commentsLengthState',
+  default: false,
+});
+
+export const recommentsRenderTriggerState = atom<boolean>({
+  key: 'recommentsRenderTriggerState',
+  default: false,
 });
 
 export const isCurrentPathMainState = atom<boolean>({
@@ -308,4 +238,25 @@ export const deleteCheckedItemsState = atom<number[]>({
 export const isDeleteModeState = atom<boolean>({
   key: 'isDeleteModeState',
   default: false,
+});
+
+/** 페이지네이션 */
+export const currentPageNumState = atom<number>({
+  key: 'currentPageNumState',
+  default: 1,
+});
+
+export const totalPagesState = atom<number>({
+  key: 'totalPagesState',
+  default: 0,
+});
+
+export const totalElementsState = atom<number>({
+  key: 'totalElementsState',
+  default: 0,
+});
+
+export const startPageNumState = atom<number>({
+  key: 'startPageNumState',
+  default: 1,
 });

@@ -4,14 +4,14 @@ const SignUpInputBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-`
+`;
 
 const SignUpLabel = styled.label`
   color: var(--color-black);
   font-size: 1.8rem;
   font-weight: 600;
   line-height: normal;
-`
+`;
 
 interface ISignUpInput {
   width: string;
@@ -24,6 +24,7 @@ const SignUpInput = styled.input<ISignUpInput>`
   border: 1px solid var(--color-gray);
   border-radius: 5px;
   color: var(--color-black);
+  margin-right: 10px;
   font-size: 1.5rem;
   font-weight: 400;
   line-height: normal;
@@ -38,27 +39,29 @@ const SignUpInput = styled.input<ISignUpInput>`
   }
 
   &:focus {
-    border: 1px solid linear-gradient(#F9E499, #F2B2CF, #55ABD7, #B1B0D7);
+    border: 1px solid linear-gradient(#f9e499, #f2b2cf, #55abd7, #b1b0d7);
   }
-`
+`;
 
 const InputRowBox = styled.div`
   display: flex;
   margin-bottom: 4.5rem;
-`
+`;
 
 const InputRow1Box = styled(InputRowBox)`
   gap: 7.1rem;
-`
+`;
 
 const InputRow2Box = styled(InputRowBox)`
   flex-direction: column;
+  margin-top: 37px;
+  display: flex;
   gap: 2rem;
-`
+`;
 
 const InputRow3Box = styled(InputRow2Box)`
   padding-bottom: 2.1rem;
-`
+`;
 
 export {
   SignUpInputBox,
@@ -66,5 +69,5 @@ export {
   SignUpInput,
   InputRow1Box,
   InputRow2Box,
-  InputRow3Box
-}
+  InputRow3Box,
+};

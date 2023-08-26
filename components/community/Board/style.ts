@@ -4,7 +4,8 @@ export const Box = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: end;
+  align-items: center;
 
   height: 95%;
 `;
@@ -16,7 +17,7 @@ export const HeaderSection = styled.div`
   left: 0;
 `;
 
-export const MyPostButtonContainer = styled.button`
+export const GoToMyPostButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,7 +34,7 @@ export const MyPostButtonContainer = styled.button`
   }
 `;
 
-export const WriteButtonContainer = styled.button`
+export const PostUploadButtonContainer = styled.button`
   position: absolute;
   top: 75%;
   right: 8%;

@@ -2,7 +2,9 @@
 import React, { useState } from 'react';
 import DropDown from '../../common/DropDown/index';
 import * as S from '../Ingredients/style';
-import searchIcon from 'public/assets/icons/community/search.svg';
+import searchIcon from 'public/assets/icons/main/mainSearch.svg';
+import addIcon from 'public/assets/icons/main/mainAdd.svg';
+import searchCancel from 'public/assets/icons/main/seachCancel.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -46,7 +48,7 @@ const Categories: React.FC<ControlBarProps> = ({
     }
   };
 
-  const handleInputChange = event => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputHeight(event.target.scrollHeight);
     handleSearchChange(event);
   };
@@ -61,74 +63,85 @@ const Categories: React.FC<ControlBarProps> = ({
             transition: 'opacity 0.3s ease',
           }}
         >
-          <S.StyledLink
+          <S.StyledLinkTotal
             isactive={activeLink === '전체'}
             onClick={() => handleLinkClick('전체')}
           >
-            전체
-            <S.CountValue>{totalCount}</S.CountValue>
+            전체 {totalCount}
+          </S.StyledLinkTotal>
+          <S.StyledLink
+            isactive={activeLink === '유통기한 경과'}
+            onClick={() => handleLinkClick('유통기한 경과')}
+          >
+            유통기한 지난 재료 {expiredIngredientsCount}
           </S.StyledLink>
           <S.StyledLink
-            isactive={activeLink === 'afterDate'}
-            onClick={() => handleLinkClick('afterDate')}
+            isactive={activeLink === '유통기한 임박'}
+            onClick={() => handleLinkClick('유통기한 임박')}
           >
-            유통기한 지난 재료
-            <S.CountValue>{expiredIngredientsCount}</S.CountValue>
+            유통기한 임박 재료 {approachingExpirationCount}
           </S.StyledLink>
-          <S.StyledLink
-            isactive={activeLink === 'beforeDate'}
-            onClick={() => handleLinkClick('beforeDate')}
+          <S.StyledLinkLack
+            isactive={activeLink === '재고 부족'}
+            onClick={() => handleLinkClick('재고 부족')}
           >
-            유통기한 임박 재료
-            <S.CountValue>{approachingExpirationCount}</S.CountValue>
-          </S.StyledLink>
-          <S.StyledLink
-            isactive={activeLink === 'no'}
-            onClick={() => handleLinkClick('no')}
-          >
-            부족한 재료
-            <S.CountValue>{insufficientIngredientsCount}</S.CountValue>
-          </S.StyledLink>
+            부족한 재료 {insufficientIngredientsCount}
+          </S.StyledLinkLack>
 
           <S.DropBoxContainer>
             <DropDown
-              width={13.3}
+              width={16}
               height={3.5}
-              fontSize={1.3}
+              fontSize={1.79}
               toggleSize={10}
               toggleTopSize={48}
               list={sortOptionList}
-              onChange={handleSortChange}
+              onChangeValue={handleSortChange}
               type={selectedSortOption}
             />
           </S.DropBoxContainer>
+          <S.SearchBox>
+            <Image
+              alt="search"
+              src={searchIcon}
+              onClick={toggleLinksVisibility}
+              width={27}
+              height={35}
+            />
+          </S.SearchBox>
+
+          <S.ActionButtonBox>
+            <Link href="/home/new">
+              <Image alt="add" src={addIcon} />
+            </Link>
+          </S.ActionButtonBox>
         </div>
 
         <S.SerchSection>
-          <Image
-            alt="search"
-            src={searchIcon}
-            onClick={toggleLinksVisibility}
-          />
-          <S.Input
-            type="text"
-            placeholder="제품 검색"
-            value={searchTerm}
-            onChange={handleInputChange}
-            // onChange={handleSearchChange} api 호출 함수
+          <S.SeachBox
             style={{
               display: linksVisible ? 'none' : 'block',
               width: `${inputWidth}px`,
-              transition: 'width 1s ease, height 0.3s ease', // Add transition properties
+              opacity: linksVisible ? 0 : 1,
+              transition: 'width 0.5s ease, opacity 0.5s ease',
             }}
-          />
+          >
+            <S.SearchPro>제품명</S.SearchPro>
+            <S.Input
+              type="text"
+              placeholder="제품 검색"
+              value={searchTerm}
+              onChange={handleInputChange}
+            />
+            <Image
+              src={searchCancel}
+              alt="취소"
+              width={15}
+              height={15}
+              onClick={toggleLinksVisibility}
+            />
+          </S.SeachBox>
         </S.SerchSection>
-
-        <S.ActionButtonBox>
-          <Link href="/home/new">
-            <S.Add>+</S.Add>
-          </Link>
-        </S.ActionButtonBox>
       </S.NavBar>
     </S.ControlBar>
   );

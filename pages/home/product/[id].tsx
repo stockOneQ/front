@@ -2,22 +2,33 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 import { mainPostListState } from '../../../recoil/states';
 import { useSetRecoilState } from 'recoil';
+import useScroll from 'hooks/useScroll';
+import cancleIcon from 'public/assets/icons/main/detailCancle.svg';
 import * as S from '../../../components/main/style';
 import {
   fetchProductDetails,
   addProduct,
   handleDeleteProduct,
-} from '../../../pages/api/api';
+} from '../../api/api';
 
 const ProductPage = () => {
   const router = useRouter();
-  const { id } = router.query;
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const handleImageChange = e => {
-    setSelectedImage(e.target.files[0]);
+  const { id } = router.query;
+  const { pathname } = router;
+  const { hideScroll, scrollHandler } = useScroll();
+
+  const [selectedStorageMethod, setSelectedStorageMethod] = useState('');
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setSelectedImage(selectedFile);
+    }
   };
 
   const [formData, setFormData] = useState({
@@ -27,8 +38,8 @@ const ProductPage = () => {
     receivingDate: '2000-10-02',
     expirationDate: '2000-10-02',
     location: '선반',
-    requireQuant: '3',
-    stockQuant: '4',
+    requireQuant: 3,
+    stockQuant: 4,
     siteToOrder: 'www',
     orderFreq: '80',
     image: 'sk',
@@ -36,7 +47,6 @@ const ProductPage = () => {
 
   const convertFormDataToJson = () => {
     const jsonFormData = {
-      // id: getId(),
       name: formData.name,
       price: formData.price,
       vendor: formData.vendor,
@@ -57,7 +67,6 @@ const ProductPage = () => {
         const response = await fetchProductDetails(Number(id));
         setFormData(response);
         setSelectedImage(response.image || '');
-        console.log('받아온 값: ', response);
       } catch (error) {
         console.error('Error fetching product details:', error);
       }
@@ -67,10 +76,6 @@ const ProductPage = () => {
       fetchDetails();
     }
   }, [id]);
-
-  /** API 호출------------------------------------------------- */
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
 
   // 수정 API
   const handleEditProduct = async () => {
@@ -92,13 +97,18 @@ const ProductPage = () => {
     }
   };
 
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
-  /** --------------------------------------------------------- */
+  const handleDeleteClick = () => {
+    if (typeof id === 'string') {
+      const parsedId = parseInt(id, 10);
+      if (!isNaN(parsedId)) {
+        handleDeleteProduct(parsedId);
+      }
+    }
+  };
 
   const setPostListState = useSetRecoilState(mainPostListState);
 
-  const handleInputChange = e => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     console.log('Input Changed:', name, value);
     setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
@@ -107,41 +117,30 @@ const ProductPage = () => {
   const handleSubmit = () => {
     /** 수정 API  */
     handleEditProduct();
-
     router.push('/');
   };
 
-  const [selectedStorageMethod, setSelectedStorageMethod] = useState(
-    formData.storageMethod || '냉동',
-  );
-
-  const handleStorageMethodChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedStorageMethod(e.target.value);
-    // 업데이트 formData
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      storageMethod: e.target.value,
-    }));
-  };
-
-  const handleImageClick = () => {
-    console.log('Image clicked');
+  const handleCancle = () => {
+    router.push('/');
   };
 
   return (
     <S.Box>
-      <S.Title title="재료 등록">재료상세</S.Title>
-      <S.TopSection>
-        <S.Button onClick={() => handleDeleteProduct(id)}>
+      <S.Title title="재료 상세">재료 상세</S.Title>
+      <S.TopSectionDetail>
+        <S.Button onClick={handleDeleteClick}>
           <Link href="/">삭제</Link>
         </S.Button>
-        <S.Button type="submit" onClick={handleSubmit}>
+        <S.ButtonEdit type="submit" onClick={handleSubmit}>
           <Link href="/">수정</Link>
-        </S.Button>
-        <Link href="/">X</Link>
-      </S.TopSection>
+        </S.ButtonEdit>
 
-      <S.Form>
+        <S.CCL>
+          <Image src={cancleIcon} alt="취소" onClick={handleCancle} />
+        </S.CCL>
+      </S.TopSectionDetail>
+
+      <S.Form hideScroll={hideScroll} onScroll={scrollHandler}>
         <S.InforSection>
           <S.LeftSection>
             <S.StyledInput>
@@ -155,7 +154,7 @@ const ProductPage = () => {
                           name="storageMethod"
                           value="냉동"
                           checked={selectedStorageMethod === '냉동'}
-                          onChange={handleStorageMethodChange}
+                          onChange={() => setSelectedStorageMethod('냉동')}
                         />
                         <span>냉동</span>
                       </S.StyledRadioInput>
@@ -165,7 +164,7 @@ const ProductPage = () => {
                           name="storageMethod"
                           value="냉장"
                           checked={selectedStorageMethod === '냉장'}
-                          onChange={handleStorageMethodChange}
+                          onChange={() => setSelectedStorageMethod('냉장')}
                         />
                         <span>냉장</span>
                       </S.StyledRadioInput>
@@ -175,7 +174,7 @@ const ProductPage = () => {
                           name="storageMethod"
                           value="상온"
                           checked={selectedStorageMethod === '상온'}
-                          onChange={handleStorageMethodChange}
+                          onChange={() => setSelectedStorageMethod('상온')}
                         />
                         <span>상온</span>
                       </S.StyledRadioInput>
@@ -194,8 +193,16 @@ const ProductPage = () => {
               <label htmlFor="imageInput">
                 <S.ImgInput>
                   <img
+                    src={`data:image/jpeg;base64,${selectedImage}`}
+                    alt="Selected Image"
+                    style={{
+                      maxWidth: '100%',
+                      cursor: 'pointer',
+                    }}
+                  />
+                  {/* <img
                     src={
-                      selectedImage instanceof File
+                      selectedImage
                         ? URL.createObjectURL(selectedImage)
                         : `data:image/jpeg;base64,${selectedImage}`
                     }
@@ -204,7 +211,7 @@ const ProductPage = () => {
                       maxWidth: '100%',
                       cursor: 'pointer',
                     }}
-                  />
+                  /> */}
                 </S.ImgInput>
               </label>
             </S.ImgInput>
@@ -335,7 +342,7 @@ const ProductPage = () => {
               <S.Slider
                 type="range"
                 name="orderingFrequency"
-                value={formData.orderingFrequency}
+                value={formData.orderFreq}
                 min="0"
                 max="100"
                 step="20"

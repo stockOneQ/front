@@ -1,10 +1,14 @@
+import { Dispatch, SetStateAction } from 'react';
+import { useCookies } from 'react-cookie';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+
 import logo from 'public/favicon/favicon-192.png';
 import headerNavArrow from 'public/assets/icons/header/headerNavArrow.svg';
 import * as H from './style';
-import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
+import { API } from 'pages/api/api';
 
 interface IHeaderProps {
   setSideBarIdx: Dispatch<SetStateAction<number>>;
@@ -13,6 +17,39 @@ interface IHeaderProps {
 const Header = ({ setSideBarIdx }: IHeaderProps) => {
   const router = useRouter();
   const currentPath = router.pathname;
+
+  const [, , removeRefCookie] = useCookies(['refreshToken']);
+  const [, , removeAccCookie] = useCookies(['accessToken']);
+  const [, , removeFcmCookie] = useCookies(['fcmToken']);
+
+  const [, , removeLogInUserIdCookie] = useCookies(['logInUserId']);
+  const [, , removeLogInUserNameCookie] = useCookies(['logInUserName']);
+
+  const handleLogout = async () => {
+    try {
+      const res = await API.post('/api/auth/logout');
+      if (res.status === 204) {
+        console.log('로그아웃 성공');
+
+        /** 토큰 삭제 */
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
+        Cookies.remove('fcmToken');
+
+        removeAccCookie('accessToken');
+        removeRefCookie('refreshToken');
+        removeFcmCookie('fcmToken');
+
+        /** 로그인 사용자 정보 삭제 */
+        removeLogInUserIdCookie('logInUserId');
+        removeLogInUserNameCookie('logInUserName');
+
+        router.push('/login');
+      }
+    } catch (error) {
+      console.error('로그아웃 에러', error);
+    }
+  };
 
   return (
     <H.Header>
@@ -57,7 +94,7 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
             className={currentPath.startsWith('/community') ? 'active' : ''}
           >
             <Link
-              href="/community/friends"
+              href="/community/friends/search"
               onClick={() => {
                 setSideBarIdx(0);
               }}
@@ -116,14 +153,7 @@ const Header = ({ setSideBarIdx }: IHeaderProps) => {
         </H.NavList>
 
         <H.Login className={currentPath.startsWith('/login') ? 'active' : ''}>
-          <Link
-            href="/login"
-            onClick={() => {
-              setSideBarIdx(0);
-            }}
-          >
-            <p>로그아웃</p>
-          </Link>
+          <button onClick={handleLogout}>로그아웃</button>
         </H.Login>
       </H.NavBar>
     </H.Header>

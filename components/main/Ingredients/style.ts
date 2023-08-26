@@ -12,6 +12,33 @@ const slideDown = keyframes`
   }
 `;
 
+export const SearchBox = styled.div`
+  cursor: pointer;
+  img {
+    margin-left: 200px;
+  }
+`;
+export const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+`;
+
+export const LoadingContainer = styled.div`
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease-in-out; /* Add a transition effect */
+
+  &.active {
+    opacity: 1; /* Visible when active */
+  }
+`;
+
 export const LoadMoreButton = styled.button`
   display: flex;
   align-items: center;
@@ -25,18 +52,24 @@ export const LoadMoreButton = styled.button`
   cursor: pointer;
   margin: 20px auto;
   font-size: 1.5rem;
+  position: relative;
   font-weight: bold;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  left: -12%;
 
   span {
     margin-left: 8px;
   }
 `;
 
-export const MainSection = styled.div`
+interface MainSectionProps {
+  hideScroll?: boolean;
+}
+
+export const MainSection = styled.div<MainSectionProps>`
   display: flex;
   flex-wrap: wrap;
-  height: 95vh;
+  height: 90vh;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -63,18 +96,24 @@ export const MainSection = styled.div`
 `;
 
 export const DropBoxContainer = styled.div`
-  margin-left: 3%;
+  margin-left: 73%;
+  position: absolute;
+  margin-right: 2%;
 `;
 
 export const Input = styled.input`
-  background: none;
   color: inherit;
   border: none;
-  font-size: 13px;
-  padding: 0 0 0 15%;
+  padding: 0px 0 0 27%;
   font: inherit;
+  width: 181px;
   cursor: pointer;
   outline: inherit;
+  height: 35px;
+  background: white;
+  border-radius: 43px;
+  position: absolute;
+  right: 90%;
 `;
 
 export const MainItem = styled.div`
@@ -82,7 +121,7 @@ export const MainItem = styled.div`
   box-shadow: 0px 1.1rem 2rem 0px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   height: 180px;
-  margin: 1% 3% 3% 3%;
+  margin: 1% 6% 5% 0%;
   flex-wrap: wrap;
   display: flex;
   justify-content: center;
@@ -90,23 +129,96 @@ export const MainItem = styled.div`
 `;
 
 export const ProductName = styled.h3`
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
-  margin-top: 45px;
+  margin-top: 40px;
   text-align: center;
+  color: #979797;
 `;
 
 export const MainItemImg = styled.div`
-  margin-top: 20px;
+  margin-top: 11px;
+
+  img {
+    border-radius: 16px;
+  }
 `;
-export const StyledLink = styled.button<{ isactive: boolean }>`
+
+export const SeachBox = styled.div`
   display: flex;
-  width: 190px;
+`;
+
+export const SearchPro = styled.div`
+  font-size: 18px;
+  background-color: black;
+  font-weight: 600;
+  line-height: 35px;
+  text-align: center;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  border-radius: 43px;
+  width: 92px;
+  height: 35px;
+  right: 188%;
+  position: absolute;
+  color: white;
+`;
+
+export const StyledLinkLack = styled.button<{ isactive: boolean }>`
+  display: flex;
+  width: 184px;
   height: 35px;
   margin: 0 0 0 2%;
   border-radius: 100px;
   color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
-  font-size: 13px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 35px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: ${props => (props.isactive ? '#000000' : '')};
+  border: none;
+  transition: background-color 0.3s ease-in-out; /* 배경색 변경 트랜지션 */
+
+  &:hover {
+    background-color: ${props => (props.isactive ? '#000000' : '#f0f0f0')};
+  }
+`;
+
+export const StyledLinkTotal = styled.button<{ isactive: boolean }>`
+  display: flex;
+  width: 112px;
+  height: 35px;
+  margin: 0 2% 0 0%;
+  border-radius: 100px;
+  color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 35px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: ${props => (props.isactive ? '#000000' : '')};
+  border: none;
+  transition: background-color 0.3s ease-in-out; /* 배경색 변경 트랜지션 */
+
+  &:hover {
+    background-color: ${props => (props.isactive ? '#000000' : '#f0f0f0')};
+  }
+`;
+
+export const StyledLink = styled.button<{ isactive: boolean }>`
+  display: flex;
+  width: 234px;
+  height: 35px;
+  margin: 0 2% 0 0%;
+  border-radius: 100px;
+  color: ${props => (props.isactive ? '#ffffff' : '#e0e0e0')};
+  font-size: 18px;
   font-weight: 600;
   line-height: 35px;
   text-align: center;
@@ -129,10 +241,10 @@ export const ActionButtonBox = styled.div`
   position: absolute;
   gap: 8px;
   color: white;
-  left: 91%;
+  left: 97%;
   font-size: 18px;
   font-weight: 600;
-  padding-bottom: 30px;
+  right: 6rem;
 `;
 
 export const Add = styled.div`
@@ -152,10 +264,10 @@ export const Add = styled.div`
 export const NavBar = styled.div`
   display: flex;
   width: 90%;
+  position: relative;
 `;
 
 export const ControlBar = styled.div`
-  width: 107%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
@@ -176,8 +288,9 @@ export const SerchSection = styled.div`
 
   img {
     top: 26%;
+    left: 24%;
     position: relative;
-    left: 10%;
+    cursor: pointer;
   }
 `;
 

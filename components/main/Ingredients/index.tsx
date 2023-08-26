@@ -1,78 +1,86 @@
 //ingredients/index.tsx
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import * as S from './style';
 import Link from 'next/link';
+import Image from 'next/image';
 import Categories from '../Categories';
 import {
   mainPostListState,
   StorageMethod,
-  ProductItem,
+  Product,
+  userIdState,
+  storeIdState,
+  authState,
 } from '../../../recoil/states';
-import axios from 'axios';
 import {
   API,
   productList,
   fetchProductCounts,
   getProductByCategory,
 } from 'pages/api/api';
+import loading from 'public/assets/icons/main/spinnerT.gif';
 
-const sortOptionList = ['가나다순', '빈도'];
+const sortOptionList = ['가나다순', '빈도순'];
+
 type IngredientsProps = {
-  productsToShow: ProductItem[];
   storageMethodFilter: StorageMethod;
 };
 
-interface productAll {
-  id: number;
-  name: string;
-  image: string;
-}
-
 const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   const postList = useRecoilValue(mainPostListState);
+  const [data, setData] = useState({});
+  const [authStatus] = useRecoilState(authState);
 
   const router = useRouter();
-  const [data, setData] = useState(null);
-  const [storeId, setStoreId] = useState(1);
-  const [userId, setUserId] = useState(1);
-  const [sortedProducts, setSortedProducts] = useState<ProductItem[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<productAll | null>(
-    null,
-  );
-
-  const [selectedSortOption, setSelectedSortOption] = useState('가나다순');
+  const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
+  const [selectedSortOption, setSelectedSortOption] =
+    useState<string>('가나다순');
   const [activeLink, setActiveLink] = useState<string>('전체');
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [searchTerm, setSearchTerm] = useState('');
   const [linksVisible, setLinksVisible] = useState(false);
 
+  /** storId 저장 */
+  const [userId, setUserId] = useRecoilState(userIdState);
+  const [storeId, setStoreId] = useRecoilState(storeIdState);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [hasReloaded, setHasReloaded] = useState(false);
+
+  useEffect(() => {
+    if (authStatus && !hasReloaded) {
+      setIsLoading(true); // Show loading indicator
+      router.reload();
+      setHasReloaded(true);
+    }
+  }, [authStatus, hasReloaded]);
+
   /** 가게 아이디 user id 조회 ---------------------------------------------------------- */
   useEffect(() => {
     API.get('/api/product')
       .then(response => {
-        console.log('첫 storeId api 호출: ', response);
-        // 업데이트
-        setData(response.data);
-        setUserId(response.data?.result?.userId ?? null);
-        setStoreId(response.data?.result?.storeId ?? null);
+        const { storeId: fetchedStoreId, userId: fetchedUserId } =
+          response.data.result;
+        setUserId(fetchedUserId);
+        setStoreId(fetchedStoreId); // storeId 업데이트
+        console.log(fetchedStoreId); // 업데이트된 값 출력
       })
       .catch(error => {
-        alert('요청실패');
         console.log(error);
       });
-  }, [storeId, userId]);
+  }, [userId]); // storeId 제거
 
-  // api호출에서 받은 storeID 와 userId 로 전체 제품 조회 api 호출
   useEffect(() => {
-    if (storeId && userId) {
-      fetchSortedProducts('가나다');
+    if (selectedCategory) {
+      fetchSortedProducts(selectedCategory, '가나다');
     }
-  }, [storeId, userId]);
+  }, [selectedCategory, storeId]); // storeId 추가
 
   /** 제품조회 API 완 ------------------------------------------------------------------ */
   const fetchSortedProducts = async (
+    category: string,
     sortParameter: string,
     lastProductId?: number,
   ) => {
@@ -80,41 +88,51 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       const response = await productList(
         storeId,
         storageMethodFilter,
-        lastProductId,
+        category,
+        lastProductId !== undefined ? lastProductId : -1,
         sortParameter,
       );
-      const productAll = response.data.result;
-      setSelectedProduct(response.data.result);
 
-      console.log('응답 response data 값: ', productAll);
+      const productAll = response.data.result;
+
       setSortedProducts(prevProducts =>
         lastProductId ? [...prevProducts, ...productAll] : productAll,
       );
-    } catch (error) {
-      console.log(storeId);
+    } catch (error: any) {
+      if (error.response && error.response.status === 500) {
+        router.push('/login'); // Redirect to login page if token is missing
+        return; // Return early to prevent further processing
+      }
+
       console.error('Error fetching sorted products:', error);
     }
   };
 
   const handleLoadMore = async () => {
     if (sortedProducts.length > 0) {
-      //마지막 제품 아이디
+      // 마지막 제품 아이디
       const lastProductId = sortedProducts[sortedProducts.length - 1].id;
-      fetchSortedProducts(
-        selectedSortOption === '빈도' ? '빈도' : '가나다',
-        lastProductId,
-      );
+
+      if (lastProductId) {
+        // lastProductId가 정의되었을 때만 실행
+        fetchSortedProducts(
+          selectedCategory,
+          selectedSortOption === '빈도순' ? '빈도' : '가나다',
+          lastProductId,
+        );
+      }
     }
   };
 
-  useEffect(() => {
-    console.log('sortedProducts updated:', sortedProducts); //null
-  }, [sortedProducts]);
+  useEffect(() => {}, [sortedProducts]);
 
   /** 가나다순, 빈도순 옵션 변경----------------------------------------------------- */
   const handleSortChange = (selectedOption: string) => {
     setSelectedSortOption(selectedOption);
-    fetchSortedProducts(selectedOption === '빈도' ? '빈도' : '가나다');
+    fetchSortedProducts(
+      selectedCategory,
+      selectedOption === '빈도순' ? '빈도' : '가나다',
+    );
   };
 
   /** 검색 API 완------------------------------------------------------------------ */
@@ -139,22 +157,15 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       console.error('Error fetching search results:', error);
     }
   };
-  /** condition별 api 호출 완------------------------------------------------------ */
+
   const handleLinkClick = async (category: string, lastProductId?: number) => {
     setSelectedSortOption('가나다순');
     setActiveLink(category);
     setSelectedCategory(category);
+    console.error(category);
 
     try {
-      const products = await getProductByCategory(
-        category,
-        storeId,
-        storageMethodFilter,
-        lastProductId,
-        '가나다',
-      );
-      console.log('컨디션 별 호출 성공', products);
-      setSortedProducts(products);
+      await fetchSortedProducts(category, '가나다', lastProductId);
     } catch (error) {
       console.error('Error fetching sorted products:', error);
     }
@@ -184,7 +195,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
   }, [sortedProducts]);
 
   const handleItemClick = (productId: number) => {
-    router.push(`/product/${productId}`);
+    router.push(`/home/product/${productId}`);
   };
 
   return (
@@ -205,36 +216,40 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       />
 
       {/* api 호출에 따른 MAIN SECTION */}
-      <S.MainSection>
-        {Array.isArray(sortedProducts) ? (
-          sortedProducts.map(product => (
-            <S.MainItem
-              key={product.id}
-              onClick={() => handleItemClick(product.id)}
-            >
-              <Link href={`home/product/${product.id}`} passHref>
-                <S.MainItemImg>
-                  {product.image && (
-                    <img
-                      src={`data:image/jpeg;base64,${product.image}`}
-                      alt={product.name}
-                      width={140}
-                      height={140}
-                    />
-                  )}
-                </S.MainItemImg>
-                <S.ProductName>{product.name}</S.ProductName>
-              </Link>
-            </S.MainItem>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </S.MainSection>
+      {isLoading ? (
+        <S.Loading>
+          <Image src={loading} alt="loading" width={100} height={100} />
+        </S.Loading>
+      ) : (
+        <S.MainSection hideScroll={true}>
+          {Array.isArray(sortedProducts) ? (
+            sortedProducts.map(product => (
+              <S.MainItem
+                key={product.id}
+                onClick={() => handleItemClick(product.id)}
+              >
+                <Link href={`/home/product/${product.id}`} passHref>
+                  <S.MainItemImg>
+                    {product.image && (
+                      <img
+                        src={`data:image/jpeg;base64,${product.image}`}
+                        alt={product.name}
+                        width={158}
+                        height={158}
+                      />
+                    )}
+                  </S.MainItemImg>
+                  <S.ProductName>{product.name}</S.ProductName>
+                </Link>
+              </S.MainItem>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </S.MainSection>
+      )}
 
-      <S.LoadMoreButton onClick={handleLoadMore}>
-        <span>&gt;</span>
-      </S.LoadMoreButton>
+      <S.LoadMoreButton onClick={handleLoadMore}>+</S.LoadMoreButton>
     </>
   );
 };
