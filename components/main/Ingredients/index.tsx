@@ -157,6 +157,7 @@ const Ingredients = ({ storageMethodFilter }: IngredientsProps) => {
       console.error('Error fetching search results:', error);
     }
   };
+
   const handleLinkClick = async (category: string, lastProductId?: number) => {
     setSelectedSortOption('가나다순');
     setActiveLink(category);

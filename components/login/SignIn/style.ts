@@ -40,6 +40,7 @@ const SignInInputBox = styled.div`
   font-weight: 500;
   line-height: normal;
   color: var(--color-black);
+
   input {
     width: 34.5rem;
     height: 6.6rem;

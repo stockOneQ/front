@@ -85,6 +85,7 @@ const MyPosts = () => {
     setSortType('최신순');
     setSearchType('글 제목');
     setSearchInput('');
+
     router.push('/community/board');
   };
 

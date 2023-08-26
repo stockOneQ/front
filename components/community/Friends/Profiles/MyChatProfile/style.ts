@@ -12,6 +12,7 @@ const MyProfileBox = styled.div`
   display: flex;
   align-items: center;
   padding: 0 3rem 0 2rem;
+
   img {
     border-radius: 50%;
     margin-right: 1.9rem;

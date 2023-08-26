@@ -135,6 +135,7 @@ const New = () => {
       'editProductRequest',
       new Blob([JSON.stringify(jsonFormData)], { type: 'application/json' }),
     );
+
     try {
       await API.post(
         `/api/product/add?store=${storeId}&condition=${condition}`,
@@ -298,6 +299,15 @@ const New = () => {
                     value={formData.receiptYear}
                     onChange={handleInputChange}
                     placeholder="YYYY"
+                    autoComplete="off"
+                  />
+                  <p>년</p>
+                  <S.ReceiptDateInputField
+                    type="text"
+                    name="receiptMonth"
+                    value={formData.receiptMonth}
+                    onChange={handleInputChange}
+                    placeholder="MM"
                     autoComplete="off"
                   />
                   <p>월</p>
