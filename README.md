@@ -6,6 +6,10 @@
 
 ---
 
+## **💡 StockOneQ’s Solution!**
+<img width="100%" src="https://github.com/stockOneQ/.github/assets/139538765/3f9ca9c7-f253-4ece-a471-e5be1457b605"/>
+
+
 ## 팀원 구성
 |<img src="https://avatars.githubusercontent.com/u/104339899?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/81246338?v=4" width="150" height="150"/>|
 |:-:|:-:|
