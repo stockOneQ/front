@@ -1,12 +1,4 @@
-## StockOneQ_FE
-### ❤️ 재고 관리의 모든 것, StockOneQ
-![image](https://github.com/stockOneQ/front/assets/81246338/440a1995-4223-4890-86f1-8d77a6445666)
-
-### [Backend Repo](https://github.com/stockOneQ/back)
-
----
-
-## **💡 StockOneQ’s Solution!**
+## ❤️ 재고 관리의 모든 것, StockOneQ’s Solution! 💡 
 <img width="100%" src="https://github.com/stockOneQ/.github/assets/139538765/3f9ca9c7-f253-4ece-a471-e5be1457b605"/>
 
 
@@ -22,3 +14,5 @@
 
 <img src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white"/> <img src="https://img.shields.io/badge/EC2-FF9900?style=flat-square&logo=amazonec2&logoColor=black"/>
 
+
+### [Backend Repo](https://github.com/stockOneQ/back)
