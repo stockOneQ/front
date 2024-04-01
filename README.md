@@ -3,9 +3,9 @@
 
 
 ## 팀원 구성
-|<img src="https://avatars.githubusercontent.com/u/104339899?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/81246338?v=4" width="150" height="150"/>|
-|:-:|:-:|
-|LEE KAYOUNG / KATIE<br/>[@imeureka](https://github.com/imeureka)|Halim-Lim<br/>[@gkfla668](https://github.com/gkfla668)|
+|<img src="https://avatars.githubusercontent.com/u/104339899?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/81246338?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/121864459?v=4" width="150" height="150"/>|
+|:-:|:-:|:-:|
+|LEE KAYOUNG / KATIE<br/>[@imeureka](https://github.com/imeureka)|Halim-Lim<br/>[@gkfla668](https://github.com/gkfla668)|Eonseok Jeon<br/>[@eonseok-jeon](https://github.com/eonseok-jeon)|
 
 ## 기술 스택
 ![image](https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_8_FE/assets/81246338/2261eaa7-8a36-4545-a896-178791a721a8)
